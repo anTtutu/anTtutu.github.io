@@ -23,9 +23,9 @@ Jekyll 需要依赖：Ruby、bundler
 
 #### 获取博客模板
 
-> $ git clone https://github.com/anTtutu/anttu.blog.github.io.git
+> $ git clone https://github.com/anTtutu/anTtutu.github.io.git
 
-或者直接[下载博客](https://github.com/anTtutu/anttu.blog.github.io/archive/master.zip)   
+或者直接[下载博客](https://github.com/anTtutu/anTtutu.github.io/archive/master.zip)   
 
 进anttu.blog.github.io/ 目录下， 开启本地服务 
 
@@ -37,8 +37,7 @@ Jekyll 需要依赖：Ruby、bundler
 
 如果有错误提示，可以尝试
 
-> $ bundle install
-
+> $ bundle install  
 > $ bundle update
 
 ### 提示
