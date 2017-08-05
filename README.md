@@ -38,6 +38,7 @@ Jekyll 需要依赖：Ruby、bundler
 如果有错误提示，可以尝试
 
 > $ bundle install
+
 > $ bundle update
 
 ### 提示

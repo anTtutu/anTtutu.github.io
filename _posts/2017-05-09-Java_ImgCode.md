@@ -20,7 +20,7 @@ description: "Java原生图形验证码"
 如下共计有6个类，图形验证码工具类，使用方法调用，老外的Encoder、GifDecoder、GifEncoder、Quant等4个工具类
 
 ### 1、图形验证码工具类
-```
+```java
 package com.test.test;    
     
 import java.awt.AlphaComposite;    
@@ -39,7 +39,9 @@ import java.io.OutputStream;
 import java.util.Arrays;    
 import java.util.Random;    
     
-import javax.imageio.ImageIO;    
+import javax.imageio.ImageIO;
+
+import org.apache.log4j.Logger;    
     
 /**  
  * 验证码工具类：  
@@ -47,12 +49,15 @@ import javax.imageio.ImageIO;
  * 彩色字符 每个字符的颜色随机，一定会不相同  
  * 随机字符 阿拉伯数字 + 小写字母 + 大写字母  
  * 3D中空自定义字体，需要单独使用，只有阿拉伯数字和大写字母  
- * gif支持动态输出  
+ * gif支持动态输出
+ * 2017-06-09 解决压测时自定义字符字体不停的new，内存溢出问题。因为自定义字体不会变，提成static,建议用64bit jdk，自定义自动字符串太长，32bit偶尔编译会报错字符串太长
  * @author cgtu  
  * @date 2017年5月9日 下午7:27:55  
  */    
 public class RandonImgCodeUtil    
-{    
+{
+	  private static Logger logger = Logger.getLogger(RandomVerifyImgCodeUtil.class);
+	  
     /**  
      * 随机类  
      */    
@@ -62,7 +67,26 @@ public class RandonImgCodeUtil
     public static final String RANDOMCODEKEY = "RANDOMVALIDATECODEKEY";    
     
     // 验证码来源范围，去掉了0,1,I,O,l,o几个容易混淆的字符    
-    public static final String VERIFY_CODES = "23456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz";    
+    public static final String VERIFY_CODES = "23456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz";
+    
+    private static ImgFontByte imgFontByte = new ImgFontByte();
+	
+		private static Font baseFont;
+		static
+		{
+			try
+			{
+				baseFont = Font.createFont(Font.TRUETYPE_FONT, new ByteArrayInputStream(imgFontByte.hex2byte(imgFontByte.getFontByteStr())));
+			}
+			catch (FontFormatException e)
+			{
+				logger.error("new img font font format failed. e: " + e.getMessage(), e);
+			}
+			catch (IOException e)
+			{
+				logger.error("new img font io failed. e: " + e.getMessage(), e);
+			}
+		}    
     
     // 字体类型    
     private static String[] fontName =    
@@ -426,18 +450,22 @@ public class RandonImgCodeUtil
      */    
     static class ImgFontByte    
     {    
-        public Font getFont(int fontSize, int fontStype)    
-        {    
-            try    
-            {    
-                Font baseFont = Font.createFont(Font.TRUETYPE_FONT, new ByteArrayInputStream(hex2byte(getFontByteStr())));    
-                return baseFont.deriveFont(fontStype, fontSize);    
-            }    
-            catch (Exception e)    
-            {    
-                return new Font("Arial", fontStype, fontSize);    
-            }    
-        }    
+        public Font getFont(int fontSize, int fontStype)
+				{
+					try
+					{
+						Font font = baseFont;
+						if (baseFont == null)
+						{
+							font = Font.createFont(Font.TRUETYPE_FONT, new ByteArrayInputStream(imgFontByte.hex2byte(imgFontByte.getFontByteStr())));
+						}
+						return font.deriveFont(fontStype, fontSize);
+					}
+					catch (Exception e)
+					{
+						return new Font("Arial", fontStype, fontSize);
+					}
+				}    
     
         private byte[] hex2byte(String str)    
         {    
@@ -616,7 +644,7 @@ public class RandonImgCodeUtil
 ```
 
 ### 2、调用示例
-```
+```java
 public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  
 {  
     response.setContentType("image/jpeg");  
@@ -685,7 +713,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response) thro
 
 ### 3、用到的老外的工具类：共计4个，如果只是生成的话用不了这么多
 ### I、Encoder
-```  
+```java  
 package com.test.test;    
     
 import java.io.IOException;    
@@ -1003,7 +1031,7 @@ public class Encoder
 ```
 
 ### II、GifDecoder  
-```
+```java
 package com.test.test;  
     
 import java.awt.*;    
@@ -1901,7 +1929,7 @@ public class GifDecoder
 ``` 
  
 ### III、GifEncoder 
-```
+```java
 package com.test.test;    
     
 import java.awt.*;    
@@ -2472,7 +2500,7 @@ public class GifEncoder
 }  
 ```  
 ### IV、Quant 
-```
+```java
 package com.test.test;    
     
 import java.io.FileNotFoundException;    
