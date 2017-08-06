@@ -45,7 +45,7 @@ Jekyll 需要依赖：Ruby、bundler
 >* 如果你想使用我的模板，请把 _posts/ 目录下的文章都去掉。
 >* 修改 _config.yml 文件里面的内容为你自己的个人信息。
 
-如果在部署博客的时候发现问题，可以直接在[Issues](https://github.com/anTtutu/anttu.blog.github.io/issues)里面提问。        
+如果在部署博客的时候发现问题，可以直接在[Issues](https://github.com/anTtutu/anTtutu.github.io/issues)里面提问。        
 
 
 ### 把这个博客变成你自己的博客
