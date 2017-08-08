@@ -27,7 +27,7 @@ Jekyll 需要依赖：Ruby、bundler
 
 或者直接[下载博客](https://github.com/anTtutu/anTtutu.github.io/archive/master.zip)   
 
-进anttu.blog.github.io/ 目录下， 开启本地服务 
+进anTtutu.github.io/ 目录下， 开启本地服务 
 
 > $ jekyll s
 
