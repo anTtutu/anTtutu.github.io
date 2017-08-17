@@ -451,21 +451,21 @@ public class RandonImgCodeUtil
     static class ImgFontByte    
     {    
         public Font getFont(int fontSize, int fontStype)
+		{
+			try
+			{
+				Font font = baseFont;
+				if (baseFont == null)
 				{
-					try
-					{
-						Font font = baseFont;
-						if (baseFont == null)
-						{
-							font = Font.createFont(Font.TRUETYPE_FONT, new ByteArrayInputStream(imgFontByte.hex2byte(imgFontByte.getFontByteStr())));
-						}
-						return font.deriveFont(fontStype, fontSize);
-					}
-					catch (Exception e)
-					{
-						return new Font("Arial", fontStype, fontSize);
-					}
-				}    
+					font = Font.createFont(Font.TRUETYPE_FONT, new ByteArrayInputStream(imgFontByte.hex2byte(imgFontByte.getFontByteStr())));
+				}
+					return font.deriveFont(fontStype, fontSize);
+			}
+			catch (Exception e)
+			{
+					return new Font("Arial", fontStype, fontSize);
+			}
+		}    
     
         private byte[] hex2byte(String str)    
         {    
@@ -679,29 +679,29 @@ public void doGet(HttpServletRequest request, HttpServletResponse response) thro
         switch(type)  
         {  
             case 0:  
-                RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "login");  
+                RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "login"); 
                 break;  
-                    case 1:  
-                        RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "GIF");                 
-                        break;  
-                    case 2:  
-                        RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "3D");  
-                        break;  
-                    case 3:  
-                        RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "GIF3D");  
-                        break;  
-                    case 4:  
-                        RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "mix2");  
-                        break;  
-                    case 5:  
-                        RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "mixGIF");  
-                        break;  
-                    case 6:  
-                        RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "coupons");  
-                        break;  
-                    default:  
-                        RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "mixGIF");  
-                        break;  
+             case 1:  
+                RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "GIF");
+                break;  
+            case 2:  
+                RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "3D");  
+                break;  
+            case 3:  
+                RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "GIF3D");
+                break;  
+            case 4:  
+                RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "mix2");  
+                break;  
+            case 5:  
+                RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "mixGIF");
+                break;  
+            case 6:  
+                RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "coupons");  
+                break;  
+            default:  
+                RandomVerifyImgCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode, "mixGIF");
+                break;  
         }             
     }  
     catch (Exception e)  
