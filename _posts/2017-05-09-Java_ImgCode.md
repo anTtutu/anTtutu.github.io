@@ -71,22 +71,22 @@ public class RandonImgCodeUtil
     
     private static ImgFontByte imgFontByte = new ImgFontByte();
 	
-		private static Font baseFont;
-		static
+	private static Font baseFont;
+	static
+	{
+		try
 		{
-			try
-			{
-				baseFont = Font.createFont(Font.TRUETYPE_FONT, new ByteArrayInputStream(imgFontByte.hex2byte(imgFontByte.getFontByteStr())));
-			}
-			catch (FontFormatException e)
-			{
-				logger.error("new img font font format failed. e: " + e.getMessage(), e);
-			}
-			catch (IOException e)
-			{
-				logger.error("new img font io failed. e: " + e.getMessage(), e);
-			}
-		}    
+			baseFont = Font.createFont(Font.TRUETYPE_FONT, new ByteArrayInputStream(imgFontByte.hex2byte(imgFontByte.getFontByteStr())));
+		}
+		catch (FontFormatException e)
+		{
+			logger.error("new img font font format failed. e: " + e.getMessage(), e);
+		}
+		catch (IOException e)
+		{
+			logger.error("new img font io failed. e: " + e.getMessage(), e);
+		}
+	}    
     
     // 字体类型    
     private static String[] fontName =    
