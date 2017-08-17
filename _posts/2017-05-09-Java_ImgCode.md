@@ -2,7 +2,7 @@
 layout: post
 title: Java高防OCR和机器人图形验证码
 date: 2017-05-09
-tags: Java 
+tags: java 
 description: "Java原生图形验证码"
 ---   
 
