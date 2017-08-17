@@ -105,7 +105,7 @@ h(左移一个字符←)、j(下一行↓)、k(上一行↑)、l(右移一个字
 
 ### 9、shell script使用
 ```
-\# 注释 
+# 注释 
 $? 前一个命令执行结果，0成功 1失败 
 $# 统计传递的参数个数 
 $0 在脚本中获取当前脚本名称 
@@ -143,7 +143,7 @@ expect 从进程接收字符串
 spawn 启动新的进程 
 interact 允许用户交互 
 如： 
-\#!/usr/bin/expect 
+#!/usr/bin/expect 
 spawn ssh sshuser@192.168.22.194 
 expect "*password:" 
 send "123\r" 
