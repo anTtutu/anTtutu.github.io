@@ -127,9 +127,9 @@ awk 用来从文本文件中提取字段。缺省地，字段分割符是空格�
 sed 一个基本的查找替换程序 
 怎么让脚本后台执行 ./test.sh & 
 nohup 永久执行 
-EOF 通常与”\<\<”结合使用，”\<\<\EOF”表示后续的输入作为子命令或子shell的输入，直到遇到”EOF”，再次返回到主调shell 
+EOF 通常与”<<”结合使用，”<<EOF”表示后续的输入作为子命令或子shell的输入，直到遇到”EOF”，再次返回到主调shell 
 如： 
-sqlplus testuser/testpwd \<\<\EOF 
+sqlplus testuser/testpwd <<EOF 
 select sysdate from dual; 
 EOF 
 
