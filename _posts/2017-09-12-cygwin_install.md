@@ -11,7 +11,7 @@ description: "Cygwin安装"
 #### cygwin相对安装虚拟机、vps是轻量级的，因此在条件不足情况下，练习、学习shell等都是很好的选择。
 
 ### 一、Cygwin的安装
-1. 下载Cygwin，这个可以到这里下载 ，至于使用32位的还是64位的版本可以根据自己的系统而定，打开下载好的setup-x86.exe（以64bitwindws系统为例） 。
+1. 下载Cygwin，这个可以到这里下载 ，至于使用32位的还是64位的版本可以根据自己的系统而定，打开下载好的setup-x86.exe（以64bit-windws系统为例） 。
 
 2. 我这里选择的是2.876（64位）版本
 ![](/images/posts/cygwin/install1.jpg)
