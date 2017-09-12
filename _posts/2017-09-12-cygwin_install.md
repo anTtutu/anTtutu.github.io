@@ -32,6 +32,7 @@ description: "Cygwin安装"
 ![](/images/posts/cygwin/install6.jpg)
 
 8. 这一步很关键，选择要下载和安装的包，根据你的需要选择包，选的包越多所需的下载时间越长，单击【View】可以在分类、全部、已选之间循环切换，点击每一类前面的加号可以展开，要选中每一个包，只需单击每一行前边像循环的那个图标，会在版本号和Skip之间切换，选一个最新的版本号即可，下边的那个复选框默认即可。
+```
 为了后面的操作，我们有必要在这里选择一些必要的包进行安装：
 (1) curl；
 (2) git* (git,git-completion, git-gui, gitk)；
@@ -40,6 +41,7 @@ description: "Cygwin安装"
 (5) python;
 (6) lynx
 (7) wget, tar, gawk, bzip2
+```
 当然其中有一些是已经就默认勾选的，在选择的时候只要在search里面输入对应名称，它就会自动过滤出你要安装的包了，然后将循环Skip切换成你需要安装的版本就好了，一定要记得在搜索的时候不需要按Enter, 不然就直接跳到下一步了。
 ![](/images/posts/cygwin/install7.jpg)
 
