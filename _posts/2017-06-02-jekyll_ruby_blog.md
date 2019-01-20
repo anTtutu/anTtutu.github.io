@@ -28,7 +28,7 @@ ruby建议是在Linux环境下安装的，但是工作电脑是windows比较常�
 
 ### 3、安装ruby，在上一环节的D:\RubyDevKit\新建Ruby目录，把ruby安装到这个目录下。
 ```
-安装完ruby dev  kit和ruby后，需要执行如下安装操作：
+安装完ruby dev kit和ruby后，需要执行如下安装操作：
 cd D:\RubyDevKit
 创建config.yml配置文件，初始化init，
 编辑config.yml添加上ruby的安装目录，然后review添加结果，
@@ -36,7 +36,7 @@ cd D:\RubyDevKit
 ```
 ![](/images/posts/jekyll/dk.rb.jpg)
 ![](/images/posts/jekyll/config1.jpg)     
-### 4、放置ruby SSL证书文件到D:\RubyDevKit\Ruby\ Ruby23-x64\bin目录下，最后开始设置环境变量
+### 4、放置ruby SSL证书文件到D:\RubyDevKit\Ruby\Ruby23-x64\bin目录下，最后开始设置环境变量
 ![](/images/posts/jekyll/env-set.jpg)
 ![](/images/posts/jekyll/env-set3.jpg)
 ### 5、安装Git，直接保持默认值，一路安装完成，注意设置环境变量时要勾选设置Path。
@@ -46,7 +46,7 @@ cd D:\RubyDevKit
 系统 - 高级系统设置 - 环境变量，
 新增RUBY_HOME，值为D:\RubyDevKit\Ruby\Ruby23-x64，
 继续新增PYTHON_HOME，值为：D:\PYTHON_HOME\Python27，
-继续新增SSL_CERT_FILE，值为D:\RubyDevKit\Ruby\ Ruby23-x64\bin\cacert.pem。
+继续新增SSL_CERT_FILE，值为D:\RubyDevKit\Ruby\Ruby23-x64\bin\cacert.pem。
 ```
 ![](/images/posts/jekyll/env-set2.jpg)
 ## 开始校验下安装和环境变量配置是否正确：

@@ -34,11 +34,11 @@ description: "Cygwin安装"
 8. 这一步很关键，选择要下载和安装的包，根据你的需要选择包，选的包越多所需的下载时间越长，单击【View】可以在分类、全部、已选之间循环切换，点击每一类前面的加号可以展开，要选中每一个包，只需单击每一行前边像循环的那个图标，会在版本号和Skip之间切换，选一个最新的版本号即可，下边的那个复选框默认即可。
 ```
 为了后面的操作，我们有必要在这里选择一些必要的包进行安装：
-(1) curl；
-(2) git* (git,git-completion, git-gui, gitk)；
-(3) libreadline6, libiconv2；
+(1) curl
+(2) git* (git, git-gui, gitk)；
+(3) libreadline7, libiconv2
 (4) vim, ctags
-(5) python;
+(5) python
 (6) lynx
 (7) wget, tar, gawk, bzip2
 ```
@@ -89,6 +89,6 @@ DESCRIPTION
 就可以随便安装相应的软件了
 ```
 apt-cyg install man cygwin-doc 
-apt-cyg install vim screenwget subversion openssh pwgen gzip bzip2 curl rsyncbash-completion lftp nc tree p7zip connect-proxy util-linux bind-utils inetutils
+apt-cyg install vim screen wget subversion openssh pwgen gzip bzip2 curl rsync bash-completion lftp nc tree p7zip connect-proxy util-linux bind-utils inetutils
 #有了apt-cyg这个神器后，后续安装就可以类似yum、apt-get那么方便了
 ```
