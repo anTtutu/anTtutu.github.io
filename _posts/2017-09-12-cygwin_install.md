@@ -84,6 +84,13 @@ DESCRIPTION
 
 #出现其他提示，可能是安装出现故障了，请删除apt-cyg包后重新下载再安装配置。  
 ```
+ps：win10可能会在执行install出现个错误提示
+```
+/usr/bin/apt-cyg:行25: $'\r': 未找到命令
+/usr/bin/apt-cyg:行121: 未预期的符号 `$'{\r'' 附近有语法错误
+'usr/bin/apt-cyg:行121: `function wget {
+由于windows上的换行符和linux上不同，因此notepad++打开apt-cyg文件，替换所有的\r为空，保存即可使用apt-cyg了
+```
 
 ### 四、安装其他组件
 就可以随便安装相应的软件了
