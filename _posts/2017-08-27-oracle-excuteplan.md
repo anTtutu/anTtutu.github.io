@@ -61,4 +61,4 @@ SQL> select * from table(dbms_xplan.display);
 ----结束
 ```
 
-## 以上都是不借助图形化的工具，截止图形化的工具后方便很多，比如:PL/SQL Developer强大的不行，或者Toad也行。
+## 以上都是不借助图形化的工具，借助图形化的工具后方便很多，比如:PL/SQL Developer强大的不行，或者Toad也行。
