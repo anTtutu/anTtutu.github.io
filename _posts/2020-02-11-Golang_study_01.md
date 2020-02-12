@@ -2,7 +2,7 @@
 layout: post
 title: Golang学习笔记 - 关键字和基础数据类型介绍
 date: 2020-02-11
-tags: golang 学习 
+tags: golang 
 description: "Golang学习笔记"
 ---
 

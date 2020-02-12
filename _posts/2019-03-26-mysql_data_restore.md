@@ -2,7 +2,7 @@
 layout: post
 title: 被同事误删表找回丢失的数据
 date: 2019-03-26
-tags: mysql 误删 binlog 
+tags: mysql 
 description: "误删表后的数据恢复"
 ---
 
