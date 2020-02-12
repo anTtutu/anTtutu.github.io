@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>linux日常小细节注意说明</title>
+  <meta name="description" content="1、清理cache```仅清除页面缓存（PageCache）sync; echo 1 &gt; /proc/sys/vm/drop_caches">
+  <meta name="author" content="Anttu">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="linux日常小细节注意说明">
+  <meta name="twitter:description" content="1、清理cache```仅清除页面缓存（PageCache）sync; echo 1 &gt; /proc/sys/vm/drop_caches">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="linux日常小细节注意说明">
+  <meta property="og:description" content="1、清理cache```仅清除页面缓存（PageCache）sync; echo 1 &gt; /proc/sys/vm/drop_caches">
+  
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/darcula.css">
+
+  <link rel="canonical" href="http://localhost:4000/2017/06/shell_use/">
+  <link rel="alternate" type="application/rss+xml" title="Anttu" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+<!-- 站点统计 -->
+  <script 
+  async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>  
+
+<!-- 百度统计 -->
+  
+  <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?f840ee1cf94942747467436f33412e09";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+  </script>
+  
+
+<!-- google 统计 -->
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-101226804-1', 'auto');
+      ga('send', 'pageview');
+  </script>
+  
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      归档
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      分类
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/messages" title="messages" class="btn-mobile-menu__icon">
+                      留言
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于
+                  </a>
+                </i>
+            
+          </nav>
+      </div>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">            
+            <a href="/#blog" title="前往 Anttu 的主页" class="blog-button">
+                <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+                <div class="info">
+                    <div class="info-back">
+                        <h2> 
+                            
+                                Anttu
+                            
+                        </h2>
+                        <p>
+                           
+                                Java | linux
+                            
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Anttu" class="blog-button">Anttu</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">个人站</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">欢迎来到我的个人站~</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                  <li class="navigation__item"><a href="/archive" title="archive">归档</a></li>
+                
+                  <li class="navigation__item"><a href="/tags" title="tags">分类</a></li>
+                
+                  <li class="navigation__item"><a href="/messages" title="messages">留言</a></li>
+                
+                  <li class="navigation__item"><a href="/about" title="about">关于</a></li>
+                
+              </ul>
+            </nav>
+          </div>          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-clear"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- latex公式支持代码 end -->
+
+<!-- 代码高亮设置 begin -->
+<link rel="stylesheet" href="/css/pygments-default.css">
+<!-- 代码高亮设置 end -->
+
+<article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">linux日常小细节注意说明</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/> 
+      <time datetime="2017-06-04 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2017-06-04</time>  
+         
+      <span id="busuanzi_container_page_pv"> | 阅读: <span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+  
+  <p style="text-align:center">
+		<font style="font-weight:bold;font-style:italic;">声明: 本博客由 <a href="http://localhost:4000">Anttu</a>原创，如需使用请在开头引用或者添加转载字样，谢谢配合。同时也仅代表个人观点。</font>
+	</p>
+
+
+  <section class="post">
+    <h3 id="1清理cache">1、清理cache</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>仅清除页面缓存（PageCache）
+sync; echo 1 &gt; /proc/sys/vm/drop_caches
+
+清除目录项和inode
+sync; echo 2 &gt; /proc/sys/vm/drop_caches
+
+清除页面缓存，目录项和inode
+sync; echo 3 &gt; /proc/sys/vm/drop_caches
+</code></pre></div></div>
+
+<h3 id="2crontab定时任务取值范围">2、crontab定时任务取值范围</h3>
+
+<p>文件/etc/crontab中每行任务的描述格式如下:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>minute hour day month dayofweek command
+
+minute - 从0到59的整数 
+hour - 从0到23的整数 
+day - 从1到31的整数 (必须是指定月份的有效日期)
+month - 从1到12的整数 (或如Jan或Feb简写的月份)
+dayofweek - 从0到7的整数，0或7用来描述周日 (或用Sun或Mon简写来表示)
+command - 需要执行的命令(可用as ls /proc &gt;&gt; /tmp/proc或 执行自定义脚本的命令)
+</code></pre></div></div>
+<p>前面五个*号代表五个数字，数字的取值范围和含义如下：
+分钟 (0-59)
+小時(0-23)
+日期(1-31)
+月份(1-12)
+星期(0-6) //0代表星期天</p>
+
+<h3 id="3删除乱码文件">3、删除乱码文件</h3>
+<p>linux下删除乱码文件名：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. ls -i 列出文件的节点ID, 如: 123456789 
+2. find ./ -inum 123456789 -print -exec rm -rf {} \; 
+</code></pre></div></div>
+<p>批量删除:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for n in 123456789 987654321;do find . -inum $n -exec rm -f {} \;;done 
+</code></pre></div></div>
+
+<h3 id="4shell中参数含义">4、shell中$参数含义</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$# 是传给脚本的参数个数
+$0 是脚本本身的名字
+$1 是传递给该shell脚本的第一个参数
+$2 是传递给该shell脚本的第二个参数
+$@ 是传给脚本的所有参数的列表
+$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个
+$$ 是脚本运行的当前进程ID号
+$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误
+</code></pre></div></div>
+
+<h3 id="5查找">5、查找</h3>
+<p>查找某类型文件下包含的字符块</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@qm app]# grep loading.gif  ./css/*.css
+
+./css/index.css:.d-loading { height:32px; text-align:left; text-indent:-999em; overflow:hidden; background:url(http://img1.qmsdstatic.com/mres/res/base/images/loading.gif) no-repeat center center; }
+
+./css/index.css:.loading {   width:100%;    height:56px;    position: fixed;    top:50%;  text-indent: 0px;       line-height:56px;    color:#fff;    padding-left:60px;    font-size:15px;    background: #000 url(http://img1.qmsdstatic.com/mres/res/base/images/loading.gif) no-repeat 40% 50%;  text-align: center;   opacity: 0.7;    z-index:9999;    -moz-border-radius:20px;    -webkit-border-radius:20px;    border-radius:20px;    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70);  }
+
+./css/index.css:.lazy { background: url("http://img1.qmsdstatic.com/mres/res/base/images/loading.gif") no-repeat center center; display: block;}
+
+[root@qm app]# 
+</code></pre></div></div>
+<p>查找文件名称</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find ./ -name "loading.gif"
+</code></pre></div></div>
+
+<h3 id="6linux系统的timezone">6、linux系统的TimeZone</h3>
+<p>使用Centos，遇到本地时间对不上，直接敲命令：date -s “2014-12-25 15:15:15”是立即生效了，但是重启后，系统时间还是原来的。
+后面经过查找资料，做个小结.
+我的Centos是安装在虚拟机上。在虚拟机有分系统时间和硬件时间。修改了其一是没有办法奏效，必须两者都更改。</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.date {查看目前本地的时间}
+2.hwclock --show {查看硬件的时间}
+3.如果硬件的时间是对不上，那就对硬件的时间进行修改、
+4.hwclock --set --date '014-12-15 15:15:15' {设置硬件时间}
+5.hwclock --hctosys {设置系统时间和硬件时间同步}
+6.clock -w {保存时钟}
+</code></pre></div></div>
+
+<h3 id="7最后在通过重启init-6-快速重启后查看系统时间是否真正生效">7.最后在通过重启，init 6 快速重启后，查看系统时间是否真正生效！！！！</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@qm-wap1 ~]# tzselect 
+Please identify a location so that time zone rules can be set correctly.
+Please select a continent or ocean.
+ 1) Africa
+ 2) Americas
+ 3) Antarctica
+ 4) Arctic Ocean
+ 5) Asia
+ 6) Atlantic Ocean
+ 7) Australia
+ 8) Europe
+ 9) Indian Ocean
+10) Pacific Ocean
+11) none - I want to specify the time zone using the Posix TZ format.
+#? 5
+Please select a country.
+ 1) Afghanistan          18) Israel            35) Palestine
+ 2) Armenia          19) Japan            36) Philippines
+ 3) Azerbaijan          20) Jordan            37) Qatar
+ 4) Bahrain          21) Kazakhstan        38) Russia
+ 5) Bangladesh          22) Korea (North)        39) Saudi Arabia
+ 6) Bhutan          23) Korea (South)        40) Singapore
+ 7) Brunei          24) Kuwait            41) Sri Lanka
+ 8) Cambodia          25) Kyrgyzstan        42) Syria
+ 9) China          26) Laos            43) Taiwan
+10) Cyprus          27) Lebanon            44) Tajikistan
+11) East Timor          28) Macau            45) Thailand
+12) Georgia          29) Malaysia            46) Turkmenistan
+13) Hong Kong          30) Mongolia            47) United Arab Emirates
+14) India          31) Myanmar (Burma)        48) Uzbekistan
+15) Indonesia          32) Nepal            49) Vietnam
+16) Iran          33) Oman            50) Yemen
+17) Iraq          34) Pakistan
+#? 9
+Please select one of the following time zone regions.
+1) Beijing Time
+2) Xinjiang Time
+#? 1
+
+The following information has been given:
+
+    China
+    Beijing Time
+
+Therefore TZ='Asia/Shanghai' will be used.
+Local time is now:    Thu Oct 20 20:34:58 CST 2016.
+Universal Time is now:    Thu Oct 20 12:34:58 UTC 2016.
+Is the above information OK?
+1) Yes
+2) No
+#? 1
+
+You can make this change permanent for yourself by appending the line
+    TZ='Asia/Shanghai'; export TZ
+to the file '.profile' in your home directory; then log out and log in again.
+
+Here is that TZ value again, this time on standard output so that you
+can use the /usr/bin/tzselect command in shell scripts:
+Asia/Shanghai
+[root@qm-wap1 ~]# 
+[root@qm-wap1 ~]# vi /etc/profile    增加    export TZ='Asia/Shanghai' 
+[root@qm-wap1 ~]# date -R Thu, 20 Oct 2016 12:41:17 +0000
+[root@qm-wap1 ~]# . /etc/profile    使环境变量生效
+[root@qm-wap1 ~]# date -R Thu, 20 Oct 2016 20:41:35 +0800
+</code></pre></div></div>
+
+<h3 id="7调整文件句柄数">7、调整文件句柄数</h3>
+<h4 id="查看进程开发的文件句柄数量">–查看进程开发的文件句柄数量</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lsof -n | awk '{print $2}' | sort | uniq -c | sort -nr | more
+
+ps -aef | grep 进程号
+</code></pre></div></div>
+
+<h4 id="修改系统的文件句柄数">–修改系统的文件句柄数</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root登录服务器
+vi /etc/security/limits.conf
+
+* hard nofile 65535 或 * - nofile 65535
+
+vi .profile  添加 ulimit -n 65535
+
+. ~/.profile
+</code></pre></div></div>
+
+<h4 id="修改系统内核参数">–修改系统内核参数</h4>
+<p>linux TIME_WAIT过多的解决方法</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>查看TCP状态：netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+查看SOCKET状态：cat /proc/net/sockstat
+TIME_WAIT状态的socket一般需要等到2msl时间后，socket才会被回收。
+修改(添加)系统内核参数:/etc/sysctl.conf
+#改系統默认的TIMEOUT时间
+net.ipv4.tcp_fin_timeout=2
+#启重用,允许将TIME-WAIT sockets重新用于新的TCP连接 默认为0表示关闭
+net.ipv4.tcp_tw_reuse=1
+#开启TCP连接中TIME-WAIT sockets的快速回收 默认为0 表示关闭
+net.ipv4.tcp_tw_recycle=1
+使新增参数生效：sysctl -p
+</code></pre></div></div>
+
+<h3 id="9监控参数">9、监控参数</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@qm ~]# vmstat 2 10
+procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 2  0 258952 17992080 309016 8748008    0    0     5     3    0    0  1  0 99  0  0    
+ 3  0 258952 17992072 309016 8747976    0    0     0    26 2895  710 17  0 83  0  0    
+ 2  0 258952 17992196 309016 8747976    0    0     0     0 2481  598 17  0 83  0  0    
+ 2  0 258952 17991824 309016 8747976    0    0     0    18 2916  684 18  0 81  0  0    
+ 2  0 258952 17992196 309016 8747976    0    0     0   132 2989  731 19  0 80  1  0    
+ 3  0 258952 17991948 309016 8747980    0    0     0    10 3630  905 22  0 78  0  0    
+ 3  0 258952 17991700 309016 8747980    0    0     0    38 3170  796 21  0 78  0  0    
+ 2  0 258952 17991204 309016 8747948    0    0     0   364 2576  685 17  0 82  1  0    
+ 2  0 258952 17991204 309016 8747948    0    0     0    16 2939  647 17  0 83  0  0    
+ 3  0 258952 17991328 309016 8747948    0    0     0     0 2768  651 17  0 83  0  0    
+[root@qm ~]#  iostat
+Linux 2.6.32-358.el6.x86_64 (qm.web10)     2016年04月26日     _x86_64_    (12 CPU)
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.91    0.00    0.03    0.06    0.00   99.00
+
+Device:            tps   Blk_read/s   Blk_wrtn/s   Blk_read   Blk_wrtn
+sda               2.51       122.19        72.73 7081933849 4215403284
+dm-0              0.58         1.76         4.39  101952970  254331472
+dm-1              7.14       120.27        68.10 6970687410 3946930248
+
+可以用iostat/iotop查看具体的io状况
+</code></pre></div></div>
+
+
+  </section>
+</article>
+
+<section>
+<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+</section>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<style type="text/css">
+	  .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+	  .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+	  .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+	  .shang_box-play img{border:none;border-width:0;}
+	  .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+	  .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+	  .shang_close-play{float:right;display:inline-block;
+	    margin-right: 10px;margin-top: 20px;
+	  }
+	  .shang_logo{display:block;text-align:center;margin:20px auto;}
+	  .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+	  .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+	  .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+	  .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+	  .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+	  .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+	  .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+	  .shang_info-play{clear:both;}
+	  .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+	</style>
+</head>
+
+<body>
+	<div class="content-play">
+	  <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏</a></p>
+	  <div class="hide_box-play"></div>
+	  <div class="shang_box-play">
+	    <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+	    <div class="shang_tit-play">
+	      <p>感谢您的支持，我会继续努力的!</p>
+	    </div>
+	    <div class="shang_payimg">
+	        <img src="/images/payimg/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+	    </div>
+	  <div class="shang_payimg">    
+	        <img src="/images/payimg/weipayimg.jpg" alt="扫码支持" title="扫一扫" />
+	    </div>
+	    <div class="pay_explain">扫码打赏，你说多少就多少</div>
+	    <div class="shang_payselect">
+	      <div class="pay_item checked" data-id="alipay">
+	        <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+	      </div>
+	      <div class="pay_item" data-id="weipay">
+	        <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+	      </div>
+	    </div>
+	    <div class="shang_info-play">
+	      <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+	    </div>
+	  </div>
+	</div>
+	<script type="text/javascript">
+	function dashangToggle(){
+	  $(".hide_box-play").fadeToggle();
+	  $(".shang_box-play").fadeToggle();
+	}
+	</script>
+
+	<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+</body>
+</html>
+
+<section>
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2017/06/redis/" data-toggle="tooltip" data-placement="top" title="Redis日常命令整理">上一篇：  <span>Redis日常命令整理</span>
+            </a>
+        </li>
+        
+        
+        <li class="next">
+            <a href="/2017/07/kali/" data-toggle="tooltip" data-placement="top" title="初识Kali-linux及其工具">下一篇：  <span>初识Kali-linux及其工具</span>
+            </a>
+        </li>
+        
+    </ul>
+
+</section>
+
+
+<section class="post-comments">
+
+  
+   		<div id="container"></div>
+			<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+			<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+			<script>
+			var gitment = new Gitment({
+			  owner: 'anTtutu',
+			  repo: 'anTtutu.github.io',
+			  oauth: {
+			    client_id: '8287a6ac1cb424dd8ff0',
+			    client_secret: '49e0050abbf6ed5581940a7a85db9465dbe29ac5',
+			  },
+			})
+			gitment.render('container')
+			</script>
+
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+        <div class = "footer_div">  
+        <nav class="cover-navigation navigation--social">
+          <ul class="navigation">
+
+          
+          <!-- Weibo -->
+          <li class="navigation__item_social">
+            <a href="http://weibo.com/5574617638" title="@5574617638 的微博" target="_blank">
+              <i class='social fa fa-weibo fa-2x'></i>
+              <span class="label">Weibo</span>
+            </a>
+          </li>
+          
+
+          
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/anTtutu" title="@anTtutu 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+          
+          
+          
+
+          
+          
+          
+          <!-- CSDN Blog -->
+          <li class="navigation__item_social">
+            <a href="http://blog.csdn.net/anttu" rel="author" title="anttu 的 CSDN Blog" target="_blank">
+              <i class='social fa fa-home fa-2x'></i>
+              <span class="label">CSDN Blog</span>
+            </a>
+          </li>
+          
+
+          <!-- RSS -->
+          <li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <i class='social fa fa-rss fa-2x'></i>
+              <span class="label">RSS</span>
+            </a>
+          </li>
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:anttu0531@gmail.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+          </ul>
+        </nav>
+
+        </div>
+
+        <div class = "footer_div">  
+           <p class="copyright text-muted">
+            Copyright &copy; Anttu 2020 Theme by leopardpan |
+            <iframe
+                style="margin-left: 2px; margin-bottom:-5px;"
+                frameborder="0" scrolling="0" width="91px" height="20px"
+                src="https://ghbtns.com/github-btn.html?user=anTtutu&repo=anTtutu.github.io&type=star&count=true" >
+            </iframe>
+            </p>
+        	<div align="right">
+    			<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+          <!-- 访问统计 -->
+          <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+          </span>
+
+        </div>
+        <div>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+  </body>
+
+</html>

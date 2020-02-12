@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Golang学习笔记 - 关键字和基础数据类型介绍</title>
+  <meta name="description" content="记录自己的Golang学习笔记">
+  <meta name="author" content="Anttu">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Golang学习笔记 - 关键字和基础数据类型介绍">
+  <meta name="twitter:description" content="记录自己的Golang学习笔记">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Golang学习笔记 - 关键字和基础数据类型介绍">
+  <meta property="og:description" content="记录自己的Golang学习笔记">
+  
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/darcula.css">
+
+  <link rel="canonical" href="http://localhost:4000/2020/02/Golang_study_01/">
+  <link rel="alternate" type="application/rss+xml" title="Anttu" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+<!-- 站点统计 -->
+  <script 
+  async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>  
+
+<!-- 百度统计 -->
+  
+  <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?f840ee1cf94942747467436f33412e09";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+  </script>
+  
+
+<!-- google 统计 -->
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-101226804-1', 'auto');
+      ga('send', 'pageview');
+  </script>
+  
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      归档
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      分类
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/messages" title="messages" class="btn-mobile-menu__icon">
+                      留言
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于
+                  </a>
+                </i>
+            
+          </nav>
+      </div>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">            
+            <a href="/#blog" title="前往 Anttu 的主页" class="blog-button">
+                <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+                <div class="info">
+                    <div class="info-back">
+                        <h2> 
+                            
+                                Anttu
+                            
+                        </h2>
+                        <p>
+                           
+                                Java | linux
+                            
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Anttu" class="blog-button">Anttu</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">个人站</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">欢迎来到我的个人站~</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                  <li class="navigation__item"><a href="/archive" title="archive">归档</a></li>
+                
+                  <li class="navigation__item"><a href="/tags" title="tags">分类</a></li>
+                
+                  <li class="navigation__item"><a href="/messages" title="messages">留言</a></li>
+                
+                  <li class="navigation__item"><a href="/about" title="about">关于</a></li>
+                
+              </ul>
+            </nav>
+          </div>          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-clear"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- latex公式支持代码 end -->
+
+<!-- 代码高亮设置 begin -->
+<link rel="stylesheet" href="/css/pygments-default.css">
+<!-- 代码高亮设置 end -->
+
+<article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">Golang学习笔记 - 关键字和基础数据类型介绍</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/> 
+      <time datetime="2020-02-11 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2020-02-11</time>  
+         
+      <span id="busuanzi_container_page_pv"> | 阅读: <span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+  
+  <p style="text-align:center">
+		<font style="font-weight:bold;font-style:italic;">声明: 本博客由 <a href="http://localhost:4000">Anttu</a>原创，如需使用请在开头引用或者添加转载字样，谢谢配合。同时也仅代表个人观点。</font>
+	</p>
+
+
+  <section class="post">
+    <h4 id="记录自己的golang学习笔记">记录自己的Golang学习笔记</h4>
+
+<h1 id="一golang关键字和介绍">一、Golang关键字和介绍</h1>
+<h2 id="25个关键字">25个关键字:</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>break     default      func     interface    select
+case      defer        go       map          struct
+chan      else         goto     package      switch
+const     fallthrough  if       range        type
+continue  for          import   return       var
+</code></pre></div></div>
+<h4 id="针对自己不太熟悉的关键字说明下虽然以后用着会熟悉但是提前了解不是坏事">针对自己不太熟悉的关键字说明下，虽然以后用着会熟悉，但是提前了解不是坏事</h4>
+<h3 id="break">break:</h3>
+<p>跳出循环</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>func main() {
+    //跳出循环
+    for i := 0; i &lt; 10; i++ {
+        fmt.Println(i)
+        if i == 6 {
+            break
+        }
+    }
+}
+
+---------------------------------
+0
+1
+2
+3
+4
+5
+6
+
+Process finished with exit code 0
+</code></pre></div></div>
+
+<h3 id="switch-case-default">switch case default:</h3>
+<p>switch分支流程控制语句</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>func main() {
+    //写法1：
+    switch i := 6; i {
+    case 1, 3, 5, 7, 9:
+        fmt.Println("奇数5")
+    case 2, 4, 6, 8, 10:
+        fmt.Println("偶数")
+    default:
+        fmt.Println("other", i)
+    }
+
+    //写法2：
+    finger := 2
+    switch finger {
+    case 1:
+        fmt.Println("大拇指")
+    case 2:
+        fmt.Println("食指")
+    case 3:
+        fmt.Println("中指")
+    case 4:
+        fmt.Println("无名指")
+    case 5:
+        fmt.Println("小指")
+    default:
+        fmt.Println("无效的数字")
+    }
+
+    //写法3：
+    age := 30
+    switch {
+    case age &lt; 24:
+        fmt.Println("学习阶段")
+    case age &gt;= 24 &amp;&amp; age &lt; 60:
+        fmt.Println("工作阶段")
+    case age &gt; 60:
+        fmt.Println("退休阶段")
+    default:
+        fmt.Println("活着真好")
+    }
+}
+
+---------------------------------
+偶数
+食指
+工作阶段
+
+Process finished with exit code 0
+</code></pre></div></div>
+
+<h3 id="func">func:</h3>
+<p>函数</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//1、带返回值的函数
+func add(a, b int) int {
+    return a + b
+}
+
+//2、多个返回值的函数
+func vals() (int, int) {
+    return 3, 7
+}
+
+//3、没返回值的函数
+func query () {
+    fmt.Println("query success.")
+}
+</code></pre></div></div>
+
+<h3 id="interface">interface:</h3>
+<p>接口</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>type Dog interface {
+    Category()
+}
+
+type Ha struct {
+    Name string
+}
+
+func (h Ha) Category() {
+    fmt.Println("狗子")
+}
+
+func main() {
+    h := Ha{"二哈"}
+    h.Category()
+    test(h)
+}
+
+func test(a Dog) {
+    fmt.Println("成功调用啦")
+}
+
+---------------------------------
+狗子
+成功调用啦
+
+Process finished with exit code 0
+</code></pre></div></div>
+
+<h3 id="select">select:</h3>
+<p>A “select” statement chooses which of a set of possible send or receive operations will proceed. It looks similar to a “switch” statement but with the cases all referring to communication operations.<br />
+一个select语句用来选择哪个case中的发送或接收操作可以被立即执行。它类似于switch语句，但是它的case涉及到channel有关的I/O操作。</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//select基本用法
+select {
+case &lt;- chan1:
+// 如果chan1成功读到数据，则进行该case处理语句
+case chan2 &lt;- 1:
+// 如果成功向chan2写入数据，则进行该case处理语句
+default:
+// 如果上面都没有成功，则进入default处理流程
+}
+</code></pre></div></div>
+
+<h3 id="defer">defer:</h3>
+<p>A “defer” statement invokes a function whose execution is deferred to the moment the surrounding function returns, either because the surrounding function executed a return statement, reached the end of its function body, or because the corresponding goroutine is panicking.<br />
+一个defer语句在函数返回、函数结束或者对应的goroutine发生panic的时候defer就会执行。<br />
+在golang中，我们使用defer语句来进行一些错误处理和收尾工作，它的作用类似java里面finally关键字的作用</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>func CopyFile(dstName, srcName string) (written int64, err error) {
+    src, err := os.Open(srcName)
+    if err != nil {
+        return
+    }
+    defer src.Close()
+
+    dst, err := os.Create(dstName)
+    if err != nil {
+        return
+    }
+    defer dst.Close()
+
+    // other codes
+    return io.Copy(dst, src)
+}
+</code></pre></div></div>
+<p>列举2个简单demo:<br />
+demo1: 理解延迟</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>func main() {
+    // demo1
+    defer fmt.Println("hello")
+    fmt.Println("world")
+}
+
+--------------------------------
+world
+hello
+
+Process finished with exit code 0
+</code></pre></div></div>
+<p>demo2: 理解defer、return、返回值的顺序<br />
+1、多个defer的执行顺序为“后进先出”；<br />
+2、defer、return、返回值三者的执行逻辑应该是：return最先执行，return负责将结果写入返回值中；接着defer开始执行一些收尾工作；最后函数携带当前返回值退出。</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>func main() {
+    // demo2
+    fmt.Println("c return:", *(c())) // 打印结果为 c return: 2
+}
+
+func c() *int {
+    var i int
+    defer func() {
+        i++
+        fmt.Println("c defer2:", i) // 打印结果为 c defer: 2
+    }()
+    defer func() {
+        i++
+        fmt.Println("c defer1:", i) // 打印结果为 c defer: 1
+    }()
+    return &amp;i
+}
+
+---------------------------------
+c defer1: 1
+c defer2: 2
+c return: 2
+
+Process finished with exit code 0
+</code></pre></div></div>
+
+<h3 id="go">go:</h3>
+<p>轻松开启高并发，一直都是golang语言引以为豪的功能点。golang通过goroutine实现高并发，而开启goroutine的钥匙正是go关键字。开启并发执行的语法格式是：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>func main() {
+    go testName()
+    fmt.Println("main method")
+    time.Sleep(time.Second)
+}
+
+func testName () {
+    fmt.Println("test method")
+}
+
+---------------------------------
+main method
+test method
+
+Process finished with exit code 0
+</code></pre></div></div>
+
+<h3 id="map">map:</h3>
+<p>map是映射关系容器为map，其内部使用散列表（hash）实现，一种无序的基于key-value的数据结构，Go语言中的map是引用类型，必须初始化才能使用。</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>func main() {
+    //1、声明map
+    scoreMap := make(map[string]int, 8)
+    scoreMap["张三"] = 90
+    scoreMap["小明"] = 100
+    fmt.Println(scoreMap)
+    fmt.Println(scoreMap["小明"])
+    fmt.Printf("type of a:%T\n", scoreMap)
+
+    //2、遍历map
+    for k, v := range scoreMap {
+        fmt.Printf("key[%s] - value[%d]\n", k, v)
+    }
+
+    //3、遍历map只要key或者value
+    for k := range scoreMap {
+        fmt.Printf("key[%s]\n", k)
+    }
+
+    for _, v := range scoreMap {
+        fmt.Printf("value[%d]\n", v)
+    }
+
+    //4、判断某个key是否存在  特殊写法：value, ok := map[key]
+    // 如果key存在ok为true,v为对应的值；不存在ok为false,v为值类型的零值
+    v, ok := scoreMap["张三"]
+    if ok {
+        fmt.Println(v)
+    } else {
+        fmt.Println("查无此人")
+    }
+
+    //5、删除某个key
+    //将小明:100从map中删除
+    delete(scoreMap, "小明")
+    for k,v := range scoreMap{
+        fmt.Printf("key[%s] - value[%d]\n", k, v)
+    }
+}
+
+---------------------------------
+map[小明:100 张三:90]
+100
+type of a:map[string]int
+
+key[张三] - value[90]
+key[小明] - value[100]
+
+key[张三]
+key[小明]
+value[90]
+value[100]
+
+90
+
+key[张三] - value[90]
+
+Process finished with exit code 0
+</code></pre></div></div>
+
+
+  </section>
+</article>
+
+<section>
+<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+</section>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<style type="text/css">
+	  .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+	  .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+	  .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+	  .shang_box-play img{border:none;border-width:0;}
+	  .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+	  .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+	  .shang_close-play{float:right;display:inline-block;
+	    margin-right: 10px;margin-top: 20px;
+	  }
+	  .shang_logo{display:block;text-align:center;margin:20px auto;}
+	  .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+	  .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+	  .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+	  .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+	  .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+	  .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+	  .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+	  .shang_info-play{clear:both;}
+	  .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+	</style>
+</head>
+
+<body>
+	<div class="content-play">
+	  <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏</a></p>
+	  <div class="hide_box-play"></div>
+	  <div class="shang_box-play">
+	    <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+	    <div class="shang_tit-play">
+	      <p>感谢您的支持，我会继续努力的!</p>
+	    </div>
+	    <div class="shang_payimg">
+	        <img src="/images/payimg/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+	    </div>
+	  <div class="shang_payimg">    
+	        <img src="/images/payimg/weipayimg.jpg" alt="扫码支持" title="扫一扫" />
+	    </div>
+	    <div class="pay_explain">扫码打赏，你说多少就多少</div>
+	    <div class="shang_payselect">
+	      <div class="pay_item checked" data-id="alipay">
+	        <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+	      </div>
+	      <div class="pay_item" data-id="weipay">
+	        <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+	      </div>
+	    </div>
+	    <div class="shang_info-play">
+	      <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+	    </div>
+	  </div>
+	</div>
+	<script type="text/javascript">
+	function dashangToggle(){
+	  $(".hide_box-play").fadeToggle();
+	  $(".shang_box-play").fadeToggle();
+	}
+	</script>
+
+	<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+</body>
+</html>
+
+<section>
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2019/03/mysql_data_restore/" data-toggle="tooltip" data-placement="top" title="被同事误删表找回丢失的数据">上一篇：  <span>被同事误删表找回丢失的数据</span>
+            </a>
+        </li>
+        
+        
+    </ul>
+
+</section>
+
+
+<section class="post-comments">
+
+  
+   		<div id="container"></div>
+			<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+			<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+			<script>
+			var gitment = new Gitment({
+			  owner: 'anTtutu',
+			  repo: 'anTtutu.github.io',
+			  oauth: {
+			    client_id: '8287a6ac1cb424dd8ff0',
+			    client_secret: '49e0050abbf6ed5581940a7a85db9465dbe29ac5',
+			  },
+			})
+			gitment.render('container')
+			</script>
+
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+        <div class = "footer_div">  
+        <nav class="cover-navigation navigation--social">
+          <ul class="navigation">
+
+          
+          <!-- Weibo -->
+          <li class="navigation__item_social">
+            <a href="http://weibo.com/5574617638" title="@5574617638 的微博" target="_blank">
+              <i class='social fa fa-weibo fa-2x'></i>
+              <span class="label">Weibo</span>
+            </a>
+          </li>
+          
+
+          
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/anTtutu" title="@anTtutu 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+          
+          
+          
+
+          
+          
+          
+          <!-- CSDN Blog -->
+          <li class="navigation__item_social">
+            <a href="http://blog.csdn.net/anttu" rel="author" title="anttu 的 CSDN Blog" target="_blank">
+              <i class='social fa fa-home fa-2x'></i>
+              <span class="label">CSDN Blog</span>
+            </a>
+          </li>
+          
+
+          <!-- RSS -->
+          <li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <i class='social fa fa-rss fa-2x'></i>
+              <span class="label">RSS</span>
+            </a>
+          </li>
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:anttu0531@gmail.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+          </ul>
+        </nav>
+
+        </div>
+
+        <div class = "footer_div">  
+           <p class="copyright text-muted">
+            Copyright &copy; Anttu 2020 Theme by leopardpan |
+            <iframe
+                style="margin-left: 2px; margin-bottom:-5px;"
+                frameborder="0" scrolling="0" width="91px" height="20px"
+                src="https://ghbtns.com/github-btn.html?user=anTtutu&repo=anTtutu.github.io&type=star&count=true" >
+            </iframe>
+            </p>
+        	<div align="right">
+    			<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+          <!-- 访问统计 -->
+          <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+          </span>
+
+        </div>
+        <div>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+  </body>
+
+</html>

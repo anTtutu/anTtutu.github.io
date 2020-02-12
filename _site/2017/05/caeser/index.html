@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>利用网上的Caeser算法写了一个唯一id生成工具</title>
+  <meta name="description" content="工作中需要用到，不需要用uuid这种太长的，但是需要有自己特色标识的，于是晚上搜集了部分算法和思路，加工出来一个唯一随机id生成类">
+  <meta name="author" content="Anttu">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="利用网上的Caeser算法写了一个唯一id生成工具">
+  <meta name="twitter:description" content="工作中需要用到，不需要用uuid这种太长的，但是需要有自己特色标识的，于是晚上搜集了部分算法和思路，加工出来一个唯一随机id生成类">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="利用网上的Caeser算法写了一个唯一id生成工具">
+  <meta property="og:description" content="工作中需要用到，不需要用uuid这种太长的，但是需要有自己特色标识的，于是晚上搜集了部分算法和思路，加工出来一个唯一随机id生成类">
+  
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/darcula.css">
+
+  <link rel="canonical" href="http://localhost:4000/2017/05/caeser/">
+  <link rel="alternate" type="application/rss+xml" title="Anttu" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+<!-- 站点统计 -->
+  <script 
+  async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>  
+
+<!-- 百度统计 -->
+  
+  <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?f840ee1cf94942747467436f33412e09";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+  </script>
+  
+
+<!-- google 统计 -->
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-101226804-1', 'auto');
+      ga('send', 'pageview');
+  </script>
+  
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      归档
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      分类
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/messages" title="messages" class="btn-mobile-menu__icon">
+                      留言
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于
+                  </a>
+                </i>
+            
+          </nav>
+      </div>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">            
+            <a href="/#blog" title="前往 Anttu 的主页" class="blog-button">
+                <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+                <div class="info">
+                    <div class="info-back">
+                        <h2> 
+                            
+                                Anttu
+                            
+                        </h2>
+                        <p>
+                           
+                                Java | linux
+                            
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Anttu" class="blog-button">Anttu</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">个人站</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">欢迎来到我的个人站~</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                  <li class="navigation__item"><a href="/archive" title="archive">归档</a></li>
+                
+                  <li class="navigation__item"><a href="/tags" title="tags">分类</a></li>
+                
+                  <li class="navigation__item"><a href="/messages" title="messages">留言</a></li>
+                
+                  <li class="navigation__item"><a href="/about" title="about">关于</a></li>
+                
+              </ul>
+            </nav>
+          </div>          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-clear"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- latex公式支持代码 end -->
+
+<!-- 代码高亮设置 begin -->
+<link rel="stylesheet" href="/css/pygments-default.css">
+<!-- 代码高亮设置 end -->
+
+<article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">利用网上的Caeser算法写了一个唯一id生成工具</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/> 
+      <time datetime="2017-05-10 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2017-05-10</time>  
+         
+      <span id="busuanzi_container_page_pv"> | 阅读: <span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+  
+  <p style="text-align:center">
+		<font style="font-weight:bold;font-style:italic;">声明: 本博客由 <a href="http://localhost:4000">Anttu</a>原创，如需使用请在开头引用或者添加转载字样，谢谢配合。同时也仅代表个人观点。</font>
+	</p>
+
+
+  <section class="post">
+    <h2 id="工作中需要用到不需要用uuid这种太长的但是需要有自己特色标识的于是晚上搜集了部分算法和思路加工出来一个唯一随机id生成类">工作中需要用到，不需要用uuid这种太长的，但是需要有自己特色标识的，于是晚上搜集了部分算法和思路，加工出来一个唯一随机id生成类</h2>
+
+<h2 id="思路改造过的caesar算法利用随机数加密生成前12位--后4位随机数经测试大量数据和实际使用验证无重复值出现可以放心使用">思路：改造过的Caesar算法，利用随机数加密，生成前12位 + 后4位随机数，经测试大量数据和实际使用验证，无重复值出现，可以放心使用</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// key  
+private static String KEYS = "0123456789qwertyuiopasdfghjklzxcvbnm";  
+  
+/** 
+ * 唯一id生成工具类，12位字母+数字 
+ *  
+ * @param id 随机整数即可 
+ */  
+public static String getRandomId(int id)  
+{  
+    String ret = null;  
+    String num = String.format("%09d", id);  
+    Random random = new Random();  
+    int key = random.nextInt(10);  
+    int seed = random.nextInt(100);  
+    Caesar caesar = new Caesar(KEYS, seed);  
+    num = caesar.encode(key, num);  
+    ret = num + String.format("%01d", key) + String.format("%02x", seed);  
+  
+    return ret;  
+}  
+  
+/** 
+ * id唯一值生成工具类&lt;br&gt; 
+ * 格式：test_xxxx，总共21位随机码  
+ * @return test_+16位随机码 
+ */  
+public static String getID()  
+{  
+    // 前缀  
+    String prefix = "test_";  
+    // 随机码  
+    String main = TestRandomUUID.getRandomId(new Random().nextInt(1000000));  
+    String end = RandomUtils.getRandomAlphamericStrNew(4);  
+      
+    return prefix + main + end;  
+}  
+
+public class RandomUtils  
+{  
+     /** 
+     * 获得特定长度的一串随机数字 
+     *  
+     * @param length  
+     * @return 
+     */  
+    public static String getRandomNumberStr(int length)  
+    {  
+        StringBuilder builder = new StringBuilder();  
+        Random random = new Random();  
+        for (int i = 0; i &lt; length; i++)  
+        {  
+            builder.append(random.nextInt(10));  
+        }  
+        return builder.toString();  
+    }  
+  
+    /** 
+     * 获得特定长度的一个随机字母数字混编字符串（所包含的字符包括0-9A-Z) 
+     *  
+     * @param length 
+     * @return 
+     */  
+    public static String getRandomAlphamericStr(int length)  
+    {  
+        StringBuilder builder = new StringBuilder();  
+        Random random = new Random();  
+        for (int i = 0; i &lt; length; i++)  
+        {  
+            int n = random.nextInt(36);  
+            if (n &lt; 10)  
+            {  
+                builder.append(n);  
+            }  
+            else  
+            {  
+                builder.append((char) (n + 55));  
+            }  
+        }  
+        return builder.toString();  
+    }  
+  
+    /** 
+     * 获得特定长度的一个随机字母数字混编字符串（所包含的字符包括0-9a-z) 
+     *  
+     * @param length 
+     * @return 
+     */  
+    public static String getRandomAlphamericStrNew(int length)  
+    {  
+        StringBuilder builder = new StringBuilder();  
+        Random random = new Random();  
+        for (int i = 0; i &lt; length; i++)  
+        {  
+            int n = random.nextInt(36);  
+            if (n &lt; 10)  
+            {  
+                builder.append(n);  
+            }  
+            else  
+            {  
+                builder.append((char) (n + 87));  
+            }  
+        }  
+        return builder.toString();  
+    }  
+  
+    /** 
+     * 获得特定长度的一个随机十六进制数字字母混编字符串(所包含的字符包括0-9A-F) 
+     *  
+     * @param length 
+     * @return 
+     */  
+    public static String getRandomHexStr(int length)  
+    {  
+        StringBuilder builder = new StringBuilder();  
+        Random random = new Random();  
+        for (int i = 0; i &lt; length; i++)  
+        {  
+            int n = random.nextInt(16);  
+            if (n &lt; 10)  
+            {  
+                builder.append(n);  
+            }  
+            else  
+            {  
+                builder.append((char) (n + 55));  
+            }  
+        }  
+        return builder.toString();  
+    }  
+  
+    public static void main(String[] args)  
+    {  
+        for (int i = 0; i &lt; 100; i++)  
+        {  
+            System.out.println(RandomUtils.getRandomAlphamericStrNew(4));  
+            // String num = String.format("%09d", new Random().nextInt(100000));  
+            // System.out.println(num);  
+        }  
+  
+    }  
+}  
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class Caesar  
+{  
+    private String table;  
+    private int seedA = 1103515245;  
+    private int seedB = 12345;  
+  
+    public Caesar(String table, int seed)  
+    {  
+        this.table = chaos(table, seed, table.length());  
+    }  
+  
+    public Caesar(String table)  
+    {  
+        this(table, 11);  
+    }  
+  
+    public Caesar()  
+    {  
+        this(11);  
+    }  
+  
+    public Caesar(int seed)  
+    {  
+        this("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", seed);  
+    }  
+  
+    public char dict(int i, boolean reverse)  
+    {  
+        int s = table.length(), index = reverse ? s - i : i;  
+        return table.charAt(index);  
+    }  
+  
+    public int dict(char c, boolean reverse)  
+    {  
+        int s = table.length(), index = table.indexOf(c);  
+        return reverse ? s - index : index;  
+    }  
+  
+    public int seed(int seed)  
+    {  
+        long temp = seed;  
+        return (int) ((temp * seedA + seedB) &amp; 0x7fffffffL);  
+    }  
+  
+    public String chaos(String data, int seed, int cnt)  
+    {  
+        StringBuffer buf = new StringBuffer(data);  
+        char tmp;  
+        int a, b, r = data.length();  
+        for (int i = 0; i &lt; cnt; i += 1)  
+        {  
+            seed = seed(seed);  
+            a = seed % r;  
+            seed = seed(seed);  
+            b = seed % r;  
+            tmp = buf.charAt(a);  
+            buf.setCharAt(a, buf.charAt(b));  
+            buf.setCharAt(b, tmp);  
+        }  
+        return buf.toString();  
+    }  
+  
+    public String crypto(boolean reverse, int key, String text)  
+    {  
+        String ret = null;  
+        StringBuilder buf = new StringBuilder();  
+        int m, s = table.length(), e = text.length();  
+  
+        for (int i = 0; i &lt; e; i += 1)  
+        {  
+            m = dict(text.charAt(i), reverse);  
+            if (m &lt; 0)  
+            {  
+                break;  
+            }  
+            m = m + key + i;  
+            buf.append(dict(m % s, reverse));  
+        }  
+        if (buf.length() == e)  
+        {  
+            ret = buf.toString();  
+        }  
+        return ret;  
+    }  
+  
+    public String encode(int key, String text)  
+    {  
+        return crypto(false, key, text);  
+  
+    }  
+  
+    public String decode(int key, String text)  
+    {  
+        return crypto(true, key, text);  
+    }  
+  
+    public static void main(String[] args)  
+    {  
+        Caesar caesar = new Caesar("0123456789qwertyuiopasdfghjklzxcvbnm");  
+        String data = caesar.encode(32, "23423");  
+        System.out.println(data);  
+        String pass = caesar.decode(32, data);  
+        System.out.println(pass);  
+  
+    }  
+}
+</code></pre></div></div>
+
+
+  </section>
+</article>
+
+<section>
+<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+</section>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<style type="text/css">
+	  .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+	  .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+	  .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+	  .shang_box-play img{border:none;border-width:0;}
+	  .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+	  .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+	  .shang_close-play{float:right;display:inline-block;
+	    margin-right: 10px;margin-top: 20px;
+	  }
+	  .shang_logo{display:block;text-align:center;margin:20px auto;}
+	  .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+	  .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+	  .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+	  .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+	  .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+	  .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+	  .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+	  .shang_info-play{clear:both;}
+	  .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+	</style>
+</head>
+
+<body>
+	<div class="content-play">
+	  <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏</a></p>
+	  <div class="hide_box-play"></div>
+	  <div class="shang_box-play">
+	    <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+	    <div class="shang_tit-play">
+	      <p>感谢您的支持，我会继续努力的!</p>
+	    </div>
+	    <div class="shang_payimg">
+	        <img src="/images/payimg/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+	    </div>
+	  <div class="shang_payimg">    
+	        <img src="/images/payimg/weipayimg.jpg" alt="扫码支持" title="扫一扫" />
+	    </div>
+	    <div class="pay_explain">扫码打赏，你说多少就多少</div>
+	    <div class="shang_payselect">
+	      <div class="pay_item checked" data-id="alipay">
+	        <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+	      </div>
+	      <div class="pay_item" data-id="weipay">
+	        <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+	      </div>
+	    </div>
+	    <div class="shang_info-play">
+	      <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+	    </div>
+	  </div>
+	</div>
+	<script type="text/javascript">
+	function dashangToggle(){
+	  $(".hide_box-play").fadeToggle();
+	  $(".shang_box-play").fadeToggle();
+	}
+	</script>
+
+	<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+</body>
+</html>
+
+<section>
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2017/05/Java_ImgCode/" data-toggle="tooltip" data-placement="top" title="Java高防OCR和机器人图形验证码">上一篇：  <span>Java高防OCR和机器人图形验证码</span>
+            </a>
+        </li>
+        
+        
+        <li class="next">
+            <a href="/2017/05/h2/" data-toggle="tooltip" data-placement="top" title="H2内存数据库">下一篇：  <span>H2内存数据库</span>
+            </a>
+        </li>
+        
+    </ul>
+
+</section>
+
+
+<section class="post-comments">
+
+  
+   		<div id="container"></div>
+			<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+			<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+			<script>
+			var gitment = new Gitment({
+			  owner: 'anTtutu',
+			  repo: 'anTtutu.github.io',
+			  oauth: {
+			    client_id: '8287a6ac1cb424dd8ff0',
+			    client_secret: '49e0050abbf6ed5581940a7a85db9465dbe29ac5',
+			  },
+			})
+			gitment.render('container')
+			</script>
+
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+        <div class = "footer_div">  
+        <nav class="cover-navigation navigation--social">
+          <ul class="navigation">
+
+          
+          <!-- Weibo -->
+          <li class="navigation__item_social">
+            <a href="http://weibo.com/5574617638" title="@5574617638 的微博" target="_blank">
+              <i class='social fa fa-weibo fa-2x'></i>
+              <span class="label">Weibo</span>
+            </a>
+          </li>
+          
+
+          
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/anTtutu" title="@anTtutu 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+          
+          
+          
+
+          
+          
+          
+          <!-- CSDN Blog -->
+          <li class="navigation__item_social">
+            <a href="http://blog.csdn.net/anttu" rel="author" title="anttu 的 CSDN Blog" target="_blank">
+              <i class='social fa fa-home fa-2x'></i>
+              <span class="label">CSDN Blog</span>
+            </a>
+          </li>
+          
+
+          <!-- RSS -->
+          <li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <i class='social fa fa-rss fa-2x'></i>
+              <span class="label">RSS</span>
+            </a>
+          </li>
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:anttu0531@gmail.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+          </ul>
+        </nav>
+
+        </div>
+
+        <div class = "footer_div">  
+           <p class="copyright text-muted">
+            Copyright &copy; Anttu 2020 Theme by leopardpan |
+            <iframe
+                style="margin-left: 2px; margin-bottom:-5px;"
+                frameborder="0" scrolling="0" width="91px" height="20px"
+                src="https://ghbtns.com/github-btn.html?user=anTtutu&repo=anTtutu.github.io&type=star&count=true" >
+            </iframe>
+            </p>
+        	<div align="right">
+    			<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+          <!-- 访问统计 -->
+          <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+          </span>
+
+        </div>
+        <div>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+  </body>
+
+</html>

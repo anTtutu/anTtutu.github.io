@@ -1,0 +1,49 @@
+I"�<p>Gitment 是作者<a href="https://imsun.net/posts/gitment-introduction/">imsun</a>实现的一款基于 GitHub Issues 的评论系统。支持在前端直接引入，不需要任何后端代码。可以在页面进行登录、查看、评论、点赞等操作，同时有完整的 Markdown / GFM 和代码高亮支持。尤为适合各种基于 GitHub Pages 的静态博客或项目页面。</p>
+
+<p>本博客评论系统已迁移至 Gitment，参考作者的介绍部署成功，不过这里补充详细点，方便新手入门。</p>
+
+<h3 id="1注册-oauth-application">1、注册 OAuth Application</h3>
+
+<p>通过地址<a href="https://github.com/settings/applications/new">传送门</a>申请配置，注册一个新的 OAuth Application，其他内容可以随意填写，但要确保填入正确的 callback URL（一般是评论页面对应的域名，如 https://anttutu.github.io）。
+<img src="/images/posts/gitment/OAuth.jpg" alt="" />
+创建成功后，你会得到一个 client ID 和一个 client secret，这个将被用于之后的用户登录。
+<img src="/images/posts/gitment/id.jpg" alt="" /></p>
+
+<h3 id="2引入-gitment">2、引入 Gitment</h3>
+
+<p>将下面的代码添加到你的页面：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="container"&gt;&lt;/div&gt;
+&lt;link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css"&gt;
+&lt;script src="https://imsun.github.io/gitment/dist/gitment.browser.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+var gitment = new Gitment({
+  id: '页面 ID', // 可选。默认为 location.href  比如我本人的就删除了
+  owner: '你的 GitHub Name',              //比如我的叫anTtutu
+  repo: '存储评论的 repo',                 //比如我的叫anTtutu.github.io
+  oauth: {
+    client_id: '你的 client ID',          //比如我的828***********
+    client_secret: '你的 client secret',  //比如我的49e************************
+  },
+})
+gitment.render('container')
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="为了灵活我在_configyml中配置好全局参数">为了灵活，我在_config.yml中配置好全局参数：</h2>
+<p><img src="/images/posts/gitment/config.jpg" alt="" /></p>
+
+<h3 id="3初始化评论">3、初始化评论</h3>
+
+<p>页面发布后，你需要访问页面并使用你的 GitHub 账号登录（请确保你的账号是第二步所填 repo 的 owner），点击初始化按钮。</p>
+
+<p>之后其他用户即可在该页面发表评论</p>
+
+<h2 id="初始化点击下初始化即可">初始化：点击下初始化即可</h2>
+<p><img src="/images/posts/gitment/init.jpg" alt="" /></p>
+
+<h2 id="正常">正常：</h2>
+<p><img src="/images/posts/gitment/comment2.jpg" alt="" /> <img src="/images/posts/gitment/comment.jpg" alt="" /></p>
+
+<h2 id="异常通常是repo或者owner配置不对请细心检测errornot-found--图1还有本地调测会出现callback不对提示error-comments-not-initialized-图2">异常：通常是repo或者owner配置不对，请细心检测Error：Not Found  图1。还有本地调测会出现callback不对提示Error: Comments Not Initialized 图2</h2>
+<p><img src="/images/posts/gitment/Error1.jpg" alt="" /> <img src="/images/posts/gitment/Error3.jpg" alt="" /></p>
+:ET

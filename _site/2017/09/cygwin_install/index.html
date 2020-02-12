@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Cygwin安装</title>
+  <meta name="description" content="cygwin是windows平台上运行的unix模拟环境，它对于学习unix/linux操作环境，或者从unix到windows的应用程序移植，或者进行某些特殊的开发工作，尤其是使用gnu工具集在windows上进行嵌入式系统开发，非常有用。">
+  <meta name="author" content="Anttu">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Cygwin安装">
+  <meta name="twitter:description" content="cygwin是windows平台上运行的unix模拟环境，它对于学习unix/linux操作环境，或者从unix到windows的应用程序移植，或者进行某些特殊的开发工作，尤其是使用gnu工具集在windows上进行嵌入式系统开发，非常有用。">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Cygwin安装">
+  <meta property="og:description" content="cygwin是windows平台上运行的unix模拟环境，它对于学习unix/linux操作环境，或者从unix到windows的应用程序移植，或者进行某些特殊的开发工作，尤其是使用gnu工具集在windows上进行嵌入式系统开发，非常有用。">
+  
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/darcula.css">
+
+  <link rel="canonical" href="http://localhost:4000/2017/09/cygwin_install/">
+  <link rel="alternate" type="application/rss+xml" title="Anttu" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+<!-- 站点统计 -->
+  <script 
+  async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>  
+
+<!-- 百度统计 -->
+  
+  <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?f840ee1cf94942747467436f33412e09";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+  </script>
+  
+
+<!-- google 统计 -->
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-101226804-1', 'auto');
+      ga('send', 'pageview');
+  </script>
+  
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      归档
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      分类
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/messages" title="messages" class="btn-mobile-menu__icon">
+                      留言
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于
+                  </a>
+                </i>
+            
+          </nav>
+      </div>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">            
+            <a href="/#blog" title="前往 Anttu 的主页" class="blog-button">
+                <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+                <div class="info">
+                    <div class="info-back">
+                        <h2> 
+                            
+                                Anttu
+                            
+                        </h2>
+                        <p>
+                           
+                                Java | linux
+                            
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Anttu" class="blog-button">Anttu</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">个人站</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">欢迎来到我的个人站~</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                  <li class="navigation__item"><a href="/archive" title="archive">归档</a></li>
+                
+                  <li class="navigation__item"><a href="/tags" title="tags">分类</a></li>
+                
+                  <li class="navigation__item"><a href="/messages" title="messages">留言</a></li>
+                
+                  <li class="navigation__item"><a href="/about" title="about">关于</a></li>
+                
+              </ul>
+            </nav>
+          </div>          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-clear"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- latex公式支持代码 end -->
+
+<!-- 代码高亮设置 begin -->
+<link rel="stylesheet" href="/css/pygments-default.css">
+<!-- 代码高亮设置 end -->
+
+<article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">Cygwin安装</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/> 
+      <time datetime="2017-09-12 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2017-09-12</time>  
+         
+      <span id="busuanzi_container_page_pv"> | 阅读: <span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+  
+  <p style="text-align:center">
+		<font style="font-weight:bold;font-style:italic;">声明: 本博客由 <a href="http://localhost:4000">Anttu</a>原创，如需使用请在开头引用或者添加转载字样，谢谢配合。同时也仅代表个人观点。</font>
+	</p>
+
+
+  <section class="post">
+    <h4 id="cygwin是windows平台上运行的unix模拟环境它对于学习unixlinux操作环境或者从unix到windows的应用程序移植或者进行某些特殊的开发工作尤其是使用gnu工具集在windows上进行嵌入式系统开发非常有用">cygwin是windows平台上运行的unix模拟环境，它对于学习unix/linux操作环境，或者从unix到windows的应用程序移植，或者进行某些特殊的开发工作，尤其是使用gnu工具集在windows上进行嵌入式系统开发，非常有用。</h4>
+
+<h4 id="cygwin相对安装虚拟机vps是轻量级的因此在条件不足情况下练习学习shell等都是很好的选择">cygwin相对安装虚拟机、vps是轻量级的，因此在条件不足情况下，练习、学习shell等都是很好的选择。</h4>
+
+<h3 id="一cygwin的安装">一、Cygwin的安装</h3>
+<ol>
+  <li>
+    <p>下载Cygwin，这个可以到这里下载 ，至于使用32位的还是64位的版本可以根据自己的系统而定，打开下载好的setup-x86.exe（以64bit-windws系统为例） 。</p>
+  </li>
+  <li>
+    <p>我这里选择的是2.876（64位）版本
+<img src="/images/posts/cygwin/install1.jpg" alt="" /></p>
+  </li>
+  <li>
+    <p>第一个选项是在线安装，第二个选项是只下载不安装（然后手动安装），第三个指你已经下载了安装包，通过已经下载的本地安装包安装，若是第一次安装，选中第一个即可（默认），【下一步】
+<img src="/images/posts/cygwin/install2.jpg" alt="" /></p>
+  </li>
+  <li>
+    <p>指定unix系统的根目录，以及限定那些用户可以访问这个目录。安装目录别为中文名,以免出错,接入网站如果不行,提示错误,那就重新来换一个接入网站，建议这个路径要指定在空间比较大的硬盘，在后面的开发中，这个目录是工作目录，随着积累会越来越大
+<img src="/images/posts/cygwin/install3.jpg" alt="" /></p>
+  </li>
+  <li>
+    <p>指定包的下载目录，安装完成以后可删除，下面的单选框默认即可，【下一步】
+<img src="/images/posts/cygwin/install4.jpg" alt="" /></p>
+  </li>
+  <li>
+    <p>选择连接方式，如果用的是外网，选择第一个（默认）即可，如果使用的是公司网或者其他需要代理的内网，记得使用相应的代理，一般如果默认浏览器有设代理，选择第二个就好，如果默认浏览器没有设代理，则使用第三项自己配置代理，【下一步】
+<img src="/images/posts/cygwin/install5.jpg" alt="" /></p>
+  </li>
+  <li>
+    <p>选择一个镜像站点，任选一个即可，按Ctrl键可选中多个。这里需要注意一下，对于国内的用户，强烈建议使用国内的镜像，这样可以在后面的下载过程中有更快的速度，比如我这里使用的是http://mirrors.163.com/cygwin/，【下一步】
+<img src="/images/posts/cygwin/install6.jpg" alt="" /></p>
+  </li>
+  <li>这一步很关键，选择要下载和安装的包，根据你的需要选择包，选的包越多所需的下载时间越长，单击【View】可以在分类、全部、已选之间循环切换，点击每一类前面的加号可以展开，要选中每一个包，只需单击每一行前边像循环的那个图标，会在版本号和Skip之间切换，选一个最新的版本号即可，下边的那个复选框默认即可。
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>为了后面的操作，我们有必要在这里选择一些必要的包进行安装：
+(1) curl
+(2) git* (git, git-gui, gitk)；
+(3) libreadline7, libiconv2
+(4) vim, ctags
+(5) python
+(6) lynx
+(7) wget, tar, gawk, bzip2
+</code></pre></div>    </div>
+    <p>当然其中有一些是已经就默认勾选的，在选择的时候只要在search里面输入对应名称，它就会自动过滤出你要安装的包了，然后将循环Skip切换成你需要安装的版本就好了，一定要记得在搜索的时候不需要按Enter, 不然就直接跳到下一步了。
+<img src="/images/posts/cygwin/install7.jpg" alt="" /></p>
+  </li>
+  <li>选好后【下一步】下图，会显示你选择的安装包：
+<img src="/images/posts/cygwin/install8.jpg" alt="" />
+单击下一步开始安装，最后会让你让你选择是否生成快捷方式，然后OK了！
+以后要安装新的安装包，或是更新，还是通过这个过程，运行setup.exe选择安装包即可。</li>
+</ol>
+
+<h3 id="二cygwin的配置">二、Cygwin的配置</h3>
+<p>打开Cygwin终端,右击打开 Options…选项
+Text可以设置字体的一些属性,如大小、编码,Locale 选择C, Character set 选择 UTF-8,可以避免中文显示乱码</p>
+
+<h3 id="三安装apt-cyg">三、安装apt-cyg</h3>
+<p>这时就可以打开Cygwin64 Terminal，开始像正常linux终端一样在windows下工作了，但是现在还是比较粗糙，缺少很多我们必要的比如一些依赖库和命令，而且我们比较熟悉的apt-get也没有，在Cygwin中，我们使用apt-cyg来下载和管理安装包，下面我们来介绍怎么安装它：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/transcode-open/apt-cyg.git
+cd apt-cyg
+install apt-cyg /bin
+
+#检测是否安装成功
+apt-cyg --help
+
+#出现如下帮助信息，表示安装成功
+$ apt-cyg --help
+NAME
+  apt-cyg - package manager utility
+
+SYNOPSIS
+  apt-cyg [operation] [options] [targets]
+
+DESCRIPTION
+  apt-cyg is a package management utility that tracks installed packages on a
+  Cygwin system. Invoking apt-cyg involves specifying an operation with any
+  potential options and targets to operate on. A target is usually a package
+  name, file name, URL, or a search string. Targets can be provided as command
+  line arguments.
+  ......
+  ......
+  ......
+
+#出现其他提示，可能是安装出现故障了，请删除apt-cyg包后重新下载再安装配置。  
+</code></pre></div></div>
+<p>ps：win10可能会在执行install出现个错误提示</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/apt-cyg:行25: $'\r': 未找到命令
+/usr/bin/apt-cyg:行121: 未预期的符号 `$'{\r'' 附近有语法错误
+'usr/bin/apt-cyg:行121: `function wget {
+由于windows上的换行符和linux上不同，因此notepad++打开apt-cyg文件，替换所有的\r为空，保存即可使用apt-cyg了
+</code></pre></div></div>
+
+<h3 id="四安装其他组件">四、安装其他组件</h3>
+<p>就可以随便安装相应的软件了</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-cyg install man cygwin-doc 
+apt-cyg install vim screen wget subversion openssh pwgen gzip bzip2 curl rsync bash-completion lftp nc tree p7zip connect-proxy util-linux bind-utils inetutils
+#有了apt-cyg这个神器后，后续安装就可以类似yum、apt-get那么方便了
+</code></pre></div></div>
+
+
+  </section>
+</article>
+
+<section>
+<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+</section>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<style type="text/css">
+	  .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+	  .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+	  .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+	  .shang_box-play img{border:none;border-width:0;}
+	  .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+	  .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+	  .shang_close-play{float:right;display:inline-block;
+	    margin-right: 10px;margin-top: 20px;
+	  }
+	  .shang_logo{display:block;text-align:center;margin:20px auto;}
+	  .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+	  .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+	  .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+	  .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+	  .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+	  .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+	  .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+	  .shang_info-play{clear:both;}
+	  .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+	</style>
+</head>
+
+<body>
+	<div class="content-play">
+	  <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏</a></p>
+	  <div class="hide_box-play"></div>
+	  <div class="shang_box-play">
+	    <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+	    <div class="shang_tit-play">
+	      <p>感谢您的支持，我会继续努力的!</p>
+	    </div>
+	    <div class="shang_payimg">
+	        <img src="/images/payimg/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+	    </div>
+	  <div class="shang_payimg">    
+	        <img src="/images/payimg/weipayimg.jpg" alt="扫码支持" title="扫一扫" />
+	    </div>
+	    <div class="pay_explain">扫码打赏，你说多少就多少</div>
+	    <div class="shang_payselect">
+	      <div class="pay_item checked" data-id="alipay">
+	        <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+	      </div>
+	      <div class="pay_item" data-id="weipay">
+	        <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+	      </div>
+	    </div>
+	    <div class="shang_info-play">
+	      <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+	    </div>
+	  </div>
+	</div>
+	<script type="text/javascript">
+	function dashangToggle(){
+	  $(".hide_box-play").fadeToggle();
+	  $(".shang_box-play").fadeToggle();
+	}
+	</script>
+
+	<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+</body>
+</html>
+
+<section>
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2017/08/oracle-excuteplan/" data-toggle="tooltip" data-placement="top" title="oracle知识梳理-执行计划分析">上一篇：  <span>oracle知识梳理-执行计划分析</span>
+            </a>
+        </li>
+        
+        
+        <li class="next">
+            <a href="/2019/03/jdkbug/" data-toggle="tooltip" data-placement="top" title="JDK1.8.0.161版本bug定位">下一篇：  <span>JDK1.8.0.161版本bug定位</span>
+            </a>
+        </li>
+        
+    </ul>
+
+</section>
+
+
+<section class="post-comments">
+
+  
+   		<div id="container"></div>
+			<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+			<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+			<script>
+			var gitment = new Gitment({
+			  owner: 'anTtutu',
+			  repo: 'anTtutu.github.io',
+			  oauth: {
+			    client_id: '8287a6ac1cb424dd8ff0',
+			    client_secret: '49e0050abbf6ed5581940a7a85db9465dbe29ac5',
+			  },
+			})
+			gitment.render('container')
+			</script>
+
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+        <div class = "footer_div">  
+        <nav class="cover-navigation navigation--social">
+          <ul class="navigation">
+
+          
+          <!-- Weibo -->
+          <li class="navigation__item_social">
+            <a href="http://weibo.com/5574617638" title="@5574617638 的微博" target="_blank">
+              <i class='social fa fa-weibo fa-2x'></i>
+              <span class="label">Weibo</span>
+            </a>
+          </li>
+          
+
+          
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/anTtutu" title="@anTtutu 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+          
+          
+          
+
+          
+          
+          
+          <!-- CSDN Blog -->
+          <li class="navigation__item_social">
+            <a href="http://blog.csdn.net/anttu" rel="author" title="anttu 的 CSDN Blog" target="_blank">
+              <i class='social fa fa-home fa-2x'></i>
+              <span class="label">CSDN Blog</span>
+            </a>
+          </li>
+          
+
+          <!-- RSS -->
+          <li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <i class='social fa fa-rss fa-2x'></i>
+              <span class="label">RSS</span>
+            </a>
+          </li>
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:anttu0531@gmail.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+          </ul>
+        </nav>
+
+        </div>
+
+        <div class = "footer_div">  
+           <p class="copyright text-muted">
+            Copyright &copy; Anttu 2020 Theme by leopardpan |
+            <iframe
+                style="margin-left: 2px; margin-bottom:-5px;"
+                frameborder="0" scrolling="0" width="91px" height="20px"
+                src="https://ghbtns.com/github-btn.html?user=anTtutu&repo=anTtutu.github.io&type=star&count=true" >
+            </iframe>
+            </p>
+        	<div align="right">
+    			<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+          <!-- 访问统计 -->
+          <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+          </span>
+
+        </div>
+        <div>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+  </body>
+
+</html>

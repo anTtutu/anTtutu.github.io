@@ -1,0 +1,101 @@
+I"�<h4 id="记录自己的golang学习笔记">记录自己的Golang学习笔记</h4>
+
+<h1 id="一golang关键字和介绍">一、Golang关键字和介绍</h1>
+<h2 id="25个关键字">25个关键字:</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>break     default      func     interface    select
+case      defer        go       map          struct
+chan      else         goto     package      switch
+const     fallthrough  if       range        type
+continue  for          import   return       var
+</code></pre></div></div>
+<h4 id="针对自己不太熟悉的关键字说明下虽然以后用着会熟悉但是提前了解不是坏事">针对自己不太熟悉的关键字说明下，虽然以后用着会熟悉，但是提前了解不是坏事</h4>
+<h3 id="break">break:</h3>
+<p>跳出循环</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>func main() {
+	for i := 0; i &lt; 10; i++ {
+		fmt.Println(i)
+		if i == 6 {
+			break
+		}
+	}
+}
+</code></pre></div></div>
+
+<h3 id="select">select:</h3>
+<p>A “select” statement chooses which of a set of possible send or receive operations will proceed. It looks similar to a “switch” statement but with the cases all referring to communication operations.<br />
+一个select语句用来选择哪个case中的发送或接收操作可以被立即执行。它类似于switch语句，但是它的case涉及到channel有关的I/O操作。</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//select基本用法
+select {
+case &lt;- chan1:
+// 如果chan1成功读到数据，则进行该case处理语句
+case chan2 &lt;- 1:
+// 如果成功向chan2写入数据，则进行该case处理语句
+default:
+// 如果上面都没有成功，则进入default处理流程
+}
+</code></pre></div></div>
+
+<h3 id="defer">defer:</h3>
+<p>A “defer” statement invokes a function whose execution is deferred to the moment the surrounding function returns, either because the surrounding function executed a return statement, reached the end of its function body, or because the corresponding goroutine is panicking.<br />
+一个defer语句在函数返回、函数结束或者对应的goroutine发生panic的时候defer就会执行。<br />
+在golang中，我们使用defer语句来进行一些错误处理和收尾工作，它的作用类似java里面finally关键字的作用</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>func CopyFile(dstName, srcName string) (written int64, err error) {
+    src, err := os.Open(srcName)
+    if err != nil {
+        return
+    }
+    defer src.Close()
+
+    dst, err := os.Create(dstName)
+    if err != nil {
+        return
+    }
+    defer dst.Close()
+
+    // other codes
+    return io.Copy(dst, src)
+}
+</code></pre></div></div>
+<p>列举2个简单demo:<br />
+demo1: 理解延迟</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>func main() {
+	// demo1
+	defer fmt.Println("hello")
+	fmt.Println("world")
+}
+
+--------------------------------
+world
+hello
+
+Process finished with exit code 0
+</code></pre></div></div>
+<p>demo2: 理解defer、return、返回值的顺序<br />
+1、多个defer的执行顺序为“后进先出”；<br />
+2、defer、return、返回值三者的执行逻辑应该是：return最先执行，return负责将结果写入返回值中；接着defer开始执行一些收尾工作；最后函数携带当前返回值退出。</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>func main() {
+	// demo2
+	fmt.Println("c return:", *(c())) // 打印结果为 c return: 2
+}
+
+func c() *int {
+	var i int
+	defer func() {
+		i++
+		fmt.Println("c defer2:", i) // 打印结果为 c defer: 2
+	}()
+	defer func() {
+		i++
+		fmt.Println("c defer1:", i) // 打印结果为 c defer: 1
+	}()
+	return &amp;i
+}
+
+---------------------------------
+c defer1: 1
+c defer2: 2
+c return: 2
+
+Process finished with exit code 0
+</code></pre></div></div>
+:ET
