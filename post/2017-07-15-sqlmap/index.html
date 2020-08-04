@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>SQLMap初学使用和参数讲解 | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="SQLMap初学使用和参数讲解 - Anttu&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2017-07-15T21:46:20&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2017-07-15T21:46:20&#43;08:00'>
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
+    <meta name="description" content="SQLMap初学使用和参数讲解">
+        
+    <meta name="author" content="Anttu">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2017-07-15-sqlmap/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://anTtutu.github.io/">
+                        Anttu&#39;s Blog
+                    </a>
+                
+                <p class="description">一位Java开发者，喜欢研究技术，同时也在学习Golang和Python中，对服务器、Linux使用比较熟悉。欢迎添加技术交流QQ群：655158296</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://anTtutu.github.io/">首页</a>
+                    
+                    <a  href="https://anTtutu.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://anTtutu.github.io/tags/" title="分类">分类</a>
+                    
+                    <a  href="https://anTtutu.github.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#测试web系统的sql注入问题学着使用神器sqlmap下载了最新版本">测试web系统的sql注入问题，学着使用神器sqlmap，下载了最新版本:</a></li>
+    <li><a href="#以某自己搭建的注入点为例记录下加搜集的参数含义">以某自己搭建的注入点为例：记录下加搜集的参数含义</a></li>
+    <li><a href="#参数-u或者--url">参数：-u或者&ndash;url</a></li>
+    <li><a href="#参数--level">参数：&ndash;level</a></li>
+    <li><a href="#参数--risk">参数：&ndash;risk</a></li>
+    <li><a href="#参数--tamper">参数：&ndash;tamper</a></li>
+    <li><a href="#参数--dbms">参数：&ndash;dbms</a></li>
+    <li><a href="#参数--os">参数：&ndash;os</a></li>
+    <li><a href="#参数-current-user">参数：-current-user</a></li>
+    <li><a href="#参数--current-db">参数：&ndash;current-db</a></li>
+    <li><a href="#参数--is-dba">参数：&ndash;is-dba</a></li>
+    <li><a href="#参数--users">参数：&ndash;users</a></li>
+    <li><a href="#参数--tables--exclude-sysdbs-d">参数：&ndash;tables,&ndash;exclude-sysdbs,-D</a></li>
+    <li><a href="#参数--columns-c-t-d">参数：&ndash;columns,-C,-T,-D</a></li>
+    <li><a href="#参数--dump-c-t-d--start--stop--first--last">参数：&ndash;dump,-C,-T,-D,&ndash;start,&ndash;stop,&ndash;first,&ndash;last</a></li>
+    <li><a href="#参数--sql-query--sql-shell">参数：&ndash;sql-query,&ndash;sql-shell</a></li>
+    <li><a href="#参数--cookie--load-cookies--drop-set-cookie">参数：&ndash;cookie,&ndash;load-cookies,&ndash;drop-set-cookie</a></li>
+    <li><a href="#参数--user-agent--random-agent">参数：&ndash;user-agent,&ndash;random-agent</a></li>
+    <li><a href="#参数--os-cmd--os-shell">参数：&ndash;os-cmd,&ndash;os-shell</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">SQLMap初学使用和参数讲解</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2017年7月15日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://anTtutu.github.io/categories/sqlmap'>sqlmap</a></span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h2 id="测试web系统的sql注入问题学着使用神器sqlmap下载了最新版本">测试web系统的sql注入问题，学着使用神器sqlmap，下载了最新版本:</h2>
+<p>Git地址：https://github.com/sqlmapproject/sqlmap</p>
+<p>前提条件设置好python2.7和环境变量，python3.6也支持只是2.7当前工具更多</p>
+<h2 id="以某自己搭建的注入点为例记录下加搜集的参数含义">以某自己搭建的注入点为例：记录下加搜集的参数含义</h2>
+<h2 id="参数-u或者--url">参数：-u或者&ndash;url</h2>
+<p>格式：http(s)://targeturl[:port]/[…]</p>
+<p>例如：Python sqlmap.py -u &ldquo;<a href="http://www.target.com/vuln.PHP?id=1%22">http://www.target.com/vuln.PHP?id=1&quot;</a> -f &ndash;banner &ndash;dbs &ndash;users</p>
+<h2 id="参数--level">参数：&ndash;level</h2>
+<p>共有五个等级，默认为1，sqlmap使用的payload可以在xml/payloads.xml中看到，你也可以根据相应的格式添加自己的payload。</p>
+<p>这个参数不仅影响使用哪些payload同时也会影响测试的注入点，GET和POST的数据都会测试，HTTP Cookie在level为2的时候就会测试，HTTP User-Agent/Referer头在level为3的时候就会测试。</p>
+<p>总之在你不确定哪个payload或者参数为注入点的时候，为了保证全面性，建议使用高的level值。</p>
+<h2 id="参数--risk">参数：&ndash;risk</h2>
+<p>共有四个风险等级，默认是1会测试大部分的测试语句，2会增加基于事件的测试语句，3会增加OR语句的SQL注入测试。</p>
+<p>在有些时候，例如在UPDATE的语句中，注入一个OR的测试语句，可能导致更新的整个表，可能造成很大的风险。</p>
+<p>测试的语句同样可以在xml/payloads.xml中找到，你也可以自行添加payload。</p>
+<h2 id="参数--tamper">参数：&ndash;tamper</h2>
+<p>sqlmap除了使用CHAR()函数来防止出现单引号之外没有对注入的数据修改，你可以使用&ndash;tamper参数对数据做修改来绕过WAF等设备。</p>
+<h2 id="参数--dbms">参数：&ndash;dbms</h2>
+<p>默认情况系sqlmap会自动的探测web应用后端的数据库是什么，sqlmap支持的数据库有：</p>
+<p>MySQL、Oracle、PostgreSQL、Microsoft SQL Server、Microsoft Access、SQLite、Firebird、Sybase、SAP MaxDB、DB2</p>
+<h2 id="参数--os">参数：&ndash;os</h2>
+<p>默认情况下sqlmap会自动的探测数据库服务器系统，支持的系统有：Linux、Windows。</p>
+<h2 id="参数-current-user">参数：-current-user</h2>
+<p>在大多数据库中可以获取到管理数据的用户。</p>
+<h2 id="参数--current-db">参数：&ndash;current-db</h2>
+<p>返还当前连接的数据库。</p>
+<h2 id="参数--is-dba">参数：&ndash;is-dba</h2>
+<p>判断当前的用户是否为管理，是的话会返回True。</p>
+<h2 id="参数--users">参数：&ndash;users</h2>
+<p>当前用户有权限读取包含所有用户的表的权限时，就可以列出所有管理用户。</p>
+<h2 id="参数--tables--exclude-sysdbs-d">参数：&ndash;tables,&ndash;exclude-sysdbs,-D</h2>
+<p>当前用户有权限读取包含所有数据库表信息的表中的时候，即可列出一个特定数据的所有表。</p>
+<p>如果你不提供-D参数来列指定的一个数据的时候，sqlmap会列出数据库所有库的所有表。</p>
+<p>&ndash;exclude-sysdbs参数是指包含了所有的系统数据库。</p>
+<p>需要注意的是在Oracle中你需要提供的是TABLESPACE_NAME而不是数据库名称</p>
+<h2 id="参数--columns-c-t-d">参数：&ndash;columns,-C,-T,-D</h2>
+<p>当前用户有权限读取包含所有数据库表信息的表中的时候，即可列出指定数据库表中的字段，同时也会列出字段的数据类型。</p>
+<p>如果没有使用-D参数指定数据库时，默认会使用当前数据库。</p>
+<h2 id="参数--dump-c-t-d--start--stop--first--last">参数：&ndash;dump,-C,-T,-D,&ndash;start,&ndash;stop,&ndash;first,&ndash;last</h2>
+<p>如果当前管理员有权限读取数据库其中的一个表的话，那么就能获取真个表的所有内容。</p>
+<p>使用-D,-T参数指定想要获取哪个库的哪个表，不适用-D参数时，默认使用当前库。</p>
+<h2 id="参数--sql-query--sql-shell">参数：&ndash;sql-query,&ndash;sql-shell</h2>
+<p>sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语句。</p>
+<p>如果是SELECT查询语句，sqlap将会输出结果。如果是通过SQL注入执行其他语句，需要测试是否支持多语句执行SQL语句。</p>
+<h2 id="参数--cookie--load-cookies--drop-set-cookie">参数：&ndash;cookie,&ndash;load-cookies,&ndash;drop-set-cookie</h2>
+<p>这个参数在以下两个方面很有用：</p>
+<p>1、web应用需要登陆的时候。</p>
+<p>2、你想要在这些头参数中测试SQL注入时。</p>
+<p>可以通过抓包把cookie获取到，复制出来，然后加到&ndash;cookie参数里。</p>
+<p>在HTTP请求中，遇到Set-Cookie的话，sqlmap会自动获取并且在以后的请求中加入，并且会尝试SQL注入。</p>
+<p>如果你不想接受Set-Cookie可以使用&ndash;drop-set-cookie参数来拒接。</p>
+<p>当你使用&ndash;cookie参数时，当返回一个Set-Cookie头的时候，sqlmap会询问你用哪个cookie来继续接下来的请求。当&ndash;level的参数设定为2或者2以上的时候，sqlmap会尝试注入Cookie参数。</p>
+<h2 id="参数--user-agent--random-agent">参数：&ndash;user-agent,&ndash;random-agent</h2>
+<p>默认情况下sqlmap的HTTP请求头中User-Agent值是：</p>
+<p>sqlmap/1.0-dev-xxxxxxx (<a href="http://sqlmap.org">http://sqlmap.org</a>)
+可以使用&ndash;user-anget参数来修改，同时也可以使用&ndash;random-agnet参数来随机的从./txt/user-agents.txt中获取。</p>
+<p>当&ndash;level参数设定为3或者3以上的时候，会尝试对User-Angent进行注入</p>
+<h2 id="参数--os-cmd--os-shell">参数：&ndash;os-cmd,&ndash;os-shell</h2>
+<p>当数据库为MySQL，PostgreSQL或Microsoft SQL Server，并且当前用户有权限使用特定的函数。</p>
+<p>在mysql、PostgreSQL，sqlmap上传一个二进制库，包含用户自定义的函数，sys_exec()和sys_eval()。</p>
+<p>那么他创建的这两个函数可以执行系统命令。在Microsoft SQL Server，sqlmap将会使用xp_cmdshell存储过程，如果被禁（在Microsoft SQL Server 2005及以上版本默认禁制），sqlmap会重新启用它，如果不存在，会自动创建</p>
+
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2017-07-15-sqlmap/">https://anTtutu.github.io/post/2017-07-15-sqlmap/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/2017-07-15-kali/">初识Kali-linux及其工具</a></li>
+        
+        <li><a href="/post/2017-06-04-redis/">Redis日常命令整理</a></li>
+        
+        <li><a href="/post/2017-06-04-jrebel/">eclipse之jrebel热部署插件</a></li>
+        
+        <li><a href="/post/2017-06-04-shell_use/">linux日常小细节注意说明</a></li>
+        
+        <li><a href="/post/2017-06-04-browser/">市面上所有浏览器内核或UserAgent参数</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='https://anTtutu.github.io/tags/sqlmap'>sqlmap</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "anTtutu/anTtutu.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://anTtutu.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://anTtutu.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2020-02-13-hugo-blog/" title="改用最快的静态blog-hugo">改用最快的静态blog-hugo</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2020-02-11-Golang_study_01/" title="Golang学习笔记01 - 关键字和基础数据类型介绍">Golang学习笔记01 - 关键字和基础数据类型介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2020-01-07-redis_batch_import/" title="30W数据批量导入redis集群">30W数据批量导入redis集群</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2019-12-21-mysql_expansion/" title="mysql集群在线无损扩容">mysql集群在线无损扩容</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2019-03-26-mysql_data_restore/" title="被同事误删表找回丢失的数据">被同事误删表找回丢失的数据</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2019-03-11-jdkbug/" title="JDK1.8.0.161版本bug定位">JDK1.8.0.161版本bug定位</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2017-09-12-cygwin_install/" title="Cygwin安装">Cygwin安装</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2017-08-27-java_use_note/" title="java小日常记录-不定期更新">java小日常记录-不定期更新</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2017-08-27-oracle-db/" title="oracle知识梳理-awr\ash\addm日志开启并提取">oracle知识梳理-awr\ash\addm日志开启并提取</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2017-08-27-oracle-excuteplan/" title="oracle知识梳理-执行计划分析">oracle知识梳理-执行计划分析</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li><a href="https://anTtutu.github.io/categories/JDK%E7%9A%84bug/">JDK的bug (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/about/">about (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/golang/">golang (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/java/">java (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mysql/">mysql (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/redis/">redis (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/reids/">reids (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/shell/">shell (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://anTtutu.github.io/tags/JDK%E7%9A%84bug/">JDK的bug</a>
+    
+    <a href="https://anTtutu.github.io/tags/about/">about</a>
+    
+    <a href="https://anTtutu.github.io/tags/blog/">blog</a>
+    
+    <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
+    
+    <a href="https://anTtutu.github.io/tags/golang/">golang</a>
+    
+    <a href="https://anTtutu.github.io/tags/h2/">h2</a>
+    
+    <a href="https://anTtutu.github.io/tags/hugo/">hugo</a>
+    
+    <a href="https://anTtutu.github.io/tags/java/">java</a>
+    
+    <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
+    
+    <a href="https://anTtutu.github.io/tags/js/">js</a>
+    
+    <a href="https://anTtutu.github.io/tags/linux/">linux</a>
+    
+    <a href="https://anTtutu.github.io/tags/log4j/">log4j</a>
+    
+    <a href="https://anTtutu.github.io/tags/mysql/">mysql</a>
+    
+    <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
+    
+    <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/shell/">shell</a>
+    
+    <a href="https://anTtutu.github.io/tags/sqlmap/">sqlmap</a>
+    
+    <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://anTtutu.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+    <div class="container">
+        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/flysnow-org/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+
+</html>

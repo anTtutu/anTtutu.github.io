@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>linux日常小细节注意说明 | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="linux日常小细节注意说明 - Anttu&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2017-06-04T21:46:20&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2017-06-04T21:46:20&#43;08:00'>
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
+    <meta name="description" content="linux日常小细节注意说明">
+        
+    <meta name="author" content="Anttu">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2017-06-04-shell_use/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://anTtutu.github.io/">
+                        Anttu&#39;s Blog
+                    </a>
+                
+                <p class="description">一位Java开发者，喜欢研究技术，同时也在学习Golang和Python中，对服务器、Linux使用比较熟悉。欢迎添加技术交流QQ群：655158296</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://anTtutu.github.io/">首页</a>
+                    
+                    <a  href="https://anTtutu.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://anTtutu.github.io/tags/" title="分类">分类</a>
+                    
+                    <a  href="https://anTtutu.github.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1清理cache">1、清理cache</a></li>
+        <li><a href="#2crontab定时任务取值范围">2、crontab定时任务取值范围</a></li>
+        <li><a href="#3删除乱码文件">3、删除乱码文件</a></li>
+        <li><a href="#4shell中参数含义">4、shell中$参数含义</a></li>
+        <li><a href="#5查找">5、查找</a></li>
+        <li><a href="#6linux系统的timezone">6、linux系统的TimeZone</a></li>
+        <li><a href="#7最后在通过重启init-6-快速重启后查看系统时间是否真正生效">7.最后在通过重启，init 6 快速重启后，查看系统时间是否真正生效！！！！</a></li>
+        <li><a href="#7调整文件句柄数">7、调整文件句柄数</a></li>
+        <li><a href="#9监控参数">9、监控参数</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">linux日常小细节注意说明</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2017年6月4日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://anTtutu.github.io/categories/shell'>shell</a></span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h3 id="1清理cache">1、清理cache</h3>
+<pre><code>仅清除页面缓存（PageCache）
+sync; echo 1 &gt; /proc/sys/vm/drop_caches
+
+清除目录项和inode
+sync; echo 2 &gt; /proc/sys/vm/drop_caches
+
+清除页面缓存，目录项和inode
+sync; echo 3 &gt; /proc/sys/vm/drop_caches
+</code></pre><h3 id="2crontab定时任务取值范围">2、crontab定时任务取值范围</h3>
+<p>文件/etc/crontab中每行任务的描述格式如下:</p>
+<pre><code>minute hour day month dayofweek command
+
+minute - 从0到59的整数 
+hour - 从0到23的整数 
+day - 从1到31的整数 (必须是指定月份的有效日期)
+month - 从1到12的整数 (或如Jan或Feb简写的月份)
+dayofweek - 从0到7的整数，0或7用来描述周日 (或用Sun或Mon简写来表示)
+command - 需要执行的命令(可用as ls /proc &gt;&gt; /tmp/proc或 执行自定义脚本的命令)
+</code></pre><p>前面五个*号代表五个数字，数字的取值范围和含义如下：
+分钟 (0-59)
+小時(0-23)
+日期(1-31)
+月份(1-12)
+星期(0-6) //0代表星期天</p>
+<h3 id="3删除乱码文件">3、删除乱码文件</h3>
+<p>linux下删除乱码文件名：</p>
+<pre><code>1. ls -i 列出文件的节点ID, 如: 123456789 
+2. find ./ -inum 123456789 -print -exec rm -rf {} \; 
+</code></pre><p>批量删除:</p>
+<pre><code>for n in 123456789 987654321;do find . -inum $n -exec rm -f {} \;;done 
+</code></pre><h3 id="4shell中参数含义">4、shell中$参数含义</h3>
+<pre><code>$# 是传给脚本的参数个数
+$0 是脚本本身的名字
+$1 是传递给该shell脚本的第一个参数
+$2 是传递给该shell脚本的第二个参数
+$@ 是传给脚本的所有参数的列表
+$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个
+$$ 是脚本运行的当前进程ID号
+$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误
+</code></pre><h3 id="5查找">5、查找</h3>
+<p>查找某类型文件下包含的字符块</p>
+<pre><code>[root@qm app]# grep loading.gif  ./css/*.css
+
+./css/index.css:.d-loading { height:32px; text-align:left; text-indent:-999em; overflow:hidden; background:url(http://img1.qmsdstatic.com/mres/res/base/images/loading.gif) no-repeat center center; }
+
+./css/index.css:.loading {   width:100%;    height:56px;    position: fixed;    top:50%;  text-indent: 0px;       line-height:56px;    color:#fff;    padding-left:60px;    font-size:15px;    background: #000 url(http://img1.qmsdstatic.com/mres/res/base/images/loading.gif) no-repeat 40% 50%;  text-align: center;   opacity: 0.7;    z-index:9999;    -moz-border-radius:20px;    -webkit-border-radius:20px;    border-radius:20px;    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70);  }
+
+./css/index.css:.lazy { background: url(&quot;http://img1.qmsdstatic.com/mres/res/base/images/loading.gif&quot;) no-repeat center center; display: block;}
+
+[root@qm app]# 
+</code></pre><p>查找文件名称</p>
+<pre><code>find ./ -name &quot;loading.gif&quot;
+</code></pre><h3 id="6linux系统的timezone">6、linux系统的TimeZone</h3>
+<p>使用Centos，遇到本地时间对不上，直接敲命令：date -s &ldquo;2014-12-25 15:15:15&quot;是立即生效了，但是重启后，系统时间还是原来的。
+后面经过查找资料，做个小结.
+我的Centos是安装在虚拟机上。在虚拟机有分系统时间和硬件时间。修改了其一是没有办法奏效，必须两者都更改。</p>
+<pre><code>1.date {查看目前本地的时间}
+2.hwclock --show {查看硬件的时间}
+3.如果硬件的时间是对不上，那就对硬件的时间进行修改、
+4.hwclock --set --date '014-12-15 15:15:15' {设置硬件时间}
+5.hwclock --hctosys {设置系统时间和硬件时间同步}
+6.clock -w {保存时钟}
+</code></pre><h3 id="7最后在通过重启init-6-快速重启后查看系统时间是否真正生效">7.最后在通过重启，init 6 快速重启后，查看系统时间是否真正生效！！！！</h3>
+<pre><code>[root@qm-wap1 ~]# tzselect 
+Please identify a location so that time zone rules can be set correctly.
+Please select a continent or ocean.
+ 1) Africa
+ 2) Americas
+ 3) Antarctica
+ 4) Arctic Ocean
+ 5) Asia
+ 6) Atlantic Ocean
+ 7) Australia
+ 8) Europe
+ 9) Indian Ocean
+10) Pacific Ocean
+11) none - I want to specify the time zone using the Posix TZ format.
+#? 5
+Please select a country.
+ 1) Afghanistan          18) Israel            35) Palestine
+ 2) Armenia          19) Japan            36) Philippines
+ 3) Azerbaijan          20) Jordan            37) Qatar
+ 4) Bahrain          21) Kazakhstan        38) Russia
+ 5) Bangladesh          22) Korea (North)        39) Saudi Arabia
+ 6) Bhutan          23) Korea (South)        40) Singapore
+ 7) Brunei          24) Kuwait            41) Sri Lanka
+ 8) Cambodia          25) Kyrgyzstan        42) Syria
+ 9) China          26) Laos            43) Taiwan
+10) Cyprus          27) Lebanon            44) Tajikistan
+11) East Timor          28) Macau            45) Thailand
+12) Georgia          29) Malaysia            46) Turkmenistan
+13) Hong Kong          30) Mongolia            47) United Arab Emirates
+14) India          31) Myanmar (Burma)        48) Uzbekistan
+15) Indonesia          32) Nepal            49) Vietnam
+16) Iran          33) Oman            50) Yemen
+17) Iraq          34) Pakistan
+#? 9
+Please select one of the following time zone regions.
+1) Beijing Time
+2) Xinjiang Time
+#? 1
+
+The following information has been given:
+
+    China
+    Beijing Time
+
+Therefore TZ='Asia/Shanghai' will be used.
+Local time is now:    Thu Oct 20 20:34:58 CST 2016.
+Universal Time is now:    Thu Oct 20 12:34:58 UTC 2016.
+Is the above information OK?
+1) Yes
+2) No
+#? 1
+
+You can make this change permanent for yourself by appending the line
+    TZ='Asia/Shanghai'; export TZ
+to the file '.profile' in your home directory; then log out and log in again.
+
+Here is that TZ value again, this time on standard output so that you
+can use the /usr/bin/tzselect command in shell scripts:
+Asia/Shanghai
+[root@qm-wap1 ~]# 
+[root@qm-wap1 ~]# vi /etc/profile    增加    export TZ='Asia/Shanghai' 
+[root@qm-wap1 ~]# date -R Thu, 20 Oct 2016 12:41:17 +0000
+[root@qm-wap1 ~]# . /etc/profile    使环境变量生效
+[root@qm-wap1 ~]# date -R Thu, 20 Oct 2016 20:41:35 +0800
+</code></pre><h3 id="7调整文件句柄数">7、调整文件句柄数</h3>
+<h4 id="--查看进程开发的文件句柄数量">&ndash;查看进程开发的文件句柄数量</h4>
+<pre><code>lsof -n | awk '{print $2}' | sort | uniq -c | sort -nr | more
+
+ps -aef | grep 进程号
+</code></pre><h4 id="--修改系统的文件句柄数">&ndash;修改系统的文件句柄数</h4>
+<pre><code>root登录服务器
+vi /etc/security/limits.conf
+
+* hard nofile 65535 或 * - nofile 65535
+
+vi .profile  添加 ulimit -n 65535
+
+. ~/.profile
+</code></pre><h4 id="--修改系统内核参数">&ndash;修改系统内核参数</h4>
+<p>linux TIME_WAIT过多的解决方法</p>
+<pre><code>查看TCP状态：netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+查看SOCKET状态：cat /proc/net/sockstat
+TIME_WAIT状态的socket一般需要等到2msl时间后，socket才会被回收。
+修改(添加)系统内核参数:/etc/sysctl.conf
+#改系統默认的TIMEOUT时间
+net.ipv4.tcp_fin_timeout=2
+#启重用,允许将TIME-WAIT sockets重新用于新的TCP连接 默认为0表示关闭
+net.ipv4.tcp_tw_reuse=1
+#开启TCP连接中TIME-WAIT sockets的快速回收 默认为0 表示关闭
+net.ipv4.tcp_tw_recycle=1
+使新增参数生效：sysctl -p
+</code></pre><h3 id="9监控参数">9、监控参数</h3>
+<pre><code>[root@qm ~]# vmstat 2 10
+procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 2  0 258952 17992080 309016 8748008    0    0     5     3    0    0  1  0 99  0  0    
+ 3  0 258952 17992072 309016 8747976    0    0     0    26 2895  710 17  0 83  0  0    
+ 2  0 258952 17992196 309016 8747976    0    0     0     0 2481  598 17  0 83  0  0    
+ 2  0 258952 17991824 309016 8747976    0    0     0    18 2916  684 18  0 81  0  0    
+ 2  0 258952 17992196 309016 8747976    0    0     0   132 2989  731 19  0 80  1  0    
+ 3  0 258952 17991948 309016 8747980    0    0     0    10 3630  905 22  0 78  0  0    
+ 3  0 258952 17991700 309016 8747980    0    0     0    38 3170  796 21  0 78  0  0    
+ 2  0 258952 17991204 309016 8747948    0    0     0   364 2576  685 17  0 82  1  0    
+ 2  0 258952 17991204 309016 8747948    0    0     0    16 2939  647 17  0 83  0  0    
+ 3  0 258952 17991328 309016 8747948    0    0     0     0 2768  651 17  0 83  0  0    
+[root@qm ~]#  iostat
+Linux 2.6.32-358.el6.x86_64 (qm.web10)     2016年04月26日     _x86_64_    (12 CPU)
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.91    0.00    0.03    0.06    0.00   99.00
+
+Device:            tps   Blk_read/s   Blk_wrtn/s   Blk_read   Blk_wrtn
+sda               2.51       122.19        72.73 7081933849 4215403284
+dm-0              0.58         1.76         4.39  101952970  254331472
+dm-1              7.14       120.27        68.10 6970687410 3946930248
+
+可以用iostat/iotop查看具体的io状况
+</code></pre>
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2017-06-04-shell_use/">https://anTtutu.github.io/post/2017-06-04-shell_use/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/2017-06-04-redis/">Redis日常命令整理</a></li>
+        
+        <li><a href="/post/2017-06-04-jrebel/">eclipse之jrebel热部署插件</a></li>
+        
+        <li><a href="/post/2017-06-04-browser/">市面上所有浏览器内核或UserAgent参数</a></li>
+        
+        <li><a href="/post/2017-06-02-jekyll_ruby_blog/">jekyll搭建自己的静态blog</a></li>
+        
+        <li><a href="/post/2017-05-22-log4j/">Log4j参数整理</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='https://anTtutu.github.io/tags/shell'>shell</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "anTtutu/anTtutu.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://anTtutu.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://anTtutu.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2020-02-13-hugo-blog/" title="改用最快的静态blog-hugo">改用最快的静态blog-hugo</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2020-02-11-Golang_study_01/" title="Golang学习笔记01 - 关键字和基础数据类型介绍">Golang学习笔记01 - 关键字和基础数据类型介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2020-01-07-redis_batch_import/" title="30W数据批量导入redis集群">30W数据批量导入redis集群</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2019-12-21-mysql_expansion/" title="mysql集群在线无损扩容">mysql集群在线无损扩容</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2019-03-26-mysql_data_restore/" title="被同事误删表找回丢失的数据">被同事误删表找回丢失的数据</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2019-03-11-jdkbug/" title="JDK1.8.0.161版本bug定位">JDK1.8.0.161版本bug定位</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2017-09-12-cygwin_install/" title="Cygwin安装">Cygwin安装</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2017-08-27-java_use_note/" title="java小日常记录-不定期更新">java小日常记录-不定期更新</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2017-08-27-oracle-db/" title="oracle知识梳理-awr\ash\addm日志开启并提取">oracle知识梳理-awr\ash\addm日志开启并提取</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2017-08-27-oracle-excuteplan/" title="oracle知识梳理-执行计划分析">oracle知识梳理-执行计划分析</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li><a href="https://anTtutu.github.io/categories/JDK%E7%9A%84bug/">JDK的bug (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/about/">about (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/golang/">golang (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/java/">java (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mysql/">mysql (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/redis/">redis (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/reids/">reids (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/shell/">shell (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://anTtutu.github.io/tags/JDK%E7%9A%84bug/">JDK的bug</a>
+    
+    <a href="https://anTtutu.github.io/tags/about/">about</a>
+    
+    <a href="https://anTtutu.github.io/tags/blog/">blog</a>
+    
+    <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
+    
+    <a href="https://anTtutu.github.io/tags/golang/">golang</a>
+    
+    <a href="https://anTtutu.github.io/tags/h2/">h2</a>
+    
+    <a href="https://anTtutu.github.io/tags/hugo/">hugo</a>
+    
+    <a href="https://anTtutu.github.io/tags/java/">java</a>
+    
+    <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
+    
+    <a href="https://anTtutu.github.io/tags/js/">js</a>
+    
+    <a href="https://anTtutu.github.io/tags/linux/">linux</a>
+    
+    <a href="https://anTtutu.github.io/tags/log4j/">log4j</a>
+    
+    <a href="https://anTtutu.github.io/tags/mysql/">mysql</a>
+    
+    <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
+    
+    <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/shell/">shell</a>
+    
+    <a href="https://anTtutu.github.io/tags/sqlmap/">sqlmap</a>
+    
+    <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://anTtutu.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+    <div class="container">
+        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/flysnow-org/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+
+</html>
