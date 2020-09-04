@@ -24,11 +24,12 @@
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
-
-
+    
+    
+    
     
     
 </head>
@@ -215,7 +216,20 @@
 <h4 id="本配置基于oracle官方文档目的在于加深对于dataguard的了解">本配置基于Oracle官方文档，目的在于加深对于Dataguard的了解。　</h4>
 <h4 id="本配置的结果是最大性能模式下的异步传输-因此在参数文件中只涉及基本的主备参数没有考虑switchover和最大性能模式下的real-time-apply在监听的配置中也没有考虑data-guard-broker的应用情况">本配置的结果是最大性能模式下的异步传输 ，因此在参数文件中，只涉及基本的主备参数，没有考虑switchover和最大性能模式下的real time apply。在监听的配置中，也没有考虑Data Guard Broker的应用情况</h4>
 <h2 id="配置环境">配置环境：</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">主库： 备库：
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">主库： 备库：
 操作系统版本： Oracle Linux 6.3 Oracle Linux 6.3
 数据库版本： Oracle 11.2.0.1.0 Oracle 11.2.0.1.0
 主机名： node1.being.com node2.being.com
@@ -224,7 +238,9 @@ db_name orcl victor
 db_unique_name orcl orcl
 instance_name orcl victor
 service_names orcl victor
-</code></pre></div><h2 id="注意">注意：</h2>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="注意">注意：</h2>
 <ol>
 <li>Dataguard中只需要db_unique_name保持一致即可</li>
 <li>主库中除了安装Oracle软件以外，还需要dbca建库。而备库中，只需要安装Oracle软件即可，即在./runInstaller安装过程中，第三步选择install software only即可</li>
@@ -232,7 +248,23 @@ service_names orcl victor
 </ol>
 <h3 id="一配置监听">一、配置监听</h3>
 <h4 id="1-主库上">1&gt; 主库上</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node1 ~<span style="color:#000;font-weight:bold">]</span>$ <span style="color:#0086b3">cd</span> <span style="color:#008080">$ORACLE_HOME</span>/network/admin/
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node1 ~<span style="color:#000;font-weight:bold">]</span>$ <span style="color:#0086b3">cd</span> <span style="color:#008080">$ORACLE_HOME</span>/network/admin/
 <span style="color:#000;font-weight:bold">[</span>oracle@node1 admin<span style="color:#000;font-weight:bold">]</span>$ cat tnsnames.ora
 <span style="color:#008080">TO_VICTOR</span> <span style="color:#000;font-weight:bold">=</span>
 <span style="color:#000;font-weight:bold">(</span><span style="color:#008080">DESCRIPTION</span> <span style="color:#000;font-weight:bold">=</span>
@@ -244,9 +276,27 @@ service_names orcl victor
 <span style="color:#000;font-weight:bold">(</span><span style="color:#008080">SERVICE_NAME</span> <span style="color:#000;font-weight:bold">=</span> victor<span style="color:#000;font-weight:bold">)</span>
 <span style="color:#000;font-weight:bold">)</span>
 <span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p>其中to_victor为网络服务名，在后面配置log_archive_dest_2和fal_server中会用到</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>其中to_victor为网络服务名，在后面配置log_archive_dest_2和fal_server中会用到</p>
 <h4 id="2-备库上">2&gt; 备库上</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node2 ~<span style="color:#000;font-weight:bold">]</span>$ <span style="color:#0086b3">cd</span> <span style="color:#008080">$ORACLE_HOME</span>/network/admin/
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node2 ~<span style="color:#000;font-weight:bold">]</span>$ <span style="color:#0086b3">cd</span> <span style="color:#008080">$ORACLE_HOME</span>/network/admin/
 <span style="color:#000;font-weight:bold">[</span>oracle@node2 admin<span style="color:#000;font-weight:bold">]</span>$ cat tnsnames.ora
 <span style="color:#008080">TO_ORCL</span> <span style="color:#000;font-weight:bold">=</span>
 <span style="color:#000;font-weight:bold">(</span><span style="color:#008080">DESCRIPTION</span> <span style="color:#000;font-weight:bold">=</span>
@@ -258,19 +308,55 @@ service_names orcl victor
 <span style="color:#000;font-weight:bold">(</span><span style="color:#008080">SERVICE_NAME</span> <span style="color:#000;font-weight:bold">=</span> orcl<span style="color:#000;font-weight:bold">)</span>
 <span style="color:#000;font-weight:bold">)</span>
 <span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p>注意：该配置只是基于基本的Dataguard配置，没有考虑Dataguard broker的配置</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>注意：该配置只是基于基本的Dataguard配置，没有考虑Dataguard broker的配置</p>
 <h3 id="二主库环境准备----在node1上操作">二、主库环境准备 &ndash;&raquo; 在node1上操作</h3>
 <h4 id="1-将数据库设置为归档模式">1&gt; 将数据库设置为归档模式</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; archive log list --&gt;&gt;若Database log mode为No Archive Mode，则表示该数据库运行在非归档模式下。进行以下操作
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; archive log list --&gt;&gt;若Database log mode为No Archive Mode，则表示该数据库运行在非归档模式下。进行以下操作
 SQL&gt; shutdown immediate
 SQL&gt; startup mount
 SQL&gt; alter database archivelog;
 SQL&gt; alter database open;
-</code></pre></div><h4 id="2-将数据库设置为force-logging模式">2&gt; 将数据库设置为Force Logging模式</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; <span style="color:#000;font-weight:bold">select</span> force_logging from v<span style="color:#008080">$database</span>; --&gt;&gt;若为NO，则进行以下操作
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-将数据库设置为force-logging模式">2&gt; 将数据库设置为Force Logging模式</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; <span style="color:#000;font-weight:bold">select</span> force_logging from v<span style="color:#008080">$database</span>; --&gt;&gt;若为NO，则进行以下操作
 SQL&gt; alter database force logging;
-</code></pre></div><h4 id="3-修改主库参数文件">3&gt; 修改主库参数文件</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; alter system <span style="color:#0086b3">set</span> <span style="color:#008080">log_archive_config</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;dg_config=(orcl,victor)&#39;</span>;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-修改主库参数文件">3&gt; 修改主库参数文件</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; alter system <span style="color:#0086b3">set</span> <span style="color:#008080">log_archive_config</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;dg_config=(orcl,victor)&#39;</span>;
 --&gt;&gt; 代表该Dataguard是两个节点，一主一从，若要配置多个节点，则需要在此处添加。
 SQL&gt; alter system <span style="color:#0086b3">set</span> <span style="color:#008080">log_archive_dest_1</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;location=USE_DB_RECOVERY_FILE_DEST valid_for=(online_logfiles,primary_role) db_unique_name=orcl&#39;</span>;
 --&gt;&gt; location代表本地归档。在这里我们使用闪回区作为在线日志文件的归档目录，在实际生产环境中，如果归档日志是归档在本地文件系统上，不建议使用闪回区，因为闪回区和数据库软件是在同一个目录下，如果归档日志过多，闪回区空间增长过快，容易造成磁盘空间不足，这样容易使数据库挂掉。valid_for代表该归档目录只有在该库为主库，归档在线日志文件时才有效。
@@ -281,28 +367,99 @@ SQL&gt; alter system <span style="color:#0086b3">set</span> <span style="color:#
 SQL&gt; alter system <span style="color:#0086b3">set</span> <span style="color:#008080">remote_login_passwordfile</span><span style="color:#000;font-weight:bold">=</span>exclusive <span style="color:#008080">scope</span><span style="color:#000;font-weight:bold">=</span>spfile; --&gt;&gt; 设置密码文件的权限，该设置需重启数据库才能生效
 SQL&gt; alter system <span style="color:#0086b3">set</span> <span style="color:#008080">log_archive_format</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;%t_%s_%r.arc&#39;</span> <span style="color:#008080">scope</span><span style="color:#000;font-weight:bold">=</span>spfile; --&gt;&gt; 设置归档日志的格式，该设置需重启数据库才能生效
 --&gt;&gt; 最后两项可不用显性设定
-</code></pre></div><h3 id="三-为备库创建各种文件----在node1上操作">三、 为备库创建各种文件 &ndash;&raquo; 在node1上操作</h3>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="三-为备库创建各种文件----在node1上操作">三、 为备库创建各种文件 &ndash;&raquo; 在node1上操作</h3>
 <h4 id="1-密码文件">1&gt; 密码文件</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node1 ~<span style="color:#000;font-weight:bold">]</span>$ <span style="color:#0086b3">cd</span> <span style="color:#008080">$ORACLE_HOME</span>/dbs/
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node1 ~<span style="color:#000;font-weight:bold">]</span>$ <span style="color:#0086b3">cd</span> <span style="color:#008080">$ORACLE_HOME</span>/dbs/
 <span style="color:#000;font-weight:bold">[</span>oracle@node1 dbs<span style="color:#000;font-weight:bold">]</span>$ orapwd <span style="color:#008080">file</span><span style="color:#000;font-weight:bold">=</span>orapworcl <span style="color:#008080">entries</span><span style="color:#000;font-weight:bold">=</span><span style="color:#099">5</span> <span style="color:#008080">force</span><span style="color:#000;font-weight:bold">=</span>y <span style="color:#008080">password</span><span style="color:#000;font-weight:bold">=</span>oracle
-</code></pre></div><h4 id="2-参数文件">2&gt; 参数文件</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; create <span style="color:#008080">pfile</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;/home/oracle/orcl.ora&#39;</span> from spfile;
-</code></pre></div><h4 id="3-备份数据库">3&gt; 备份数据库</h4>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-参数文件">2&gt; 参数文件</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; create <span style="color:#008080">pfile</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;/home/oracle/orcl.ora&#39;</span> from spfile;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-备份数据库">3&gt; 备份数据库</h4>
 <p>对数据库做备份有多种办法，包括冷备、在线热备、RMAN备份，在这里我们使用RMAN备份</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node1 ~<span style="color:#000;font-weight:bold">]</span>$ mkdir /home/oracle/rman
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node1 ~<span style="color:#000;font-weight:bold">]</span>$ mkdir /home/oracle/rman
 <span style="color:#000;font-weight:bold">[</span>oracle@node1 ~<span style="color:#000;font-weight:bold">]</span>$ rman target /
 RMAN&gt; backup database format <span style="color:#d14">&#39;/home/oracle/rman/full_%U&#39;</span>;
-</code></pre></div><h4 id="4-备份控制文件">4&gt; 备份控制文件</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; alter system switch logfile;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4-备份控制文件">4&gt; 备份控制文件</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; alter system switch logfile;
 SQL&gt; alter database create standby controlfile as <span style="color:#d14">&#39;/home/oracle/victor.ctl&#39;</span>;
-</code></pre></div><h3 id="四将上述四类文件copy到备库">四、将上述四类文件copy到备库</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node1 ~<span style="color:#000;font-weight:bold">]</span>$ scp <span style="color:#008080">$ORACLE_HOME</span>/dbs/orapworcl oracle@192.168.1.12:/u01/app/oracle/product/11.2.0.1/db_1/dbs/orapwvictor
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="四将上述四类文件copy到备库">四、将上述四类文件copy到备库</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node1 ~<span style="color:#000;font-weight:bold">]</span>$ scp <span style="color:#008080">$ORACLE_HOME</span>/dbs/orapworcl oracle@192.168.1.12:/u01/app/oracle/product/11.2.0.1/db_1/dbs/orapwvictor
 <span style="color:#000;font-weight:bold">[</span>oracle@node1 ~<span style="color:#000;font-weight:bold">]</span>$ scp /home/oracle/orcl.ora oracle@192.168.1.12:/home/oracle/victor.ora
 <span style="color:#000;font-weight:bold">[</span>oracle@node1 ~<span style="color:#000;font-weight:bold">]</span>$ scp -r /home/oracle/rman/ oracle@192.168.1.12:/home/oracle/rman
 <span style="color:#000;font-weight:bold">[</span>oracle@node1 ~<span style="color:#000;font-weight:bold">]</span>$ scp /home/oracle/victor.ctl oracle@192.168.1.12:/home/oracle
-</code></pre></div><h3 id="五-创建备库">五、 创建备库</h3>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="五-创建备库">五、 创建备库</h3>
 <h4 id="1-修改参数文件">1&gt; 修改参数文件</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node2 ~<span style="color:#000;font-weight:bold">]</span>$ vim victor.ora
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node2 ~<span style="color:#000;font-weight:bold">]</span>$ vim victor.ora
 *.audit_file_dest<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;/u01/app/oracle/admin/victor/adump&#39;</span>
 *.audit_trail<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;db&#39;</span>
 *.compatible<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;11.2.0.0.0&#39;</span>
@@ -325,29 +482,82 @@ SQL&gt; alter database create standby controlfile as <span style="color:#d14">&#
 <span style="color:#008080">fal_server</span><span style="color:#000;font-weight:bold">=</span>to_orcl
 <span style="color:#008080">db_file_name_convert</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;/u01/app/oracle/oradata/orcl/&#39;</span>,<span style="color:#d14">&#39;/u01/app/oracle/oradata/victor/&#39;</span>
 <span style="color:#008080">log_file_name_convert</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;/u01/app/oracle/oradata/orcl/&#39;</span>,<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>/u01/app/oracle/oradata/victor/’
-</code></pre></div><h4 id="2-创建参数文件中相应的目录">2&gt; 创建参数文件中相应的目录</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node2 ~<span style="color:#000;font-weight:bold">]</span>$ mkdir -p /u01/app/oracle/admin/victor/adump
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-创建参数文件中相应的目录">2&gt; 创建参数文件中相应的目录</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node2 ~<span style="color:#000;font-weight:bold">]</span>$ mkdir -p /u01/app/oracle/admin/victor/adump
 <span style="color:#000;font-weight:bold">[</span>oracle@node2 ~<span style="color:#000;font-weight:bold">]</span>$ mkdir /u01/archilog
 <span style="color:#000;font-weight:bold">[</span>oracle@node2 ~<span style="color:#000;font-weight:bold">]</span>$ mkdir -p /u01/app/oracle/oradata/victor
 <span style="color:#000;font-weight:bold">[</span>oracle@node2 ~<span style="color:#000;font-weight:bold">]</span>$ cp /home/oracle/victor.ctl /u01/app/oracle/oradata/victor/control01.ctl
-</code></pre></div><h4 id="3-创建备库">3&gt; 创建备库</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node2 ~<span style="color:#000;font-weight:bold">]</span>$ sqlplus / as sysdba
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-创建备库">3&gt; 创建备库</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>oracle@node2 ~<span style="color:#000;font-weight:bold">]</span>$ sqlplus / as sysdba
 SQL&gt; create spfile from <span style="color:#008080">pfile</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;/home/oracle/victor.ora&#39;</span>;
 SQL&gt; startup mount
 <span style="color:#000;font-weight:bold">[</span>oracle@node2 ~<span style="color:#000;font-weight:bold">]</span>$ rman target /
 RMAN&gt; restore database;
 RMAN&gt; alter database open;
 SQL&gt; alter database recover managed standby database disconnect from session;
-</code></pre></div><h3 id="六测试">六、测试</h3>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="六测试">六、测试</h3>
 <h4 id="1-在备库上查询归档日志的序列号">1&gt; 在备库上查询归档日志的序列号</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; <span style="color:#000;font-weight:bold">select</span> sequence# from v<span style="color:#008080">$archived_log</span>;
-</code></pre></div><h4 id="2-在主库上切换一次日志">2&gt; 在主库上切换一次日志</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; alter system switch logfile;
-</code></pre></div><h4 id="3-在备库上查询归档日志的序列号看是否有增加">3&gt; 在备库上查询归档日志的序列号,看是否有增加</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; <span style="color:#000;font-weight:bold">select</span> sequence# from v<span style="color:#008080">$archived_log</span>;
-</code></pre></div><h4 id="4-在备库上查询归档日志是否被应用">4&gt; 在备库上查询归档日志是否被应用</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; <span style="color:#000;font-weight:bold">select</span> sequence#,applied from v<span style="color:#008080">$archived_log</span>;
-</code></pre></div><p>当然，也可以用具体案例进行测试，譬如在主库中新建一张表，对表进行增、删、改，然后切换日志，看备库能否应用。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; <span style="color:#000;font-weight:bold">select</span> sequence# from v<span style="color:#008080">$archived_log</span>;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-在主库上切换一次日志">2&gt; 在主库上切换一次日志</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; alter system switch logfile;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-在备库上查询归档日志的序列号看是否有增加">3&gt; 在备库上查询归档日志的序列号,看是否有增加</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; <span style="color:#000;font-weight:bold">select</span> sequence# from v<span style="color:#008080">$archived_log</span>;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="4-在备库上查询归档日志是否被应用">4&gt; 在备库上查询归档日志是否被应用</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SQL&gt; <span style="color:#000;font-weight:bold">select</span> sequence#,applied from v<span style="color:#008080">$archived_log</span>;
+</code></pre></td></tr></table>
+</div>
+</div><p>当然，也可以用具体案例进行测试，譬如在主库中新建一张表，对表进行增、删、改，然后切换日志，看备库能否应用。</p>
 
         </div>
 
@@ -409,6 +619,45 @@ SQL&gt; alter database recover managed standby database disconnect from session;
     </div>
     
 </div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
 
                 </div>
 
@@ -472,7 +721,7 @@ SQL&gt; alter database recover managed standby database disconnect from session;
     
 
     <section class="widget">
-        <h3 class="widget-title">分类</h3>
+        <h3 class="widget-title"><a href="/categories">分类</a></h3>
 <ul class="widget-list">
     
     <li><a href="https://anTtutu.github.io/categories/JDK%E7%9A%84bug/">JDK的bug (1)</a></li>
@@ -523,7 +772,7 @@ SQL&gt; alter database recover managed standby database disconnect from session;
     </section>
 
     <section class="widget">
-        <h3 class="widget-title">标签</h3>
+        <h3 class="widget-title"><a href="/tags">标签</a></h3>
 <div class="tagcloud">
     
     <a href="https://anTtutu.github.io/tags/JDK%E7%9A%84bug/">JDK的bug</a>
@@ -585,38 +834,6 @@ SQL&gt; alter database recover managed standby database disconnect from session;
             </div>
         </div>
     </div>
-    <footer id="footer">
-    <div class="container">
-        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>.
-        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
-        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/flysnow-org/maupassant-hugo" target="_blank">maupassant</a>.
-        
-    </div>
-</footer>
-
-
-    
-    <script type="text/javascript">
-        window.MathJax = {
-            tex2jax: {
-                inlineMath: [['$', '$']],
-                processEscapes: true
-                }
-            };
-    </script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
-
-
-<a id="rocket" href="#top"></a>
-<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
-
-
-
-    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-
-
-
-
 </body>
 
 </html>

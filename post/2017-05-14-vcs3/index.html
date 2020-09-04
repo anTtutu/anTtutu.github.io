@@ -24,11 +24,12 @@
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
-
-
+    
+    
+    
     
     
 </head>
@@ -243,9 +244,13 @@ root 3905     1  0  Feb 16 ?         0:00/opt/VRTSvcs/bin/hashadow
 
 root 3855     1  0  Feb 16 ?         1:13 /opt/VRTSvcs/bin/had
 </code></pre><p>在每个Node上，VCS用户命令，VCSAgent，GUI等组件，通过一个VCS特有的通信协议（叫Inter Process Messaging – IPM）直接与本机上的HAD通信（intra-system communication）。
-<img src="/images/posts/vcs_component/HAD.jpg" alt="">
+
+        <img class="mx-auto" alt="" src="/images/posts/vcs_component/HAD.jpg" />   
+    
 以AGENT为例，它和本机的HAD通信的情形如下：
-<img src="/images/posts/vcs_component/HAD2.jpg" alt="">
+
+        <img class="mx-auto" alt="" src="/images/posts/vcs_component/HAD2.jpg" />   
+    
 如果用户在某个Node上通过命令或GUI，进行了操作，从而VCS的状态（例如配置信息改变了），或者某个AGENT检测到了 resource状态变化，则命令，或者GUI，或者AGENT，通过IPM将这些变化发送给本地的HAD。然后HAD要负责将这些变化通过网络通知给其 他Node的HAD进程，并且要保证其他节点都正确接收了这些信息，然后其他Node上的HAD进程会在各自的Node上，应用这些变化。由于每个 Node都运行着相同版本的HAD，因此每个Node上的HAD只需要简单地执行与首先发送通知消息的那个Node相同的代码序列。</p>
 <p>前面简略地提及，本地命令，GUI，AGENT通过IPM，与本地HAD通信，统称”intra-systemcommunication”。</p>
 <p>更加简略地提及：“HAD要负责将这些变化通过网络通知给其他Node的HAD进程”。通过网络，这个说得太过简略了，实际上这一部分，比想象中复杂得多，因为这忽然就涉及到了复杂的网络通信，并且引出了另外两大模块： GAB 和 LLT。Node之间通过网络进行的通信，统称为“inter-system communication”。</p>
@@ -265,7 +270,9 @@ root 3855     1  0  Feb 16 ?         1:13 /opt/VRTSvcs/bin/had
  d. GAB接受到心跳状态信息后，根据该状态信息，决定是否对Membership进行改变
 </code></pre><p>说明一下前面提及的问题：当配置VCS的时候，我们只提供了IP地址或者主机名，作为一个第三层协议的LLT，在以太网中需要知道目标Node的MAC地址才能正确发送数据帧。而MAC地址并没有在安装的时候提供，也没有被安装程序通过ARP协议自动检测并写入配置文件，那么LLT如何发送数据帧 到目标Node呢？实际是这样的：LLT通过数据链路层的广播协议 – 即通过交换机发送一个广播数据帧（目标mac地址为全“1”，ffff.ffff.ffff的帧）进行广播，数据帧中包含Cluster ID（而Cluster ID是安装产品的时候指定的，并且每个Cluster是唯一的），然后局域网中所有拥有同一个Cluster ID的其它Node上的LLT模块，会应答，这样，Node就知道自己Cluster的Node中有哪些Node，以及每个Node的每个link的 mac地址了）。</p>
 <h3 id="3心跳信号的传递过程">3.心跳信号的传递过程:</h3>
-<p><img src="/images/posts/vcs_component/LLT.jpg" alt="">
+<p>
+        <img class="mx-auto" alt="" src="/images/posts/vcs_component/LLT.jpg" />   
+    
 LLT为什么不能替换IP协议？ LLT在VCS环境中确实可以很高效地传输数据，但它被设计为只在同一个局域网内工作的协议，而不能被路由，因此无法广泛使用作为通用传输协议。正因为 LLT只专注于服务VCS以及Veritas的其他产品，因此它才能高效地集成在VCS产品中。</p>
 <pre><code>LLT配置的一些考虑： LLT的link可以被指定为两种模式其中之一：
 High priority link: 用于传输心跳及其他所有Cluster内部通信信息。
@@ -319,7 +326,9 @@ link1  lan1 on etherfp hipri
 <p>当目标机器上的HAD收到了这个消息之后，会发送一个回执，确认消息发送成功。</p>
 <p>在本例中，如果3个Node中的某一个（因为网络故障或其它原因）没有收到消息，从而没有发送回执给源机器上的GAB，则整个广播过程失败，第一个Node的HAD会rollback所发生的变化。</p>
 <p>前面介绍了HAD和GAB，但实际的底层消息传递，仍然停留在“通过网络”这个模糊的概念上面，一般情况下看到“通过网络”这样的描述，很容易产生其它联想，如TCP/IP，UDP，SOCKET等等。实际上，LLT才是VCS真正负责底层网络通信的模块。用户程序（包括GUI/COMMAND/AGENT），HAD，GAB，LLT之间的层次关系如下图所示：
-<img src="/images/posts/vcs_component/GAB.jpg" alt="">
+
+        <img class="mx-auto" alt="" src="/images/posts/vcs_component/GAB.jpg" />   
+    
 Gab不是一个进程：</p>
 <pre><code>h110121:/-&gt;ps-ef|grep -i gab
 
@@ -394,7 +403,9 @@ gabconfig-a ， 列举所有已经注册的端口，以及每个端口上注册�
 
 于是乎，端口号 “Node map”，形成了一个Membership，由于每个membership，都是相对某个Port而言，因此又叫做“Port Membership”。“Port Membership”由GAB模块维护。
 </code></pre><h3 id="6gab端口对应表">6.GAB端口对应表：</h3>
-<p><img src="/images/posts/vcs_component/GAB-port.jpg" alt="">
+<p>
+        <img class="mx-auto" alt="" src="/images/posts/vcs_component/GAB-port.jpg" />   
+    
 好了，有了前面的基础，下面的事情就好讲了。接着说一下GAB是如何维护Cluster Membership的（这也是GAB的两大功能之一）。</p>
 <p>Clustermembership，实际就是说GAB能及时更新每个端口的“Node map”，然后其他的进程或内核模块可以询问GAB，以得到当前的Membership。看下面这个输出：</p>
 <pre><code># gabconfig-a | grep “Port a”
@@ -598,6 +609,45 @@ Portw gen   ab280b membership 01
     
 </div>
 
+                    <footer id="footer">
+    <div>
+        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
                 </div>
 
                 <div id="secondary">
@@ -660,7 +710,7 @@ Portw gen   ab280b membership 01
     
 
     <section class="widget">
-        <h3 class="widget-title">分类</h3>
+        <h3 class="widget-title"><a href="/categories">分类</a></h3>
 <ul class="widget-list">
     
     <li><a href="https://anTtutu.github.io/categories/JDK%E7%9A%84bug/">JDK的bug (1)</a></li>
@@ -711,7 +761,7 @@ Portw gen   ab280b membership 01
     </section>
 
     <section class="widget">
-        <h3 class="widget-title">标签</h3>
+        <h3 class="widget-title"><a href="/tags">标签</a></h3>
 <div class="tagcloud">
     
     <a href="https://anTtutu.github.io/tags/JDK%E7%9A%84bug/">JDK的bug</a>
@@ -773,38 +823,6 @@ Portw gen   ab280b membership 01
             </div>
         </div>
     </div>
-    <footer id="footer">
-    <div class="container">
-        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>.
-        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
-        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/flysnow-org/maupassant-hugo" target="_blank">maupassant</a>.
-        
-    </div>
-</footer>
-
-
-    
-    <script type="text/javascript">
-        window.MathJax = {
-            tex2jax: {
-                inlineMath: [['$', '$']],
-                processEscapes: true
-                }
-            };
-    </script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
-
-
-<a id="rocket" href="#top"></a>
-<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
-
-
-
-    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-
-
-
-
 </body>
 
 </html>

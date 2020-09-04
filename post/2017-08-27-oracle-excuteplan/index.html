@@ -24,11 +24,12 @@
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
-
-
+    
+    
+    
     
     
 </head>
@@ -222,41 +223,102 @@
             <h4 id="分析某条sql的性能问题通常我们要先看sql的执行计划看看sql的每一步执行是否存在问题常用的两种方法查看sql执行计划">分析某条SQL的性能问题，通常我们要先看SQL的执行计划，看看SQL的每一步执行是否存在问题。常用的两种方法查看SQL执行计划。</h4>
 <h1 id="方法一autotrace生成执行计划">方法一：autotrace生成执行计划</h1>
 <h4 id="这种方式执行方便但是当遇到执行时间长的sql就变得不太现实它是先产生结果再生成执行计划的关于autotrace几个常用选项的说明">这种方式执行方便，但是当遇到执行时间长的SQL就变得不太现实，它是先产生结果再生成执行计划的。关于Autotrace几个常用选项的说明：</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SET</span>  AUTOTRACE  <span style="color:#000;font-weight:bold">OFF</span> <span style="color:#998;font-style:italic">---------------- 不生成AUTOTRACE 报告，这是缺省模式
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SET</span>  AUTOTRACE  <span style="color:#000;font-weight:bold">OFF</span> <span style="color:#998;font-style:italic">---------------- 不生成AUTOTRACE 报告，这是缺省模式
 </span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">SET</span>  AUTOTRACE  <span style="color:#000;font-weight:bold">ON</span>  <span style="color:#000;font-weight:bold">EXPLAIN</span> <span style="color:#998;font-style:italic">--------- AUTOTRACE只显示优化器执行路径报告
 </span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">SET</span>  AUTOTRACE  <span style="color:#000;font-weight:bold">ON</span>  <span style="color:#000;font-weight:bold">STATISTICS</span> <span style="color:#998;font-style:italic">------ 只显示执行统计信息
 </span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">SET</span>  AUTOTRACE  <span style="color:#000;font-weight:bold">ON</span> <span style="color:#998;font-style:italic">----------------- 包含执行计划和统计信息
 </span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">SET</span>  AUTOTRACE  TRACEONLY <span style="color:#998;font-style:italic">-----------同set autotrace on，但是不显示查询输出
-</span></code></pre></div><h2 id="步骤-1-sqlplus登录数据库">步骤 1 sqlplus登录数据库</h2>
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="步骤-1-sqlplus登录数据库">步骤 1 sqlplus登录数据库</h2>
 <h2 id="步骤-2-打开autotrace">步骤 2 打开autotrace</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">set</span> autotrace <span style="color:#000;font-weight:bold">on</span> <span style="color:#000;font-weight:bold">explain</span>
-</code></pre></div><h2 id="步骤-3-输入要查看的sql">步骤 3 输入要查看的SQL</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">select</span> po.charge, po.new_charge, po.avg_charge
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">set</span> autotrace <span style="color:#000;font-weight:bold">on</span> <span style="color:#000;font-weight:bold">explain</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="步骤-3-输入要查看的sql">步骤 3 输入要查看的SQL</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">select</span> po.charge, po.new_charge, po.avg_charge
          <span style="color:#000;font-weight:bold">from</span> lbi_ls_basic.t_l_acct_sum_po_sum_d  po,
              lbi_dim_basic.t_d_dyn_pkgname     pkg,
              lbi_dim_basic.t_d_dyn_tenant_def     def
  <span style="color:#000;font-weight:bold">where</span> po.subcosid <span style="color:#000;font-weight:bold">=</span> pkg.productkey(<span style="color:#000;font-weight:bold">+</span>)
          <span style="color:#000;font-weight:bold">and</span> po.tenantid <span style="color:#000;font-weight:bold">=</span> def.tenantid(<span style="color:#000;font-weight:bold">+</span>); 
 <span style="color:#a61717;background-color:#e3d2d2">返</span><span style="color:#a61717;background-color:#e3d2d2">回</span><span style="color:#a61717;background-color:#e3d2d2">执</span><span style="color:#a61717;background-color:#e3d2d2">行</span><span style="color:#a61717;background-color:#e3d2d2">计</span><span style="color:#a61717;background-color:#e3d2d2">划</span><span style="color:#a61717;background-color:#e3d2d2">结</span><span style="color:#a61717;background-color:#e3d2d2">果</span>
-</code></pre></div><h2 id="步骤-4-关闭autotrace">步骤 4 关闭autotrace</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">set</span> autotrace <span style="color:#000;font-weight:bold">off</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="步骤-4-关闭autotrace">步骤 4 关闭autotrace</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">set</span> autotrace <span style="color:#000;font-weight:bold">off</span>
 <span style="color:#998;font-style:italic">----结束
-</span></code></pre></div><h1 id="方法二explain-plan-for-生成执行计划">方法二、explain plan for 生成执行计划</h1>
+</span></code></pre></td></tr></table>
+</div>
+</div><h1 id="方法二explain-plan-for-生成执行计划">方法二、explain plan for 生成执行计划</h1>
 <p>这种方式是直接产生执行计划，不会产生SQL结果。</p>
 <h2 id="步骤1-sqlplus登录数据库">步骤1 sqlplus登录数据库</h2>
 <h2 id="步骤2-执行explain-plan-for语句">步骤2 执行explain plan for语句</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">explain</span> plan <span style="color:#000;font-weight:bold">for</span> 
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">explain</span> plan <span style="color:#000;font-weight:bold">for</span> 
 <span style="color:#000;font-weight:bold">select</span> po.charge, po.new_charge,po.avg_charge
            <span style="color:#000;font-weight:bold">from</span> lbi_ls_basic.t_l_acct_sum_po_sum_d   po,
                 lbi_dim_basic.t_d_dyn_pkgname       pkg,
                 lbi_dim_basic.t_d_dyn_tenant_def     def
        <span style="color:#000;font-weight:bold">where</span> po.subcosid <span style="color:#000;font-weight:bold">=</span> pkg.productkey(<span style="color:#000;font-weight:bold">+</span>) <span style="color:#000;font-weight:bold">and</span> po.tenantid <span style="color:#000;font-weight:bold">=</span> def.tenantid(<span style="color:#000;font-weight:bold">+</span>)
        ;
-</code></pre></div><h2 id="步骤3-查询执行计划">步骤3 查询执行计划</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">select</span> <span style="color:#000;font-weight:bold">*</span> <span style="color:#000;font-weight:bold">from</span> <span style="color:#000;font-weight:bold">table</span>(dbms_xplan.display);
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="步骤3-查询执行计划">步骤3 查询执行计划</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">select</span> <span style="color:#000;font-weight:bold">*</span> <span style="color:#000;font-weight:bold">from</span> <span style="color:#000;font-weight:bold">table</span>(dbms_xplan.display);
 <span style="color:#a61717;background-color:#e3d2d2">返</span><span style="color:#a61717;background-color:#e3d2d2">回</span><span style="color:#a61717;background-color:#e3d2d2">结</span><span style="color:#a61717;background-color:#e3d2d2">果</span><span style="color:#a61717;background-color:#e3d2d2">：</span><span style="color:#a61717;background-color:#e3d2d2">略</span>
 <span style="color:#998;font-style:italic">----结束
-</span></code></pre></div><h2 id="以上都是不借助图形化的工具借助图形化的工具后方便很多比如plsql-developer强大的不行或者toad也行">以上都是不借助图形化的工具，借助图形化的工具后方便很多，比如:PL/SQL Developer强大的不行，或者Toad也行。</h2>
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="以上都是不借助图形化的工具借助图形化的工具后方便很多比如plsql-developer强大的不行或者toad也行">以上都是不借助图形化的工具，借助图形化的工具后方便很多，比如:PL/SQL Developer强大的不行，或者Toad也行。</h2>
 
         </div>
 
@@ -318,6 +380,45 @@
     </div>
     
 </div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
 
                 </div>
 
@@ -381,7 +482,7 @@
     
 
     <section class="widget">
-        <h3 class="widget-title">分类</h3>
+        <h3 class="widget-title"><a href="/categories">分类</a></h3>
 <ul class="widget-list">
     
     <li><a href="https://anTtutu.github.io/categories/JDK%E7%9A%84bug/">JDK的bug (1)</a></li>
@@ -432,7 +533,7 @@
     </section>
 
     <section class="widget">
-        <h3 class="widget-title">标签</h3>
+        <h3 class="widget-title"><a href="/tags">标签</a></h3>
 <div class="tagcloud">
     
     <a href="https://anTtutu.github.io/tags/JDK%E7%9A%84bug/">JDK的bug</a>
@@ -494,38 +595,6 @@
             </div>
         </div>
     </div>
-    <footer id="footer">
-    <div class="container">
-        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>.
-        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
-        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/flysnow-org/maupassant-hugo" target="_blank">maupassant</a>.
-        
-    </div>
-</footer>
-
-
-    
-    <script type="text/javascript">
-        window.MathJax = {
-            tex2jax: {
-                inlineMath: [['$', '$']],
-                processEscapes: true
-                }
-            };
-    </script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
-
-
-<a id="rocket" href="#top"></a>
-<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
-
-
-
-    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-
-
-
-
 </body>
 
 </html>

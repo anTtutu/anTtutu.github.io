@@ -24,11 +24,12 @@
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
-
-
+    
+    
+    
     
     
 </head>
@@ -210,12 +211,35 @@
 <p>本博客评论系统已迁移至 Gitment，参考作者的介绍部署成功，不过这里补充详细点，方便新手入门。</p>
 <h2 id="1注册-oauth-application">1、注册 OAuth Application</h2>
 <p>通过地址<!-- raw HTML omitted -->传送门<!-- raw HTML omitted -->申请配置，注册一个新的 OAuth Application，其他内容可以随意填写，但要确保填入正确的 callback URL（一般是评论页面对应的域名，如 <a href="https://anttutu.github.io">https://anttutu.github.io</a>）。
-<img src="/posts/gitment/OAuth.jpg" alt="">
+
+        <img class="mx-auto" alt="" src="/posts/gitment/OAuth.jpg" />   
+    
 创建成功后，你会得到一个 client ID 和一个 client secret，这个将被用于之后的用户登录。
-<img src="/posts/gitment/id.jpg" alt=""></p>
+
+        <img class="mx-auto" alt="" src="/posts/gitment/id.jpg" />   
+    </p>
 <h2 id="2引入-gitment">2、引入 Gitment</h2>
 <p>将下面的代码添加到你的页面：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#000;font-weight:bold">&lt;</span>div id<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;container&#34;</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#a61717;background-color:#e3d2d2">/</span><span style="color:#a61717;background-color:#e3d2d2">d</span><span style="color:#a61717;background-color:#e3d2d2">i</span><span style="color:#a61717;background-color:#e3d2d2">v</span><span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#000;font-weight:bold">&lt;</span>div id<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;container&#34;</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#a61717;background-color:#e3d2d2">/</span><span style="color:#a61717;background-color:#e3d2d2">d</span><span style="color:#a61717;background-color:#e3d2d2">i</span><span style="color:#a61717;background-color:#e3d2d2">v</span><span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
 <span style="color:#000;font-weight:bold">&lt;</span>link rel<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;stylesheet&#34;</span> href<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;https://imsun.github.io/gitment/style/default.css&#34;</span><span style="color:#000;font-weight:bold">&gt;</span>
 <span style="color:#000;font-weight:bold">&lt;</span>script src<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;https://imsun.github.io/gitment/dist/gitment.browser.js&#34;</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#a61717;background-color:#e3d2d2">/</span><span style="color:#a61717;background-color:#e3d2d2">s</span><span style="color:#a61717;background-color:#e3d2d2">c</span><span style="color:#a61717;background-color:#e3d2d2">r</span><span style="color:#a61717;background-color:#e3d2d2">i</span><span style="color:#a61717;background-color:#e3d2d2">p</span><span style="color:#a61717;background-color:#e3d2d2">t</span><span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
 <span style="color:#000;font-weight:bold">&lt;</span>script<span style="color:#000;font-weight:bold">&gt;</span>
@@ -230,17 +254,31 @@
 })
 gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
 <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#a61717;background-color:#e3d2d2">/</span><span style="color:#a61717;background-color:#e3d2d2">s</span><span style="color:#a61717;background-color:#e3d2d2">c</span><span style="color:#a61717;background-color:#e3d2d2">r</span><span style="color:#a61717;background-color:#e3d2d2">i</span><span style="color:#a61717;background-color:#e3d2d2">p</span><span style="color:#a61717;background-color:#e3d2d2">t</span><span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
-</code></pre></div><h4 id="为了灵活我在_configyml中配置好全局参数">为了灵活，我在_config.yml中配置好全局参数：</h4>
-<p><img src="/posts/gitment/config.jpg" alt=""></p>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="为了灵活我在_configyml中配置好全局参数">为了灵活，我在_config.yml中配置好全局参数：</h4>
+<p>
+        <img class="mx-auto" alt="" src="/posts/gitment/config.jpg" />   
+    </p>
 <h2 id="3初始化评论">3、初始化评论</h2>
 <p>页面发布后，你需要访问页面并使用你的 GitHub 账号登录（请确保你的账号是第二步所填 repo 的 owner），点击初始化按钮。</p>
 <p>之后其他用户即可在该页面发表评论</p>
 <h4 id="初始化点击下初始化即可">初始化：点击下初始化即可</h4>
-<p><img src="/posts/gitment/init.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/gitment/init.jpg" />   
+    </p>
 <h4 id="正常">正常：</h4>
-<p><img src="/posts/gitment/comment2.jpg" alt=""> <img src="/posts/gitment/comment.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/gitment/comment2.jpg" />   
+     
+        <img class="mx-auto" alt="" src="/posts/gitment/comment.jpg" />   
+    </p>
 <h4 id="异常通常是repo或者owner配置不对请细心检测errornot-found--图1还有本地调测会出现callback不对提示error-comments-not-initialized-图2">异常：通常是repo或者owner配置不对，请细心检测Error：Not Found  图1。还有本地调测会出现callback不对提示Error: Comments Not Initialized 图2</h4>
-<p><img src="/posts/gitment/Error1.jpg" alt=""> <img src="/posts/gitment/Error3.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/gitment/Error1.jpg" />   
+     
+        <img class="mx-auto" alt="" src="/posts/gitment/Error3.jpg" />   
+    </p>
 
         </div>
 
@@ -302,6 +340,45 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     </div>
     
 </div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
 
                 </div>
 
@@ -365,7 +442,7 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     
 
     <section class="widget">
-        <h3 class="widget-title">分类</h3>
+        <h3 class="widget-title"><a href="/categories">分类</a></h3>
 <ul class="widget-list">
     
     <li><a href="https://anTtutu.github.io/categories/JDK%E7%9A%84bug/">JDK的bug (1)</a></li>
@@ -416,7 +493,7 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     </section>
 
     <section class="widget">
-        <h3 class="widget-title">标签</h3>
+        <h3 class="widget-title"><a href="/tags">标签</a></h3>
 <div class="tagcloud">
     
     <a href="https://anTtutu.github.io/tags/JDK%E7%9A%84bug/">JDK的bug</a>
@@ -478,38 +555,6 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
             </div>
         </div>
     </div>
-    <footer id="footer">
-    <div class="container">
-        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>.
-        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
-        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/flysnow-org/maupassant-hugo" target="_blank">maupassant</a>.
-        
-    </div>
-</footer>
-
-
-    
-    <script type="text/javascript">
-        window.MathJax = {
-            tex2jax: {
-                inlineMath: [['$', '$']],
-                processEscapes: true
-                }
-            };
-    </script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
-
-
-<a id="rocket" href="#top"></a>
-<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
-
-
-
-    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-
-
-
-
 </body>
 
 </html>

@@ -24,11 +24,12 @@
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
-
-
+    
+    
+    
     
     
 </head>
@@ -215,7 +216,9 @@
             <h4 id="好好运行的系统突然故障无意间根据错误信息查找竟然是jdk的bug描述下曲折的定位过程">好好运行的系统，突然故障，无意间根据错误信息查找，竟然是jdk的bug，描述下曲折的定位过程。</h4>
 <h2 id="一错误日志">一、错误日志</h2>
 <p>有个老系统有使用到soap接口，采用CXF结合接口文件wsdl自动生成的接口开发的，突然在3月2日（后续日志定位才发现真正故障的时间）无法正常工作，但是实际发现时间已经到了3月6日了，直接查看日志文件，报错“组装saop报文头异常:Entity References are not allowed in SOAP documents”，想到看看是不是代码做了什么改动，进svn版本管理工具对比，没有改动，最近一次部署是在3月5日上午，3月2日周六突然就故障了，属于突发性异常，感觉可以排除自身的问题，然后去咨询服务端系统，对方说也没有任何改动，现在才接手，不可能进行新的开发。但是接口一直在日志中打印错误，对比svn提交记录，发现确实没人改动代码，难道是对方动了代码？抱着这种心态总觉得是服务端异常了。
-<img src="/posts/jdkbug/error.jpg" alt=""></p>
+
+        <img class="mx-auto" alt="" src="/posts/jdkbug/error.jpg" />   
+    </p>
 <h2 id="二检查代码和修改记录">二、检查代码和修改记录</h2>
 <p>有了这个排除自己代码改动造成异常的前提后，始终觉得是服务端异常了，然后通过抓包对比正常接口、异常接口，SoapUI发送，重现错误返回值等一系列对比，3月6、7日没有任何结果，唯一发现就是报错的接口没有soap请求没有head信息，只有UTF-8的字符集和body，这种结构就有些奇怪了，难道是鉴权账号被锁？继续用soapUI测试这个账号，其他接口跑起来正常，修改了一条数据返回是success，更加郁闷了，怎么可能head平白无故丢失呢？</p>
 <h2 id="三继续啃问题">三、继续啃问题</h2>
@@ -232,13 +235,21 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
 <p>立马下载最新202 update版本，部署环境，重新，偶然没有出现相同的错了，然后一看时间，已经是3月8日21:30了，继续观察下，确认正常，问题得以修复。估算堵住的数据，预计还需要36小时才可以处理完，周末时间刚好。这下周末可以轻松下，不用跑来继续啃问题了。</p>
 <h2 id="附上错误信息截图">附上错误信息截图：</h2>
 <h4 id="openjdk的版本错误信息描述">OpenJDK的版本错误信息描述：</h4>
-<p><img src="/posts/jdkbug/jdkbug.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/jdkbug/jdkbug.jpg" />   
+    </p>
 <h4 id="openjdk的错误样例">OpenJDK的错误样例：</h4>
-<p><img src="/posts/jdkbug/bug2.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/jdkbug/bug2.jpg" />   
+    </p>
 <h4 id="业务日志中的错误信息">业务日志中的错误信息：</h4>
-<p><img src="/posts/jdkbug/buglog.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/jdkbug/buglog.jpg" />   
+    </p>
 <h4 id="业务所在服务器的jdk版本和安装时间">业务所在服务器的JDK版本和安装时间：</h4>
-<p><img src="/posts/jdkbug/log.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/jdkbug/log.jpg" />   
+    </p>
 <h2 id="ps有一点是这个jdk跑了这个出bug的业务差不多1年了为啥这1年不出问题呢怀疑是header里的鉴权session字符串开始用完纯字母类型的出现带特殊字符的了从开始出现特殊字符就触发这个bug">PS：有一点是这个jdk跑了这个出bug的业务差不多1年了，为啥这1年不出问题呢？怀疑是header里的鉴权session字符串开始用完纯字母类型的，出现带特殊字符的了，从开始出现特殊字符就触发这个bug</h2>
 
         </div>
@@ -302,6 +313,45 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
 </div>
 
+                    <footer id="footer">
+    <div>
+        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
                 </div>
 
                 <div id="secondary">
@@ -364,7 +414,7 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
 
     <section class="widget">
-        <h3 class="widget-title">分类</h3>
+        <h3 class="widget-title"><a href="/categories">分类</a></h3>
 <ul class="widget-list">
     
     <li><a href="https://anTtutu.github.io/categories/JDK%E7%9A%84bug/">JDK的bug (1)</a></li>
@@ -415,7 +465,7 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     </section>
 
     <section class="widget">
-        <h3 class="widget-title">标签</h3>
+        <h3 class="widget-title"><a href="/tags">标签</a></h3>
 <div class="tagcloud">
     
     <a href="https://anTtutu.github.io/tags/JDK%E7%9A%84bug/">JDK的bug</a>
@@ -477,38 +527,6 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
             </div>
         </div>
     </div>
-    <footer id="footer">
-    <div class="container">
-        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>.
-        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
-        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/flysnow-org/maupassant-hugo" target="_blank">maupassant</a>.
-        
-    </div>
-</footer>
-
-
-    
-    <script type="text/javascript">
-        window.MathJax = {
-            tex2jax: {
-                inlineMath: [['$', '$']],
-                processEscapes: true
-                }
-            };
-    </script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
-
-
-<a id="rocket" href="#top"></a>
-<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
-
-
-
-    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-
-
-
-
 </body>
 
 </html>
