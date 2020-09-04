@@ -24,11 +24,12 @@
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
-
-
+    
+    
+    
     
     
 </head>
@@ -231,36 +232,77 @@
 <p>ruby建议是在Linux环境下安装的，但是工作电脑是windows比较常见，下面记录下在windows 7 64bit版本下安装ruby + jekyll + ruby devkit的经历，进过坑，不过都爬出来了，把爬坑经历记录下方便后来者。</p>
 <h1 id="搭建环境--windows-7-64bit电脑举例">搭建环境：  windows 7 64bit电脑举例</h1>
 <h3 id="步骤一下载ruby-x64ruby-devkit-x64python-27-x64ruby建议用233亲测241有插件不支持241才出不久插件未经考验python不强求27版本只是个人习惯用这个版本了ruby-devkit可以用最新版本下载地址httpsrubyinstallerorgdownloads">步骤一：下载ruby x64、ruby devkit x64、Python 2.7 x64，ruby建议用2.3.3，亲测2.4.1有插件不支持，2.4.1才出不久，插件未经考验，python不强求2.7版本，只是个人习惯用这个版本了，ruby devkit可以用最新版本，下载地址：https://rubyinstaller.org/downloads/</h3>
-<p><img src="/posts/jekyll/ruby-download.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/jekyll/ruby-download.jpg" />   
+    </p>
 <h3 id="步骤二下载python27下载地址httpswwwpythonorgdownloadsreleasepython-2713">步骤二：下载python2.7，下载地址：https://www.python.org/downloads/release/python-2713/</h3>
-<p><img src="/posts/jekyll/python-download.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/jekyll/python-download.jpg" />   
+    </p>
 <h3 id="步骤三下载ruby-ssl证书文件下载地址httpcurlhaxxsecacacertpem该证书文件待用">步骤三：下载ruby SSL证书文件，下载地址：http://curl.haxx.se/ca/cacert.pem，该证书文件待用。</h3>
 <h3 id="步骤四下载git-x64安装包下载地址httpsgit-scmcomdownloadwin下载windows-setup即可">步骤四：下载Git x64安装包，下载地址：https://git-scm.com/download/win，下载windows setup即可。</h3>
-<p><img src="/posts/jekyll/Git-install.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/jekyll/Git-install.jpg" />   
+    </p>
 <h2 id="下载完成后开始安装并配置环境变量虽然安装选项中会有是否配置环境变量提示但是仍然是习惯自己配置环境变量">下载完成后，开始安装并配置环境变量，虽然安装选项中会有是否配置环境变量提示，但是仍然是习惯自己配置环境变量。</h2>
 <h3 id="1安装pythond新建python_home把python27安装到dpython_homepython27下具体过程不一一详细讲解需要excuteinstall功能">1、安装python，D:\新建PYTHON_HOME，把python27安装到D:\PYTHON_HOME\Python27下，具体过程不一一详细讲解，需要excuteInstall功能</h3>
 <h3 id="2安装ruby-dev-kitd新建rubydevkit把devkit解压到drubydevkit下具体操作不一一详细讲解因windows环境没有linux命令所以需要这个工具包增加操作命令">2、安装ruby dev kit，D:\新建RubyDevKit，把DevKit解压到D:\RubyDevKit\下，具体操作不一一详细讲解，因windows环境没有linux命令，所以需要这个工具包增加操作命令。</h3>
 <h3 id="3安装ruby在上一环节的drubydevkit新建ruby目录把ruby安装到这个目录下">3、安装ruby，在上一环节的D:\RubyDevKit\新建Ruby目录，把ruby安装到这个目录下。</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bat" data-lang="bat">安装完ruby dev kit和ruby后，需要执行如下安装操作：
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bat" data-lang="bat">安装完ruby dev kit和ruby后，需要执行如下安装操作：
 <span style="color:#000;font-weight:bold">cd</span> D:\RubyDevKit
 创建config.yml配置文件，初始化init，
 编辑config.yml添加上ruby的安装目录，然后review添加结果，
 最后执行install，没报错表示配置成功。
-</code></pre></div><p><img src="/posts/jekyll/dk.rb.jpg" alt="">
-<img src="/posts/jekyll/config1.jpg" alt=""></p>
+</code></pre></td></tr></table>
+</div>
+</div><p>
+        <img class="mx-auto" alt="" src="/posts/jekyll/dk.rb.jpg" />   
+    
+
+        <img class="mx-auto" alt="" src="/posts/jekyll/config1.jpg" />   
+    </p>
 <h3 id="4放置ruby-ssl证书文件到drubydevkitrubyruby23-x64bin目录下最后开始设置环境变量">4、放置ruby SSL证书文件到D:\RubyDevKit\Ruby\Ruby23-x64\bin目录下，最后开始设置环境变量</h3>
-<p><img src="/posts/jekyll/env-set.jpg" alt="">
-<img src="/posts/jekyll/env-set3.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/jekyll/env-set.jpg" />   
+    
+
+        <img class="mx-auto" alt="" src="/posts/jekyll/env-set3.jpg" />   
+    </p>
 <h3 id="5安装git直接保持默认值一路安装完成注意设置环境变量时要勾选设置path">5、安装Git，直接保持默认值，一路安装完成，注意设置环境变量时要勾选设置Path。</h3>
-<p><img src="/posts/jekyll/Git-install2.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/jekyll/Git-install2.jpg" />   
+    </p>
 <h2 id="安装完成后开始下一步配置环境变量">安装完成后，开始下一步配置环境变量：</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bat" data-lang="bat">系统 - 高级系统设置 - 环境变量，
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bat" data-lang="bat">系统 - 高级系统设置 - 环境变量，
 新增RUBY_HOME，值为D:\RubyDevKit\Ruby\Ruby23-x64，
 继续新增PYTHON_HOME，值为：D:\PYTHON_HOME\Python27，
 继续新增SSL_CERT_FILE，值为D:\RubyDevKit\Ruby\Ruby23-x64\bin\cacert.pem。
-</code></pre></div><p><img src="/posts/jekyll/env-set2.jpg" alt=""></p>
+</code></pre></td></tr></table>
+</div>
+</div><p>
+        <img class="mx-auto" alt="" src="/posts/jekyll/env-set2.jpg" />   
+    </p>
 <h2 id="开始校验下安装和环境变量配置是否正确">开始校验下安装和环境变量配置是否正确：</h2>
-<p><img src="/posts/jekyll/env-check.jpg" alt=""><br>
+<p>
+        <img class="mx-auto" alt="" src="/posts/jekyll/env-check.jpg" />   
+    <br>
 校验无误后，开始进行jekyll安装，
 执行命令：
 安装bundler</p>
@@ -271,17 +313,31 @@
 <pre><code>&gt;jekyll new myBlog
 &gt;cd myBlog
 &gt;jekyll s
-</code></pre><p><img src="/posts/jekyll/new.jpg" alt=""></p>
+</code></pre><p>
+        <img class="mx-auto" alt="" src="/posts/jekyll/new.jpg" />   
+    </p>
 <h2 id="看到如下信息表示一个初步的静态blog系统搭建好">看到如下信息表示一个初步的静态blog系统搭建好</h2>
-<p><img src="/posts/jekyll/jekyll-start.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/jekyll/jekyll-start.jpg" />   
+    </p>
 <h2 id="中途可能会碰到4000端口被占用情况可以cmd进去后执行netstat--ano找到占用4000端口的pid然后进系统进程找到对应的pid看是哪个服务进程可以关闭比如我的电脑因为安装了foxit-pdf占用了4000可以关闭这个无用的foxit-service">中途可能会碰到4000端口被占用情况，可以cmd进去后执行netstat -ano找到占用4000端口的pid，然后进系统进程找到对应的pid，看是哪个服务进程，可以关闭，比如我的电脑因为安装了Foxit pdf，占用了4000，可以关闭这个无用的Foxit service。</h2>
-<p><img src="/posts/jekyll/port-check-pid.jpg" alt="">
-<img src="/posts/jekyll/pid.jpg" alt="">
-<img src="/posts/jekyll/service-close.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/jekyll/port-check-pid.jpg" />   
+    
+
+        <img class="mx-auto" alt="" src="/posts/jekyll/pid.jpg" />   
+    
+
+        <img class="mx-auto" alt="" src="/posts/jekyll/service-close.jpg" />   
+    </p>
 <h2 id="如果没碰到4000端口占用问题可以不理会上面的端口冲突关闭其他4000占用进程步骤开始进一步的完善jekyll先查看启动的服务界面在浏览器输入http1270014000可以看到如下界面表示jekyll服务初步成功">如果没碰到4000端口占用问题，可以不理会上面的端口冲突关闭其他4000占用进程步骤，开始进一步的完善jekyll，先查看启动的服务界面。在浏览器输入http://127.0.0.1:4000，可以看到如下界面，表示jekyll服务初步成功</h2>
-<p><img src="/posts/jekyll/127.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/jekyll/127.jpg" />   
+    </p>
 <h2 id="这个只是demojekyll如果只是这么点功能那就不推荐了jekyll的好处就是模板多我们可以去github上找更多精美的模板进行二次开发模板地址httpjekyllthemesorg如下图有很多精美模板可供参考">这个只是demo，jekyll如果只是这么点功能，那就不推荐了，jekyll的好处就是模板多，我们可以去github上找更多精美的模板，进行二次开发。模板地址：http://jekyllthemes.org/，如下图，有很多精美模板可供参考：</h2>
-<p><img src="/posts/jekyll/theme.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/jekyll/theme.jpg" />   
+    </p>
 <h3 id="还可以下载我的个人httpsgithubcomanttutuanttutugithubio我的这个也是在别人的基础上修改而来所以下载模板进行二次开发最便捷的手段省去美化的时间">还可以下载我的个人https://github.com/anTtutu/anTtutu.github.io，我的这个也是在别人的基础上修改而来，所以下载模板进行二次开发最便捷的手段，省去美化的时间。</h3>
 <p>那么，使用他人的模板，插件库可能不一致，导致的问题有很多</p>
 <h3 id="首先使用git命令下载模板库后进入对方的模板库目录">首先，使用git命令下载模板库后，进入对方的模板库目录</h3>
@@ -296,9 +352,15 @@
 下载好模板和插件后，可以切换到模板目录再次jekyll s启动模板的工程。
 &gt;cd F:\testWorksapce\anttu   
 &gt;jekyll s   
-</code></pre><p><img src="/posts/jekyll/clone.jpg" alt="">
-<img src="/posts/jekyll/bundle-install.jpg" alt="">
-<img src="/posts/jekyll/bundle-update.jpg" alt=""></p>
+</code></pre><p>
+        <img class="mx-auto" alt="" src="/posts/jekyll/clone.jpg" />   
+    
+
+        <img class="mx-auto" alt="" src="/posts/jekyll/bundle-install.jpg" />   
+    
+
+        <img class="mx-auto" alt="" src="/posts/jekyll/bundle-update.jpg" />   
+    </p>
 <h3 id="检查如同demo--myblog那个启动成功没错误提示表示ok了可以愉快的去修改试用模板了">检查如同demo  myBlog那个启动成功没错误提示表示OK了。可以愉快的去修改、试用模板了。</h3>
 <h3 id="模板的语法是用ruby--markdown写的这点对于有开发基础的人来说不是问题">模板的语法是用ruby + markdown写的，这点对于有开发基础的人来说不是问题。</h3>
 <h1 id="tips">Tips：</h1>
@@ -395,6 +457,45 @@ Installing RDoc documentation for rdiscount-1.6.8...
     
 </div>
 
+                    <footer id="footer">
+    <div>
+        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
                 </div>
 
                 <div id="secondary">
@@ -457,7 +558,7 @@ Installing RDoc documentation for rdiscount-1.6.8...
     
 
     <section class="widget">
-        <h3 class="widget-title">分类</h3>
+        <h3 class="widget-title"><a href="/categories">分类</a></h3>
 <ul class="widget-list">
     
     <li><a href="https://anTtutu.github.io/categories/JDK%E7%9A%84bug/">JDK的bug (1)</a></li>
@@ -508,7 +609,7 @@ Installing RDoc documentation for rdiscount-1.6.8...
     </section>
 
     <section class="widget">
-        <h3 class="widget-title">标签</h3>
+        <h3 class="widget-title"><a href="/tags">标签</a></h3>
 <div class="tagcloud">
     
     <a href="https://anTtutu.github.io/tags/JDK%E7%9A%84bug/">JDK的bug</a>
@@ -570,38 +671,6 @@ Installing RDoc documentation for rdiscount-1.6.8...
             </div>
         </div>
     </div>
-    <footer id="footer">
-    <div class="container">
-        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>.
-        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
-        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/flysnow-org/maupassant-hugo" target="_blank">maupassant</a>.
-        
-    </div>
-</footer>
-
-
-    
-    <script type="text/javascript">
-        window.MathJax = {
-            tex2jax: {
-                inlineMath: [['$', '$']],
-                processEscapes: true
-                }
-            };
-    </script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
-
-
-<a id="rocket" href="#top"></a>
-<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
-
-
-
-    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-
-
-
-
 </body>
 
 </html>

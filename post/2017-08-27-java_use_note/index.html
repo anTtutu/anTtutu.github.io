@@ -24,11 +24,12 @@
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
-
-
+    
+    
+    
     
     
 </head>
@@ -212,28 +213,51 @@
         <div class="post-content">
             <h2 id="1web项目远程调测---仅用于测试环境或者上线前的调测">1、web项目远程调测 - 仅用于测试环境或者上线前的调测</h2>
 <h4 id="注意仅限测试环境或者上线前的调测如果用于生产环境你的开发工具再debug模式起着的话会拦截所有的请求">注意：仅限测试环境或者上线前的调测，如果用于生产环境，你的开发工具再debug模式起着的话，会拦截所有的请求。</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># linux增加以下这段就可以远程连接服务器的5888端口了</span>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># linux增加以下这段就可以远程连接服务器的5888端口了</span>
 <span style="color:#008080">CATALINA_OPTS</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5888&#34;</span>
-</code></pre></div><h4 id="添加了debug端口以后好像会出现shutdownsh-无法关闭tomcat需要手动kill">添加了debug端口以后好像会出现./shutdown.sh 无法关闭tomcat，需要手动kill</h4>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="添加了debug端口以后好像会出现shutdownsh-无法关闭tomcat需要手动kill">添加了debug端口以后好像会出现./shutdown.sh 无法关闭tomcat，需要手动kill</h4>
 <pre><code class="language-dos" data-lang="dos"># Windows下面修改catalina.bat，增加：  
 SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5888
 </code></pre><p>然后配置你的eclispe启动remote：新建remote java Application
-<img src="/posts/debug/add-remote.jpg" alt=""></p>
+
+        <img class="mx-auto" alt="" src="/posts/debug/add-remote.jpg" />   
+    </p>
 <p>配置host和port：
-<img src="/posts/debug/config.jpg" alt=""></p>
+
+        <img class="mx-auto" alt="" src="/posts/debug/config.jpg" />   
+    </p>
 <p>然后就可以调测定位问题。</p>
 <h2 id="2生产环境的数据问题如何在本地开发环境重现">2、生产环境的数据问题如何在本地开发环境重现？</h2>
 <h4 id="这个问题碰不到还好碰到就头疼了我个人是把依赖的几个工程转成osgi的模式然后测试代码替换到spring的服务抓到生产的入参然后在测试代码中跟踪逻辑走向">这个问题碰不到还好，碰到就头疼了，我个人是把依赖的几个工程转成osgi的模式，然后测试代码，替换到spring的服务，抓到生产的入参，然后在测试代码中跟踪逻辑走向。</h4>
 <h2 id="3base64奇葩问题">3、base64奇葩问题</h2>
 <h4 id="周五2017年6月10日晚碰到个诡异问题">周五（2017年6月10日晚）碰到个诡异问题：</h4>
 <h4 id="用maven引入commons-codec-110的包使用base64加密结果怎么都不对一直提示方法找不到如下面的报错">用maven引入commons-codec-1.10的包，使用base64加密，结果怎么都不对，一直提示方法找不到，如下面的报错</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">lang</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">NoSuchMethodError</span><span style="color:#000;font-weight:bold">:</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">commons</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">codec</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">binary</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Base64</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">decodeBase64</span>
-</code></pre></div><h4 id="后来找了下发现qq的第三方登录sdk包重写了apache的base64而且包名都一样导致找不到对应的方法">后来找了下，发现QQ的第三方登录SDK包重写了apache的base64，而且包名都一样，导致找不到对应的方法，</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">lang</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">NoSuchMethodError</span><span style="color:#000;font-weight:bold">:</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">commons</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">codec</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">binary</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Base64</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">decodeBase64</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="后来找了下发现qq的第三方登录sdk包重写了apache的base64而且包名都一样导致找不到对应的方法">后来找了下，发现QQ的第三方登录SDK包重写了apache的base64，而且包名都一样，导致找不到对应的方法，</h4>
 <h4 id="经打开两个包查看验证确实如此给自己做个记录以免再入坑">经打开两个包查看，验证确实如此，给自己做个记录，以免再入坑：</h4>
 <h4 id="qq的sdk4j">QQ的Sdk4j:</h4>
-<p><img src="/posts/debug/tx.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/debug/tx.jpg" />   
+    </p>
 <h4 id="apache的commons-codec">Apache的commons-codec:</h4>
-<p><img src="/posts/debug/apache.jpg" alt=""></p>
+<p>
+        <img class="mx-auto" alt="" src="/posts/debug/apache.jpg" />   
+    </p>
 
         </div>
 
@@ -295,6 +319,45 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     </div>
     
 </div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
 
                 </div>
 
@@ -358,7 +421,7 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     
 
     <section class="widget">
-        <h3 class="widget-title">分类</h3>
+        <h3 class="widget-title"><a href="/categories">分类</a></h3>
 <ul class="widget-list">
     
     <li><a href="https://anTtutu.github.io/categories/JDK%E7%9A%84bug/">JDK的bug (1)</a></li>
@@ -409,7 +472,7 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     </section>
 
     <section class="widget">
-        <h3 class="widget-title">标签</h3>
+        <h3 class="widget-title"><a href="/tags">标签</a></h3>
 <div class="tagcloud">
     
     <a href="https://anTtutu.github.io/tags/JDK%E7%9A%84bug/">JDK的bug</a>
@@ -471,38 +534,6 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
             </div>
         </div>
     </div>
-    <footer id="footer">
-    <div class="container">
-        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>.
-        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
-        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/flysnow-org/maupassant-hugo" target="_blank">maupassant</a>.
-        
-    </div>
-</footer>
-
-
-    
-    <script type="text/javascript">
-        window.MathJax = {
-            tex2jax: {
-                inlineMath: [['$', '$']],
-                processEscapes: true
-                }
-            };
-    </script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
-
-
-<a id="rocket" href="#top"></a>
-<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
-
-
-
-    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-
-
-
-
 </body>
 
 </html>

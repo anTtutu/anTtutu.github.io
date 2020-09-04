@@ -24,11 +24,12 @@
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
-
-
+    
+    
+    
     
     
 </head>
@@ -242,11 +243,33 @@
 <h4 id="前提条件数据库为oracle-10g以上版本">前提条件数据库为Oracle 10g以上版本。</h4>
 <h4 id="背景信息">背景信息</h4>
 <h4 id="oracle默认快照1小时生成一次保持7天可以根据需要调整快照生成的频率保持时长如果要手工生成快照则用">Oracle默认快照1小时生成一次、保持7天，可以根据需要调整快照生成的频率、保持时长。如果要手工生成快照，则用</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">~</span><span style="color:#000;font-weight:bold">&gt;</span> sqlplus <span style="color:#000;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">as</span> sysdba;<span style="color:#a61717;background-color:#e3d2d2">登</span><span style="color:#a61717;background-color:#e3d2d2">录</span><span style="color:#a61717;background-color:#e3d2d2">数</span><span style="color:#a61717;background-color:#e3d2d2">据</span><span style="color:#a61717;background-color:#e3d2d2">库</span><span style="color:#a61717;background-color:#e3d2d2">执</span><span style="color:#a61717;background-color:#e3d2d2">行</span><span style="color:#a61717;background-color:#e3d2d2">命</span><span style="color:#a61717;background-color:#e3d2d2">令</span><span style="color:#a61717;background-color:#e3d2d2">：</span>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">~</span><span style="color:#000;font-weight:bold">&gt;</span> sqlplus <span style="color:#000;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">as</span> sysdba;<span style="color:#a61717;background-color:#e3d2d2">登</span><span style="color:#a61717;background-color:#e3d2d2">录</span><span style="color:#a61717;background-color:#e3d2d2">数</span><span style="color:#a61717;background-color:#e3d2d2">据</span><span style="color:#a61717;background-color:#e3d2d2">库</span><span style="color:#a61717;background-color:#e3d2d2">执</span><span style="color:#a61717;background-color:#e3d2d2">行</span><span style="color:#a61717;background-color:#e3d2d2">命</span><span style="color:#a61717;background-color:#e3d2d2">令</span><span style="color:#a61717;background-color:#e3d2d2">：</span>
 <span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">exec</span> dbms_workload_repository.create_snapshot();
-</code></pre></div><h2 id="步骤-1-以oracle用户登录操作系统">步骤 1 以oracle用户登录操作系统。</h2>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="步骤-1-以oracle用户登录操作系统">步骤 1 以oracle用户登录操作系统。</h2>
 <h2 id="步骤-2-登录数据库">步骤 2 登录数据库。</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">~</span><span style="color:#000;font-weight:bold">&gt;</span> sqlplus <span style="color:#000;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">as</span> sysdba;
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">~</span><span style="color:#000;font-weight:bold">&gt;</span> sqlplus <span style="color:#000;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">as</span> sysdba;
 <span style="color:#a61717;background-color:#e3d2d2">登</span><span style="color:#a61717;background-color:#e3d2d2">录</span><span style="color:#a61717;background-color:#e3d2d2">成</span><span style="color:#a61717;background-color:#e3d2d2">功</span><span style="color:#a61717;background-color:#e3d2d2">后</span><span style="color:#a61717;background-color:#e3d2d2">，</span><span style="color:#a61717;background-color:#e3d2d2">返</span><span style="color:#a61717;background-color:#e3d2d2">回</span><span style="color:#a61717;background-color:#e3d2d2">信</span><span style="color:#a61717;background-color:#e3d2d2">息</span><span style="color:#a61717;background-color:#e3d2d2">如</span><span style="color:#a61717;background-color:#e3d2d2">下</span><span style="color:#a61717;background-color:#e3d2d2">：</span>
 <span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">*</span>Plus: Release <span style="color:#099">11</span>.<span style="color:#099">1</span>.<span style="color:#099">0</span>.<span style="color:#099">7</span>.<span style="color:#099">0</span> <span style="color:#000;font-weight:bold">-</span> Production <span style="color:#000;font-weight:bold">on</span> Mon Jul <span style="color:#099">22</span> <span style="color:#099">09</span>:<span style="color:#099">52</span>:<span style="color:#099">46</span> <span style="color:#099">2013</span>
  
@@ -256,8 +279,93 @@ Connected <span style="color:#000;font-weight:bold">to</span>:
 Oracle <span style="color:#000;font-weight:bold">Database</span> <span style="color:#099">11</span><span style="color:#000;font-weight:bold">g</span> Enterprise Edition Release <span style="color:#099">11</span>.<span style="color:#099">1</span>.<span style="color:#099">0</span>.<span style="color:#099">7</span>.<span style="color:#099">0</span> <span style="color:#000;font-weight:bold">-</span> <span style="color:#099">64</span><span style="color:#0086b3">bit</span> Production
 <span style="color:#000;font-weight:bold">With</span> the Partitioning, Oracle Label <span style="color:#000;font-weight:bold">Security</span>, OLAP, <span style="color:#000;font-weight:bold">Data</span> Mining,
 Oracle <span style="color:#000;font-weight:bold">Database</span> Vault <span style="color:#000;font-weight:bold">and</span> <span style="color:#0086b3">Real</span> Application Testing <span style="color:#000;font-weight:bold">options</span>
-</code></pre></div><h2 id="步骤-3-生成awr报表">步骤 3 生成AWR报表。</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#099">1</span>. <span style="color:#a61717;background-color:#e3d2d2">开</span><span style="color:#a61717;background-color:#e3d2d2">始</span><span style="color:#a61717;background-color:#e3d2d2">收</span><span style="color:#a61717;background-color:#e3d2d2">集</span>AWR报表
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="步骤-3-生成awr报表">步骤 3 生成AWR报表。</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#099">1</span>. <span style="color:#a61717;background-color:#e3d2d2">开</span><span style="color:#a61717;background-color:#e3d2d2">始</span><span style="color:#a61717;background-color:#e3d2d2">收</span><span style="color:#a61717;background-color:#e3d2d2">集</span>AWR报表
 <span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">@</span><span style="color:#000;font-weight:bold">?</span><span style="color:#000;font-weight:bold">/</span>rdbms<span style="color:#000;font-weight:bold">/</span><span style="color:#000;font-weight:bold">admin</span><span style="color:#000;font-weight:bold">/</span>awrrpt.<span style="color:#000;font-weight:bold">sql</span>;
 <span style="color:#a61717;background-color:#e3d2d2">说</span><span style="color:#a61717;background-color:#e3d2d2">明</span><span style="color:#a61717;background-color:#e3d2d2">：</span>
 <span style="color:#a61717;background-color:#e3d2d2">对</span><span style="color:#a61717;background-color:#e3d2d2">某</span><span style="color:#a61717;background-color:#e3d2d2">些</span><span style="color:#a61717;background-color:#e3d2d2">系</span><span style="color:#a61717;background-color:#e3d2d2">统</span><span style="color:#a61717;background-color:#e3d2d2">，</span><span style="color:#000;font-weight:bold">@</span><span style="color:#a61717;background-color:#e3d2d2">特</span><span style="color:#a61717;background-color:#e3d2d2">殊</span><span style="color:#a61717;background-color:#e3d2d2">字</span><span style="color:#a61717;background-color:#e3d2d2">符</span><span style="color:#a61717;background-color:#e3d2d2">前</span><span style="color:#a61717;background-color:#e3d2d2">面</span><span style="color:#a61717;background-color:#e3d2d2">可</span><span style="color:#a61717;background-color:#e3d2d2">能</span><span style="color:#a61717;background-color:#e3d2d2">需</span><span style="color:#a61717;background-color:#e3d2d2">要</span><span style="color:#a61717;background-color:#e3d2d2">转</span><span style="color:#a61717;background-color:#e3d2d2">义</span><span style="color:#a61717;background-color:#e3d2d2">字</span><span style="color:#a61717;background-color:#e3d2d2">符</span><span style="color:#a61717;background-color:#e3d2d2">\</span><span style="color:#a61717;background-color:#e3d2d2">，</span><span style="color:#a61717;background-color:#e3d2d2">才</span><span style="color:#a61717;background-color:#e3d2d2">能</span><span style="color:#a61717;background-color:#e3d2d2">运</span><span style="color:#a61717;background-color:#e3d2d2">行</span><span style="color:#a61717;background-color:#e3d2d2">该</span><span style="color:#a61717;background-color:#e3d2d2">命</span><span style="color:#a61717;background-color:#e3d2d2">令</span><span style="color:#a61717;background-color:#e3d2d2">。</span><span style="color:#a61717;background-color:#e3d2d2">请</span><span style="color:#a61717;background-color:#e3d2d2">运</span><span style="color:#a61717;background-color:#e3d2d2">行</span><span style="color:#a61717;background-color:#e3d2d2">命</span><span style="color:#a61717;background-color:#e3d2d2">令</span><span style="color:#a61717;background-color:#e3d2d2">：</span><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#a61717;background-color:#e3d2d2">\</span><span style="color:#000;font-weight:bold">@</span><span style="color:#000;font-weight:bold">?</span><span style="color:#000;font-weight:bold">/</span>rdbms<span style="color:#000;font-weight:bold">/</span><span style="color:#000;font-weight:bold">admin</span><span style="color:#000;font-weight:bold">/</span>awrrpt.<span style="color:#000;font-weight:bold">sql</span>;
@@ -336,8 +444,22 @@ Listing the <span style="color:#000;font-weight:bold">last</span> <span style="c
 </span><span style="color:#d14">默认以snap Id命名，可以不输入。
 </span><span style="color:#d14">如下所示为生成的AWR报表样例：
 </span><span style="color:#d14">Report written to awrrpt_1_3166_3168.html
-</span></code></pre></div><h2 id="步骤-4-如果没指定目录和文件名生成的awr报表在当前目录执行如下命令查看">步骤 4 如果没指定目录和文件名，生成的AWR报表在当前目录，执行如下命令查看。</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#099">1</span>. <span style="color:#a61717;background-color:#e3d2d2">回</span><span style="color:#a61717;background-color:#e3d2d2">到</span><span style="color:#a61717;background-color:#e3d2d2">当</span><span style="color:#a61717;background-color:#e3d2d2">前</span><span style="color:#a61717;background-color:#e3d2d2">目</span><span style="color:#a61717;background-color:#e3d2d2">录</span><span style="color:#a61717;background-color:#e3d2d2">。</span>
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="步骤-4-如果没指定目录和文件名生成的awr报表在当前目录执行如下命令查看">步骤 4 如果没指定目录和文件名，生成的AWR报表在当前目录，执行如下命令查看。</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#099">1</span>. <span style="color:#a61717;background-color:#e3d2d2">回</span><span style="color:#a61717;background-color:#e3d2d2">到</span><span style="color:#a61717;background-color:#e3d2d2">当</span><span style="color:#a61717;background-color:#e3d2d2">前</span><span style="color:#a61717;background-color:#e3d2d2">目</span><span style="color:#a61717;background-color:#e3d2d2">录</span><span style="color:#a61717;background-color:#e3d2d2">。</span>
 <span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">host</span>;
 
 <span style="color:#099">2</span>. <span style="color:#a61717;background-color:#e3d2d2">查</span><span style="color:#a61717;background-color:#e3d2d2">看</span><span style="color:#a61717;background-color:#e3d2d2">报</span><span style="color:#a61717;background-color:#e3d2d2">表</span><span style="color:#a61717;background-color:#e3d2d2">。</span>
@@ -345,15 +467,105 @@ Listing the <span style="color:#000;font-weight:bold">last</span> <span style="c
 <span style="color:#a61717;background-color:#e3d2d2">返</span><span style="color:#a61717;background-color:#e3d2d2">回</span><span style="color:#a61717;background-color:#e3d2d2">信</span><span style="color:#a61717;background-color:#e3d2d2">息</span><span style="color:#a61717;background-color:#e3d2d2">显</span><span style="color:#a61717;background-color:#e3d2d2">示</span><span style="color:#a61717;background-color:#e3d2d2">如</span><span style="color:#a61717;background-color:#e3d2d2">下</span><span style="color:#a61717;background-color:#e3d2d2">：</span>
 awrrpt_1_3166_3168.html
 <span style="color:#998;font-style:italic">----结束
-</span></code></pre></div><h1 id="二ash报告开启和提取操作步骤">二、ash报告开启和提取操作步骤:</h1>
+</span></code></pre></td></tr></table>
+</div>
+</div><h1 id="二ash报告开启和提取操作步骤">二、ash报告开启和提取操作步骤:</h1>
 <h4 id="收集活动会话的历史信息短暂的性能问题比如只是持续几分钟的性能问题特定时段的数据库运行的性能状态信息以及针对特定的模块sql_idsession_idservice等来收集的性能状态信息">收集活动会话的历史信息、短暂的性能问题（比如只是持续几分钟的性能问题）、特定时段的数据库运行的性能状态信息，以及针对特定的模块、SQL_ID、SESSION_ID、service等来收集的性能状态信息。</h4>
 <h4 id="背景信息-1">背景信息</h4>
 <h4 id="ash每秒钟收集一次当前处于非空闲等待事件的活动状态的session的信息不收集空闲的会话">ASH每秒钟收集一次当前处于非空闲等待事件的、活动状态的session的信息，不收集空闲的会话。</h4>
 <h2 id="步骤-1-以oracle用户登录操作系统-1">步骤 1 以Oracle用户登录操作系统。</h2>
 <h2 id="步骤-2-登录数据库-1">步骤 2 登录数据库。</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">:<span style="color:#000;font-weight:bold">~</span><span style="color:#000;font-weight:bold">&gt;</span> sqlplus <span style="color:#000;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">as</span> sysdba; 
-</code></pre></div><h2 id="步骤-3-生成ash报表">步骤 3 生成ASH报表</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#099">1</span>. <span style="color:#a61717;background-color:#e3d2d2">开</span><span style="color:#a61717;background-color:#e3d2d2">始</span><span style="color:#a61717;background-color:#e3d2d2">收</span><span style="color:#a61717;background-color:#e3d2d2">集</span>ASH报表<span style="color:#a61717;background-color:#e3d2d2">。</span>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">:<span style="color:#000;font-weight:bold">~</span><span style="color:#000;font-weight:bold">&gt;</span> sqlplus <span style="color:#000;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">as</span> sysdba; 
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="步骤-3-生成ash报表">步骤 3 生成ASH报表</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#099">1</span>. <span style="color:#a61717;background-color:#e3d2d2">开</span><span style="color:#a61717;background-color:#e3d2d2">始</span><span style="color:#a61717;background-color:#e3d2d2">收</span><span style="color:#a61717;background-color:#e3d2d2">集</span>ASH报表<span style="color:#a61717;background-color:#e3d2d2">。</span>
 <span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">@</span><span style="color:#000;font-weight:bold">?</span><span style="color:#000;font-weight:bold">/</span>rdbms<span style="color:#000;font-weight:bold">/</span><span style="color:#000;font-weight:bold">admin</span><span style="color:#000;font-weight:bold">/</span>ashrpt.<span style="color:#000;font-weight:bold">sql</span>;
 <span style="color:#a61717;background-color:#e3d2d2">对</span><span style="color:#a61717;background-color:#e3d2d2">某</span><span style="color:#a61717;background-color:#e3d2d2">些</span><span style="color:#a61717;background-color:#e3d2d2">系</span><span style="color:#a61717;background-color:#e3d2d2">统</span><span style="color:#a61717;background-color:#e3d2d2">，</span><span style="color:#000;font-weight:bold">@</span><span style="color:#a61717;background-color:#e3d2d2">特</span><span style="color:#a61717;background-color:#e3d2d2">殊</span><span style="color:#a61717;background-color:#e3d2d2">字</span><span style="color:#a61717;background-color:#e3d2d2">符</span><span style="color:#a61717;background-color:#e3d2d2">前</span><span style="color:#a61717;background-color:#e3d2d2">面</span><span style="color:#a61717;background-color:#e3d2d2">可</span><span style="color:#a61717;background-color:#e3d2d2">能</span><span style="color:#a61717;background-color:#e3d2d2">需</span><span style="color:#a61717;background-color:#e3d2d2">要</span><span style="color:#a61717;background-color:#e3d2d2">转</span><span style="color:#a61717;background-color:#e3d2d2">义</span><span style="color:#a61717;background-color:#e3d2d2">字</span><span style="color:#a61717;background-color:#e3d2d2">符</span><span style="color:#a61717;background-color:#e3d2d2">\</span><span style="color:#a61717;background-color:#e3d2d2">，</span><span style="color:#a61717;background-color:#e3d2d2">才</span><span style="color:#a61717;background-color:#e3d2d2">能</span><span style="color:#a61717;background-color:#e3d2d2">运</span><span style="color:#a61717;background-color:#e3d2d2">行</span><span style="color:#a61717;background-color:#e3d2d2">该</span><span style="color:#a61717;background-color:#e3d2d2">命</span><span style="color:#a61717;background-color:#e3d2d2">令</span><span style="color:#a61717;background-color:#e3d2d2">。</span><span style="color:#a61717;background-color:#e3d2d2">请</span><span style="color:#a61717;background-color:#e3d2d2">运</span><span style="color:#a61717;background-color:#e3d2d2">行</span><span style="color:#a61717;background-color:#e3d2d2">命</span><span style="color:#a61717;background-color:#e3d2d2">令</span><span style="color:#a61717;background-color:#e3d2d2">：</span><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#a61717;background-color:#e3d2d2">\</span><span style="color:#000;font-weight:bold">@</span><span style="color:#000;font-weight:bold">?</span><span style="color:#000;font-weight:bold">/</span>rdbms<span style="color:#000;font-weight:bold">/</span><span style="color:#000;font-weight:bold">admin</span><span style="color:#000;font-weight:bold">/</span>awrrpt.<span style="color:#000;font-weight:bold">sql</span>;
 <span style="color:#a61717;background-color:#e3d2d2">返</span><span style="color:#a61717;background-color:#e3d2d2">回</span><span style="color:#a61717;background-color:#e3d2d2">信</span><span style="color:#a61717;background-color:#e3d2d2">息</span><span style="color:#a61717;background-color:#e3d2d2">显</span><span style="color:#a61717;background-color:#e3d2d2">示</span><span style="color:#a61717;background-color:#e3d2d2">如</span><span style="color:#a61717;background-color:#e3d2d2">下</span><span style="color:#a61717;background-color:#e3d2d2">：</span>
@@ -430,8 +642,22 @@ Enter value <span style="color:#000;font-weight:bold">for</span> report_name:
 <span style="color:#099">5</span>. <span style="color:#a61717;background-color:#e3d2d2">输</span><span style="color:#a61717;background-color:#e3d2d2">入</span><span style="color:#a61717;background-color:#e3d2d2">报</span><span style="color:#a61717;background-color:#e3d2d2">表</span><span style="color:#a61717;background-color:#e3d2d2">名</span><span style="color:#a61717;background-color:#e3d2d2">，</span><span style="color:#a61717;background-color:#e3d2d2">默</span><span style="color:#a61717;background-color:#e3d2d2">认</span><span style="color:#a61717;background-color:#e3d2d2">以</span><span style="color:#a61717;background-color:#e3d2d2">“</span>ashrpt_instance_Id_日期_时间<span style="color:#a61717;background-color:#e3d2d2">”</span><span style="color:#a61717;background-color:#e3d2d2">命</span><span style="color:#a61717;background-color:#e3d2d2">名</span><span style="color:#a61717;background-color:#e3d2d2">，</span><span style="color:#a61717;background-color:#e3d2d2">可</span><span style="color:#a61717;background-color:#e3d2d2">以</span><span style="color:#a61717;background-color:#e3d2d2">不</span><span style="color:#a61717;background-color:#e3d2d2">输</span><span style="color:#a61717;background-color:#e3d2d2">入</span><span style="color:#a61717;background-color:#e3d2d2">。</span>
 <span style="color:#a61717;background-color:#e3d2d2">如</span><span style="color:#a61717;background-color:#e3d2d2">下</span><span style="color:#a61717;background-color:#e3d2d2">所</span><span style="color:#a61717;background-color:#e3d2d2">示</span><span style="color:#a61717;background-color:#e3d2d2">为</span><span style="color:#a61717;background-color:#e3d2d2">生</span><span style="color:#a61717;background-color:#e3d2d2">成</span><span style="color:#a61717;background-color:#e3d2d2">的</span>ASH报表样例<span style="color:#a61717;background-color:#e3d2d2">：</span>
 Report written <span style="color:#000;font-weight:bold">to</span> ashrpt_1_0729_1920.html
-</code></pre></div><h2 id="步骤-4-如果没指定目录和文件名生成的ash报表在当前目录执行如下命令查看">步骤 4 如果没指定目录和文件名，生成的ASH报表在当前目录，执行如下命令查看。</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#099">1</span>. <span style="color:#a61717;background-color:#e3d2d2">回</span><span style="color:#a61717;background-color:#e3d2d2">到</span><span style="color:#a61717;background-color:#e3d2d2">当</span><span style="color:#a61717;background-color:#e3d2d2">前</span><span style="color:#a61717;background-color:#e3d2d2">目</span><span style="color:#a61717;background-color:#e3d2d2">录</span><span style="color:#a61717;background-color:#e3d2d2">。</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="步骤-4-如果没指定目录和文件名生成的ash报表在当前目录执行如下命令查看">步骤 4 如果没指定目录和文件名，生成的ASH报表在当前目录，执行如下命令查看。</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#099">1</span>. <span style="color:#a61717;background-color:#e3d2d2">回</span><span style="color:#a61717;background-color:#e3d2d2">到</span><span style="color:#a61717;background-color:#e3d2d2">当</span><span style="color:#a61717;background-color:#e3d2d2">前</span><span style="color:#a61717;background-color:#e3d2d2">目</span><span style="color:#a61717;background-color:#e3d2d2">录</span><span style="color:#a61717;background-color:#e3d2d2">。</span>
 <span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">host</span>;
 
 <span style="color:#099">2</span>. <span style="color:#a61717;background-color:#e3d2d2">查</span><span style="color:#a61717;background-color:#e3d2d2">看</span><span style="color:#a61717;background-color:#e3d2d2">报</span><span style="color:#a61717;background-color:#e3d2d2">表</span><span style="color:#a61717;background-color:#e3d2d2">。</span>
@@ -439,13 +665,63 @@ Report written <span style="color:#000;font-weight:bold">to</span> ashrpt_1_0729
 <span style="color:#a61717;background-color:#e3d2d2">返</span><span style="color:#a61717;background-color:#e3d2d2">回</span><span style="color:#a61717;background-color:#e3d2d2">信</span><span style="color:#a61717;background-color:#e3d2d2">息</span><span style="color:#a61717;background-color:#e3d2d2">显</span><span style="color:#a61717;background-color:#e3d2d2">示</span><span style="color:#a61717;background-color:#e3d2d2">如</span><span style="color:#a61717;background-color:#e3d2d2">下</span><span style="color:#a61717;background-color:#e3d2d2">：</span>
 ashrpt_1_0729_1920.html
 <span style="color:#998;font-style:italic">----结束
-</span></code></pre></div><h1 id="三addm日志开启和提取操作步骤">三、ADDM日志开启和提取操作步骤:</h1>
+</span></code></pre></td></tr></table>
+</div>
+</div><h1 id="三addm日志开启和提取操作步骤">三、ADDM日志开启和提取操作步骤:</h1>
 <h4 id="收集定期内的数据库状态潜在的数据库性能瓶颈以及内建专家系统给出的oracle性能调优方法和数据统计分析">收集定期内的数据库状态、潜在的数据库性能瓶颈，以及内建专家系统给出的Oracle性能调优方法和数据统计分析。</h4>
 <h2 id="步骤-1-以oracle用户登录操作系统-2">步骤 1 以oracle用户登录操作系统。</h2>
 <h2 id="步骤-2-登录数据库-2">步骤 2 登录数据库。</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">:<span style="color:#000;font-weight:bold">~</span><span style="color:#000;font-weight:bold">&gt;</span> sqlplus <span style="color:#000;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">as</span> sysdba; 
-</code></pre></div><h2 id="步骤-3-生成addm报表">步骤 3 生成addm报表。</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#099">1</span>. <span style="color:#a61717;background-color:#e3d2d2">开</span><span style="color:#a61717;background-color:#e3d2d2">始</span><span style="color:#a61717;background-color:#e3d2d2">收</span><span style="color:#a61717;background-color:#e3d2d2">集</span>addm报表<span style="color:#a61717;background-color:#e3d2d2">。</span>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">:<span style="color:#000;font-weight:bold">~</span><span style="color:#000;font-weight:bold">&gt;</span> sqlplus <span style="color:#000;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">as</span> sysdba; 
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="步骤-3-生成addm报表">步骤 3 生成addm报表。</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#099">1</span>. <span style="color:#a61717;background-color:#e3d2d2">开</span><span style="color:#a61717;background-color:#e3d2d2">始</span><span style="color:#a61717;background-color:#e3d2d2">收</span><span style="color:#a61717;background-color:#e3d2d2">集</span>addm报表<span style="color:#a61717;background-color:#e3d2d2">。</span>
 <span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">@</span><span style="color:#000;font-weight:bold">?</span><span style="color:#000;font-weight:bold">/</span>rdbms<span style="color:#000;font-weight:bold">/</span><span style="color:#000;font-weight:bold">admin</span><span style="color:#000;font-weight:bold">/</span>addmrpt; 
 <span style="color:#a61717;background-color:#e3d2d2">对</span><span style="color:#a61717;background-color:#e3d2d2">某</span><span style="color:#a61717;background-color:#e3d2d2">些</span><span style="color:#a61717;background-color:#e3d2d2">系</span><span style="color:#a61717;background-color:#e3d2d2">统</span><span style="color:#a61717;background-color:#e3d2d2">，</span><span style="color:#000;font-weight:bold">@</span><span style="color:#a61717;background-color:#e3d2d2">特</span><span style="color:#a61717;background-color:#e3d2d2">殊</span><span style="color:#a61717;background-color:#e3d2d2">字</span><span style="color:#a61717;background-color:#e3d2d2">符</span><span style="color:#a61717;background-color:#e3d2d2">前</span><span style="color:#a61717;background-color:#e3d2d2">面</span><span style="color:#a61717;background-color:#e3d2d2">可</span><span style="color:#a61717;background-color:#e3d2d2">能</span><span style="color:#a61717;background-color:#e3d2d2">需</span><span style="color:#a61717;background-color:#e3d2d2">要</span><span style="color:#a61717;background-color:#e3d2d2">转</span><span style="color:#a61717;background-color:#e3d2d2">义</span><span style="color:#a61717;background-color:#e3d2d2">字</span><span style="color:#a61717;background-color:#e3d2d2">符</span><span style="color:#a61717;background-color:#e3d2d2">\</span><span style="color:#a61717;background-color:#e3d2d2">，</span><span style="color:#a61717;background-color:#e3d2d2">才</span><span style="color:#a61717;background-color:#e3d2d2">能</span><span style="color:#a61717;background-color:#e3d2d2">运</span><span style="color:#a61717;background-color:#e3d2d2">行</span><span style="color:#a61717;background-color:#e3d2d2">该</span><span style="color:#a61717;background-color:#e3d2d2">命</span><span style="color:#a61717;background-color:#e3d2d2">令</span><span style="color:#a61717;background-color:#e3d2d2">。</span><span style="color:#a61717;background-color:#e3d2d2">请</span><span style="color:#a61717;background-color:#e3d2d2">运</span><span style="color:#a61717;background-color:#e3d2d2">行</span><span style="color:#a61717;background-color:#e3d2d2">命</span><span style="color:#a61717;background-color:#e3d2d2">令</span><span style="color:#a61717;background-color:#e3d2d2">：</span><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#a61717;background-color:#e3d2d2">\</span><span style="color:#000;font-weight:bold">@</span><span style="color:#000;font-weight:bold">?</span><span style="color:#000;font-weight:bold">/</span>rdbms<span style="color:#000;font-weight:bold">/</span><span style="color:#000;font-weight:bold">admin</span><span style="color:#000;font-weight:bold">/</span>awrrpt.<span style="color:#000;font-weight:bold">sql</span>;
 <span style="color:#a61717;background-color:#e3d2d2">返</span><span style="color:#a61717;background-color:#e3d2d2">回</span><span style="color:#a61717;background-color:#e3d2d2">信</span><span style="color:#a61717;background-color:#e3d2d2">息</span><span style="color:#a61717;background-color:#e3d2d2">显</span><span style="color:#a61717;background-color:#e3d2d2">示</span><span style="color:#a61717;background-color:#e3d2d2">如</span><span style="color:#a61717;background-color:#e3d2d2">下</span><span style="color:#a61717;background-color:#e3d2d2">：</span>
@@ -482,8 +758,22 @@ Enter value <span style="color:#000;font-weight:bold">for</span> report_name:
 <span style="color:#099">3</span>. <span style="color:#a61717;background-color:#e3d2d2">输</span><span style="color:#a61717;background-color:#e3d2d2">入</span><span style="color:#a61717;background-color:#e3d2d2">报</span><span style="color:#a61717;background-color:#e3d2d2">表</span><span style="color:#a61717;background-color:#e3d2d2">名</span><span style="color:#a61717;background-color:#e3d2d2">，</span><span style="color:#a61717;background-color:#e3d2d2">默</span><span style="color:#a61717;background-color:#e3d2d2">认</span><span style="color:#a61717;background-color:#e3d2d2">以</span>snap Id命名<span style="color:#a61717;background-color:#e3d2d2">，</span><span style="color:#a61717;background-color:#e3d2d2">可</span><span style="color:#a61717;background-color:#e3d2d2">以</span><span style="color:#a61717;background-color:#e3d2d2">不</span><span style="color:#a61717;background-color:#e3d2d2">输</span><span style="color:#a61717;background-color:#e3d2d2">入</span><span style="color:#a61717;background-color:#e3d2d2">。</span>
 <span style="color:#a61717;background-color:#e3d2d2">如</span><span style="color:#a61717;background-color:#e3d2d2">下</span><span style="color:#a61717;background-color:#e3d2d2">所</span><span style="color:#a61717;background-color:#e3d2d2">示</span><span style="color:#a61717;background-color:#e3d2d2">为</span><span style="color:#a61717;background-color:#e3d2d2">生</span><span style="color:#a61717;background-color:#e3d2d2">成</span><span style="color:#a61717;background-color:#e3d2d2">的</span>ADDM报表样例<span style="color:#a61717;background-color:#e3d2d2">：</span>
 Report written <span style="color:#000;font-weight:bold">to</span> addmrpt_1_3311_3316.txt
-</code></pre></div><h2 id="步骤-4-如果没指定目录和文件名生成的addm报表在当前目录执行如下命令查看">步骤 4 如果没指定目录和文件名，生成的ADDM报表在当前目录，执行如下命令查看。</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#099">1</span>. <span style="color:#a61717;background-color:#e3d2d2">回</span><span style="color:#a61717;background-color:#e3d2d2">到</span><span style="color:#a61717;background-color:#e3d2d2">当</span><span style="color:#a61717;background-color:#e3d2d2">前</span><span style="color:#a61717;background-color:#e3d2d2">目</span><span style="color:#a61717;background-color:#e3d2d2">录</span><span style="color:#a61717;background-color:#e3d2d2">。</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="步骤-4-如果没指定目录和文件名生成的addm报表在当前目录执行如下命令查看">步骤 4 如果没指定目录和文件名，生成的ADDM报表在当前目录，执行如下命令查看。</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#099">1</span>. <span style="color:#a61717;background-color:#e3d2d2">回</span><span style="color:#a61717;background-color:#e3d2d2">到</span><span style="color:#a61717;background-color:#e3d2d2">当</span><span style="color:#a61717;background-color:#e3d2d2">前</span><span style="color:#a61717;background-color:#e3d2d2">目</span><span style="color:#a61717;background-color:#e3d2d2">录</span><span style="color:#a61717;background-color:#e3d2d2">。</span>
 <span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">host</span>;
 
 <span style="color:#099">2</span>. <span style="color:#a61717;background-color:#e3d2d2">查</span><span style="color:#a61717;background-color:#e3d2d2">看</span><span style="color:#a61717;background-color:#e3d2d2">报</span><span style="color:#a61717;background-color:#e3d2d2">表</span><span style="color:#a61717;background-color:#e3d2d2">。</span>
@@ -491,7 +781,9 @@ Report written <span style="color:#000;font-weight:bold">to</span> addmrpt_1_331
 <span style="color:#a61717;background-color:#e3d2d2">返</span><span style="color:#a61717;background-color:#e3d2d2">回</span><span style="color:#a61717;background-color:#e3d2d2">信</span><span style="color:#a61717;background-color:#e3d2d2">息</span><span style="color:#a61717;background-color:#e3d2d2">显</span><span style="color:#a61717;background-color:#e3d2d2">示</span><span style="color:#a61717;background-color:#e3d2d2">如</span><span style="color:#a61717;background-color:#e3d2d2">下</span><span style="color:#a61717;background-color:#e3d2d2">：</span>
 addmrpt_1_3311_3316.txt
 <span style="color:#998;font-style:italic">----结束
-</span></code></pre></div>
+</span></code></pre></td></tr></table>
+</div>
+</div>
         </div>
 
         
@@ -552,6 +844,45 @@ addmrpt_1_3311_3316.txt
     </div>
     
 </div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
 
                 </div>
 
@@ -615,7 +946,7 @@ addmrpt_1_3311_3316.txt
     
 
     <section class="widget">
-        <h3 class="widget-title">分类</h3>
+        <h3 class="widget-title"><a href="/categories">分类</a></h3>
 <ul class="widget-list">
     
     <li><a href="https://anTtutu.github.io/categories/JDK%E7%9A%84bug/">JDK的bug (1)</a></li>
@@ -666,7 +997,7 @@ addmrpt_1_3311_3316.txt
     </section>
 
     <section class="widget">
-        <h3 class="widget-title">标签</h3>
+        <h3 class="widget-title"><a href="/tags">标签</a></h3>
 <div class="tagcloud">
     
     <a href="https://anTtutu.github.io/tags/JDK%E7%9A%84bug/">JDK的bug</a>
@@ -728,38 +1059,6 @@ addmrpt_1_3311_3316.txt
             </div>
         </div>
     </div>
-    <footer id="footer">
-    <div class="container">
-        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>.
-        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
-        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/flysnow-org/maupassant-hugo" target="_blank">maupassant</a>.
-        
-    </div>
-</footer>
-
-
-    
-    <script type="text/javascript">
-        window.MathJax = {
-            tex2jax: {
-                inlineMath: [['$', '$']],
-                processEscapes: true
-                }
-            };
-    </script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
-
-
-<a id="rocket" href="#top"></a>
-<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
-
-
-
-    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
-
-
-
-
 </body>
 
 </html>
