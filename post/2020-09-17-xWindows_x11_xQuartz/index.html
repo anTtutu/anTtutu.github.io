@@ -140,14 +140,15 @@
   <ul>
     <li><a href="#1前言">1、前言</a></li>
     <li><a href="#2查询了下报错信息">2、查询了下报错信息</a></li>
-    <li><a href="#3x-windows介绍">3、X windows介绍</a></li>
+    <li><a href="#3xwindows介绍">3、Xwindows介绍</a></li>
     <li><a href="#4在mac安装xquartz">4、在Mac安装XQuartz</a></li>
     <li><a href="#5可能服务上需要安装xauth可选参考验证后再决策">5、可能服务上需要安装xauth(可选，参考验证后再决策)</a></li>
     <li><a href="#6修改服务器上的配置">6、修改服务器上的配置</a></li>
     <li><a href="#7在服务器上安装x11小工具可选步骤用于验证x11是否成功">7、在服务器上安装X11小工具（可选步骤，用于验证X11是否成功）</a></li>
-    <li><a href="#7在mac端连接服务器并启用x11转发功能">7、在Mac端连接服务器并启用X11转发功能</a></li>
-    <li><a href="#8测试运行x11验证小程序可选">8、测试运行X11验证小程序（可选）</a></li>
-    <li><a href="#9原理解析">9、原理解析</a></li>
+    <li><a href="#8在mac端连接服务器并启用x11转发功能">8、在Mac端连接服务器并启用X11转发功能</a></li>
+    <li><a href="#9测试运行x11验证小程序可选">9、测试运行X11验证小程序（可选）</a></li>
+    <li><a href="#10原理解析">10、原理解析</a></li>
+    <li><a href="#11结束语">11、结束语</a></li>
   </ul>
 </nav>
     </div>
@@ -264,13 +265,13 @@ java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="2查询了下报错信息">2、查询了下报错信息</h2>
-<p>MacOS从v10.5附带了x11的升级版本XQuartz，但是从10.7后又不附带了，需要自己额外安装<br>
+<p>MacOS从v10.5附带了X11的升级版本XQuartz，但是从10.7后又不附带了，需要自己额外安装<br>
 苹果官网介绍X11：(<a href="https://support.apple.com/zh-cn/HT201341">https://support.apple.com/zh-cn/HT201341</a>)<br>
 XQuartz下载地址：(<a href="http://www.xquartz.org">www.xquartz.org</a>)</p>
-<h2 id="3x-windows介绍">3、X windows介绍</h2>
-<p>X Window 系统最初是由 MIT 在 1984 年开发的，目的是为了给 Unix 以及类 Unix 操作系统一个通用性强且硬件无关的 GUI 接口。</p>
-<p>目前常见的 X Window 系统都是基于 11 版本进行改良的，所以统称为 X11。</p>
-<p>目前像 KDE、GNOME 这些所谓的 Linux GUI 其实就是X windows的一种。</p>
+<h2 id="3xwindows介绍">3、Xwindows介绍</h2>
+<p>XWindow系统最初是由MIT在1984年开发的，目的是为了给Unix以及类Unix操作系统一个通用性强且硬件无关的GUI接口。</p>
+<p>目前常见的XWindow系统都是基于11版本进行改良的，所以统称为X11。</p>
+<p>目前像KDE、GNOME这些所谓的linux GUI其实就是Xwindows的一种。</p>
 <h2 id="4在mac安装xquartz">4、在Mac安装XQuartz</h2>
 <p>下载步骤2中的XQuartz,然后按照提示一路安装完成
 
@@ -368,8 +369,11 @@ X11UseLocalhost no
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum install xorg-x11-apps
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="7在mac端连接服务器并启用x11转发功能">7、在Mac端连接服务器并启用X11转发功能</h2>
-<p>打开步骤4安装完成的XQuartz，然后选择XQuartz菜单的『应用程序』 - 『终端』</p>
+</div><h2 id="8在mac端连接服务器并启用x11转发功能">8、在Mac端连接服务器并启用X11转发功能</h2>
+<p>打开步骤4安装完成的XQuartz，然后选择XQuartz菜单的『应用程序』 - 『终端』
+
+        <img class="mx-auto" alt="" src="/posts/x11/run.jpg" />   
+    </p>
 <p>输入ssh连接命令</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -388,7 +392,7 @@ X11UseLocalhost no
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">X11 forwarding request failed on channel <span style="color:#099">0</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="8测试运行x11验证小程序可选">8、测试运行X11验证小程序（可选）</h2>
+</div><h2 id="9测试运行x11验证小程序可选">9、测试运行X11验证小程序（可选）</h2>
 <p>步骤7中测试X11小程序派上用场了，虽然是可选步骤，为了保险，还是可以安装下一步一步测试</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -406,7 +410,7 @@ xclock
     
         <img class="mx-auto" alt="" src="/posts/x11/clock.jpg" />   
     </p>
-<h2 id="9原理解析">9、原理解析</h2>
+<h2 id="10原理解析">10、原理解析</h2>
 <p>当ssh连接简历完成并成功开启X11转发后，服务器默认会监听127.0.0.1(localhost)的6010端口</p>
 <p>可以在服务器上查看DISPLAY环境变量</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
@@ -426,6 +430,11 @@ localhost：表示X服务器的地址。
 0：表示在X服务器上的第0个显示器上输出。
 </code></pre><p>再继续在服务器上打开X应用，X应用就会和localhost:6010建立连接，然后服务器就会和客户端（Mac）建立起一条ssh隧道，对接客户端上的X服务器，从而实现服务器的X程序在客户端上显示的目的。</p>
 <p>而Mac上的XQuartz可以看成是一个带窗口管理功能的X服务器。</p>
+<h2 id="11结束语">11、结束语</h2>
+<p>最后自己需要的IBM jca分析工具也启动成功了。类似的linux GUI工具还有很多，如：Oracle家的linux安装软件，linux下的Wireshark，赛门铁克家的VCS等
+
+        <img class="mx-auto" alt="" src="/posts/x11/jca.jpg" />   
+    </p>
 <p>注意：<br>
 X11转发对网络传输要求较高，建议在服务器与客户端之间网络稳定的情况下使用，否则网络不畅可能出现窗口卡顿或显示不全的情况<br>
 一旦ssh掉线或者关闭XQuartz终端窗口，那么所有的X11应用也将被强制退出</p>
