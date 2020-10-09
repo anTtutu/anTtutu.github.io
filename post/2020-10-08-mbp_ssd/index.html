@@ -141,6 +141,16 @@
     <li><a href="#1前言">1、前言</a></li>
     <li><a href="#2准备">2、准备</a></li>
     <li><a href="#3格式化">3、格式化</a></li>
+    <li><a href="#4安装系统">4、安装系统</a></li>
+    <li><a href="#5备份">5、备份</a>
+      <ul>
+        <li><a href="#注ccc-clone后的系统盘也自带系统能力只是我个人测试clone的系统盘wifi异常这里只当资料备份未找到原因看网络介绍和资料可以完美替代时间机器的">注：CCC clone后的系统盘也自带系统能力，只是我个人测试clone的系统盘wifi异常，这里只当资料备份，未找到原因，看网络介绍和资料，可以完美替代时间机器的</a></li>
+      </ul>
+    </li>
+    <li><a href="#6拆机">6、拆机</a></li>
+    <li><a href="#7时间机器恢复">7、时间机器恢复</a></li>
+    <li><a href="#8恢复完成后">8、恢复完成后</a></li>
+    <li><a href="#9后记">9、后记</a></li>
   </ul>
 </nav>
     </div>
@@ -207,14 +217,161 @@
 <p>最近准备给自己的mbp2015升级下固态硬盘，替换成西数蓝盘sn550 1T的，需要准备2个固态硬盘，一个1T用于安装新系统，另外一个固态硬盘+硬盘盒用于数据备份和时间机器备份<br>
 1、时间机器备份，方便新SSD安装系统后还原之前安装的APP和数据<br>
 2、数据备份，采用carbon copy cloner，全盘备份，如果这步操作正常，可以不用时间机器备份，目前我测试部分正常，但是wifi无法上网，只好用于备份数据</p>
+<table>
+<thead>
+<tr>
+<th>时间机器</th>
+<th>CCC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+        <img class="mx-auto" alt="" src="/posts/ssd/time_machine_logo.png" />   
+    </td>
+<td>
+        <img class="mx-auto" alt="" src="/posts/ssd/clone.png" />   
+    </td>
+</tr>
+</tbody>
+</table>
 <h2 id="2准备">2、准备</h2>
 <p>1、西数蓝盘sn550 1T盘一个<br>
 2、淘宝购买的苹果m.2转接卡一个，mbp的m.2接口是中间分叉的，跟标准的不同，需要一个转接卡<br>
 3、用于数据备份的硬盘盒一个，注意时间机器备份需要格式化<br>
-4、mbp配套螺丝刀，一般淘宝购买苹果m.2转接卡会赠送2把工具螺丝刀</p>
+4、mbp配套螺丝刀，一般淘宝购买苹果m.2转接卡会赠送2把工具螺丝刀<br>
+5、下载好MacOS10.14.6官方镜像<br>
+<a href="https://apps.apple.com/cn/app/macos-mojave/id1398502828?ls=1&amp;mt=12">App Store</a><br>
+<a href="https://itunes.apple.com/cn/app/macos-mojave/id1398502828?ls=1&amp;mt=12">iTunes</a></p>
+<p>sn550 1T
+
+        <img class="mx-auto" alt="" src="/posts/ssd/sn550_1T.JPG" />   
+    </p>
+<p>m.2转接卡</p>
+<table>
+<thead>
+<tr>
+<th>示例</th>
+<th>规格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+        <img class="mx-auto" alt="" src="/posts/ssd/m.2_demo.JPG" />   
+    </td>
+<td>
+        <img class="mx-auto" alt="" src="/posts/ssd/m.2_change.JPG" />   
+    </td>
+</tr>
+</tbody>
+</table>
+<p>数据备份的硬盘盒-容量1T，按自己待备份的数据量大小决定
+
+        <img class="mx-auto" alt="" src="/posts/ssd/disk_manager.JPG" />   
+    </p>
+<p>螺丝刀
+
+        <img class="mx-auto" alt="" src="/posts/ssd/tools.png" />   
+    </p>
+<p>Mojave
+
+        <img class="mx-auto" alt="" src="/posts/ssd/mojave_appstore.webp" />   
+    
+
+        <img class="mx-auto" alt="" src="/posts/ssd/mojave_download.webp" />   
+    </p>
 <h2 id="3格式化">3、格式化</h2>
-<p>1、待安装系统的1T固态蓝盘，先放入固态硬盘盒，接入电脑，使用磁盘工具格式化，选择AFPS格式<br>
-2、格式化完成后，把用于使用时间机器备份，把源系统盘256G的数据备份到1T</p>
+<p>待安装系统的1T固态蓝盘，先放入固态硬盘盒，接入电脑，使用磁盘工具格式化，选择APFS格式</p>
+<p>Mac 上的“磁盘工具”支持多种文件系统格式：</p>
+<table>
+<thead>
+<tr>
+<th>文件系统格式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apple 文件系统 (APFS)</td>
+<td>macOS 10.13或后续版本使用的文件系统。</td>
+</tr>
+<tr>
+<td>Mac OS 扩展</td>
+<td>macOS 10.12或之前版本使用的文件系统。</td>
+</tr>
+<tr>
+<td>MS-DOS (FAT)和ExFAT</td>
+<td>与Windows兼容的文件系统</td>
+</tr>
+</tbody>
+</table>
+<p>借用网络图，忘记截图了
+
+        <img class="mx-auto" alt="" src="/posts/ssd/format.png" />   
+    
+
+        <img class="mx-auto" alt="" src="/posts/ssd/format_complate.png" />   
+    </p>
+<h2 id="4安装系统">4、安装系统</h2>
+<p>利用没有T2芯片可以外部硬盘安装系统和启动的特性，可以把刚才准备环节下载的Mojave 10.14.6安装到格式化好的硬盘上，大约等待30 ~ 40分钟
+
+        <img class="mx-auto" alt="" src="/posts/ssd/install_mojave.png" />   
+    </p>
+<h2 id="5备份">5、备份</h2>
+<p>打开硬盘盒取出已经格式化好并安装全新Mojave的系统盘，准备下一步拆机替换原装256G固态硬盘。这里先开始进行CCC备份和时间机器备份</p>
+<p>时间机器备份
+
+        <img class="mx-auto" alt="" src="/posts/ssd/time_machine.jpg" />   
+    
+
+        <img class="mx-auto" alt="" src="/posts/ssd/usb_disk.jpg" />   
+    
+
+        <img class="mx-auto" alt="" src="/posts/ssd/time_machine_complate.png" />   
+    </p>
+<p>CCC备份
+
+        <img class="mx-auto" alt="" src="/posts/ssd/ccc_copy.png" />   
+    </p>
+<h3 id="注ccc-clone后的系统盘也自带系统能力只是我个人测试clone的系统盘wifi异常这里只当资料备份未找到原因看网络介绍和资料可以完美替代时间机器的">注：CCC clone后的系统盘也自带系统能力，只是我个人测试clone的系统盘wifi异常，这里只当资料备份，未找到原因，看网络介绍和资料，可以完美替代时间机器的</h3>
+<h2 id="6拆机">6、拆机</h2>
+<p>打开mbp的后盖，红色的就是原装系统盘，注意macos10.12后才支持NVMe M.2
+
+        <img class="mx-auto" alt="" src="/posts/ssd/old.png" />   
+    </p>
+<p>替换之前格式化APFS格式的1T蓝盘，忘记截图，用网络图替代下，网络图是三星evo 970 plus
+
+        <img class="mx-auto" alt="" src="/posts/ssd/demo.jpg" />   
+    </p>
+<h2 id="7时间机器恢复">7、时间机器恢复</h2>
+<p>启动替换好1T系统盘的mbp，然后打开&quot;迁移助理&rdquo; - &ldquo;从Mac、时间机器备份或启动盘&rdquo;
+
+        <img class="mx-auto" alt="" src="/posts/ssd/restore_begin.jpg" />   
+    
+
+        <img class="mx-auto" alt="" src="/posts/ssd/restore_second.jpg" />   
+    
+
+        <img class="mx-auto" alt="" src="/posts/ssd/restore_third.jpg" />   
+    
+
+        <img class="mx-auto" alt="" src="/posts/ssd/restore_four.jpg" />   
+    </p>
+<p>时长视备份的数据量和传输速度而定，256G基本上要半天时间恢复</p>
+<h2 id="8恢复完成后">8、恢复完成后</h2>
+<p>基本上之前的数据都保留回来了，连开着的窗口也一样，但是有部分购买的软件需要重新激活下
+
+        <img class="mx-auto" alt="" src="/posts/ssd/system.png" />   
+    </p>
+<h2 id="9后记">9、后记</h2>
+<p>购买m.2转接卡时发现有一个sd卡可以当防尘塞使用, 不够比创见的长一点会露出来，但是比标准的sd卡还是短不少，将就使用吧
+
+        <img class="mx-auto" alt="" src="/posts/ssd/sd.JPG" />   
+    
+
+        <img class="mx-auto" alt="" src="/posts/ssd/sd_mbp.JPG" />   
+    </p>
 
         </div>
 
