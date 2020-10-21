@@ -683,14 +683,66 @@ nginx
 <span style="color:#0086b3">kill</span> -QUIT nginx_PID
 </code></pre></td></tr></table>
 </div>
-</div><p>
+</div><p>5、启动mongodb
+需要配置好启动配置文件，否则可能提示无法创建db</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">systemLog</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">destination</span>:<span style="color:#bbb"> </span>file<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">logAppend</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">path</span>:<span style="color:#bbb"> </span>mongodb/logs/mongodb.log<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000080">storage</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">dbPath</span>:<span style="color:#bbb"> </span>mongodb/db<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">journal</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#000080">enabled</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000080">processManagement</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">fork</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb">
+</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># 启动mongodb</span>
+mongod -f ./mongodb/conf/mongodb/conf
+<span style="color:#998;font-style:italic"># 优雅的停</span>
+<span style="color:#0086b3">kill</span> -QUIT mongodb_PID
+</code></pre></td></tr></table>
+</div>
+</div><p>mysql
+
         <img class="mx-auto" alt="" src="/posts/termux/mysql_server.JPG" />   
     
 
         <img class="mx-auto" alt="" src="/posts/termux/mysql_databases.JPG" />   
     
+redis
 
         <img class="mx-auto" alt="" src="/posts/termux/redis.JPG" />   
+    
+mongodb
+
+        <img class="mx-auto" alt="" src="/posts/termux/mongodb.png" />   
     </p>
 <h2 id="10基本功能完成还有很多进阶设置和玩法待开发和更新进来未完待续">10、基本功能完成，还有很多进阶设置和玩法待开发和更新进来(未完待续)</h2>
 <p>未完待续，待补充进阶设置和玩法</p>
