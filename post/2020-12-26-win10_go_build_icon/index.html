@@ -156,6 +156,7 @@
         <li><a href="#33执行go-build">3.3、执行go build</a></li>
       </ul>
     </li>
+    <li><a href="#注">注：</a></li>
   </ul>
 </nav>
     </div>
@@ -252,11 +253,10 @@ rc文件命名test.exe.rc</p>
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#000;font-weight:bold">go</span> build <span style="color:#000;font-weight:bold">-</span>ldflags=<span style="color:#d14">&#34;-H windowsgui -w -s&#34;</span>
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#000;font-weight:bold">go</span> build
 </code></pre></td></tr></table>
 </div>
-</div><p>测试有bug，打包出来的exe工具没法执行，比不带ico体积小。后续研究出来结果再补充完美</p>
-<h2 id="3方法2---rsrc命令">3、方法2 - rsrc命令</h2>
+</div><h2 id="3方法2---rsrc命令">3、方法2 - rsrc命令</h2>
 <p>需要先下载rsrc命令</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -341,6 +341,18 @@ manifest文件名test.exe.manifest</p>
 </div><p>
         <img class="mx-auto" alt="" src="/posts/icon/result.jpg" />   
     </p>
+<h2 id="注">注：</h2>
+<p>测试发现，有些打包命令建议带参数：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#000;font-weight:bold">go</span> build <span style="color:#000;font-weight:bold">-</span>ldflags=<span style="color:#d14">&#34;-H windowsgui -w -s&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>会导致打包出来的文件无法执行，可能是windowsgui这个导致的，而且对比比直接go build出来的文件偏小<br>
+直接go build打包的文件也会带ico并正确执行。</p>
 
         </div>
 
