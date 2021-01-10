@@ -342,7 +342,7 @@ manifest文件名test.exe.manifest</p>
         <img class="mx-auto" alt="" src="/posts/icon/result.jpg" />   
     </p>
 <h2 id="注">注：</h2>
-<p>测试发现，有些打包命令建议带参数：</p>
+<p>测试发现，有的blog写的打包命令建议带参数：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -351,8 +351,9 @@ manifest文件名test.exe.manifest</p>
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#000;font-weight:bold">go</span> build <span style="color:#000;font-weight:bold">-</span>ldflags=<span style="color:#d14">&#34;-H windowsgui -w -s&#34;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>会导致打包出来的文件无法执行，可能是windowsgui这个导致的，而且对比比直接go build出来的文件偏小<br>
-直接go build打包的文件也会带ico并正确执行。</p>
+</div><p>应该只有gui的程序才需要带，本文举例是非gui界面的，因此带了反而会出现无法正确运行。 <br>
+对比带了该参数比直接的go build打包出来的文件大小不一致，偏小很多，可能非gui的命令行程序不适合带这个参数。比如用walk的gui go项目带了没问题。<br>
+验证通过2、3步骤做了ico处理的，建议通过go build打包。</p>
 
         </div>
 
@@ -419,7 +420,7 @@ manifest文件名test.exe.manifest</p>
 
                     <footer id="footer">
     <div>
-        &copy; 2020 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        &copy; 2021 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
         
     </div>
     <br />
