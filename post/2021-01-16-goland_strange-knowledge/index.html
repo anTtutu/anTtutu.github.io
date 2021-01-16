@@ -9,8 +9,8 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     
 
-    <title>golang奇怪的知识 | Anttu&#39;s Blog</title>
-    <meta property="og:title" content="golang奇怪的知识 - Anttu&#39;s Blog">
+    <title>golang奇怪的知识点 | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="golang奇怪的知识点 - Anttu&#39;s Blog">
     <meta property="og:type" content="article">
         
     <meta property="article:published_time" content='2021-01-16T00:29:47&#43;08:00'>
@@ -19,7 +19,7 @@
     <meta property="article:modified_time" content='2021-01-16T00:29:47&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
-    <meta name="description" content="golang奇怪的知识">
+    <meta name="description" content="golang奇怪的知识点">
         
     <meta name="author" content="Anttu">
     <meta property="og:url" content="https://anTtutu.github.io/post/2021-01-16-goland_strange-knowledge/">
@@ -143,20 +143,51 @@
   <ul>
     <li><a href="#1前言">1、前言</a></li>
     <li><a href="#2包名带">2、包名带!</a></li>
-    <li><a href="#3goroot">3、GOROOT</a></li>
-    <li><a href="#4gopath">4、GOPATH</a></li>
-    <li><a href="#5mod">5、mod</a></li>
-    <li><a href="#6日常可能用到的命令">6、日常可能用到的命令</a>
+    <li><a href="#3goroot下包用途介绍">3、GOROOT下包用途介绍</a></li>
+    <li><a href="#4gopath下包用途介绍">4、GOPATH下包用途介绍</a></li>
+    <li><a href="#5mod">5、mod</a>
       <ul>
-        <li><a href="#61go-get">6.1、go get</a></li>
-        <li><a href="#62go-mod">6.2、go mod</a></li>
-        <li><a href="#7其他">7、其他</a></li>
+        <li><a href="#51gomod目前有以下5个动词">5.1、go.mod目前有以下5个动词:</a></li>
+        <li><a href="#特殊">特殊：</a></li>
+        <li><a href="#52gosum">5.2、go.sum</a></li>
       </ul>
     </li>
-    <li><a href="#7只有一个后自增i没有i同理自减也一样如">7、只有一个后自增i++，没有++i，同理自减也一样，如：</a></li>
-    <li><a href="#8与的使用区别">8、=与:=的使用区别</a></li>
-    <li><a href="#9首字母大小写">9、首字母大小写</a></li>
-    <li><a href="#10struct-tag">10、struct tag</a></li>
+    <li><a href="#6goproxy">6、goproxy</a>
+      <ul>
+        <li><a href="#direct参数">direct参数：</a></li>
+      </ul>
+    </li>
+    <li><a href="#7日常可能用到的命令">7、日常可能用到的命令</a>
+      <ul>
+        <li><a href="#71go-get">7.1、go get</a></li>
+        <li><a href="#73语义化版本">7.3、语义化版本</a></li>
+        <li><a href="#举个例子">举个例子</a></li>
+        <li><a href="#举个例子-1">举个例子：</a></li>
+        <li><a href="#72go-mod">7.2、go mod</a></li>
+      </ul>
+    </li>
+    <li><a href="#8其他">8、其他</a>
+      <ul>
+        <li><a href="#81每一行不需要结尾">8.1、每一行不需要;结尾</a></li>
+        <li><a href="#82不能有多余的import和变量全局的可以">8.2、不能有多余的import和变量，全局的可以</a></li>
+        <li><a href="#83只能有一个main-package相当于程序入口">8.3、只能有一个main package，相当于程序入口</a></li>
+        <li><a href="#84不能另起一行开头写">8.4、{不能另起一行开头写</a></li>
+        <li><a href="#85可以返回多个值">8.5、可以返回多个值</a></li>
+        <li><a href="#86go只有一种循环for">8.6、go只有一种循环for</a></li>
+      </ul>
+    </li>
+    <li><a href="#9只有一个后自增i没有i同理自减也一样">9、只有一个后自增i++，没有++i，同理自减也一样</a></li>
+    <li><a href="#10与的使用区别">10、=与:=的使用区别</a>
+      <ul>
+        <li><a href="#那最终与还有其他区别么有">那最终=与:=还有其他区别么，有</a></li>
+      </ul>
+    </li>
+    <li><a href="#11首字母大小写">11、首字母大小写</a>
+      <ul>
+        <li><a href="#简短整理就是">简短整理就是：</a></li>
+      </ul>
+    </li>
+    <li><a href="#12struct-tag">12、struct tag</a></li>
   </ul>
 </nav>
     </div>
@@ -190,7 +221,7 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title">golang奇怪的知识</h1>
+            <h1 class="post-title">golang奇怪的知识点</h1>
         </header>
         <date class="post-meta meta-date">
             2021年1月16日
@@ -218,20 +249,20 @@
         
         <div class="post-content">
             <h2 id="1前言">1、前言</h2>
-<p>golang里面的奇怪知识总结，本人才疏学浅，可能总结得不到位或者有些纰漏，仅把学习golang知识的一些细节记录下，权当学习笔记<br>
+<p>golang里面的奇怪知识点总结，本人才疏学浅，可能总结得不到位或者有些纰漏，仅把学习golang知识的一些细节记录下，权当学习笔记<br>
 最后的其他分类里面有很多几年前学习golang时候的一些基础规则，也放进来吧，当回顾下好了</p>
 <h2 id="2包名带">2、包名带!</h2>
-<p>无意间发现包名有个别带!，不知道为啥，找了一下午资料也没找到合适的解答
+<p>无意间发现包名有个别带!，不知道为啥，找了一下午资料也没找到合适的解答<br>
 如下图：<br>
 
         <img class="mx-auto" alt="" src="/posts/golang/package.jpg" />   
     </p>
-<p>其实这个!是针对包名大写的字母才出现，比如上图的!e = E表示的是这个意思。
+<p>其实这个!是针对包名大写的字母才出现，比如上图的!e = E表示的是这个意思。<br>
 对比mod里面的引用：
 
         <img class="mx-auto" alt="" src="/posts/golang/package_mod.jpg" />   
     </p>
-<h2 id="3goroot">3、GOROOT</h2>
+<h2 id="3goroot下包用途介绍">3、GOROOT下包用途介绍</h2>
 <p>golang sdk的安装目录，目录结构如下</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -297,8 +328,8 @@
 </tr>
 </tbody>
 </table>
-<h2 id="4gopath">4、GOPATH</h2>
-<p>历史产物，原来设计者想把gopath当成workspace来管理的，windows系统举例</p>
+<h2 id="4gopath下包用途介绍">4、GOPATH下包用途介绍</h2>
+<p>历史产物，原来设计者想把gopath当成workspace来管理的，windows系统举例：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -335,20 +366,67 @@
 </tr>
 <tr>
 <td>src</td>
-<td>早期golang1.11之前是当做go的workspace的，创建的项目一般都是固定存放这里，1.11版本有了mod后，这里开始慢慢放弃，但是历史产物还是存在的</td>
+<td>早期golang1.11之前是当做go的workspace的，创建的项目一般都是固定存放GOPATH/src，1.11版本有了mod后，固定的存放开始慢慢放弃，但是历史产物还是存在的</td>
 </tr>
 </tbody>
 </table>
 <p>GOPATH不同于GOROOT，GOROOT是golang的sdk安装目录，GOROOT下也有个bin目录。<br>
 GOROOT基本上是官方的标准库代码<br>
-GOPATH基本上是用户的工作区，用mod后GOPATH就在慢慢退化</p>
+GOPATH基本上是用户的工作区，用mod后GOPATH/src就在慢慢退化</p>
 <p>注：
-只是放弃GOPATH的src创建项目的功能，不是GOPATH放弃，毕竟一些第三方包依赖和编译还是会使用pkg的</p>
+只是放弃GOPATH的src创建项目的功能，不是GOPATH不需要配置，毕竟一些第三方包依赖和编译还是会使用pkg的</p>
 <h2 id="5mod">5、mod</h2>
 <p>go modules是golang的依赖包管理工具，只是出现得比较晚，1.11才面世，之前还有dep、glide、govendor等包管理工具，本人只接触过govendor<br>
 dep是golang官方的一个实验项目，后2种属于第三方包管理工具，最后官方在1.11版本用mod统一进行了管理。<br>
 可以参考官方对比(<a href="https://github.com/golang/go/wiki/PackageManagementTools">https://github.com/golang/go/wiki/PackageManagementTools</a>)</p>
-<p>有了mod后，GOPATH开始慢慢退化，之前项目必须创建在GOPATH/src下面，比如GOPATH/src/myproject，mod可以让你随意目录创建自己的项目，早期的项目采用1.11版本后的golang sdk也可以升级改造成mod管理。</p>
+<p>1.13版本开始默认使用Go Modules模式，也就是GO111MODULE=on默认是开启状态：<br>
+一共有3种状态可以了解下：</p>
+<table>
+<thead>
+<tr>
+<th>环境变量参数</th>
+<th>模式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GO111MODULE=auto</td>
+<td>默认模式</td>
+<td>同时满足以下两个条件时使用Go Modules：<br>1、当前目录不在GOPATH/src/下<br>2、在当前目录或上层目录中存在go.mod文件</td>
+</tr>
+<tr>
+<td>GO111MODULE=off</td>
+<td>GOPATH模式</td>
+<td>从不使用Go Modules。相反，它查找vendor目录和GOPATH以查找依赖项</td>
+</tr>
+<tr>
+<td>GO111MODULE=on</td>
+<td>GO MOdules模式</td>
+<td>从不咨询GOPATH。GOPATH不再作为导入目录，但它仍然存储下载的依赖项（GOPATH/pkg/mod/）和已安装的命令（GOPATH/bin/），只移除了GOPATH/src/</td>
+</tr>
+</tbody>
+</table>
+<p>配置Go Modules相关命令：<br>
+windows设置命令：注释需要去掉</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#000;font-weight:bold">go</span> env <span style="color:#000;font-weight:bold">-</span>w GO111MODULE=on <span style="color:#998;font-style:italic">//(or off，1.13后推荐开启on)
+</span></code></pre></td></tr></table>
+</div>
+</div><p>mac、linux设置命令：注释需要去掉</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0086b3">export</span> <span style="color:#008080">GO111MODULE</span><span style="color:#000;font-weight:bold">=</span>on <span style="color:#998;font-style:italic">#(or off,1.13后推荐开启on)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>1.13之前项目必须创建在GOPATH/src下面，比如GOPATH/src/myproject，有了mod后可以随意目录当做workspace创建自己的项目，早期的项目升级1.11版本后的golang sdk也可以升级改造成mod管理的。</p>
 <p>相关命令和介绍如下：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -358,7 +436,7 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go mod init <span style="color:#000;font-weight:bold">[</span>MODULE_PATH<span style="color:#000;font-weight:bold">]</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>初始化Go modules，它将会生成go.mod文件，需要注意的是MODULE_PATH填写的是模块引入路径，你可以根据自己的情况修改路径。
+</div><p>初始化Go modules，它将会生成go.mod文件，需要注意的是MODULE_PATH填写的是模块引入路径，你可以根据自己的情况修改路径。<br>
 在执行了上述步骤后，初始化工作已完成，我们打开go.mod文件看看，如下：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -372,8 +450,154 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 <span style="color:#000;font-weight:bold">go</span> <span style="color:#099">1.15</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="6日常可能用到的命令">6、日常可能用到的命令</h2>
-<h3 id="61go-get">6.1、go get</h3>
+</div><p>一个完整的复杂参考样例go.mod文件：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">module my<span style="color:#000;font-weight:bold">/</span>thing
+<span style="color:#000;font-weight:bold">go</span> <span style="color:#099">1.15</span>
+require other<span style="color:#000;font-weight:bold">/</span>thing v1<span style="color:#099">.0.2</span> <span style="color:#998;font-style:italic">// 这是注释
+</span><span style="color:#998;font-style:italic"></span>require new<span style="color:#000;font-weight:bold">/</span>thing<span style="color:#000;font-weight:bold">/</span>v2 v2<span style="color:#099">.3.4</span> <span style="color:#998;font-style:italic">// indirect
+</span><span style="color:#998;font-style:italic"></span><span style="color:#900;font-weight:bold">require</span> (
+  new<span style="color:#000;font-weight:bold">/</span>thing v2<span style="color:#099">.3.4</span>
+  old<span style="color:#000;font-weight:bold">/</span>thing v0<span style="color:#099">.0.0</span><span style="color:#000;font-weight:bold">-</span><span style="color:#099">20190603091049</span><span style="color:#000;font-weight:bold">-</span><span style="color:#099">60506</span>f45cf65
+)
+exclude old<span style="color:#000;font-weight:bold">/</span>thing v1<span style="color:#099">.2.3</span>
+replace bad<span style="color:#000;font-weight:bold">/</span>thing v1<span style="color:#099">.4.5</span> =&gt; good<span style="color:#000;font-weight:bold">/</span>thing v1<span style="color:#099">.4.5</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="51gomod目前有以下5个动词">5.1、go.mod目前有以下5个动词:</h3>
+<table>
+<thead>
+<tr>
+<th>动词</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>module</td>
+<td>用于定义当前项目的模块路径。</td>
+</tr>
+<tr>
+<td>go</td>
+<td>用于设置预期的Go版本。</td>
+</tr>
+<tr>
+<td>require</td>
+<td>用于设置一个特定的模块版本。</td>
+</tr>
+<tr>
+<td>exclude</td>
+<td>用于从使用中排除一个特定的模块版本。</td>
+</tr>
+<tr>
+<td>replace</td>
+<td>用于将一个模块版本替换为另外一个模块版本</td>
+</tr>
+</tbody>
+</table>
+<h3 id="特殊">特殊：</h3>
+<p>也许你会发现go.mod文件中部分依赖包后面会出现一个&rdquo;// indirect&quot;的标识(参考上面完整样例)。这个标识总是出现在require指令中。</p>
+<table>
+<thead>
+<tr>
+<th>标识</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>//</td>
+<td>与代码的行注释一样表示注释的开始，但这里不能使用多行/* 这是注释 */注释</td>
+</tr>
+<tr>
+<td>indirect</td>
+<td>表示间接的依赖</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52gosum">5.2、go.sum</h3>
+<p>go.sum是类似于比如dep的Gopkg.lock的一类文件，它详细罗列了当前项目直接或间接依赖的所有模块版本，并写明了那些模块版本的SHA-256哈希值以备Go在今后的操作中保证项目所依赖的那些模块版本不会被篡改。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">example.com<span style="color:#000;font-weight:bold">/</span>apple v0<span style="color:#099">.1.2</span> h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ= 
+example.com<span style="color:#000;font-weight:bold">/</span>apple v0<span style="color:#099">.1.2</span><span style="color:#000;font-weight:bold">/</span><span style="color:#000;font-weight:bold">go</span>.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU= 
+example.com<span style="color:#000;font-weight:bold">/</span>banana v1<span style="color:#099">.2.3</span> h1:qHgHjyoNFV7jgucU8QZUuU4gcdhfs8QW1kw68OD2Lag= 
+example.com<span style="color:#000;font-weight:bold">/</span>banana v1<span style="color:#099">.2.3</span><span style="color:#000;font-weight:bold">/</span><span style="color:#000;font-weight:bold">go</span>.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw cTzAElWljhcU= 
+example.com<span style="color:#000;font-weight:bold">/</span>banana<span style="color:#000;font-weight:bold">/</span>v2 v2<span style="color:#099">.3.4</span> h1:zl<span style="color:#000;font-weight:bold">/</span>OfRA6nftbBK9qTohYBJ5xvw6C<span style="color:#000;font-weight:bold">/</span>oNKizR7cZGl3cI= 
+example.com<span style="color:#000;font-weight:bold">/</span>banana<span style="color:#000;font-weight:bold">/</span>v2 v2<span style="color:#099">.3.4</span><span style="color:#000;font-weight:bold">/</span><span style="color:#000;font-weight:bold">go</span>.mod h1:eZbhyaAYD41SGSSsnmcpxVoRiQ<span style="color:#000;font-weight:bold">/</span>MPUTjUdIIOT9Um7Q= 
+<span style="color:#000;font-weight:bold">...</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>我们可以看到一个模块路径可能有如下两种：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">example.com<span style="color:#000;font-weight:bold">/</span>apple v0<span style="color:#099">.1.2</span> h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ= 
+example.com<span style="color:#000;font-weight:bold">/</span>apple v0<span style="color:#099">.1.2</span><span style="color:#000;font-weight:bold">/</span><span style="color:#000;font-weight:bold">go</span>.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
+</code></pre></td></tr></table>
+</div>
+</div><p>前者为Go modules打包整个模块包文件zip后再进行hash值，而后者为针对go.mod的hash值。他们两者，要不就是同时存在，要不就是只存在go.mod hash。</p>
+<p>那什么情况下会不存在zip hash呢，就是当Go认为肯定用不到某个模块版本的时候就会省略它的zip hash，就会出现不存在zip hash，只存在go.mod hash的情况。</p>
+<h2 id="6goproxy">6、goproxy</h2>
+<p>因为google的关系，国内有些google.com域名下的服务是无法访问的，需要切换国内的代理</p>
+<p>常用的七牛云代理：https://goproxy.cn</p>
+<h3 id="direct参数">direct参数：</h3>
+<p>1、为特殊指示符，用于指示Go回源到模块版本的源地址去抓取(比如 GitHub 等)，当值列表中上一个Go module proxy返回404或410错误时，Go自动尝试列表中的下一个，遇见“direct”时回源，遇见EOF时终止并抛出类似“invalid version: unknown revision&hellip;”的错误<br>
+2、可以拉去私有库</p>
+<p>因此常见设置是：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">GOPROXY=<span style="color:#d14">&#34;https://goproxy.cn,direct&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>windows设置命令：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#000;font-weight:bold">go</span> env <span style="color:#000;font-weight:bold">-</span>w GOPROXY=https:<span style="color:#998;font-style:italic">//goproxy.cn,direct
+</span></code></pre></td></tr></table>
+</div>
+</div><p>mac、linux设置命令：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">export GOPROXY=https:<span style="color:#998;font-style:italic">//goproxy.cn,direct
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="7日常可能用到的命令">7、日常可能用到的命令</h2>
+<h3 id="71go-get">7.1、go get</h3>
 <table>
 <thead>
 <tr>
@@ -391,7 +615,7 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 <td>拉取master分支的最新commit</td>
 </tr>
 <tr>
-<td>go get <a href="mailto:golang.org/x/text@v0.3.2">golang.org/x/text@v0.3.2</a></td>
+<td>go get <code>golang.org/x/text@v0.3.2</code></td>
 <td>拉取tag为v0.3.2的commit</td>
 </tr>
 <tr>
@@ -404,7 +628,72 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 </tr>
 </tbody>
 </table>
-<h3 id="62go-mod">6.2、go mod</h3>
+<h3 id="73语义化版本">7.3、语义化版本</h3>
+<p>语义化版本是一套由Gravatars创办者兼GitHub共同创办者Tom Preston-Werner所建立的约定。在这套约定下，语义化版本号及其更新方式包含了很多有用的信息。</p>
+<p>语义化版本号格式为：X.Y.Z（主版本号.次版本号.修订号），使用方法如下：</p>
+<ul>
+<li>1、进行不向下兼容的修改时，递增主版本号。</li>
+<li>2、API保持向下兼容的新增及修改时，递增次版本号。</li>
+<li>3、修复问题但不影响API时，递增修订号。</li>
+</ul>
+<h3 id="举个例子">举个例子</h3>
+<p>有一个语义化版本号为：v2.3.4，则其主版本号为2，次版本为3，修订号为4。而前面的v是version（版本）的首字母，是Go语言惯例使用的，标准的语义化版本没有这个约定。如下图：
+
+        <img class="mx-auto" alt="" src="/posts/golang/version.png" />   
+    
+使用Go命令行工具或go.mod文件时，就可以使用语义化版本号来进行模块查询语义化版本号来进行模块查询，具体规则如下：</p>
+<table>
+<thead>
+<tr>
+<th>模糊查看</th>
+<th>语义化版本</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>默认值</td>
+<td>@latest</td>
+<td>将匹配最新的可用标签版本或源码库的最新未标签版本。</td>
+</tr>
+<tr>
+<td>完全指定版本</td>
+<td>@v1.2.3</td>
+<td>将匹配该指定版本。</td>
+</tr>
+<tr>
+<td>版本前缀</td>
+<td>@v1或@v1.2</td>
+<td>将匹配具有该前缀的最新可用标签版本。</td>
+</tr>
+<tr>
+<td>版本比较</td>
+<td>@&lt;v1.2.3或@&gt;=v1.5.6</td>
+<td>将匹配最接近比较目标的可用标签版本。<br>&lt;则为小于该版本的最新版本，<br>&gt;则为大于该版本的最旧版本。<br>当使用类Unix系统时，需用引号将字符串包裹起来以防止大于小于号被解释为重定向。<br>如：go get &lsquo;github.com/gin-gonic/gin@&lt;v1.2.3&rsquo;。</td>
+</tr>
+<tr>
+<td>指定某个commit</td>
+<td>@c856192</td>
+<td>将匹配该 commit 时的版本。</td>
+</tr>
+<tr>
+<td>指定某个分支</td>
+<td>@master</td>
+<td>将匹配该分支版本。</td>
+</tr>
+</tbody>
+</table>
+<p>为了能让Go Modules的使用者能够从旧版本更方便地升级至新版本，Go语言官方提出了两个重要的规则：</p>
+<ul>
+<li>1、导入兼容性规则（import compatibility rule）：如果旧包和新包具有相同的导入路径，则新包必须向后兼容旧包。</li>
+<li>2、语义化导入版本规则（semantic import versioning rule）：每个不同主版本（即不兼容的包v1或v2）使用不同的导入路径，以主版本结尾，且每个主版本中最多一个。</li>
+</ul>
+<h3 id="举个例子-1">举个例子：</h3>
+<p>my/thing、my/thing/v2、my/thing/v3，而与Git分支的集成如下：
+
+        <img class="mx-auto" alt="" src="/posts/golang/git_branch.png" />   
+    </p>
+<h3 id="72go-mod">7.2、go mod</h3>
 <table>
 <thead>
 <tr>
@@ -443,8 +732,9 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 </tr>
 </tbody>
 </table>
-<h3 id="7其他">7、其他</h3>
-<p>1、每一行不需要;结尾，如：源码来源于excelize</p>
+<h2 id="8其他">8、其他</h2>
+<h3 id="81每一行不需要结尾">8.1、每一行不需要;结尾</h3>
+<p>如：源码来源于excelize</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -477,16 +767,16 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 }
 </code></pre></td></tr></table>
 </div>
-</div><p>2、不能有多余的import和变量，全局的可以<br>
-静态检查，标红：<br>
+</div><h3 id="82不能有多余的import和变量全局的可以">8.2、不能有多余的import和变量，全局的可以</h3>
+<p>静态检查，标红：<br>
 
         <img class="mx-auto" alt="" src="/posts/golang/unused_import.jpg" />   
     
 去掉多余的import后，正常：<br>
 
         <img class="mx-auto" alt="" src="/posts/golang/normal_import.jpg" />   
-    
-3、只能有一个main package，相当于程序入口</p>
+    </p>
+<h3 id="83只能有一个main-package相当于程序入口">8.3、只能有一个main package，相当于程序入口</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -495,7 +785,8 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#000;font-weight:bold">package</span> main
 </code></pre></td></tr></table>
 </div>
-</div><p>4、{不能另起一行开头写，只能跟java默认的排版一样放函数名后面</p>
+</div><h3 id="84不能另起一行开头写">8.4、{不能另起一行开头写</h3>
+<p>只能跟java默认的排版一样放函数名后面。如：源码来源于excelize</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -528,7 +819,8 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 }
 </code></pre></td></tr></table>
 </div>
-</div><p>5、可以返回多个值，不是跟java一样多个值的话需要用对象，如：File和error，源码来源于excelize</p>
+</div><h3 id="85可以返回多个值">8.5、可以返回多个值</h3>
+<p>不是跟java一样多个值的话需要用对象，如：File和error，源码来源于excelize</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -561,7 +853,8 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 }
 </code></pre></td></tr></table>
 </div>
-</div><p>6、go只有一种循环for，如：源码来源于excelize</p>
+</div><h3 id="86go只有一种循环for">8.6、go只有一种循环for</h3>
+<p>如：源码来源于excelize</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -594,7 +887,8 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 }
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="7只有一个后自增i没有i同理自减也一样如">7、只有一个后自增i++，没有++i，同理自减也一样，如：</h2>
+</div><h2 id="9只有一个后自增i没有i同理自减也一样">9、只有一个后自增i++，没有++i，同理自减也一样</h2>
+<p>如：源码来源于举例写的</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -619,7 +913,7 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 }
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="8与的使用区别">8、=与:=的使用区别</h2>
+</div><h2 id="10与的使用区别">10、=与:=的使用区别</h2>
 <p>=赋值<br>
 :=声明并赋值</p>
 <p>定义变量</p>
@@ -667,15 +961,16 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">number1, number2, number3 <span style="color:#000;font-weight:bold">:=</span> <span style="color:#099">1</span>, <span style="color:#099">2</span>, <span style="color:#099">3</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>那最终=与:=还有其他区别么，有<br>
-:=这个符号直接取代了var和type,这种形式叫做简短声明。不过它有一个限制，那就是它只能用在函数内部；在函数外部使用则会无法编译通过，所以一般用var方式来定义全局变量。</p>
+</div><h3 id="那最终与还有其他区别么有">那最终=与:=还有其他区别么，有</h3>
+<p>:=这个符号直接取代了var和type,这种形式叫做简短声明。不过它有一个限制，那就是它只能用在函数内部；在函数外部使用则会无法编译通过，所以一般用var方式来定义全局变量。</p>
 <p>:=只能在声明“局部变量”的时候使用，而“var”没有这个限制</p>
-<h2 id="9首字母大小写">9、首字母大小写</h2>
+<h2 id="11首字母大小写">11、首字母大小写</h2>
 <p>Go语言通过首字母的大小写来控制访问权限。无论是方法，变量，常量或是自定义的变量类型，如果首字母大写，则可以被外部包访问，反之则不可以。</p>
 <p>结构体中的字段名，如果首字母小写的话，则该字段无法被外部包访问和解析，比如，json解析</p>
-<p>简短整理就是：<br>
-首字母大写 == public<br>
-首字母小写 == private</p>
+<h3 id="简短整理就是">简短整理就是：</h3>
+<p>首字母大写 == public<br>
+首字母小写 == private<br>
+如：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -724,8 +1019,8 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 {<span style="color:#d14">&#34;name&#34;</span>:<span style="color:#d14">&#34;张三&#34;</span>,<span style="color:#d14">&#34;address&#34;</span>:<span style="color:#d14">&#34;中国北京&#34;</span>}
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="10struct-tag">10、struct tag</h2>
-<p>结构体首字母小写，json无法获取属性，参考9的说明</p>
+</div><h2 id="12struct-tag">12、struct tag</h2>
+<p>结构体首字母小写，json无法获取属性，参考上面的介绍说明</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -851,7 +1146,6 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#000;font-weight:bold">package</span> main
@@ -875,7 +1169,6 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 
 输出结果:
 {<span style="color:#d14">&#34;name&#34;</span>:<span style="color:#d14">&#34;张三&#34;</span>,<span style="color:#d14">&#34;age&#34;</span>:<span style="color:#099">18</span>}
-
 </code></pre></td></tr></table>
 </div>
 </div>
@@ -998,7 +1291,7 @@ dep是golang官方的一个实验项目，后2种属于第三方包管理工具�
 <ul class="widget-list">
     
     <li>
-        <a href="https://anTtutu.github.io/post/2021-01-16-goland_strange-knowledge/" title="golang奇怪的知识">golang奇怪的知识</a>
+        <a href="https://anTtutu.github.io/post/2021-01-16-goland_strange-knowledge/" title="golang奇怪的知识点">golang奇怪的知识点</a>
     </li>
     
     <li>
