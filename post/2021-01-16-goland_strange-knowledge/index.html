@@ -188,6 +188,7 @@
       </ul>
     </li>
     <li><a href="#12struct-tag">12、struct tag</a></li>
+    <li><a href="#13参数">13、&hellip;参数</a></li>
   </ul>
 </nav>
     </div>
@@ -1169,6 +1170,85 @@ example.com<span style="color:#000;font-weight:bold">/</span>apple v0<span style
 
 输出结果:
 {<span style="color:#d14">&#34;name&#34;</span>:<span style="color:#d14">&#34;张三&#34;</span>,<span style="color:#d14">&#34;age&#34;</span>:<span style="color:#099">18</span>}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="13参数">13、&hellip;参数</h2>
+<p>表示不定参数<br>
+笑话-题外话：第一次使用redis时，做批量写入，因为参数不定还闹过乌龙，以为&hellip;是展示不全导致的<br>
+函数可变数量参数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#000;font-weight:bold">package</span> main
+
+<span style="color:#000;font-weight:bold">import</span> <span style="color:#d14">&#34;fmt&#34;</span>
+
+<span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">main</span>() {
+   <span style="color:#998;font-style:italic">//multiParam 可以接受可变数量的参数
+</span><span style="color:#998;font-style:italic"></span>   <span style="color:#900;font-weight:bold">multiParam</span>(<span style="color:#d14">&#34;jerry&#34;</span>, <span style="color:#099">1</span>)
+   <span style="color:#900;font-weight:bold">multiParam</span>(<span style="color:#d14">&#34;php&#34;</span>, <span style="color:#099">1</span>, <span style="color:#099">2</span>)
+}
+<span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">multiParam</span>(name <span style="color:#458;font-weight:bold">string</span>, args <span style="color:#000;font-weight:bold">...</span><span style="color:#458;font-weight:bold">int</span>) {
+   fmt.<span style="color:#900;font-weight:bold">Println</span>(name)
+   <span style="color:#998;font-style:italic">//接受的参数放在args数组中
+</span><span style="color:#998;font-style:italic"></span>   <span style="color:#000;font-weight:bold">for</span> _, e <span style="color:#000;font-weight:bold">:=</span> <span style="color:#000;font-weight:bold">range</span> args {
+      fmt.<span style="color:#900;font-weight:bold">Println</span>(e)
+   }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>可变函数的参数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#000;font-weight:bold">package</span> main
+
+<span style="color:#000;font-weight:bold">import</span> <span style="color:#d14">&#34;fmt&#34;</span>
+
+<span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">main</span>() {
+    <span style="color:#998;font-style:italic">//multiParam 可以接受可变数量的参数
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#900;font-weight:bold">multiParam</span>(<span style="color:#d14">&#34;jerry&#34;</span>, <span style="color:#d14">&#34;herry&#34;</span>)
+    <span style="color:#900;font-weight:bold">multiParam</span>(<span style="color:#d14">&#34;php&#34;</span>, <span style="color:#d14">&#34;mysql&#34;</span>, <span style="color:#d14">&#34;js&#34;</span>)
+}
+<span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">multiParam</span>(args <span style="color:#000;font-weight:bold">...</span><span style="color:#458;font-weight:bold">string</span>) {
+    <span style="color:#998;font-style:italic">//接受的参数放在args数组中
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">for</span> _, e <span style="color:#000;font-weight:bold">:=</span> <span style="color:#000;font-weight:bold">range</span> args {
+        fmt.<span style="color:#900;font-weight:bold">Println</span>(e)
+    }
+}
 </code></pre></td></tr></table>
 </div>
 </div>
