@@ -141,13 +141,16 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#在linux中-批量操作redis中的-keys的方法">在linux中 批量操作redis中的 keys的方法：</a>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1统计个数">1、统计个数</a></li>
+    <li><a href="#2批量删除">2、批量删除</a></li>
+    <li><a href="#3redis常用命令介绍">3、Redis常用命令介绍</a></li>
+    <li><a href="#4server">4、Server</a></li>
+    <li><a href="#5过期时间设置">5、过期时间设置</a></li>
+    <li><a href="#6redis命令错误码">6、redis命令错误码</a>
       <ul>
-        <li><a href="#统计个数">统计个数：</a></li>
-        <li><a href="#批量删除">批量删除</a></li>
-        <li><a href="#redis常用命令">Redis常用命令</a></li>
-        <li><a href="#server">Server</a></li>
-        <li><a href="#过期时间设置">过期时间设置</a></li>
+        <li><a href="#注基本上个人总结的规律不代表官方标准可能存在官方版本更新或者版本差异">注：基本上个人总结的规律，不代表官方标准，可能存在官方版本更新或者版本差异</a></li>
+        <li><a href="#总结">总结</a></li>
       </ul>
     </li>
   </ul>
@@ -210,25 +213,26 @@
         </div>
         
         <div class="post-content">
-            <h2 id="在linux中-批量操作redis中的-keys的方法">在linux中 批量操作redis中的 keys的方法：</h2>
-<h3 id="统计个数">统计个数：</h3>
+            <h2 id="前言">前言</h2>
+<p>整理下在linux中操作redis中的一些命令</p>
+<h2 id="1统计个数">1、统计个数</h2>
 <p>redis中名称含有OMP_OFFLINE的key的个数；</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">src/redis-cli keys <span style="color:#d14">&#34;*OMP_OFFLINE*&#34;</span>|wc -l
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">src/redis-cli keys <span style="color:#d14">&#34;*OMP_OFFLINE*&#34;</span> | wc -l
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="批量删除">批量删除</h3>
+</div><h2 id="2批量删除">2、批量删除</h2>
 <p>批量删除 0号数据库中名称含有OMP_OFFLINE的key：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">src/redis-cli -n <span style="color:#099">0</span> keys <span style="color:#d14">&#34;*OMP_OFFLINE*&#34;</span>|xargs src/redis-cli -n <span style="color:#099">0</span> del
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">src/redis-cli -n <span style="color:#099">0</span> keys <span style="color:#d14">&#34;*OMP_OFFLINE*&#34;</span> | xargs src/redis-cli -n <span style="color:#099">0</span> del
 </code></pre></td></tr></table>
 </div>
 </div><p>在redis的客户端环境中并不支持批量删除。</p>
@@ -241,7 +245,7 @@
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">redis-cli -p port -c <span style="color:#0086b3">command</span> &gt; keys.log
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="redis常用命令">Redis常用命令</h3>
+</div><h2 id="3redis常用命令介绍">3、Redis常用命令介绍</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -255,11 +259,9 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Key-values
-keys * 匹配键所有的键. 模糊匹配 keys my* 取出所有已my开头的键
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">keys <span style="color:#d14">&#39;*&#39;</span> 匹配键所有的键. 模糊匹配 keys my* 取出所有已my开头的键
 exists 判断是否键 exists name判断是否有name这个键是否存在
 del 删除键 del name 删除name的键
 expire 设置过期时间 expire key <span style="color:#0086b3">time</span>
@@ -272,7 +274,7 @@ rename 重命名一个键
 <span style="color:#0086b3">type</span> key 判断key的数据类型
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="server">Server</h3>
+</div><h2 id="4server">4、Server</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -288,7 +290,7 @@ rename 重命名一个键
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ping ping我们的主机能否链接 链接是否存活
 <span style="color:#0086b3">echo</span> 命令 <span style="color:#0086b3">echo</span> demo直接输出
-<span style="color:#000;font-weight:bold">select</span> 选择数据库 <span style="color:#000;font-weight:bold">select</span> 0-16个数据库
+<span style="color:#000;font-weight:bold">select</span> 选择数据库 <span style="color:#000;font-weight:bold">select</span> 0-15个数据库
 quit <span style="color:#0086b3">exit</span> 退出链接
 dbsize 返回数据库的键的个数
 info 返回服务器相关信息
@@ -297,7 +299,7 @@ flush db 清空数据库
 flushall 删除所有数据库中所有的键
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="过期时间设置">过期时间设置</h3>
+</div><h2 id="5过期时间设置">5、过期时间设置</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -332,7 +334,123 @@ redis&gt; TTL cache_page
 <span style="color:#000;font-weight:bold">(</span>integer<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">29996</span>
 </code></pre></td></tr></table>
 </div>
+</div><h2 id="6redis命令错误码">6、redis命令错误码</h2>
+<h3 id="注基本上个人总结的规律不代表官方标准可能存在官方版本更新或者版本差异">注：基本上个人总结的规律，不代表官方标准，可能存在官方版本更新或者版本差异</h3>
+<p>0 表示操作失败</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; exists <span style="color:#0086b3">test</span>  <span style="color:#998;font-style:italic"># 不存在test的key</span>
+<span style="color:#000;font-weight:bold">(</span>integer<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">0</span>
+</code></pre></td></tr></table>
 </div>
+</div><p>1 表示操作成功</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; exists str  <span style="color:#998;font-style:italic"># 存在str的key</span>
+<span style="color:#000;font-weight:bold">(</span>integer<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">1</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>-1 表示没有过期时间</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; ttl str    <span style="color:#998;font-style:italic"># 没设置过期时间</span>
+<span style="color:#000;font-weight:bold">(</span>integer<span style="color:#000;font-weight:bold">)</span> -1
+</code></pre></td></tr></table>
+</div>
+</div><p>-2 表示key不存在，一般是ttl使用，低于2.8版本仍然是-1，高于2.8版本是-2</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; ttl <span style="color:#0086b3">test</span>   <span style="color:#998;font-style:italic">#  test的key不存在 </span>
+<span style="color:#000;font-weight:bold">(</span>integer<span style="color:#000;font-weight:bold">)</span> -2
+</code></pre></td></tr></table>
+</div>
+</div><p>null 不存在值，表示这个key不存在</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; get <span style="color:#0086b3">test</span>   <span style="color:#998;font-style:italic">#  不存在test这个key因此返回值null </span>
+<span style="color:#000;font-weight:bold">(</span>nil<span style="color:#000;font-weight:bold">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>其他</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; keys *    <span style="color:#998;font-style:italic"># 这个库下没有key，因此空的</span>
+<span style="color:#000;font-weight:bold">(</span>empty array<span style="color:#000;font-weight:bold">)</span>
+
+127.0.0.1:6379&gt; <span style="color:#0086b3">test</span>      <span style="color:#998;font-style:italic">#  不存在的命令</span>
+<span style="color:#000;font-weight:bold">(</span>error<span style="color:#000;font-weight:bold">)</span> ERR unknown <span style="color:#0086b3">command</span> <span style="color:#d14">`</span><span style="color:#0086b3">test</span><span style="color:#d14">`</span>, with args beginning with:    
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="总结">总结</h3>
+<p>比如删除某个不存在的key，是返回0，不是返回-2<br>
+有些场景，0表示操作失败，也隐约有不存在的意思，但是更多的是表示删除失败</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; del <span style="color:#0086b3">test</span>
+<span style="color:#000;font-weight:bold">(</span>integer<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">0</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>再比如删除成功，返回1</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; del str
+<span style="color:#000;font-weight:bold">(</span>integer<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">1</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>会不会出现大于0的情况呢，会，不过通常是查询key的失效时间返回的，比如设置了失效时间100秒</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; expire str <span style="color:#099">100</span>
+<span style="color:#000;font-weight:bold">(</span>integer<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">1</span>
+127.0.0.1:6379&gt; ttl str
+<span style="color:#000;font-weight:bold">(</span>integer<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">97</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>所以，整体来说，redis的返回值，基本上跟C/C++的返回值bool类型一样表示返回值的：<br>
+0表示失败<br>
+1表示成功</p>
+
         </div>
 
         
@@ -452,6 +570,10 @@ redis&gt; TTL cache_page
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2021-01-28-miner_virus_2/" title="挖矿病毒2-分析和排查思路">挖矿病毒2-分析和排查思路</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2021-01-16-goland_strange-knowledge/" title="golang奇怪的知识点">golang奇怪的知识点</a>
     </li>
     
@@ -487,10 +609,6 @@ redis&gt; TTL cache_page
         <a href="https://anTtutu.github.io/post/2020-09-20-mac_aria2_install/" title="Mac下安装aria2下载工具">Mac下安装aria2下载工具</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2020-09-17-xWindows_x11_xQuartz/" title="Mac下远程运行Linux的GUI程序">Mac下远程运行Linux的GUI程序</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -522,6 +640,8 @@ redis&gt; TTL cache_page
     
     <li><a href="https://anTtutu.github.io/categories/build/">build (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/check/">check (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/gcc/">gcc (1)</a></li>
@@ -542,9 +662,11 @@ redis&gt; TTL cache_page
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mine/">mine (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/mysql/">mysql (2)</a></li>
     
@@ -554,9 +676,7 @@ redis&gt; TTL cache_page
     
     <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/redis/">redis (1)</a></li>
-    
-    <li><a href="https://anTtutu.github.io/categories/reids/">reids (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/redis/">redis (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/shell/">shell (2)</a></li>
     
@@ -566,7 +686,7 @@ redis&gt; TTL cache_page
     
     <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/virus/">virus (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/virus/">virus (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
     
@@ -598,6 +718,8 @@ redis&gt; TTL cache_page
     <a href="https://anTtutu.github.io/tags/blog/">blog</a>
     
     <a href="https://anTtutu.github.io/tags/build/">build</a>
+    
+    <a href="https://anTtutu.github.io/tags/check/">check</a>
     
     <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
     
