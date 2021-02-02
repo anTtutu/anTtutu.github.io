@@ -156,7 +156,11 @@
         <li><a href="#33执行go-build">3.3、执行go build</a></li>
       </ul>
     </li>
-    <li><a href="#注">注：</a></li>
+    <li><a href="#注">注：</a>
+      <ul>
+        <li><a href="#4可以写打包脚本">4、可以写打包脚本</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
     </div>
@@ -361,7 +365,115 @@ manifest文件名test.exe.manifest</p>
     
 比如用walk的gui go项目带了没问题。<br>
 验证通过2、3步骤做了ico处理的，建议通过go build打包。</p>
+<h3 id="4可以写打包脚本">4、可以写打包脚本</h3>
+<p>创建build.bat</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bat" data-lang="bat">@<span style="color:#000;font-weight:bold">echo</span> off
+<span style="color:#000;font-weight:bold">Title</span> build...                                              
+<span style="color:#000;font-weight:bold">Color</span> 0A
 
+<span style="color:#998;font-style:italic">REM 声明采用UTF-8编码</span>
+chcp 65001
+
+:<span style="color:#900;font-weight:bold">menu</span>
+<span style="color:#000;font-weight:bold">echo</span> =============================================
+<span style="color:#000;font-weight:bold">echo</span>.
+<span style="color:#000;font-weight:bold">echo</span> No.1-选择用minGW工具打包
+<span style="color:#000;font-weight:bold">echo</span>.
+<span style="color:#000;font-weight:bold">echo</span> No.2-选择用rsrc工具打包
+<span style="color:#000;font-weight:bold">echo</span>.
+<span style="color:#000;font-weight:bold">echo</span> =============================================
+
+<span style="color:#000;font-weight:bold">set</span> <span style="color:#000;font-weight:bold">/p</span> <span style="color:#008080">user_input</span>=请输入你的选择:
+
+<span style="color:#000;font-weight:bold">if</span> <span style="color:#008080">%user_input%</span> <span style="color:#000;font-weight:bold">equ</span> 1 <span style="color:#000;font-weight:bold">goto</span> <span style="color:#900;font-weight:bold">1</span>
+
+<span style="color:#000;font-weight:bold">if</span> <span style="color:#008080">%user_input%</span> <span style="color:#000;font-weight:bold">equ</span> 2 <span style="color:#000;font-weight:bold">goto</span> <span style="color:#900;font-weight:bold">2</span>
+
+<span style="color:#000;font-weight:bold">if</span> <span style="color:#008080">%user_input%</span> <span style="color:#000;font-weight:bold">==</span> &#39;3&#39; <span style="color:#000;font-weight:bold">exit</span>
+
+<span style="color:#000;font-weight:bold">pause</span>
+
+:<span style="color:#998;font-style:italic">: 1. minGW</span>
+:<span style="color:#900;font-weight:bold">1</span>
+<span style="color:#000;font-weight:bold">echo</span> <span style="color:#d14">&#34;请先安装好dev C++工具minGW&#34;</span>
+
+<span style="color:#000;font-weight:bold">echo</span> windresing...
+windres -o md5.exe.syso md5.exe.rc
+
+<span style="color:#000;font-weight:bold">echo</span> building...
+go build
+<span style="color:#000;font-weight:bold">goto</span> <span style="color:#900;font-weight:bold">end</span>
+
+:<span style="color:#998;font-style:italic">: 2.rsrc</span>
+:<span style="color:#900;font-weight:bold">2</span>
+<span style="color:#000;font-weight:bold">echo</span> <span style="color:#d14">&#34;需要先安装工具命令rsrc，命令：go get github.com/akavel/rsrc&#34;</span> 
+
+<span style="color:#000;font-weight:bold">echo</span> rsrc manifesting...
+rsrc -manifest md5.exe.manifest -o md5.exe.syso -ico md5.ico
+
+<span style="color:#000;font-weight:bold">echo</span> building...
+go build
+<span style="color:#000;font-weight:bold">goto</span> <span style="color:#900;font-weight:bold">end</span>
+
+:<span style="color:#900;font-weight:bold">end</span>
+<span style="color:#000;font-weight:bold">echo</span> complete
+</code></pre></td></tr></table>
+</div>
+</div>
         </div>
 
         
