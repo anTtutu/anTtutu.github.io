@@ -350,8 +350,12 @@ data_src目录:
         <img class="mx-auto" alt="" src="/posts/deepface/src.png" />   
     </p>
 <h2 id="6开始工作">6、开始工作</h2>
-<p>脚本中间的具体参数很好理解，这个工程也有完整的中文版，实在不熟悉的可以网上找下翻译好的中文完整工具包下载，这里不做过多说明，只简单告诉步骤</p>
-<h3 id="61把源视频拆分成图片">6.1、把源视频拆分成图片</h3>
+<p>脚本中间的具体参数很好理解，这个工程也有完整的中文版，实在不熟悉的可以网上找下翻译好的中文完整工具包下载，这里不做过多说明，只简单告诉步骤<br>
+注意bat脚本因为带有空格和序号等符号，双击执行即可，cmd下不好执行</p>
+<p>原理流程如下：</p>
+<pre><code class="language-mermaid" data-lang="mermaid">graph LR;
+A(目标或源视频转成图片)--&gt;B(目标或源视频转成的图片提取脸部)--&gt;C(训练模型)--&gt;D(人脸替换)--&gt;E(合成视频)
+</code></pre><h3 id="61把源视频拆分成图片">6.1、把源视频拆分成图片</h3>
 <p>执行脚本</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -399,19 +403,41 @@ data_src目录:
 </thead>
 <tbody>
 <tr>
+<td>h</td>
+<td>half face</td>
+<td>新版本参数，本文介绍的下载版本不带这个参数</td>
+</tr>
+<tr>
+<td>mf</td>
+<td>mid-half-face</td>
+<td>新版本参数，本文介绍的下载版本不带这个参数</td>
+</tr>
+<tr>
 <td>f</td>
+<td>full-face</td>
 <td>全脸</td>
-<td></td>
 </tr>
 <tr>
 <td>wf</td>
+<td>whole-face</td>
 <td>带额全脸</td>
-<td></td>
 </tr>
 <tr>
 <td>head</td>
 <td>连头发一起换</td>
 <td>越大越消耗GPU运算</td>
+</tr>
+<tr>
+<td>示例图如下:</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>
+        <img class="mx-auto" alt="" src="/posts/deepface/demo.png" />   
+    </td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -447,8 +473,13 @@ data_src目录:
 <p>1、SAEHD模型做出来的视频质量更好，但是要求的配置更高。<br>
 2、退出后再次点击train Quick96.bat 可以继续训练，进度不会丢失</p>
 </blockquote>
-<p>如下是几个小时训练的进度，分别是低于1000，1000 ~ 2000，2000 ~ 3000 3个阶段的，建议更多时间训练高于万次或者自己满意为止</p>
-<p>900次训练：
+<p>如下是几个小时训练的进度，分别是低于1000，1000 ~ 2000，2000 ~ 3000 3个阶段的，建议更多时间训练高于万次或者自己满意为止
+列序号|介绍
+-|-
+1、3列|是分别提取src和dst视频的原图<br>
+2、4列|是根据切脸参数提取的模型数据<br>
+5列|是替换后的demo效果<br>
+900次训练：
 
         <img class="mx-auto" alt="" src="/posts/deepface/900.png" />   
     
@@ -612,6 +643,14 @@ data_src目录:
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2021-04-30-python_matplotlib/" title="python生成matplotlib的统计图">python生成matplotlib的统计图</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2021-04-10-kafka_zookeeper_cluster_install/" title="kafka集群和zk集群搭建">kafka集群和zk集群搭建</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2021-03-29-change_face/" title="deepfacelab使用介绍">deepfacelab使用介绍</a>
     </li>
     
@@ -641,14 +680,6 @@ data_src目录:
     
     <li>
         <a href="https://anTtutu.github.io/post/2020-11-15-win10_kenlm_install/" title="Win10安装kenlm语言模型模块">Win10安装kenlm语言模型模块</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2020-10-08-mbp_ssd/" title="Mac升级SSD">Mac升级SSD</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2020-09-28-android_termux/" title="android下安装termux模拟器-超便携linux">android下安装termux模拟器-超便携linux</a>
     </li>
     
 </ul>
@@ -704,11 +735,15 @@ data_src目录:
     
     <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/linux/">linux (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/matplotlib/">matplotlib (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/mine/">mine (1)</a></li>
     
@@ -716,7 +751,9 @@ data_src目录:
     
     <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">python (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/pandas/">pandas (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/python/">python (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
     
@@ -733,6 +770,10 @@ data_src目录:
     <li><a href="https://anTtutu.github.io/categories/virus/">virus (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zk/">zk (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zookeeper/">zookeeper (1)</a></li>
     
 </ul>
     </section>
@@ -787,6 +828,8 @@ data_src目录:
     
     <a href="https://anTtutu.github.io/tags/js/">js</a>
     
+    <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    
     <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
     
     <a href="https://anTtutu.github.io/tags/linux/">linux</a>
@@ -818,6 +861,10 @@ data_src目录:
     <a href="https://anTtutu.github.io/tags/virus/">virus</a>
     
     <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
+    
+    <a href="https://anTtutu.github.io/tags/zk/">zk</a>
+    
+    <a href="https://anTtutu.github.io/tags/zookeeper/">zookeeper</a>
     
 </div>
     </section>
