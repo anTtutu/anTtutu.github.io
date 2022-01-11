@@ -142,7 +142,12 @@
         <nav id="TableOfContents">
   <ul>
     <li><a href="#前言">前言</a></li>
-    <li><a href="#1安装">1、安装</a></li>
+    <li><a href="#1安装">1、安装</a>
+      <ul>
+        <li><a href="#11-安装依赖">1.1 安装依赖</a></li>
+        <li><a href="#12-mydumper安装">1.2 mydumper安装</a></li>
+      </ul>
+    </li>
     <li><a href="#2常用备份还原命令">2、常用备份、还原命令</a>
       <ul>
         <li><a href="#导出备份">导出备份</a></li>
@@ -155,6 +160,7 @@
         <li><a href="#32-myloader使用参数">3.2 myloader使用参数</a></li>
       </ul>
     </li>
+    <li><a href="#4metadata文件">4、metadata文件</a></li>
   </ul>
 </nav>
     </div>
@@ -216,8 +222,43 @@
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
+<p>Mydumper是一个针对MySQL和Drizzle的高性能多线程备份和恢复工具。开发人员主要来自MySQL,Facebook,SkySQL公司。性能比自带的mysqldump强劲<br>
+github:(<a href="https://github.com/mydumper/mydumper">https://github.com/mydumper/mydumper</a>)</p>
 <h2 id="1安装">1、安装</h2>
-<p>mydumper安装</p>
+<p>redhat、centos举例</p>
+<h3 id="11-安装依赖">1.1 安装依赖</h3>
+<h4 id="安装编译库">安装编译库</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum install -y cmake gcc gcc-c++ git make
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="安装开发库">安装开发库</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum install -y glib2-devel mysql-devel openssl-devel pcre-devel zlib-devel libzstd-devel
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="安装mysql开发版库">安装mysql开发版库</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum install -y mysql-devel
+yum install -y Percona-Server-devel-57
+yum install -y mariadb-devel
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="12-mydumper安装">1.2 mydumper安装</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -226,11 +267,9 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget https://launchpad.net/mydumper/0.9/0.9.1/+download/mydumper-0.9.1.tar.gz
-yum install glib2-devel mysql-devel zlib-devel pcre-devel
 tar zxvf mydumper-0.9.1.tar.gz
 <span style="color:#0086b3">cd</span> mydumper-0.9.1
 cmake .
@@ -420,7 +459,35 @@ make install
 </tr>
 </tbody>
 </table>
+<h2 id="4metadata文件">4、metadata文件</h2>
+<p>metadata文件存储了binlog位置点和备份开始结束的时间</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat metadata
+Started dump at: 2021-06-10 17:23:10
+SHOW MASTER STATUS:
+	Log: mysql-bin.000001
+	Pos: <span style="color:#099">472</span>
+	GTID:03d52d94-c6a7-11eb-9322-000c29b99c14:1-1534082,
+71557f9f-c9c3-11eb-9a33-000c29b99c14:1-2,
+c58301f7-f8ad-11ea-b9f5-000c29bcd489:1-3259357
 
+Finished dump at: 2021-06-10 17:23:25
+</code></pre></td></tr></table>
+</div>
+</div>
         </div>
 
         
@@ -656,6 +723,8 @@ make install
     
     <li><a href="https://anTtutu.github.io/categories/mine/">mine (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/mysql/">mysql (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
@@ -768,6 +837,8 @@ make install
     <a href="https://anTtutu.github.io/tags/log4j/">log4j</a>
     
     <a href="https://anTtutu.github.io/tags/mine/">mine</a>
+    
+    <a href="https://anTtutu.github.io/tags/mongodb/">mongodb</a>
     
     <a href="https://anTtutu.github.io/tags/mysql/">mysql</a>
     
