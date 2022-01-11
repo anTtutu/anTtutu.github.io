@@ -6,7 +6,61 @@
     <description>Recent content in Posts on Anttu&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 07 Oct 2021 00:29:47 +0800</lastBuildDate><atom:link href="https://anTtutu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 07 Jan 2022 00:29:47 +0800</lastBuildDate><atom:link href="https://anTtutu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一些正则小细节-不定期补充</title>
+      <link>https://anTtutu.github.io/post/2022-01-07-regexp/</link>
+      <pubDate>Fri, 07 Jan 2022 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2022-01-07-regexp/</guid>
+      <description>前言 记录日常工作碰到的一些正则小细节 1、group分组 需要通过()把提取的参数圈起来，这样才会产生分组 1 2 3 4 5 6 7 8 9 10 private static String collectMapperId(String value) { String result = &amp;#34;&amp;#34;; String regId = &amp;#34;id=\&amp;#34;(.*?)\&amp;#34;&amp;#34;; Pattern pattern = Pattern.compile(regId); Matcher matcher = pattern.matcher(value); if (matcher.find()) { result = matcher.group(1); } return result; } 对比如果没有(),是没有分组效果的 Exception in thread &amp;quot;main&amp;quot; java.lang.IndexOutOfBoundsException: No group 1 at java.util.regex.Matcher.group(Matcher.java:538) 阅读源码和源码中的注释，其实也是s.su</description>
+    </item>
+    
+    <item>
+      <title>sdkman的使用</title>
+      <link>https://anTtutu.github.io/post/2022-01-06-sdkman/</link>
+      <pubDate>Thu, 06 Jan 2022 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2022-01-06-sdkman/</guid>
+      <description>前言 多sdk版本管理工具 1、安装java jdk 1 sdk install java 2、安装指定版本的 java jdk 1 sdk install java 8u131 3、安装本地包 1 sdk install groovy 3.0.0-SNAPSHOT /path/to/groovy-3.0.0-SNAPSHOT 4、移除 java jdk 1 sdk uninstall java 5、查看当前生效的 java jdk 1 2 3 sdk current java # 查看所有本地包的当前版本 sdk current 6、查看支持的清单 1 sdk list 7、查看软件的版本 1 sdk list java 8、临时切换版本 1 sdk use java 8.0.232.hs-adpt 9、切换默认</description>
+    </item>
+    
+    <item>
+      <title>mysql大表的数据清理</title>
+      <link>https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/</link>
+      <pubDate>Thu, 23 Dec 2021 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/</guid>
+      <description>前言 mysql的表日积月累也会出现过千万的大表，有些历史数据可以定期归档清理的，保留最近的数据即可。但是delete table_name where id = &amp;lsquo;&#39;;这种方式只是逻辑上的删除，不会释放表空间和索引的。因此需要在历史数据归档后做表分析才行 1、大表归档大量数据 先远程备份，可以开发成shell</description>
+    </item>
+    
+    <item>
+      <title>nmap参数详解</title>
+      <link>https://anTtutu.github.io/post/2021-12-17-nmap/</link>
+      <pubDate>Fri, 17 Dec 2021 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2021-12-17-nmap/</guid>
+      <description>前言 用nmap扫描域名整理下一些细节参数 1. 语法 1 nmap [扫描类型] [选项] {目标规格} 2. 选项 目标规格： 可以通过主机名，IP地址，网络等 例如： 1 2 3 4 5 scanme.nmap.org，microsoft.com/24，192.168.0.1; 10.0.0-255.1-254 -iL &amp;lt;inputfilename&amp;gt</description>
+    </item>
+    
+    <item>
+      <title>lombok一些注解的含义</title>
+      <link>https://anTtutu.github.io/post/2021-11-19-lombok/</link>
+      <pubDate>Fri, 19 Nov 2021 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2021-11-19-lombok/</guid>
+      <description>前言 lombok一些注解的含义整理 1、@Accessors(chain = true) 链式风格，在调用set方法时，返回这个类的实例对象，比如：a.b.c 2、@Data 在JavaBean或类JavaBean中使用，这个注解包含范围最广，它包含getter、setter、NoArgsConst</description>
+    </item>
+    
+    <item>
+      <title> git的日常操作命令整理</title>
+      <link>https://anTtutu.github.io/post/2021-10-19-git/</link>
+      <pubDate>Tue, 19 Oct 2021 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2021-10-19-git/</guid>
+      <description>前言 git的一些常见命令操作整理 1、下载 depth用于指定克隆深度，为1即表示只克隆最近一次commit，可以减少下载的容量 1 git cone --depth=1 {http://xxx/url} 2、撤销commit 默认撤销，不撤销本地代码，撤销commit，并且撤销git add 1 git reset --mixed HEAD^ 不删除工作空间改动代码，撤销commit，不撤销git add</description>
+    </item>
+    
     <item>
       <title>前端编码安全</title>
       <link>https://anTtutu.github.io/post/2021-10-07-safe_coding_js/</link>
@@ -23,6 +77,15 @@
       
       <guid>https://anTtutu.github.io/post/2021-09-30-safe_coding_java/</guid>
       <description>后端java开发 &amp;ndash; 转自腾讯github 1.1 数据持久化 1.1.1【必须】SQL语句默认使用预编译并绑定变量 Web后台系统应默认使用预编译绑定变量的形式创建sql语句，保持查询语句和数据相分离。以从本质上避免SQL注入风险。 如使用Mybatis作为持久层框架，应通过#{}语法进行参数绑</description>
+    </item>
+    
+    <item>
+      <title>maven校验依赖包CVE漏洞</title>
+      <link>https://anTtutu.github.io/post/2021-09-19-maven_verify/</link>
+      <pubDate>Sun, 19 Sep 2021 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2021-09-19-maven_verify/</guid>
+      <description>前言 maven也可以校验依赖包是有有CVE漏洞 1、maven检测依赖包CVE漏洞 1 mvn verify -DskipTests=true 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 &amp;lt;build&amp;gt; &amp;lt;plugins&amp;gt; &amp;lt;!-- owasp check CVE 检查依赖包是否有漏洞 command: mvn verify --&amp;gt; &amp;lt;plugin&amp;gt; &amp;lt;groupId&amp;gt;org.owasp&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;dependency-check-maven&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;6.5.1&amp;lt;/version&amp;gt; &amp;lt;executions&amp;gt; &amp;lt;execution&amp;gt; &amp;lt;goals&amp;gt; &amp;lt;goal&amp;gt;check&amp;lt;/goal&amp;gt; &amp;lt;/goals&amp;gt; &amp;lt;/execution&amp;gt; &amp;lt;/executions&amp;gt; &amp;lt;/plugin&amp;gt; &amp;lt;/plugins&amp;gt; &amp;lt;/build&amp;gt; 2、检测结果demo 第一次执行因下载CVE数据有些慢 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19</description>
     </item>
     
     <item>
@@ -269,12 +332,57 @@
     </item>
     
     <item>
+      <title>手机端调测H5页面神器-vConsole</title>
+      <link>https://anTtutu.github.io/post/2018-11-08-vconsole/</link>
+      <pubDate>Thu, 08 Nov 2018 21:46:20 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2018-11-08-vconsole/</guid>
+      <description>前言 手机端调测H5页面是比较麻烦的，需要借助腾讯的vConsole神器 1、导入引用 1 2 3 4 5 6 &amp;lt;script src=&amp;#34;https://unpkg.com/vconsole@latest/dist/vconsole.min.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script&amp;gt; // 初始化 var vConsole = new VConsole(); console.log(&amp;#39;VConsole is cool&amp;#39;); &amp;lt;/script&amp;gt; 如下图： 2、属性 vConsole.version 当前 vConsole 的版本号。 只读 类型：string 例子： 1 vConsole.version // =&amp;gt; &amp;#34;3.11.0&amp;#34; vConsole.option 配置项。 可写 类型：object 键名 类型 可选 默认值 描述 defaultPlugins Array true [&amp;lsquo;system&amp;rsquo;, &amp;lsquo;network&amp;rsquo;, &amp;lsquo;element&amp;rsquo;, &amp;lsquo;storage&amp;rsquo;] 需要自动初始化</description>
+    </item>
+    
+    <item>
+      <title>mydumper第三方备份还原工具</title>
+      <link>https://anTtutu.github.io/post/2018-09-16-mydumper/</link>
+      <pubDate>Sun, 16 Sep 2018 21:46:20 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2018-09-16-mydumper/</guid>
+      <description>前言 1、安装 mydumper安装 1 2 3 4 5 6 7 wget https://launchpad.net/mydumper/0.9/0.9.1/+download/mydumper-0.9.1.tar.gz yum install glib2-devel mysql-devel zlib-devel pcre-devel tar zxvf mydumper-0.9.1.tar.gz cd mydumper-0.9.1 cmake . make make install 2、常用备份、还原命令 导出备份 1 mydumper -u root -p XXX -h localhost -B XXX -o /data/backup/20180916 导入恢复 1 myloader -u root -p XXX -h localhost -B XXX -d /data/backup/20180916 3、参数说明 3.1 mydumper 的常用参数 参数 说明 -B &amp;ndash;database 要导出的dbname -T &amp;ndash;tables-list 需要导出的表名,导出多个表需要逗号分隔，t1[,t</description>
+    </item>
+    
+    <item>
+      <title>mysql低版本源代码安装</title>
+      <link>https://anTtutu.github.io/post/2018-08-14-mysql_install/</link>
+      <pubDate>Tue, 14 Aug 2018 21:46:20 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2018-08-14-mysql_install/</guid>
+      <description>前言 如果不使用最新版本的mysql，但是低版本的mysql官方不提供编译好的安装包，只能自己编译安装了。以下步骤和参数针对5.6、5.7生效，新版本有变动请阅读官方文档介绍。 1、环境检测 使用下面的命令检查是否安装有MySQL Server 1 2 3 4 rpm -qa | grep mysql 有的话通过下面的命令来卸载掉 rpm -e mysql /</description>
+    </item>
+    
+    <item>
+      <title>java OOM的种类整理</title>
+      <link>https://anTtutu.github.io/post/2018-05-08-OOM/</link>
+      <pubDate>Tue, 08 May 2018 21:46:20 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2018-05-08-OOM/</guid>
+      <description>前言 java OOM的种类整理 1、分类 1.1【情况一】： 1 java.lang.OutOfMemoryError: Java heap space: 这种是java堆内存不够，一个原因是真不够，另一个原因是程序中有死循环 如果是java堆内存不够的话，可以通过调整JVM下面的配置来解决： -Xms3062m -Xmx3062m 1.2【情况二】 1 java.lang.OutOfMemoryError: GC overhead limit exceeded 【解释】 JDK6新增错误类型，当GC为释放很小空间占用</description>
+    </item>
+    
+    <item>
       <title>OrangePi</title>
       <link>https://anTtutu.github.io/post/2018-04-10-OrangePi/</link>
       <pubDate>Tue, 10 Apr 2018 21:46:20 +0800</pubDate>
       
       <guid>https://anTtutu.github.io/post/2018-04-10-OrangePi/</guid>
       <description>朋友弄了一批香橙派的板子，给我做测试，拿了板子、CF卡、电源后开启了试玩，通过配置查看，香橙派比草莓派配置还强劲一些，国产的还不错，不过生态没草莓派完善，对新手可能没健全的指导，稍显不友好，但是对于我这种职业开发人员来说，小case，所以这里个人觉得香橙派还是很不错的 1、准备工作</description>
+    </item>
+    
+    <item>
+      <title>springmvc的参数校验注解整理</title>
+      <link>https://anTtutu.github.io/post/2018-03-19-springmvc/</link>
+      <pubDate>Mon, 19 Mar 2018 21:46:20 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2018-03-19-springmvc/</guid>
+      <description>1、JSR303注解字段校验 注解 说明 功能 @AssertFalse Boolean,boolean 验证注解的元素值是false @AssertTrue Boolean,boolean 验证注解的元素值是true @NotNull 任意类型 验证注解的元素值不是null @Null 任意类型 验证注解的元素值是null @Min(value=值) BigDecimal，BigInteger, byte,short, int, long，等任何Number或</description>
     </item>
     
     <item>
