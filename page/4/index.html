@@ -238,6 +238,29 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2018-10-14-mongodb_init/" title="mongodb安装后的初始化操作">mongodb安装后的初始化操作</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年10月14日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/mongodb'>mongodb</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            前言 mongodb安装成功后的初始化操作，安装步骤比较简单略过不讲 1、启动 1 ./mongobd -f /etc/mongodb.conf 2、进入命令行 1 ./mongo 3、创建超级管理账号 1 2 3 4 5 6 7 8 9 10 use admin db.createUser({user:&#34;adminuser&#34;,pwd:&#34;12345678&#34;,roles:[&#34;userAdminAnyDatabase&#34;]}) ## 4、用超级管理账号创建业务账号 db.auth(&#39;adminuser&#39;, &#39;12345678&#39;) use testdb db.createUser({user:&#34;testuser&#34;,pwd:&#34;12345678&#34;,roles: [{role:&#34;readWrite&#34;, db:&#34;testdb&#34;}]}) 5、conf文件demo，yaml格式，注意空格 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2018-10-14-mongodb_init/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2018-09-16-mydumper/" title="mydumper第三方备份还原工具">mydumper第三方备份还原工具</a>
             </h1>
         </header>
@@ -253,7 +276,7 @@
         </div>
         
         <div class="post-content">
-            前言 1、安装 mydumper安装 1 2 3 4 5 6 7 wget https://launchpad.net/mydumper/0.9/0.9.1/+download/mydumper-0.9.1.tar.gz yum install glib2-devel mysql-devel zlib-devel pcre-devel tar zxvf mydumper-0.9.1.tar.gz cd mydumper-0.9.1 cmake . make make install 2、常用备份、还原命令 导出备份 1 mydumper -u root -p XXX -h localhost -B XXX -o /data/backup/20180916 导入恢复 1 myloader -u root -p XXX -h localhost -B XXX -d /data/backup/20180916 3、参数说明 3.1 mydumper 的常用参数 参数 说明 -B &ndash;database 要导出的dbname -T &ndash;tables-list 需要导出的表名,导出多个表需要逗号分隔，t1[,t……
+            前言 Mydumper是一个针对MySQL和Drizzle的高性能多线程备份和恢复工具。开发人员主要来自MySQL,Facebook,SkySQL公司。性能比自带的mysqldump强劲 github:(https://github.com/mydumper/mydumper) 1、安装 redhat、centos举例 1.1 安装依赖 安装编译库 1 yum install -y cmake gcc gcc-c++ git make 安装开发库 1 yum install -y……
         </div>
         <p class="readmore"><a href="https://anTtutu.github.io/post/2018-09-16-mydumper/">阅读全文</a></p>
     </article>
@@ -279,29 +302,6 @@
             前言 如果不使用最新版本的mysql，但是低版本的mysql官方不提供编译好的安装包，只能自己编译安装了。以下步骤和参数针对5.6、5.7生效，新版本有变动请阅读官方文档介绍。 1、环境检测 使用下面的命令检查是否安装有MySQL Server 1 2 3 4 rpm -qa | grep mysql 有的话通过下面的命令来卸载掉 rpm -e mysql /……
         </div>
         <p class="readmore"><a href="https://anTtutu.github.io/post/2018-08-14-mysql_install/">阅读全文</a></p>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2018-05-08-OOM/" title="java OOM的种类整理">java OOM的种类整理</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2018年5月8日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/java'>java</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            前言 java OOM的种类整理 1、分类 1.1【情况一】： 1 java.lang.OutOfMemoryError: Java heap space: 这种是java堆内存不够，一个原因是真不够，另一个原因是程序中有死循环 如果是java堆内存不够的话，可以通过调整JVM下面的配置来解决： -Xms3062m -Xmx3062m 1.2【情况二】 1 java.lang.OutOfMemoryError: GC overhead limit exceeded 【解释】 JDK6新增错误类型，当GC为释放很小空间占用……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2018-05-08-OOM/">阅读全文</a></p>
     </article>
     
     
@@ -520,6 +520,8 @@
     
     <li><a href="https://anTtutu.github.io/categories/mine/">mine (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/mysql/">mysql (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
@@ -632,6 +634,8 @@
     <a href="https://anTtutu.github.io/tags/log4j/">log4j</a>
     
     <a href="https://anTtutu.github.io/tags/mine/">mine</a>
+    
+    <a href="https://anTtutu.github.io/tags/mongodb/">mongodb</a>
     
     <a href="https://anTtutu.github.io/tags/mysql/">mysql</a>
     
