@@ -6,7 +6,16 @@
     <description>Recent content in mysql on Anttu&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 21 Dec 2019 21:46:20 +0800</lastBuildDate><atom:link href="https://anTtutu.github.io/categories/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 23 Dec 2021 00:29:47 +0800</lastBuildDate><atom:link href="https://anTtutu.github.io/categories/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mysql大表的数据清理</title>
+      <link>https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/</link>
+      <pubDate>Thu, 23 Dec 2021 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/</guid>
+      <description>前言 mysql的表日积月累也会出现过千万的大表，有些历史数据可以定期归档清理的，保留最近的数据即可。但是delete table_name where id = &amp;lsquo;&#39;;这种方式只是逻辑上的删除，不会释放表空间和索引的。因此需要在历史数据归档后做表分析才行 1、大表归档大量数据 先远程备份，可以开发成shell</description>
+    </item>
+    
     <item>
       <title>mysql集群在线无损扩容</title>
       <link>https://anTtutu.github.io/post/2019-12-21-mysql_expansion/</link>
@@ -23,6 +32,24 @@
       
       <guid>https://anTtutu.github.io/post/2019-03-26-mysql_data_restore/</guid>
       <description>有些不靠谱的同事真的很误事，运维了几年的系统从来没出过误删表数据的事件，3月14日下午突然被同事误删了订单表全量数据，查询表返回0 rows，突然大脑一片空白，心想完了完了，最重要的表数据全部被清理了，虽然有每日凌晨5点的全量备份，但是截止下午的数据怎么找回？从来没碰到过误删事件，</description>
+    </item>
+    
+    <item>
+      <title>mydumper第三方备份还原工具</title>
+      <link>https://anTtutu.github.io/post/2018-09-16-mydumper/</link>
+      <pubDate>Sun, 16 Sep 2018 21:46:20 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2018-09-16-mydumper/</guid>
+      <description>前言 1、安装 mydumper安装 1 2 3 4 5 6 7 wget https://launchpad.net/mydumper/0.9/0.9.1/+download/mydumper-0.9.1.tar.gz yum install glib2-devel mysql-devel zlib-devel pcre-devel tar zxvf mydumper-0.9.1.tar.gz cd mydumper-0.9.1 cmake . make make install 2、常用备份、还原命令 导出备份 1 mydumper -u root -p XXX -h localhost -B XXX -o /data/backup/20180916 导入恢复 1 myloader -u root -p XXX -h localhost -B XXX -d /data/backup/20180916 3、参数说明 3.1 mydumper 的常用参数 参数 说明 -B &amp;ndash;database 要导出的dbname -T &amp;ndash;tables-list 需要导出的表名,导出多个表需要逗号分隔，t1[,t</description>
+    </item>
+    
+    <item>
+      <title>mysql低版本源代码安装</title>
+      <link>https://anTtutu.github.io/post/2018-08-14-mysql_install/</link>
+      <pubDate>Tue, 14 Aug 2018 21:46:20 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2018-08-14-mysql_install/</guid>
+      <description>前言 如果不使用最新版本的mysql，但是低版本的mysql官方不提供编译好的安装包，只能自己编译安装了。以下步骤和参数针对5.6、5.7生效，新版本有变动请阅读官方文档介绍。 1、环境检测 使用下面的命令检查是否安装有MySQL Server 1 2 3 4 rpm -qa | grep mysql 有的话通过下面的命令来卸载掉 rpm -e mysql /</description>
     </item>
     
   </channel>
