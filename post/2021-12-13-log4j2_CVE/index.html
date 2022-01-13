@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+
+    <title>log4j2远程执行漏洞 | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="log4j2远程执行漏洞 - Anttu&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2021-12-13T00:29:47&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2021-12-13T00:29:47&#43;08:00'>
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
+    <meta name="description" content="log4j2远程执行漏洞">
+        
+    <meta name="author" content="Anttu">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2021-12-13-log4j2_CVE/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/asciinema-player.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://anTtutu.github.io/">
+                        Anttu&#39;s Blog
+                    </a>
+                
+                <p class="description">一位Java开发者，喜欢研究技术，同时也在学习Golang和Python中，对服务器、Linux使用比较熟悉。欢迎添加技术交流QQ群：655158296</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://anTtutu.github.io/">首页</a>
+                    
+                    <a  href="https://anTtutu.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://anTtutu.github.io/tags/" title="分类">分类</a>
+                    
+                    <a  href="https://anTtutu.github.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1直接删除漏洞class">1、直接删除漏洞class</a></li>
+    <li><a href="#2apache-log4j2漏洞官方说明">2、Apache log4j2漏洞官方说明</a></li>
+    <li><a href="#3危害等级">3、危害等级</a></li>
+    <li><a href="#4影响">4、影响</a></li>
+    <li><a href="#5范围">5、范围</a></li>
+    <li><a href="#6排查方式">6、排查方式</a></li>
+    <li><a href="#7logback漏洞">7、logback漏洞</a>
+      <ul>
+        <li><a href="#71危害等级">7.1、危害等级</a></li>
+        <li><a href="#72-漏洞配置">7.2 漏洞配置</a></li>
+        <li><a href="#73-漏洞说明">7.3 漏洞说明</a></li>
+        <li><a href="#74-漏洞触发条件">7.4 漏洞触发条件</a></li>
+      </ul>
+    </li>
+    <li><a href="#8log4j1x的漏洞">8、log4j1.X的漏洞</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">log4j2远程执行漏洞</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年12月13日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/log4j'>log4j</a></span>
+            
+            <span class="meta-category"><a href='/categories/CVE'>CVE</a></span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>12月9日爆出来的log4j2远程执行漏洞，因为影响巨大，网上新闻和介绍特别多，这里不多说，间接使用log4j2的第三方也不少，等官网修复不知道是否赶得上，直接采用暴力删除jndilook.class最简单</p>
+<h2 id="1直接删除漏洞class">1、直接删除漏洞class</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#999;font-weight:bold;font-style:italic">#!/bin/bash
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span><span style="color:#0086b3">set</span> -eu
+<span style="color:#000;font-weight:bold">for</span> JAR_PATH in <span style="color:#d14">&#34;</span><span style="color:#008080">$@</span><span style="color:#d14">&#34;</span>; <span style="color:#000;font-weight:bold">do</span>
+	<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">[[</span> <span style="color:#008080">$JAR_PATH</span> !<span style="color:#000;font-weight:bold">=</span> *log4j-core*.jar <span style="color:#000;font-weight:bold">]]</span> <span style="color:#000;font-weight:bold">||</span> <span style="color:#000;font-weight:bold">[</span> -e <span style="color:#d14">&#34;</span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">.bak&#34;</span> <span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">||</span> ! <span style="color:#000;font-weight:bold">[</span> -f <span style="color:#d14">&#34;</span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">&#34;</span> <span style="color:#000;font-weight:bold">]</span>; <span style="color:#000;font-weight:bold">then</span>
+		<span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;Skipped </span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">&#34;</span>
+		<span style="color:#000;font-weight:bold">continue</span>
+	<span style="color:#000;font-weight:bold">fi</span>
+	<span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;Processing </span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">&#34;</span>
+	cp -p <span style="color:#d14">&#34;</span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">&#34;</span> <span style="color:#d14">&#34;</span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">.bak&#34;</span>
+	zip -q -d <span style="color:#d14">&#34;</span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">&#34;</span> org/apache/logging/log4j/core/lookup/JndiLookup.class
+<span style="color:#000;font-weight:bold">done</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="2apache-log4j2漏洞官方说明">2、Apache log4j2漏洞官方说明</h2>
+<p><a href="https://logging.apache.org/log4j/2.x/security.html">https://logging.apache.org/log4j/2.x/security.html</a></p>
+<h2 id="3危害等级">3、危害等级</h2>
+<p><strong>高危</strong></p>
+<h2 id="4影响">4、影响</h2>
+<p>可以远程通过 jndi 漏洞执行任意命令（CVE-2021-44228），包括删服务器，删库，下载木马，挖矿，服务器接管等等后果</p>
+<h2 id="5范围">5、范围</h2>
+<p>巨大，很多优秀的第三方开源项目有间接使用 log4j2，比如已知的如下部分清单： 在线清单(<a href="https://log4j2.huoxian.cn/layout">https://log4j2.huoxian.cn/layout</a>)</p>
+<pre><code>Kafka 
+Flink 
+Hadoop Hive	 
+ElasticSearch 
+Druid
+HikariCP
+Solr
+Logstash 
+Redis Client(redisson\jedis\lettuce)
+Spring-Boot-strater-log4j2
+mssql-jdbc
+mybatis-plus
+mybatis-generator-plugin
+springfox-swagger2
+netty-socketio
+hystrix
+zuul
+zipkin 
+</code></pre><h2 id="6排查方式">6、排查方式</h2>
+<p>利用工具搜索<br>
+下载地址：https://github.com/logpresso/CVE-2021-44228-Scanner</p>
+<h2 id="7logback漏洞">7、logback漏洞</h2>
+<p>logback低于1.2.9版本也有CVE-2021-42550漏洞，不过这个漏洞相比前面的log4j2影响小很多，记录下关键因素<br>
+漏洞说明: (<a href="https://cve.report/CVE-2021-4">https://cve.report/CVE-2021-4</a>)<br>
+官方说明: (<a href="https://logback.qos.ch/news.html">https://logback.qos.ch/news.html</a>)</p>
+<h3 id="71危害等级">7.1、危害等级</h3>
+<p><strong>中级</strong></p>
+<h3 id="72-漏洞配置">7.2 漏洞配置</h3>
+<p>初始配置demo</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#000080">&lt;configuration</span> <span style="color:#008080">scan=</span><span style="color:#d14">&#34;true&#34;</span> <span style="color:#008080">scanPeriod=</span><span style="color:#d14">&#34;10 seconds&#34;</span> <span style="color:#008080">debug=</span><span style="color:#d14">&#34;true&#34;</span><span style="color:#000080">&gt;</span>  
+　　　<span style="color:#000080">&lt;appender</span> <span style="color:#008080">name=</span><span style="color:#d14">&#34;STDOUT&#34;</span> <span style="color:#008080">class=</span><span style="color:#d14">&#34;ch.qos.logback.core.ConsoleAppender&#34;</span><span style="color:#000080">&gt;</span>  
+    　　　　　 <span style="color:#000080">&lt;encoder&gt;</span>  
+    　　　　　　　　　<span style="color:#000080">&lt;pattern&gt;</span>%-4relative [%thread] %-5level %logger{35} - %msg %n<span style="color:#000080">&lt;/pattern&gt;</span>  
+    　　　　　 <span style="color:#000080">&lt;/encoder&gt;</span>  
+    　　　<span style="color:#000080">&lt;/appender&gt;</span>  
+    <span style="color:#000080">&lt;appender</span> <span style="color:#008080">name=</span><span style="color:#d14">&#34;DB&#34;</span> <span style="color:#008080">class=</span><span style="color:#d14">&#34;ch.qos.logback.classic.db.DBAppender&#34;</span><span style="color:#000080">&gt;</span>  
+        <span style="color:#000080">&lt;connectionSource</span> <span style="color:#008080">class=</span><span style="color:#d14">&#34;ch.qos.logback.core.db.JNDIConnectionSource&#34;</span><span style="color:#000080">&gt;</span>  
+            <span style="color:#000080">&lt;jndiLocation&gt;</span>ldap://127.0.0.1:1389/erqtcd<span style="color:#000080">&lt;/jndiLocation&gt;</span>  
+        <span style="color:#000080">&lt;/connectionSource&gt;</span>  
+    <span style="color:#000080">&lt;/appender&gt;</span>  
+  
+    　　　<span style="color:#000080">&lt;root</span> <span style="color:#008080">level=</span><span style="color:#d14">&#34;DEBUG&#34;</span><span style="color:#000080">&gt;</span>  
+    　　　　　　<span style="color:#000080">&lt;appender-ref</span> <span style="color:#008080">ref=</span><span style="color:#d14">&#34;STDOUT&#34;</span> <span style="color:#000080">/&gt;</span>  
+    　　　<span style="color:#000080">&lt;/root&gt;</span>  
+<span style="color:#000080">&lt;/configuration&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>存在漏洞的配置demo</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#000080">&lt;configuration</span> <span style="color:#008080">scan=</span><span style="color:#d14">&#34;true&#34;</span> <span style="color:#008080">scanPeriod=</span><span style="color:#d14">&#34;10 seconds&#34;</span> <span style="color:#008080">debug=</span><span style="color:#d14">&#34;true&#34;</span><span style="color:#000080">&gt;</span>
+　　　<span style="color:#000080">&lt;appender</span> <span style="color:#008080">name=</span><span style="color:#d14">&#34;STDOUT&#34;</span> <span style="color:#008080">class=</span><span style="color:#d14">&#34;ch.qos.logback.core.ConsoleAppender&#34;</span><span style="color:#000080">&gt;</span>
+    　　　　　 <span style="color:#000080">&lt;encoder&gt;</span>
+    　　　　　　　　　<span style="color:#000080">&lt;pattern&gt;</span>%-4relative [%thread] %-5level %logger{35} - %msg %n<span style="color:#000080">&lt;/pattern&gt;</span>
+    　　　　　 <span style="color:#000080">&lt;/encoder&gt;</span>
+    　　　<span style="color:#000080">&lt;/appender&gt;</span>
+    <span style="color:#000080">&lt;insertFromJNDI</span> <span style="color:#008080">env-entry-name=</span><span style="color:#d14">&#34;ldap://127.0.0.1:1389/erqtcd&#34;</span> <span style="color:#008080">as=</span><span style="color:#d14">&#34;appName&#34;</span> <span style="color:#000080">/&gt;</span>  
+
+　　　<span style="color:#000080">&lt;root</span> <span style="color:#008080">level=</span><span style="color:#d14">&#34;DEBUG&#34;</span><span style="color:#000080">&gt;</span>
+    　　　　　　<span style="color:#000080">&lt;appender-ref</span> <span style="color:#008080">ref=</span><span style="color:#d14">&#34;STDOUT&#34;</span> <span style="color:#000080">/&gt;</span>
+    　　　<span style="color:#000080">&lt;/root&gt;</span>
+<span style="color:#000080">&lt;/configuration&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="73-漏洞说明">7.3 漏洞说明</h3>
+<p>漏洞复现说明:(<a href="https://github.com/cn-panda/logbackRceDemo">https://github.com/cn-panda/logbackRceDemo</a>)</p>
+<h3 id="74-漏洞触发条件">7.4 漏洞触发条件</h3>
+<pre><code>1、业务接口有文件上传漏洞，
+2、logback.xml配置了动态加载
+3、logback.xml文件有写权限，即可以被覆盖
+4、然后攻击人员可以通过文件上传漏洞 上传包含开启jndi的配置文件，剩下的注入漏洞跟log4j2一样了，可以执行任意命令
+</code></pre><p>注：如果杜绝了步骤1的文件上传漏洞，这个中级漏洞就很难触发</p>
+<h2 id="8log4j1x的漏洞">8、log4j1.X的漏洞</h2>
+<p>log4j1.X 已经2015年停止维护了，不过如果还有历史项目在使用的话，可以参考步骤1删除下面的class</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">org<span style="color:#000;font-weight:bold">/</span>apache<span style="color:#000;font-weight:bold">/</span>log4j<span style="color:#000;font-weight:bold">/</span>net<span style="color:#000;font-weight:bold">/</span>JMSAppender<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">zip -q -d log4j-*.jar org/apache/log4j/net/JMSAppender.class
+</code></pre></td></tr></table>
+</div>
+</div>
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2021-12-13-log4j2_CVE/">https://anTtutu.github.io/post/2021-12-13-log4j2_CVE/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/2021-11-19-lombok/">lombok一些注解的含义</a></li>
+        
+        <li><a href="/post/2021-10-19-git/"> git的日常操作命令整理</a></li>
+        
+        <li><a href="/post/2021-10-07-safe_coding_js/">前端编码安全</a></li>
+        
+        <li><a href="/post/2021-09-30-safe_coding_java/">java编码安全</a></li>
+        
+        <li><a href="/post/2021-09-19-maven_verify/">maven校验依赖包CVE漏洞</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            没有标签
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "anTtutu/anTtutu.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2022 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/asciinema-player.js'></script>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://anTtutu.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://anTtutu.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-01-07-regexp/" title="一些正则小细节-不定期补充">一些正则小细节-不定期补充</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理">mysql大表的数据清理</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2021-12-17-nmap/" title="nmap参数详解">nmap参数详解</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2021-12-13-log4j2_CVE/" title="log4j2远程执行漏洞">log4j2远程执行漏洞</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2021-11-19-lombok/" title="lombok一些注解的含义">lombok一些注解的含义</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2021-10-19-git/" title=" git的日常操作命令整理"> git的日常操作命令整理</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2021-10-07-safe_coding_js/" title="前端编码安全">前端编码安全</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2021-09-30-safe_coding_java/" title="java编码安全">java编码安全</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2021-09-19-maven_verify/" title="maven校验依赖包CVE漏洞">maven校验依赖包CVE漏洞</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://anTtutu.github.io/categories/CVE/">CVE (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/JDK%E7%9A%84bug/">JDK的bug (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/Mac/">Mac (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/OrangePi/">OrangePi (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/SSD/">SSD (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/Win10/">Win10 (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/about/">about (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/android/">android (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/app/">app (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/aria2/">aria2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/build/">build (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/check/">check (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gcc/">gcc (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/git/">git (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/golang/">golang (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/java/">java (9)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jvm/">jvm (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/lombok/">lombok (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/matplotlib/">matplotlib (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/maven/">maven (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mine/">mine (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mysql/">mysql (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pandas/">pandas (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/python/">python (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/redis/">redis (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/scope/">scope (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdkman/">sdkman (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/shell/">shell (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/termux/">termux (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/virus/">virus (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zk/">zk (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zookeeper/">zookeeper (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%B5%8B%E8%AF%95/">测试 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E7%94%9F%E6%88%90%E5%99%A8/">生成器 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E7%AB%AF%E5%8F%A3/">端口 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E7%BC%96%E7%A0%81%E5%AE%89%E5%85%A8/">编码安全 (2)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://anTtutu.github.io/tags/JDK%E7%9A%84bug/">JDK的bug</a>
+    
+    <a href="https://anTtutu.github.io/tags/Mac/">Mac</a>
+    
+    <a href="https://anTtutu.github.io/tags/OrangePi/">OrangePi</a>
+    
+    <a href="https://anTtutu.github.io/tags/SSD/">SSD</a>
+    
+    <a href="https://anTtutu.github.io/tags/Win10/">Win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/about/">about</a>
+    
+    <a href="https://anTtutu.github.io/tags/android/">android</a>
+    
+    <a href="https://anTtutu.github.io/tags/app/">app</a>
+    
+    <a href="https://anTtutu.github.io/tags/aria2/">aria2</a>
+    
+    <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
+    
+    <a href="https://anTtutu.github.io/tags/blog/">blog</a>
+    
+    <a href="https://anTtutu.github.io/tags/build/">build</a>
+    
+    <a href="https://anTtutu.github.io/tags/check/">check</a>
+    
+    <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
+    
+    <a href="https://anTtutu.github.io/tags/gcc/">gcc</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
+    
+    <a href="https://anTtutu.github.io/tags/golang/">golang</a>
+    
+    <a href="https://anTtutu.github.io/tags/h2/">h2</a>
+    
+    <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    
+    <a href="https://anTtutu.github.io/tags/hugo/">hugo</a>
+    
+    <a href="https://anTtutu.github.io/tags/java/">java</a>
+    
+    <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
+    
+    <a href="https://anTtutu.github.io/tags/js/">js</a>
+    
+    <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
+    
+    <a href="https://anTtutu.github.io/tags/linux/">linux</a>
+    
+    <a href="https://anTtutu.github.io/tags/log4j/">log4j</a>
+    
+    <a href="https://anTtutu.github.io/tags/mine/">mine</a>
+    
+    <a href="https://anTtutu.github.io/tags/mongodb/">mongodb</a>
+    
+    <a href="https://anTtutu.github.io/tags/mysql/">mysql</a>
+    
+    <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
+    
+    <a href="https://anTtutu.github.io/tags/python/">python</a>
+    
+    <a href="https://anTtutu.github.io/tags/rec/">rec</a>
+    
+    <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/shell/">shell</a>
+    
+    <a href="https://anTtutu.github.io/tags/springboot/">springboot</a>
+    
+    <a href="https://anTtutu.github.io/tags/sqlmap/">sqlmap</a>
+    
+    <a href="https://anTtutu.github.io/tags/termux/">termux</a>
+    
+    <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
+    
+    <a href="https://anTtutu.github.io/tags/virus/">virus</a>
+    
+    <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
+    
+    <a href="https://anTtutu.github.io/tags/zk/">zk</a>
+    
+    <a href="https://anTtutu.github.io/tags/zookeeper/">zookeeper</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://anTtutu.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
