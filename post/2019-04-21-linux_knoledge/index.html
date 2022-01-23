@@ -142,17 +142,28 @@
         <nav id="TableOfContents">
   <ul>
     <li><a href="#前言">前言</a></li>
-    <li><a href="#1tmp目录">1、tmp目录</a></li>
-    <li><a href="#2tcp连接数">2、tcp连接数</a></li>
+    <li><a href="#1tmp目录var目录自动清理">1、tmp目录、var目录自动清理</a></li>
+    <li><a href="#2tcp连接数统计">2、tcp连接数统计</a></li>
     <li><a href="#3wget下载提示ssl错">3、wget下载提示ssl错</a></li>
     <li><a href="#4wget抓取网站">4、wget抓取网站</a></li>
     <li><a href="#5shell批量注释">5、shell批量注释</a></li>
     <li><a href="#6linux的proc">6、linux的proc</a></li>
-    <li><a href="#7使用iptables模拟故障">7、使用iptables模拟故障</a></li>
-    <li><a href="#8删除乱码文件">8、删除乱码文件</a></li>
+    <li><a href="#7ssh登录提示信息">7、ssh登录提示信息</a></li>
+    <li><a href="#8使用iptables模拟故障">8、使用iptables模拟故障</a></li>
     <li><a href="#9ttypts">9、tty、pts</a></li>
-    <li><a href="#10一些特殊参数">10、一些特殊参数</a></li>
-    <li><a href="#11base64">11、base64</a></li>
+    <li><a href="#10base64">10、base64</a>
+      <ul>
+        <li><a href="#linux下用base64命令加解密字符串">Linux下用base64命令加解密字符串</a></li>
+        <li><a href="#mac">mac:</a></li>
+        <li><a href="#windows">windows</a></li>
+      </ul>
+    </li>
+    <li><a href="#11md5等摘要生成">11、md5等摘要生成</a>
+      <ul>
+        <li><a href="#linux">linux：</a></li>
+        <li><a href="#mac-1">mac:</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
     </div>
@@ -214,8 +225,8 @@
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>linux的 tmp 目录和 var 目录会被系统定期清理</p>
-<h2 id="1tmp目录">1、tmp目录</h2>
+<p>linux的一些小细节记录</p>
+<h2 id="1tmp目录var目录自动清理">1、tmp目录、var目录自动清理</h2>
 <p>tmp下的文件或目录长时间没有更新或者改动的话会被系统定期时间，配置参考如下:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -249,7 +260,7 @@ x /var/tmp/systemd-private-%b-*
 X /var/tmp/systemd-private-%b-*/tmp
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="2tcp连接数">2、tcp连接数</h2>
+</div><h2 id="2tcp连接数统计">2、tcp连接数统计</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -284,17 +295,20 @@ LISTEN <span style="color:#099">23</span>
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget -m -e <span style="color:#008080">robots</span><span style="color:#000;font-weight:bold">=</span>off https://www.baidu.com
--m是克隆整个网站,-e <span style="color:#008080">robots</span><span style="color:#000;font-weight:bold">=</span>off是让wget忽视robots.txt
+-m 是克隆整个网站
+-e <span style="color:#008080">robots</span><span style="color:#000;font-weight:bold">=</span>off 是让wget忽视robots.txt
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="5shell批量注释">5、shell批量注释</h2>
-<p>&laquo;'COMMENT&rsquo;
-&hellip;</p>
-<p>COMMENT
-举例如下：</p>
+<pre><code>&lt;&lt;'COMMENT'
+...
+
+COMMENT  
+</code></pre><p>举例如下：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -318,13 +332,49 @@ LISTEN <span style="color:#099">23</span>
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="6linux的proc">6、linux的proc</h2>
-<p>/dev/pts/x       虚拟终端
-/dev/ttySx       串行控制端
-/dev/ttyx        控制台
-/dev/console     单用户控制台</p>
-<p>/etc/motd        用于登陆的提示信息</p>
-<h2 id="7使用iptables模拟故障">7、使用iptables模拟故障</h2>
-<p>使用 iptables 来模拟网络故障的时候，我们针对 Redis 写入进行处理。
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/dev/pts/x</td>
+<td>虚拟终端</td>
+</tr>
+<tr>
+<td>/dev/ttySx</td>
+<td>串行控制端</td>
+</tr>
+<tr>
+<td>/dev/ttyx</td>
+<td>控制台</td>
+</tr>
+<tr>
+<td>/dev/console</td>
+<td>单用户控制台</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7ssh登录提示信息">7、ssh登录提示信息</h2>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/etc/motd</td>
+<td>用于登陆的提示信息</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8使用iptables模拟故障">8、使用iptables模拟故障</h2>
+<p>使用 iptables 来模拟网络故障的时候，我们针对 Redis 写入进行处理。<br>
 简单来说就是在 Redis Server 端口 OUTPUT 的网络包分别进行 REJECT 和 DROP 操作。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -345,93 +395,27 @@ sudo iptables -D OUTPUT -p tcp --destination-port <span style="color:#099">22368
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Caused by<span style="color:#000;font-weight:bold">:</span> java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">net</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">SocketTimeoutException</span><span style="color:#000;font-weight:bold">:</span> connect timed out
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="8删除乱码文件">8、删除乱码文件</h2>
-<p>查询文件的inode编号</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ls -li 
-</code></pre></td></tr></table>
-</div>
-</div><p>列出文件的节点ID, 如: 123456789
-单个删除</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">find ./ -inum <span style="color:#099">123456789</span> -print -exec rm -rf <span style="color:#000;font-weight:bold">{}</span> <span style="color:#d14">\;</span> 
-</code></pre></td></tr></table>
-</div>
-</div><p>批量删除</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">for</span> n in <span style="color:#099">123456789</span> 987654321; 
-<span style="color:#000;font-weight:bold">do</span> 
-   find . -inum <span style="color:#008080">$n</span> -exec rm -f <span style="color:#000;font-weight:bold">{}</span> <span style="color:#d14">\;</span>
-<span style="color:#000;font-weight:bold">done</span> 
-</code></pre></td></tr></table>
-</div>
-</div><p>-inum是find命令的参数<br>
--exec后面是shell命令<br>
-{}代表当前文件（夹），<br>
-;表示shell命令结束</p>
-<h2 id="9ttypts">9、tty、pts</h2>
-<p>tty本地登陆
-pts远程登录</p>
-<h2 id="10一些特殊参数">10、一些特殊参数</h2>
+</div><h2 id="9ttypts">9、tty、pts</h2>
 <table>
 <thead>
 <tr>
-<th>参数</th>
+<th>类型</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>$#</td>
-<td>是传给脚本的参数个数</td>
+<td>tty</td>
+<td>本地登陆</td>
 </tr>
 <tr>
-<td>$0</td>
-<td>是脚本本身的名字</td>
-</tr>
-<tr>
-<td>$1</td>
-<td>是传递给该shell脚本的第一个参数</td>
-</tr>
-<tr>
-<td>$2</td>
-<td>是传递给该shell脚本的第二个参数</td>
-</tr>
-<tr>
-<td>$@</td>
-<td>是传给脚本的所有参数的列表</td>
-</tr>
-<tr>
-<td>$*</td>
-<td>是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个</td>
-</tr>
-<tr>
-<td>$$</td>
-<td>是脚本运行的当前进程ID号</td>
-</tr>
-<tr>
-<td>$?</td>
-<td>是显示最后命令的退出状态，0表示没有错误，其他表示有错误</td>
+<td>pts</td>
+<td>远程登录</td>
 </tr>
 </tbody>
 </table>
-<h2 id="11base64">11、base64</h2>
-<p>Linux下用base64命令加解密字符串</p>
+<h2 id="10base64">10、base64</h2>
+<h3 id="linux下用base64命令加解密字符串">Linux下用base64命令加解密字符串</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -442,15 +426,161 @@ pts远程登录</p>
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">加密：
-$ <span style="color:#0086b3">echo</span> Hello World | base64
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">编码：
+$ <span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;Hello World&#34;</span> | base64
 SGVsbG8gV29ybGQK
-解密：
-$ <span style="color:#0086b3">echo</span> SGVsbG8gV29ybGQK | base64 -d
+解码：
+$ <span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;SGVsbG8gV29ybGQK&#34;</span> | base64 -d
 Hello World
 </code></pre></td></tr></table>
 </div>
-</div><p>mac:</p>
+</div><h3 id="mac">mac:</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">编码： 
+<span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;abc&#34;</span> | base64
+<span style="color:#008080">YWJjCg</span><span style="color:#000;font-weight:bold">==</span>
+解码：     
+<span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;YWJjCg==&#34;</span> | base64 -D
+abc
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="windows">windows</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bat" data-lang="bat">编码：
+certutil -encode 1.txt 2.txt
+//将 1.txt 编码为 2.txt
+解码：
+certutil -decode 2.txt 3.txt
+//将 2.txt 解码为 3.txt
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="注">注:</h4>
+<p>windows的base64编码是将1.txt的内容输出到2.txt，2.txt必须不存在由命令自己生成<br>
+base64解码是将刚才生成的2.txt的编码输出到3.txt，3.txt必须不存在由命令自己生成<br>
+windows的base64编码比标准的base64尾部数字有少许字符不同或者缺少</p>
+<h2 id="11md5等摘要生成">11、md5等摘要生成</h2>
+<h3 id="linux">linux：</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0086b3">echo</span> -n <span style="color:#d14">&#34;123456&#34;</span> | md5sum
+e10adc3949ba59abbe56e057f20f883e
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="mac-1">mac:</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ md5 -s <span style="color:#d14">&#34;123456&#34;</span>
+MD5 <span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;123456&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">=</span> e10adc3949ba59abbe56e057f20f883e
+</code></pre></td></tr></table>
+</div>
+</div><p>其他摘要</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic">#生成32位散列字符串, 可以不带字符串</span>
+md5 -s <span style="color:#d14">&#34;111111&#34;</span>
+MD5 <span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;111111&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">=</span> 96e79218965eb72c92a549dd5a330112
+
+<span style="color:#998;font-style:italic">#生成40位SHA1散列字符串</span>
+<span style="color:#0086b3">echo</span> -n <span style="color:#d14">&#34;111111&#34;</span> | openssl sha1
+3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d
+
+<span style="color:#998;font-style:italic">#生成64位SHA256散列字符串</span>
+<span style="color:#0086b3">echo</span> -n <span style="color:#d14">&#34;111111&#34;</span> | openssl sha256
+bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a
+
+<span style="color:#998;font-style:italic">#生成128位SHA512散列字符串</span>
+<span style="color:#0086b3">echo</span> -n <span style="color:#d14">&#34;111111&#34;</span> | openssl sha512
+b0412597dcea813655574dc54a5b74967cf85317f0332a2591be7953a016f8de56200eb37d5ba593b1e4aa27cea5ca27100f94dccd5b04bae5cadd4454dba67d
+
+<span style="color:#998;font-style:italic">#32位HMAC md5字符串</span>
+<span style="color:#0086b3">echo</span> -n <span style="color:#d14">&#34;111111&#34;</span> | openssl dgst -md5 -hmac <span style="color:#d14">&#34;key&#34;</span>
+617673cb651cec1b48e88f24d8e4df8d
+
+<span style="color:#998;font-style:italic">#40位hmac sha1字符串</span>
+<span style="color:#0086b3">echo</span> -n <span style="color:#d14">&#34;111111&#34;</span> | openssl sha1 -hmac <span style="color:#d14">&#34;key&#34;</span>
+1cda07ef7e4d03ec3c1bbddbc6f7f5f6aed7a8ce
+
+<span style="color:#998;font-style:italic">#64位hmac sha256字符串</span>
+<span style="color:#0086b3">echo</span> -n <span style="color:#d14">&#34;111111&#34;</span> | openssl sha256 -hmac <span style="color:#d14">&#34;key&#34;</span>
+847b111693b519f01f26feee81c4a1b73cf2fe2bd8d5df913c4daa1ef0957809
+
+<span style="color:#998;font-style:italic">#128位hmac sha512字符串</span>
+<span style="color:#0086b3">echo</span> -n <span style="color:#d14">&#34;111111&#34;</span> | openssl sha512 -hmac <span style="color:#d14">&#34;key&#34;</span>
+14b58f8452542bccc82fcabbd4ac268e9d3ce08dd054f0293097fbedfcc3afefcb6d0f1d3468a3926959d22fd67a595ec1c9b0c4b3f7f15cc34589cfad336273
+
+<span style="color:#998;font-style:italic">#计算文件md5</span>
+md5 xx.txt
+
+<span style="color:#998;font-style:italic">#计算文件sha1</span>
+openssl sha1 xx.txt
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="windows-1">windows:</h4>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -459,13 +589,16 @@ Hello World
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">字符串： 
-<span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;abc&#34;</span> | base64
-解码：     
-<span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;YWJjCg==&#34;</span> | base64 -D
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bat" data-lang="bat">D:<span style="color:#900;font-weight:bold">\</span><span style="color:#998;font-style:italic">&gt;certutil -hashfile sensors-analytics-1.7.2676-centos6-standalone.tar MD5</span>
+MD5 哈希(文件 sensors-analytics-1.7.2676-centos6-standalone.tar):
+f3 32 43 0f c5 97 15 2d 0e e4 51 48 2a c5 7f ab
+CertUtil: -hashfile 命令成功完成。
 </code></pre></td></tr></table>
 </div>
-</div>
+</div><h4 id="注-1">注:</h4>
+<p>linux下的其他摘要跟mac的命令差不多<br>
+windows下没测试出字符串的方式，只能针对文件生成md5摘要</p>
+
         </div>
 
         
