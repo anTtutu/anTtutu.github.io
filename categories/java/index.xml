@@ -6,7 +6,34 @@
     <description>Recent content in java on Anttu&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 19 Nov 2021 00:29:47 +0800</lastBuildDate><atom:link href="https://anTtutu.github.io/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 07 Jan 2022 00:29:47 +0800</lastBuildDate><atom:link href="https://anTtutu.github.io/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一些正则小细节-不定期补充</title>
+      <link>https://anTtutu.github.io/post/2022-01-07-regexp/</link>
+      <pubDate>Fri, 07 Jan 2022 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2022-01-07-regexp/</guid>
+      <description>前言 记录日常工作碰到的一些正则小细节 1、group分组 需要通过()把提取的参数圈起来，这样才会产生分组 1 2 3 4 5 6 7 8 9 10 private static String collectMapperId(String value) { String result = &amp;#34;&amp;#34;; String regId = &amp;#34;id=\&amp;#34;(.*?)\&amp;#34;&amp;#34;; Pattern pattern = Pattern.compile(regId); Matcher matcher = pattern.matcher(value); if (matcher.find()) { result = matcher.group(1); } return result; } 对比如果没有(),是没有分组效果的 Exception in thread &amp;quot;main&amp;quot; java.lang.IndexOutOfBoundsException: No group 1 at java.util.regex.Matcher.group(Matcher.java:538) 阅读源码和源码中的注释，其实也是s.su</description>
+    </item>
+    
+    <item>
+      <title>sdkman的使用</title>
+      <link>https://anTtutu.github.io/post/2022-01-06-sdkman/</link>
+      <pubDate>Thu, 06 Jan 2022 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2022-01-06-sdkman/</guid>
+      <description>前言 多sdk版本管理工具 1、安装java jdk 1 sdk install java 2、安装指定版本的 java jdk 1 sdk install java 8u131 3、安装本地包 1 sdk install groovy 3.0.0-SNAPSHOT /path/to/groovy-3.0.0-SNAPSHOT 4、移除 java jdk 1 sdk uninstall java 5、查看当前生效的 java jdk 1 2 3 sdk current java # 查看所有本地包的当前版本 sdk current 6、查看支持的清单 1 sdk list 7、查看软件的版本 1 sdk list java 8、临时切换版本 1 sdk use java 8.0.232.hs-adpt 9、切换默认</description>
+    </item>
+    
+    <item>
+      <title>log4j2远程执行漏洞</title>
+      <link>https://anTtutu.github.io/post/2021-12-13-log4j2_cve/</link>
+      <pubDate>Mon, 13 Dec 2021 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2021-12-13-log4j2_cve/</guid>
+      <description>前言 12月9日爆出来的log4j2远程执行漏洞，因为影响巨大，网上新闻和介绍特别多，这里不多说，间接使用log4j2的第三方也不少，等官网修复不知道是否赶得上，直接采用暴力删除jndilook.class最简单 1、直接删除漏洞class 1 2 3 4 5 6 7 8 9 10 11 #!/bin/bash set -eu for JAR_PATH in &amp;#34;$@&amp;#34;; do if [[ $JAR_PATH</description>
+    </item>
+    
     <item>
       <title>lombok一些注解的含义</title>
       <link>https://anTtutu.github.io/post/2021-11-19-lombok/</link>
@@ -26,11 +53,74 @@
     </item>
     
     <item>
+      <title>maven校验依赖包CVE漏洞</title>
+      <link>https://anTtutu.github.io/post/2021-09-19-maven_verify/</link>
+      <pubDate>Sun, 19 Sep 2021 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2021-09-19-maven_verify/</guid>
+      <description>前言 maven也可以校验依赖包是有有CVE漏洞 1、maven检测依赖包CVE漏洞 1 mvn verify -DskipTests=true 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 &amp;lt;build&amp;gt; &amp;lt;plugins&amp;gt; &amp;lt;!-- owasp check CVE 检查依赖包是否有漏洞 command: mvn verify --&amp;gt; &amp;lt;plugin&amp;gt; &amp;lt;groupId&amp;gt;org.owasp&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;dependency-check-maven&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;6.5.1&amp;lt;/version&amp;gt; &amp;lt;executions&amp;gt; &amp;lt;execution&amp;gt; &amp;lt;goals&amp;gt; &amp;lt;goal&amp;gt;check&amp;lt;/goal&amp;gt; &amp;lt;/goals&amp;gt; &amp;lt;/execution&amp;gt; &amp;lt;/executions&amp;gt; &amp;lt;/plugin&amp;gt; &amp;lt;/plugins&amp;gt; &amp;lt;/build&amp;gt; 2、检测结果demo 第一次执行因下载CVE数据有些慢 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19</description>
+    </item>
+    
+    <item>
+      <title>jvm的大dump文件分析</title>
+      <link>https://anTtutu.github.io/post/2021-08-10-jvm_dump_analyse/</link>
+      <pubDate>Tue, 10 Aug 2021 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2021-08-10-jvm_dump_analyse/</guid>
+      <description>前言 参考dump文件的大小，如果超过6G、8G 一般我们本地电脑无法打开，可以找大容量的linux服务器，配置对应启动的jvm 内存后可以参考下面的步骤 1、下载linux版本的mat 1 wget http://eclipse.stu.edu.tw/mat/1.9.0/rcp/MemoryAnalyzer-1.9.0.20190605-linux.gtk.x86_64.zip 2、解压zip包 unzip MemoryAnalyzer-1.9.0.20190605-linux.gtk.x86_64.zip 3、修改linux mat的堆内存大小（看自己下载的堆的大小，默认mat的堆支</description>
+    </item>
+    
+    <item>
+      <title>maven的scope参数</title>
+      <link>https://anTtutu.github.io/post/2021-07-15-maven_scope/</link>
+      <pubDate>Thu, 15 Jul 2021 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2021-07-15-maven_scope/</guid>
+      <description>1、用maven引用没进中央仓库的包 在使用maven的时候，如果我们要依赖一个本地的jar包的时候，通常都会使用&amp;lt;scope&amp;gt;system&amp;lt;/scope&amp;gt;和&amp;lt;systemPath&amp;gt;&amp;lt;/systemPath&amp;gt;来处理。 例如： 1 2 3 4 5 6</description>
+    </item>
+    
+    <item>
+      <title>kafka集群和zk集群搭建</title>
+      <link>https://anTtutu.github.io/post/2021-04-10-kafka_zookeeper_cluster_install/</link>
+      <pubDate>Sat, 10 Apr 2021 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2021-04-10-kafka_zookeeper_cluster_install/</guid>
+      <description>1、前言 一台应用的第三方服务器的kafka只有3个分区，测试一直存在积压的消息，搭建了一套最简单集群测试下，记录中间的参数。 2、准备工作 环境准备 环境|版本|说明 -|-|- centos|7.0|操作系统服务器，3台 JDK|1.8.261|安装好jdk并设置好环境变量 zookeeper|3.</description>
+    </item>
+    
+    <item>
+      <title>android下的termux模拟器安装openJDK和运行springboot项目</title>
+      <link>https://anTtutu.github.io/post/2021-03-10-android_termux_java/</link>
+      <pubDate>Wed, 10 Mar 2021 00:29:47 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2021-03-10-android_termux_java/</guid>
+      <description>1、前言 2020年9月份打造好了termux，但是苦于jdk没法安装，只能简单的用ecj(eclipse的java，类似jdk的javac)，但是springboot或者tomcat的项目怎么跑啊? 今天为了做培训演示，找到了termux下的openJDK资源，记录下安装的经过。t</description>
+    </item>
+    
+    <item>
+      <title>springboot的devTools热部署</title>
+      <link>https://anTtutu.github.io/post/2019-06-08-springboot_hotdeploy/</link>
+      <pubDate>Sat, 08 Jun 2019 21:46:20 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2019-06-08-springboot_hotdeploy/</guid>
+      <description>前言 springboot利用devtools实现热部署 1、application.yml 1 2 3 4 5 6 7 8 9 spring:devtools:restart:#热部署生效enabled:true#设置重启的目录#additional-paths: src/main/java#class</description>
+    </item>
+    
+    <item>
+      <title>JDK1.8.0.161版本bug定位</title>
+      <link>https://anTtutu.github.io/post/2019-03-11-jdkbug/</link>
+      <pubDate>Fri, 08 Mar 2019 21:46:20 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2019-03-11-jdkbug/</guid>
+      <description>好好运行的系统，突然故障，无意间根据错误信息查找，竟然是jdk的bug，描述下曲折的定位过程。 一、错误日志 有个老系统有使用到soap接口，采用CXF结合接口文件wsdl自动生成的接口开发的，突然在3月2日（后续日志定位才发现真正故障的时间）无法正常工作，但是实际发现时间已经到了3</description>
+    </item>
+    
+    <item>
       <title>java OOM的种类整理</title>
-      <link>https://anTtutu.github.io/post/2018-05-08-OOM/</link>
+      <link>https://anTtutu.github.io/post/2018-05-08-oom/</link>
       <pubDate>Tue, 08 May 2018 21:46:20 +0800</pubDate>
       
-      <guid>https://anTtutu.github.io/post/2018-05-08-OOM/</guid>
+      <guid>https://anTtutu.github.io/post/2018-05-08-oom/</guid>
       <description>前言 java OOM的种类整理 1、分类 1.1【情况一】： 1 java.lang.OutOfMemoryError: Java heap space: 这种是java堆内存不够，一个原因是真不够，另一个原因是程序中有死循环 如果是java堆内存不够的话，可以通过调整JVM下面的配置来解决： -Xms3062m -Xmx3062m 1.2【情况二】 1 java.lang.OutOfMemoryError: GC overhead limit exceeded 【解释】 JDK6新增错误类型，当GC为释放很小空间占用</description>
     </item>
     
@@ -71,6 +161,15 @@
     </item>
     
     <item>
+      <title>H2内存数据库</title>
+      <link>https://anTtutu.github.io/post/2017-05-11-h2/</link>
+      <pubDate>Thu, 11 May 2017 21:46:20 +0800</pubDate>
+      
+      <guid>https://anTtutu.github.io/post/2017-05-11-h2/</guid>
+      <description>H2数据库介绍 之前项目中用到了H2内存数据库，常用的开源数据库：H2，Derby，HSQLDB，MySQL，PostgreSQL。其中H2，HSQLDB类似，十分适合作为嵌入式数据库使用，其它的数据库大部分都需要安装独立的客户端和服务器端。 H2的优势： 1、h2采用纯Java编写，</description>
+    </item>
+    
+    <item>
       <title>利用网上的Caeser算法写了一个唯一id生成工具</title>
       <link>https://anTtutu.github.io/post/2017-05-10-caeser/</link>
       <pubDate>Wed, 10 May 2017 21:46:20 +0800</pubDate>
@@ -81,10 +180,10 @@
     
     <item>
       <title>Java高防OCR和机器人图形验证码</title>
-      <link>https://anTtutu.github.io/post/2017-05-09-Java_ImgCode/</link>
+      <link>https://anTtutu.github.io/post/2017-05-09-java_captach/</link>
       <pubDate>Tue, 09 May 2017 21:46:20 +0800</pubDate>
       
-      <guid>https://anTtutu.github.io/post/2017-05-09-Java_ImgCode/</guid>
+      <guid>https://anTtutu.github.io/post/2017-05-09-java_captach/</guid>
       <description>结合网上的图形验证码技术，不依赖第三方包纯java加工了一个比较复杂的图形验证码方案，防OCR、防机器人。 网上的图形验证码方案都是零星的，弄了一个随机字体、随机彩色字符、随机字体大小、随机扭曲、随机旋转等技术，能有效的防OCR、描边、深浅色等技术识别。 本意是想区分登录、领券、抽奖</description>
     </item>
     

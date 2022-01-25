@@ -84,6 +84,83 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-01-07-regexp/">一些正则小细节-不定期补充</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年1月7日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/regexp'>regexp</a>
+            
+            <a href='/categories/java'>java</a>
+            
+        </div>
+        
+        <div class="post-content">
+            前言 记录日常工作碰到的一些正则小细节 1、group分组 需要通过()把提取的参数圈起来，这样才会产生分组 1 2 3 4 5 6 7 8 9 10 private static String collectMapperId(String value) { String result = &#34;&#34;; String regId = &#34;id=\&#34;(.*?)\&#34;&#34;; Pattern pattern = Pattern.compile(regId); Matcher matcher = pattern.matcher(value); if (matcher.find()) { result = matcher.group(1); } return result; } 对比如果没有(),是没有分组效果的 Exception in thread &quot;main&quot; java.lang.IndexOutOfBoundsException: No group 1 at java.util.regex.Matcher.group(Matcher.java:538) 阅读源码和源码中的注释，其实也是s.su……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2022-01-07-regexp/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/">sdkman的使用</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年1月6日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/sdkman'>sdkman</a>
+            
+            <a href='/categories/java'>java</a>
+            
+        </div>
+        
+        <div class="post-content">
+            前言 多sdk版本管理工具 1、安装java jdk 1 sdk install java 2、安装指定版本的 java jdk 1 sdk install java 8u131 3、安装本地包 1 sdk install groovy 3.0.0-SNAPSHOT /path/to/groovy-3.0.0-SNAPSHOT 4、移除 java jdk 1 sdk uninstall java 5、查看当前生效的 java jdk 1 2 3 sdk current java # 查看所有本地包的当前版本 sdk current 6、查看支持的清单 1 sdk list 7、查看软件的版本 1 sdk list java 8、临时切换版本 1 sdk use java 8.0.232.hs-adpt 9、切换默认……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2022-01-06-sdkman/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-12-13-log4j2_cve/">log4j2远程执行漏洞</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年12月13日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/log4j'>log4j</a>
+            
+            <a href='/categories/cve'>cve</a>
+            
+            <a href='/categories/java'>java</a>
+            
+        </div>
+        
+        <div class="post-content">
+            前言 12月9日爆出来的log4j2远程执行漏洞，因为影响巨大，网上新闻和介绍特别多，这里不多说，间接使用log4j2的第三方也不少，等官网修复不知道是否赶得上，直接采用暴力删除jndilook.class最简单 1、直接删除漏洞class 1 2 3 4 5 6 7 8 9 10 11 #!/bin/bash set -eu for JAR_PATH in &#34;$@&#34;; do if [[ $JAR_PATH……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-12-13-log4j2_cve/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2021-11-19-lombok/">lombok一些注解的含义</a>
             </h1>
         </header>
@@ -121,7 +198,7 @@
             
             <a href='/categories/java'>java</a>
             
-            <a href='/categories/%E7%BC%96%E7%A0%81%E5%AE%89%E5%85%A8'>编码安全</a>
+            <a href='/categories/safe'>safe</a>
             
         </div>
         
@@ -134,161 +211,137 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2018-05-08-OOM/">java OOM的种类整理</a>
+                <a href="https://anTtutu.github.io/post/2021-09-19-maven_verify/">maven校验依赖包CVE漏洞</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            2018年5月8日
+            2021年9月19日
         </date>
         
         <div class="post-meta meta-category">
             |
+            
+            <a href='/categories/maven'>maven</a>
             
             <a href='/categories/java'>java</a>
             
         </div>
         
         <div class="post-content">
-            前言 java OOM的种类整理 1、分类 1.1【情况一】： 1 java.lang.OutOfMemoryError: Java heap space: 这种是java堆内存不够，一个原因是真不够，另一个原因是程序中有死循环 如果是java堆内存不够的话，可以通过调整JVM下面的配置来解决： -Xms3062m -Xmx3062m 1.2【情况二】 1 java.lang.OutOfMemoryError: GC overhead limit exceeded 【解释】 JDK6新增错误类型，当GC为释放很小空间占用……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2018-05-08-OOM/">阅读全文</a></p>
+            前言 maven也可以校验依赖包是有有CVE漏洞 1、maven检测依赖包CVE漏洞 1 mvn verify -DskipTests=true 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 &lt;build&gt; &lt;plugins&gt; &lt;!-- owasp check CVE 检查依赖包是否有漏洞 command: mvn verify --&gt; &lt;plugin&gt; &lt;groupId&gt;org.owasp&lt;/groupId&gt; &lt;artifactId&gt;dependency-check-maven&lt;/artifactId&gt; &lt;version&gt;6.5.1&lt;/version&gt; &lt;executions&gt; &lt;execution&gt; &lt;goals&gt; &lt;goal&gt;check&lt;/goal&gt; &lt;/goals&gt; &lt;/execution&gt; &lt;/executions&gt; &lt;/plugin&gt; &lt;/plugins&gt; &lt;/build&gt; 2、检测结果demo 第一次执行因下载CVE数据有些慢 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-09-19-maven_verify/">阅读全文</a></p>
         </div>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2018-03-19-springmvc/">springmvc的参数校验注解整理</a>
+                <a href="https://anTtutu.github.io/post/2021-08-10-jvm_dump_analyse/">jvm的大dump文件分析</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            2018年3月19日
+            2021年8月10日
         </date>
         
         <div class="post-meta meta-category">
             |
+            
+            <a href='/categories/dump'>dump</a>
+            
+            <a href='/categories/jvm'>jvm</a>
             
             <a href='/categories/java'>java</a>
             
         </div>
         
         <div class="post-content">
-            1、JSR303注解字段校验 注解 说明 功能 @AssertFalse Boolean,boolean 验证注解的元素值是false @AssertTrue Boolean,boolean 验证注解的元素值是true @NotNull 任意类型 验证注解的元素值不是null @Null 任意类型 验证注解的元素值是null @Min(value=值) BigDecimal，BigInteger, byte,short, int, long，等任何Number或……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2018-03-19-springmvc/">阅读全文</a></p>
+            前言 参考dump文件的大小，如果超过6G、8G 一般我们本地电脑无法打开，可以找大容量的linux服务器，配置对应启动的jvm 内存后可以参考下面的步骤 1、下载linux版本的mat 1 wget http://eclipse.stu.edu.tw/mat/1.9.0/rcp/MemoryAnalyzer-1.9.0.20190605-linux.gtk.x86_64.zip 2、解压zip包 unzip MemoryAnalyzer-1.9.0.20190605-linux.gtk.x86_64.zip 3、修改linux mat的堆内存大小（看自己下载的堆的大小，默认mat的堆支……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-08-10-jvm_dump_analyse/">阅读全文</a></p>
         </div>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2017-08-27-java_use_note/">java小日常记录-不定期更新</a>
+                <a href="https://anTtutu.github.io/post/2021-07-15-maven_scope/">maven的scope参数</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            2017年8月27日
+            2021年7月15日
         </date>
         
         <div class="post-meta meta-category">
             |
+            
+            <a href='/categories/maven'>maven</a>
             
             <a href='/categories/java'>java</a>
             
         </div>
         
         <div class="post-content">
-            1、web项目远程调测 - 仅用于测试环境或者上线前的调测 注意：仅限测试环境或者上线前的调测，如果用于生产环境，你的开发工具再debug模式起着的话，会拦截所有的请求。 1 2 # linux增加以下这段就可以远程连接服务器的5888端口了 CATALINA_OPTS=&#34;-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5888&#34; 添加了debug端口以后好像会出现./sh……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-08-27-java_use_note/">阅读全文</a></p>
+            1、用maven引用没进中央仓库的包 在使用maven的时候，如果我们要依赖一个本地的jar包的时候，通常都会使用&lt;scope&gt;system&lt;/scope&gt;和&lt;systemPath&gt;&lt;/systemPath&gt;来处理。 例如： 1 2 3 4 5 6……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-07-15-maven_scope/">阅读全文</a></p>
         </div>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2017-08-23-xrebel/">web应用分析利器-xrebel</a>
+                <a href="https://anTtutu.github.io/post/2021-04-10-kafka_zookeeper_cluster_install/">kafka集群和zk集群搭建</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            2017年8月23日
+            2021年4月10日
         </date>
         
         <div class="post-meta meta-category">
             |
+            
+            <a href='/categories/kafka'>kafka</a>
+            
+            <a href='/categories/zookeeper'>zookeeper</a>
+            
+            <a href='/categories/zk'>zk</a>
             
             <a href='/categories/java'>java</a>
             
         </div>
         
         <div class="post-content">
-            XRebel 是不间断运行在 web 应用的交互式分析器，当发现问题会在浏览器中显示警告信息。XRebel 会实时监测应用代码的性能指标和可能会发生的问题。 看名称跟之前的jrebel有点相像，对了，是同一家公司的产品，jrebel解决java项目动态部署，xrebel解决j2ee应用的交互式分析（甚至……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-08-23-xrebel/">阅读全文</a></p>
+            1、前言 一台应用的第三方服务器的kafka只有3个分区，测试一直存在积压的消息，搭建了一套最简单集群测试下，记录中间的参数。 2、准备工作 环境准备 环境|版本|说明 -|-|- centos|7.0|操作系统服务器，3台 JDK|1.8.261|安装好jdk并设置好环境变量 zookeeper|3.……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-04-10-kafka_zookeeper_cluster_install/">阅读全文</a></p>
         </div>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2017-06-04-jrebel/">eclipse之jrebel热部署插件</a>
+                <a href="https://anTtutu.github.io/post/2021-03-10-android_termux_java/">android下的termux模拟器安装openJDK和运行springboot项目</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            2017年6月4日
+            2021年3月10日
         </date>
         
         <div class="post-meta meta-category">
             |
+            
+            <a href='/categories/android'>android</a>
+            
+            <a href='/categories/termux'>termux</a>
+            
+            <a href='/categories/arm64'>arm64</a>
+            
+            <a href='/categories/springboot'>springboot</a>
             
             <a href='/categories/java'>java</a>
             
         </div>
         
         <div class="post-content">
-            JRebel是一个J2EE热部署的工具。使用它可以减少浪费8-18％的开发时间在项目的构建和部署上。虽然Java也提供了HotSpot的JVM，但是如果你修改的类中有方法名称变动的话，HotSpot就无能为力了，必须要重要启动应用服务器。JRebel则可以动态监视class文件及……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-06-04-jrebel/">阅读全文</a></p>
-        </div>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2017-05-10-caeser/">利用网上的Caeser算法写了一个唯一id生成工具</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2017年5月10日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/java'>java</a>
-            
-        </div>
-        
-        <div class="post-content">
-            工作中需要用到，不需要用uuid这种太长的，但是需要有自己特色标识的，于是晚上搜集了部分算法和思路，加工出来一个唯一随机id生成类 思路：改造过的Caesar算法，利用随机数加密，生成前12位 + 后4位随机数，经测试大量数据和实际使用验证，无重复值出现，可以放心使用 // key private static String KEYS = &quot;0123456789qwertyuiopasdfghjklzxcvbnm&quot;; /**……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-05-10-caeser/">阅读全文</a></p>
-        </div>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2017-05-09-Java_ImgCode/">Java高防OCR和机器人图形验证码</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2017年5月9日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/java'>java</a>
-            
-        </div>
-        
-        <div class="post-content">
-            结合网上的图形验证码技术，不依赖第三方包纯java加工了一个比较复杂的图形验证码方案，防OCR、防机器人。 网上的图形验证码方案都是零星的，弄了一个随机字体、随机彩色字符、随机字体大小、随机扭曲、随机旋转等技术，能有效的防OCR、描边、深浅色等技术识别。 本意是想区分登录、领券、抽奖……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-05-09-Java_ImgCode/">阅读全文</a></p>
+            1、前言 2020年9月份打造好了termux，但是苦于jdk没法安装，只能简单的用ecj(eclipse的java，类似jdk的javac)，但是springboot或者tomcat的项目怎么跑啊? 今天为了做培训演示，找到了termux下的openJDK资源，记录下安装的经过。t……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-03-10-android_termux_java/">阅读全文</a></p>
         </div>
     </article>
     
@@ -296,6 +349,26 @@
     
 
 
+
+<ol class="page-navigator">
+    
+
+    
+    <li  class="current">
+        <a href="https://anTtutu.github.io/categories/java/">1</a>
+    </li>
+    
+    <li >
+        <a href="https://anTtutu.github.io/categories/java/page/2/">2</a>
+    </li>
+    
+
+    
+    <li class="next">
+        <a href="https://anTtutu.github.io/categories/java/page/2/">下一页</a>
+    </li>
+    
+</ol>
 
 
 
@@ -369,7 +442,7 @@
     </li>
     
     <li>
-        <a href="https://anTtutu.github.io/post/2021-12-13-log4j2_CVE/" title="log4j2远程执行漏洞">log4j2远程执行漏洞</a>
+        <a href="https://anTtutu.github.io/post/2021-12-13-log4j2_cve/" title="log4j2远程执行漏洞">log4j2远程执行漏洞</a>
     </li>
     
     <li>
@@ -397,18 +470,6 @@
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://anTtutu.github.io/categories/CVE/">CVE (1)</a></li>
-    
-    <li><a href="https://anTtutu.github.io/categories/JDK%E7%9A%84bug/">JDK的bug (1)</a></li>
-    
-    <li><a href="https://anTtutu.github.io/categories/Mac/">Mac (4)</a></li>
-    
-    <li><a href="https://anTtutu.github.io/categories/OrangePi/">OrangePi (1)</a></li>
-    
-    <li><a href="https://anTtutu.github.io/categories/SSD/">SSD (1)</a></li>
-    
-    <li><a href="https://anTtutu.github.io/categories/Win10/">Win10 (4)</a></li>
-    
     <li><a href="https://anTtutu.github.io/categories/about/">about (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">android (2)</a></li>
@@ -417,11 +478,21 @@
     
     <li><a href="https://anTtutu.github.io/categories/aria2/">aria2 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/blog/">blog (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/build/">build (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/check/">check (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/captcha/">captcha (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/check/">check (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
     
@@ -431,25 +502,33 @@
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/faker/">faker (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/gcc/">gcc (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/git/">git (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/golang/">golang (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/go/">go (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (9)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (20)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jsr/">jsr (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jvm/">jvm (1)</a></li>
     
@@ -457,17 +536,19 @@
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (8)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (13)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/lombok/">lombok (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/mac/">mac (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/matplotlib/">matplotlib (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/maven/">maven (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mine/">mine (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mine/">mine (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
     
@@ -478,6 +559,8 @@
     <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/pandas/">pandas (1)</a></li>
     
@@ -491,23 +574,31 @@
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/scope/">scope (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/safe/">safe (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">sdkman (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/shell/">shell (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ssd/">ssd (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/tcp/">tcp (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/termux/">termux (2)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">virus (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/win10/">win10 (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/windows/">windows (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
     
@@ -519,30 +610,12 @@
     
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/%E6%B5%8B%E8%AF%95/">测试 (1)</a></li>
-    
-    <li><a href="https://anTtutu.github.io/categories/%E7%94%9F%E6%88%90%E5%99%A8/">生成器 (1)</a></li>
-    
-    <li><a href="https://anTtutu.github.io/categories/%E7%AB%AF%E5%8F%A3/">端口 (1)</a></li>
-    
-    <li><a href="https://anTtutu.github.io/categories/%E7%BC%96%E7%A0%81%E5%AE%89%E5%85%A8/">编码安全 (2)</a></li>
-    
 </ul>
     </section>
 
     <section class="widget">
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
-    
-    <a href="https://anTtutu.github.io/tags/JDK%E7%9A%84bug/">JDK的bug</a>
-    
-    <a href="https://anTtutu.github.io/tags/Mac/">Mac</a>
-    
-    <a href="https://anTtutu.github.io/tags/OrangePi/">OrangePi</a>
-    
-    <a href="https://anTtutu.github.io/tags/SSD/">SSD</a>
-    
-    <a href="https://anTtutu.github.io/tags/Win10/">Win10</a>
     
     <a href="https://anTtutu.github.io/tags/about/">about</a>
     
@@ -556,7 +629,11 @@
     
     <a href="https://anTtutu.github.io/tags/blog/">blog</a>
     
+    <a href="https://anTtutu.github.io/tags/bug/">bug</a>
+    
     <a href="https://anTtutu.github.io/tags/build/">build</a>
+    
+    <a href="https://anTtutu.github.io/tags/captcha/">captcha</a>
     
     <a href="https://anTtutu.github.io/tags/check/">check</a>
     
@@ -566,15 +643,19 @@
     
     <a href="https://anTtutu.github.io/tags/dos/">dos</a>
     
+    <a href="https://anTtutu.github.io/tags/explain/">explain</a>
+    
     <a href="https://anTtutu.github.io/tags/gcc/">gcc</a>
     
     <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
     
-    <a href="https://anTtutu.github.io/tags/golang/">golang</a>
+    <a href="https://anTtutu.github.io/tags/go/">go</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">h2</a>
     
     <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    
+    <a href="https://anTtutu.github.io/tags/http/">http</a>
     
     <a href="https://anTtutu.github.io/tags/hugo/">hugo</a>
     
@@ -584,6 +665,8 @@
     
     <a href="https://anTtutu.github.io/tags/js/">js</a>
     
+    <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
+    
     <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
@@ -591,6 +674,8 @@
     <a href="https://anTtutu.github.io/tags/linux/">linux</a>
     
     <a href="https://anTtutu.github.io/tags/log4j/">log4j</a>
+    
+    <a href="https://anTtutu.github.io/tags/mac/">mac</a>
     
     <a href="https://anTtutu.github.io/tags/mine/">mine</a>
     
@@ -601,6 +686,8 @@
     <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
     
     <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
+    
+    <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
     
     <a href="https://anTtutu.github.io/tags/python/">python</a>
     
@@ -614,6 +701,8 @@
     
     <a href="https://anTtutu.github.io/tags/sqlmap/">sqlmap</a>
     
+    <a href="https://anTtutu.github.io/tags/ssd/">ssd</a>
+    
     <a href="https://anTtutu.github.io/tags/tcp/">tcp</a>
     
     <a href="https://anTtutu.github.io/tags/termux/">termux</a>
@@ -621,6 +710,8 @@
     <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">virus</a>
+    
+    <a href="https://anTtutu.github.io/tags/win10/">win10</a>
     
     <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
     
