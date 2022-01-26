@@ -141,7 +141,8 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#miancf是vcs的集群配置文件需要理解该配置文件及其参数含义下面把以前电信行业积累的oracle冷双机结构标记下">mian.cf是VCS的集群配置文件，需要理解该配置文件及其参数含义，下面把以前电信行业积累的Oracle冷双机结构标记下</a></li>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#样例">样例</a></li>
   </ul>
 </nav>
     </div>
@@ -202,63 +203,171 @@
         </div>
         
         <div class="post-content">
-            <h2 id="miancf是vcs的集群配置文件需要理解该配置文件及其参数含义下面把以前电信行业积累的oracle冷双机结构标记下">mian.cf是VCS的集群配置文件，需要理解该配置文件及其参数含义，下面把以前电信行业积累的Oracle冷双机结构标记下</h2>
-<pre><code>include &quot;types.cf&quot;                      ---- VCS资源类型引用文件，下面的资源类型源于这里的引用，否者无法识别
-include &quot;OracleTypes.cf&quot;                ---- VCS的Agent节点Oracle资源类型引用，Oracle的资源需要识别也依赖这个引用
+            <h2 id="前言">前言</h2>
+<p>mian.cf是VCS的集群配置文件，需要理解该配置文件及其参数含义，下面把以前电信行业积累的Oracle冷双机结构标记下</p>
+<h2 id="样例">样例</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">include <span style="color:#d14">&#34;types.cf&#34;</span>                      ---- VCS资源类型引用文件，下面的资源类型源于这里的引用，否者无法识别
+include <span style="color:#d14">&#34;OracleTypes.cf&#34;</span>                ---- VCS的Agent节点Oracle资源类型引用，Oracle的资源需要识别也依赖这个引用
 
-cluster shared (                        ---- 集群名称、管理员账号和密码，密码注意是加密的
+cluster shared <span style="color:#000;font-weight:bold">(</span>                        ---- 集群名称、管理员账号和密码，密码注意是加密的
 
-UserNames = { adm = &quot;rLlzxjF.KVQnI&quot; } 
-CounterInterval = 5 
-)
-
-
-system ha1 (                            ---- Node1节点
-)
+<span style="color:#008080">UserNames</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#008080">adm</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;rLlzxjF.KVQnI&#34;</span> <span style="color:#000;font-weight:bold">}</span> 
+<span style="color:#008080">CounterInterval</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">5</span> 
+<span style="color:#000;font-weight:bold">)</span>
 
 
-system ha2 (                            ---- Node2节点
-)
+system ha1 <span style="color:#000;font-weight:bold">(</span>                            ---- Node1节点
+<span style="color:#000;font-weight:bold">)</span>
 
 
-group groupy (                          ---- 资源组名称   优先在ha1节点启动应用，adm是超级管理员
-SystemList = { ha1 = 0, ha2 = 1 } 
-AutoStartList = { ha1 } 
-Administrators = { adm } 
-)
+system ha2 <span style="color:#000;font-weight:bold">(</span>                            ---- Node2节点
+<span style="color:#000;font-weight:bold">)</span>
 
 
-DiskGroup groupydg (                    ---- dg资源管理
-DiskGroup = sharedg 
-)
+group groupy <span style="color:#000;font-weight:bold">(</span>                          ---- 资源组名称   优先在ha1节点启动应用，adm是超级管理员
+<span style="color:#008080">SystemList</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#008080">ha1</span> <span style="color:#000;font-weight:bold">=</span> 0, <span style="color:#008080">ha2</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span> <span style="color:#000;font-weight:bold">}</span> 
+<span style="color:#008080">AutoStartList</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{</span> ha1 <span style="color:#000;font-weight:bold">}</span> 
+<span style="color:#008080">Administrators</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{</span> adm <span style="color:#000;font-weight:bold">}</span> 
+<span style="color:#000;font-weight:bold">)</span>
 
 
-IP nfssrvy (                            ---- IP资源管理及其参数  
+DiskGroup groupydg <span style="color:#000;font-weight:bold">(</span>                    ---- dg资源管理
+<span style="color:#008080">DiskGroup</span> <span style="color:#000;font-weight:bold">=</span> sharedg 
+<span style="color:#000;font-weight:bold">)</span>
+
+
+IP nfssrvy <span style="color:#000;font-weight:bold">(</span>                            ---- IP资源管理及其参数  
                                         ---- device是网卡，可以设置bond绑定网卡提供网卡的高可用性
-Device = hme0 
-Address = &quot;192.168.0.43&quot; 
-)
+<span style="color:#008080">Device</span> <span style="color:#000;font-weight:bold">=</span> hme0 
+<span style="color:#008080">Address</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;192.168.0.43&#34;</span> 
+<span style="color:#000;font-weight:bold">)</span>
 
 
-Mount export3 (                         ---- mount文件类型资源及其参数   
+Mount export3 <span style="color:#000;font-weight:bold">(</span>                         ---- mount文件类型资源及其参数   
                                         ---- blockDevice是逻辑卷组名称    
                                         ---- mountpoint是mount映射的目录    
                                         ---- Fstype是文件类型
-MountPoint = &quot;/oracle&quot;                                                    
-BlockDevice = &quot;/dev/vx/dsk/sharedg/oravol&quot; 
-FSType = ufs 
-MountOpt = rw 
-FsckOpt = &quot;-y&quot; 
-)
+<span style="color:#008080">MountPoint</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;/oracle&#34;</span>                                                    
+<span style="color:#008080">BlockDevice</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;/dev/vx/dsk/sharedg/oravol&#34;</span> 
+<span style="color:#008080">FSType</span> <span style="color:#000;font-weight:bold">=</span> ufs 
+<span style="color:#008080">MountOpt</span> <span style="color:#000;font-weight:bold">=</span> rw 
+<span style="color:#008080">FsckOpt</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;-y&#34;</span> 
+<span style="color:#000;font-weight:bold">)</span>
 
 
-NIC groupy_hme0 (                        ---- 网卡资源及其参数
-Device = hme0 
-NetworkType = ether 
-)
+NIC groupy_hme0 <span style="color:#000;font-weight:bold">(</span>                        ---- 网卡资源及其参数
+<span style="color:#008080">Device</span> <span style="color:#000;font-weight:bold">=</span> hme0 
+<span style="color:#008080">NetworkType</span> <span style="color:#000;font-weight:bold">=</span> ether 
+<span style="color:#000;font-weight:bold">)</span>
 
 
-Oracle oragrp_VRT (                      ---- oracle实例资源及其参数   
+Oracle oragrp_VRT <span style="color:#000;font-weight:bold">(</span>                      ---- oracle实例资源及其参数   
                                          ---- SID是实例名   
                                          ---- owner是属组   
                                          ---- pfile是oracle参数配置文件        
@@ -267,35 +376,35 @@ Oracle oragrp_VRT (                      ---- oracle实例资源及其参数
                                          ---- Env是Oracle的环境变量文件，VCS Oracle Agent自带，这种配置常见于Oracle11gR1及其之前的版本  
                                          ---- Oracle11gR2后采用grid管理，在VCS没升级的情况下需要自定义一个GridAgent代理
 
-Sid = cnc1 
-Owner = ora 
-Home = &quot;/oracle/app/product/8.1.7&quot; 
-Pfile = &quot;/oracle/app/product/8.1.7/dbs/initcnc1.ora&quot; 
-User = &quot;system&quot; 
-Pword = manager 
-MonScript = &quot;./bin/Oracle/SqlTest.pl&quot; 
-EnvFile = &quot;/opt/VRTSvcs/bin/oracle/envfile&quot; 
-)
+<span style="color:#008080">Sid</span> <span style="color:#000;font-weight:bold">=</span> cnc1 
+<span style="color:#008080">Owner</span> <span style="color:#000;font-weight:bold">=</span> ora 
+<span style="color:#008080">Home</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;/oracle/app/product/8.1.7&#34;</span> 
+<span style="color:#008080">Pfile</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;/oracle/app/product/8.1.7/dbs/initcnc1.ora&#34;</span> 
+<span style="color:#008080">User</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;system&#34;</span> 
+<span style="color:#008080">Pword</span> <span style="color:#000;font-weight:bold">=</span> manager 
+<span style="color:#008080">MonScript</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;./bin/Oracle/SqlTest.pl&#34;</span> 
+<span style="color:#008080">EnvFile</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;/opt/VRTSvcs/bin/oracle/envfile&#34;</span> 
+<span style="color:#000;font-weight:bold">)</span>
 
 
-Sqlnet oragrp_LISTENER (                  ---- Oracle的监听资源及其参数   
+Sqlnet oragrp_LISTENER <span style="color:#000;font-weight:bold">(</span>                  ---- Oracle的监听资源及其参数   
                                           ---- Home是Oracle安装的目录
                                           ---- TnsAdmin是tnsname.ora文件所在目录    
                                           ---- Listerner是Oracle监听的名称     
                                           ---- MonScript是VCS Oracle Agent提供的检测监听是否工作的脚本，原理就是tnsping listenerName，返回OK即正常
-Owner = ora 
-Home = &quot;/oracle/app/product/8.1.7&quot; 
-TnsAdmin = &quot;/oracle/app/product/8.1.7/network/admin&quot; 
-Listener = LISTENER 
-MonScript = &quot;./bin/Sqlnet/LsnrTest.pl&quot; 
-EnvFile = &quot;/opt/VRTSvcs/bin/oracle/envfile&quot; 
-)
+<span style="color:#008080">Owner</span> <span style="color:#000;font-weight:bold">=</span> ora 
+<span style="color:#008080">Home</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;/oracle/app/product/8.1.7&#34;</span> 
+<span style="color:#008080">TnsAdmin</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;/oracle/app/product/8.1.7/network/admin&#34;</span> 
+<span style="color:#008080">Listener</span> <span style="color:#000;font-weight:bold">=</span> LISTENER 
+<span style="color:#008080">MonScript</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;./bin/Sqlnet/LsnrTest.pl&#34;</span> 
+<span style="color:#008080">EnvFile</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;/opt/VRTSvcs/bin/oracle/envfile&#34;</span> 
+<span style="color:#000;font-weight:bold">)</span>
 
 
-Volume groupydg_vol3 (                    ---- 逻辑卷组资源及其参数     volume是逻辑卷组名    DiskGroup是映射的dg名
-Volume = oravol 
-DiskGroup = sharedg 
-)
+Volume groupydg_vol3 <span style="color:#000;font-weight:bold">(</span>                    ---- 逻辑卷组资源及其参数     volume是逻辑卷组名    DiskGroup是映射的dg名
+<span style="color:#008080">Volume</span> <span style="color:#000;font-weight:bold">=</span> oravol 
+<span style="color:#008080">DiskGroup</span> <span style="color:#000;font-weight:bold">=</span> sharedg 
+<span style="color:#000;font-weight:bold">)</span>
 
 
 export3 requires groupydg_vol3            ---- 依赖关系树，不能乱依赖，需要按应用工作原理来配置，比如Oracle逻辑卷组没启动，实例和监听是完全不可能工作的
@@ -305,7 +414,9 @@ oragrp_LISTENER requires nfssrvy
 oragrp_LISTENER requires oragrp_VRT 
 oragrp_VRT requires export3 
 oragrp_VRT requires groupydg_vol3
-</code></pre>
+</code></pre></td></tr></table>
+</div>
+</div>
         </div>
 
         

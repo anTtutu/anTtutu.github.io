@@ -142,15 +142,13 @@
         <nav id="TableOfContents">
   <ul>
     <li><a href="#h2数据库介绍">H2数据库介绍</a></li>
-    <li><a href="#h2的优势">H2的优势：</a></li>
-    <li><a href="#h2和各数据库特征比较">H2和各数据库特征比较：</a>
-      <ul>
-        <li><a href="#1h2支持三种服务模式">1、H2支持三种服务模式：</a></li>
-        <li><a href="#2常见的选项如下">2、常见的选项如下：</a></li>
-        <li><a href="#3连接字符串参数">3、连接字符串参数</a></li>
-      </ul>
-    </li>
-    <li><a href="#使用心得">使用心得：</a></li>
+    <li><a href="#h2的优势">H2的优势</a></li>
+    <li><a href="#h2和各数据库特征比较">H2和各数据库特征比较</a></li>
+    <li><a href="#1h2支持三种服务模式">1、H2支持三种服务模式</a></li>
+    <li><a href="#2常见的选项如下">2、常见的选项如下</a></li>
+    <li><a href="#3连接字符串参数">3、连接字符串参数</a></li>
+    <li><a href="#4使用心得">4、使用心得</a></li>
+    <li><a href="#5参考">5、参考</a></li>
   </ul>
 </nav>
     </div>
@@ -215,42 +213,116 @@
         <div class="post-content">
             <h2 id="h2数据库介绍">H2数据库介绍</h2>
 <p>之前项目中用到了H2内存数据库，常用的开源数据库：H2，Derby，HSQLDB，MySQL，PostgreSQL。其中H2，HSQLDB类似，十分适合作为嵌入式数据库使用，其它的数据库大部分都需要安装独立的客户端和服务器端。</p>
-<h2 id="h2的优势">H2的优势：</h2>
-<pre><code>1、h2采用纯Java编写，因此不受平台的限制。
+<h2 id="h2的优势">H2的优势</h2>
+<pre><code class="language-properties" data-lang="properties">1、h2采用纯Java编写，因此不受平台的限制。
 2、h2只有一个jar文件，十分适合作为嵌入式数据库试用。
 3、性能和功能的优势
 </code></pre><p>H2比HSQLDB的最大的优势就是h2提供了一个十分方便的web控制台用于操作和管理数据库内容，这点比起HSQLDB的swing和awt控制台实在好用多了。</p>
-<h2 id="h2和各数据库特征比较">H2和各数据库特征比较：</h2>
+<h2 id="h2和各数据库特征比较">H2和各数据库特征比较</h2>
 <p>
         <img class="mx-auto" alt="" src="/images/posts/h2/h2.jpg" />   
     </p>
 <p>官方下载地址：http://www.h2database.com/html/download.html</p>
-<h3 id="1h2支持三种服务模式">1、H2支持三种服务模式：</h3>
-<p>1.web server：此种运行方式支持使用浏览器访问H2 Console</p>
-<p>2.TCP server：支持客户端/服务器端的连接方式</p>
-<p>3.PG server：支持PostgreSQL客户端</p>
+<h2 id="1h2支持三种服务模式">1、H2支持三种服务模式</h2>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>web server</td>
+<td>此种运行方式支持使用浏览器访问H2 Console</td>
+</tr>
+<tr>
+<td>TCP server</td>
+<td>支持客户端/服务器端的连接方式</td>
+</tr>
+<tr>
+<td>PG server</td>
+<td>支持PostgreSQL客户端</td>
+</tr>
+</tbody>
+</table>
 <p>启动tcp服务连接字符串示例：</p>
-<p>jdbc:h2:tcp://localhost/~/test 使用用户主目录</p>
-<p>jdbc:h2:tcp://localhost//data/test 使用绝对路径</p>
-<h3 id="2常见的选项如下">2、常见的选项如下：</h3>
-<p>-web：启动支持H2 Console的服务</p>
-<p>-webPort <port>：服务启动端口，默认为8082</p>
-<p>-browser：启动H2 Console web管理页面</p>
-<p>-tcp：使用TCP server模式启动</p>
-<p>-pg：使用PG server模式启动</p>
-<h3 id="3连接字符串参数">3、连接字符串参数</h3>
-<p>1.DB_CLOSE_DELAY：要求最后一个正在连接的连接断开后，不要关闭数据库</p>
-<p>2.MODE=mysql：兼容模式，H2兼容多种数据库，该值可以为：DB2、Derby、HSQLDB、MSSQLServer、MySQL、Oracle、PostgreSQL</p>
-<p>3.AUTO_RECONNECT=TRUE：连接丢失后自动重新连接</p>
-<p>4.AUTO_SERVER=TRUE：启动自动混合模式，允许开启多个连接，该参数不支持在内存中运行模式</p>
-<p>5.TRACE_LEVEL_SYSTEM_OUT、TRACE_LEVEL_FILE：输出跟踪日志到控制台或文件， 取值0为OFF，1为ERROR（默认值），2为INFO，3为DEBUG</p>
-<p>6.SET TRACE_MAX_FILE_SIZE mb：设置跟踪日志文件的大小，默认为16M</p>
-<h2 id="使用心得">使用心得：</h2>
-<p>1、支持索引，常规数据在1W条以下速度很快，如果数据量超过1W以上的话，需要进行表设计和sql优化。</p>
-<p>2、兼容99%以上的sql语句，可能跟oracle冲突大一点，兼容mysql多一些。</p>
-<p>3、既然是java开发的，启动依赖安装的jdk</p>
-<p>其他日常使用就不一一截图，请参考下面的博客：</p>
-<p><a href="http://blog.csdn">http://blog.csdn</a>.NET/guicaizhou/article/details/51858086和http://aub.iteye.com/blog/1882646</p>
+<pre><code class="language-properties" data-lang="properties">jdbc:h2:tcp://localhost/~/test #使用用户主目录
+jdbc:h2:tcp://localhost//data/test #使用绝对路径
+</code></pre><h2 id="2常见的选项如下">2、常见的选项如下</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-web</td>
+<td>启动支持H2 Console的服务</td>
+</tr>
+<tr>
+<td>-webPort <port></td>
+<td>服务启动端口，默认为8082</td>
+</tr>
+<tr>
+<td>-browser</td>
+<td>启动H2 Console web管理页面</td>
+</tr>
+<tr>
+<td>-tcp</td>
+<td>使用TCP server模式启动</td>
+</tr>
+<tr>
+<td>-pg</td>
+<td>使用PG server模式启动</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3连接字符串参数">3、连接字符串参数</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DB_CLOSE_DELAY</td>
+<td>要求最后一个正在连接的连接断开后，不要关闭数据库</td>
+</tr>
+<tr>
+<td>MODE=mysql</td>
+<td>兼容模式，H2兼容多种数据库，该值可以为：DB2、Derby、HSQLDB、MSSQLServer、MySQL、Oracle、PostgreSQL</td>
+</tr>
+<tr>
+<td>AUTO_RECONNECT=TRUE</td>
+<td>连接丢失后自动重新连接</td>
+</tr>
+<tr>
+<td>AUTO_SERVER=TRUE</td>
+<td>启动自动混合模式，允许开启多个连接，该参数不支持在内存中运行模式</td>
+</tr>
+<tr>
+<td>TRACE_LEVEL_SYSTEM_OUT、TRACE_LEVEL_FILE</td>
+<td>输出跟踪日志到控制台或文件， 取值0为OFF，1为ERROR（默认值），2为INFO，3为DEBUG</td>
+</tr>
+<tr>
+<td>SET TRACE_MAX_FILE_SIZE mb</td>
+<td>设置跟踪日志文件的大小，默认为16M</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4使用心得">4、使用心得</h2>
+<p>1、支持索引，常规数据在1W条以下速度很快，如果数据量超过1W以上的话，需要进行表设计和sql优化。<br>
+2、兼容99%以上的sql语句，可能跟oracle冲突大一点，兼容mysql多一些。<br>
+3、既然是java开发的，启动依赖安装的jdk</p>
+<h2 id="5参考">5、参考</h2>
+<p>其他日常使用就不一一截图，请参考下面的博客：<br>
+blog1:http://blog.csdn.net/guicaizhou/article/details/51858086<br>
+blog2:http://aub.iteye.com/blog/1882646</p>
 
         </div>
 

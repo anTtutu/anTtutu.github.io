@@ -9,21 +9,24 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     
 
-    <title>about | Anttu&#39;s Blog</title>
-    <meta property="og:title" content="about - Anttu&#39;s Blog">
+    <title>Log4j参数整理 | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="Log4j参数整理 - Anttu&#39;s Blog">
     <meta property="og:type" content="article">
         
+    <meta property="article:published_time" content='2017-05-22T21:46:20&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2017-05-22T21:46:20&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
-    <meta name="description" content="about">
+    <meta name="description" content="Log4j参数整理">
         
     <meta name="author" content="Anttu">
-    <meta property="og:url" content="https://anTtutu.github.io/categories/about/">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2017-05-22-log4j_config/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <link rel="alternate" type="application/rss+xml+xml" href="https://anTtutu.github.io/categories/about/index.xml" title="Anttu's Blog" />
     <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
@@ -51,7 +54,7 @@
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
-                    <a class="" href="https://anTtutu.github.io/">首页</a>
+                    <a class="current" href="https://anTtutu.github.io/">首页</a>
                     
                     <a  href="https://anTtutu.github.io/archives/" title="归档">归档</a>
                     
@@ -72,45 +75,333 @@
                 <div class="col-8" id="main">
                     
 <div class="res-cons">
-    
-    <h3 class="archive-title">
-        分类
-        <span class="keyword">about</span>
-        中的文章
-    </h3>
-    
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
 
-    
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-配置文件">1. 配置文件</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
     <article class="post">
         <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/about/">关于</a>
-            </h1>
+            <h1 class="post-title">Log4j参数整理</h1>
         </header>
         <date class="post-meta meta-date">
-            2020年2月16日
+            2017年5月22日
         </date>
         
-        <div class="post-meta meta-category">
-            |
+        <div class="post-meta">
+            <span>|</span>
             
-            <a href='/categories/about'>about</a>
+            <span class="meta-category"><a href='/categories/log4j'>log4j</a></span>
             
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
         </div>
         
         <div class="post-content">
-            我是谁 一位Java开发者，喜欢研究一些技术。因为anttu被老外占用了，改用anTtutu注册。 平时喜欢整理个人博客，逛逛技术论坛，折腾Pi开发板等。 了解一些linux、DB、服务器方面的少量知识。 学习Golang和Python中，目前Golang比较感兴趣。 这个博客是我参考飞雪……
-            <p class="readmore"><a href="https://anTtutu.github.io/about/">阅读全文</a></p>
+            <h3 id="1-配置文件">1. 配置文件</h3>
+<p>Log4J配置文件的基本格式如下：</p>
+<pre><code>#配置根Logger
+log4j.rootLogger  =   [ level ]   ,  appenderName1 ,  appenderName2 ,  …
+
+#配置日志信息输出目的地Appender
+log4j.appender.appenderName  =  fully.qualified.name.of.appender.class 
+　　log4j.appender.appenderName.option1  =  value1 
+　　… 
+　　log4j.appender.appenderName.optionN  =  valueN 
+
+#配置日志信息的格式（布局）
+log4j.appender.appenderName.layout  =  fully.qualified.name.of.layout.class 
+　　log4j.appender.appenderName.layout.option1  =  value1 
+　　… 
+　　log4j.appender.appenderName.layout.optionN  =  valueN 
+</code></pre><p>其中 [level] 是日志输出级别，共有5级：</p>
+<pre><code>FATAL       0  
+ERROR       3  
+WARN        4  
+INFO        6  
+DEBUG       7 
+</code></pre><p>Appender 为日志输出目的地，Log4j提供的appender有以下几种：</p>
+<pre><code>org.apache.log4j.ConsoleAppender（控制台），
+org.apache.log4j.FileAppender（文件），
+org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件），
+org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件），
+org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）
+</code></pre><p>Layout：日志输出格式，Log4j提供的layout有以下几种：</p>
+<pre><code>org.apache.log4j.HTMLLayout（以HTML表格形式布局），
+org.apache.log4j.PatternLayout（可以灵活地指定布局模式），
+org.apache.log4j.SimpleLayout（包含日志信息的级别和信息字符串），
+org.apache.log4j.TTCCLayout（包含日志产生的时间、线程、类别等等信息）
+</code></pre><p>打印参数: Log4J采用类似C语言中的printf函数的打印格式格式化日志信息，如下:</p>
+<pre><code>%m   输出代码中指定的消息
+%p   输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL 
+%r   输出自应用启动到输出该log信息耗费的毫秒数 
+%c   输出所属的类目，通常就是所在类的全名 
+%t   输出产生该日志事件的线程名 
+%n   输出一个回车换行符，Windows平台为“/r/n”，Unix平台为“/n” 
+%d   输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyy MMM dd HH:mm:ss ,SSS}，输出类似：2002年10月18日  22 ： 10 ： 28 ， 921  
+%l   输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java: 10 ) 
+%x   输出和当前线程相关联的NDC(嵌套诊断环境),尤其用到像java servlets这样的多客户多线程的应用中。
+%%   输出一个&quot;%&quot;字符
+%F   输出日志消息产生时所在的文件名称
+%L   输出代码中的行号
+</code></pre><p>可以在%与模式字符之间加上修饰符来控制其最小宽度、最大宽度、和文本的对齐方式。如：</p>
+<pre><code>1)%20c：指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，默认的情况下右对齐。
+2)%-20c:指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，&quot;-&quot;号指定左对齐。
+3)%.30c:指定输出category的名称，最大的宽度是30，如果category的名称大于30的话，就会将左边多出的字符截掉，但小于30的话也不会有空格。
+4)%20.30c:如果category的名称小于20就补空格，并且右对齐，如果其名称长于30字符，就从左边较远输出的字符截掉。
+</code></pre><p>下面给出的Log4J配置文件实现了输出到控制台，文件，回滚文件，发送日志邮件，输出到数据库日志表，自定义标签等全套功能。</p>
+<pre><code>log4j.rootLogger=DEBUG,CONSOLE,A1,im   
+#DEBUG,CONSOLE,FILE,ROLLING_FILE,MAIL,DATABASE  
+log4j.addivity.org.apache=true  
+###################   
+# Console Appender   
+###################   
+log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender   
+log4j.appender.Threshold=DEBUG   
+log4j.appender.CONSOLE.Target=System.out   
+log4j.appender.CONSOLE.layout=org.apache.log4j.PatternLayout   
+log4j.appender.CONSOLE.layout.ConversionPattern=[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n   
+#log4j.appender.CONSOLE.layout.ConversionPattern=[start]%d{DATE}[DATE]%n%p[PRIORITY]%n%x[NDC]%n%t[THREAD] n%c[CATEGORY]%n%m[MESSAGE]%n%n  
+#####################   
+# File Appender   
+#####################   
+log4j.appender.FILE=org.apache.log4j.FileAppender   
+log4j.appender.FILE.File=file.log   
+log4j.appender.FILE.Append=false   
+log4j.appender.FILE.layout=org.apache.log4j.PatternLayout   
+log4j.appender.FILE.layout.ConversionPattern=[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n   
+# Use this layout for LogFactor 5 analysis  
+########################   
+# Rolling File   
+########################   
+log4j.appender.ROLLING_FILE=org.apache.log4j.RollingFileAppender   
+log4j.appender.ROLLING_FILE.Threshold=ERROR   
+log4j.appender.ROLLING_FILE.File=rolling.log   
+log4j.appender.ROLLING_FILE.Append=true   
+log4j.appender.ROLLING_FILE.MaxFileSize=10KB   
+log4j.appender.ROLLING_FILE.MaxBackupIndex=1   
+log4j.appender.ROLLING_FILE.layout=org.apache.log4j.PatternLayout   
+log4j.appender.ROLLING_FILE.layout.ConversionPattern=[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n  
+####################   
+# Socket Appender   
+####################   
+log4j.appender.SOCKET=org.apache.log4j.RollingFileAppender   
+log4j.appender.SOCKET.RemoteHost=localhost   
+log4j.appender.SOCKET.Port=5001   
+log4j.appender.SOCKET.LocationInfo=true   
+# Set up for Log Facter 5   
+log4j.appender.SOCKET.layout=org.apache.log4j.PatternLayout   
+log4j.appender.SOCET.layout.ConversionPattern=[start]%d{DATE}[DATE]%n%p[PRIORITY]%n%x[NDC]%n%t[THREAD]%n%c[CATEGORY]%n%m[MESSAGE]%n%n  
+########################   
+# Log Factor 5 Appender   
+########################   
+log4j.appender.LF5_APPENDER=org.apache.log4j.lf5.LF5Appender   
+log4j.appender.LF5_APPENDER.MaxNumberOfRecords=2000  
+########################   
+# SMTP Appender   
+#######################   
+log4j.appender.MAIL=org.apache.log4j.net.SMTPAppender   
+log4j.appender.MAIL.Threshold=FATAL   
+log4j.appender.MAIL.BufferSize=10   
+log4j.appender.MAIL.From=testl@sohu.com  
+log4j.appender.MAIL.SMTPHost=smtp.sohu.com   
+log4j.appender.MAIL.Subject=Log4J Message   
+log4j.appender.MAIL.To=test@sohu.com  
+log4j.appender.MAIL.layout=org.apache.log4j.PatternLayout   
+log4j.appender.MAIL.layout.ConversionPattern=[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n  
+########################   
+# JDBC Appender   
+#######################   
+log4j.appender.DATABASE=org.apache.log4j.jdbc.JDBCAppender   
+log4j.appender.DATABASE.URL=jdbc:mysql://localhost:3306/test   
+log4j.appender.DATABASE.driver=com.mysql.jdbc.Driver   
+log4j.appender.DATABASE.user=root   
+log4j.appender.DATABASE.password=   
+log4j.appender.DATABASE.sql=INSERT INTO LOG4J (Message) VALUES ('[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n')   
+log4j.appender.DATABASE.layout=org.apache.log4j.PatternLayout   
+log4j.appender.DATABASE.layout.ConversionPattern=[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n  
+log4j.appender.A1=org.apache.log4j.DailyRollingFileAppender   
+log4j.appender.A1.File=SampleMessages.log4j   
+log4j.appender.A1.DatePattern=yyyyMMdd-HH'.log4j'   
+log4j.appender.A1.layout=org.apache.log4j.xml.XMLLayout  
+###################   
+#自定义Appender   
+###################   
+log4j.appender.im = net.cybercorlin.util.logger.appender.IMAppender  
+log4j.appender.im.host = mail.cybercorlin.net   
+log4j.appender.im.username = username   
+log4j.appender.im.password = password   
+log4j.appender.im.recipient = corlin@yeqiangwei.com  
+log4j.appender.im.layout=org.apache.log4j.PatternLayout   
+log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n
+</code></pre>
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2017-05-22-log4j_config/">https://anTtutu.github.io/post/2017-05-22-log4j_config/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/2017-05-22-oracle11gr2_dataguard/">Oracle11gR2手工配置dataguard</a></li>
+        
+        <li><a href="/post/2017-05-21-lvm_vxvm3/">VCS第七波-磁阵管理LVM和VxVM3-LVM</a></li>
+        
+        <li><a href="/post/2017-05-21-lvm_vxvm/">VCS第五波-磁阵管理LVM和VxVM1-LVM</a></li>
+        
+        <li><a href="/post/2017-05-21-lvm_vxvm2/">VCS第六波-磁阵管理LVM和VxVM2-VxVM</a></li>
+        
+        <li><a href="/post/2017-05-15-vcs4/">VCS第四波-main.cf解读</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/log4j'>log4j</a></li>
+                
+            </ul>
+            
         </div>
     </article>
     
-
     
 
-
-
-
-
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "anTtutu/anTtutu.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
 </div>
 
                     <footer id="footer">
@@ -131,6 +422,16 @@
 </footer>
 
 
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>

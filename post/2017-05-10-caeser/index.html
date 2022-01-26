@@ -141,8 +141,10 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#工作中需要用到不需要用uuid这种太长的但是需要有自己特色标识的于是晚上搜集了部分算法和思路加工出来一个唯一随机id生成类">工作中需要用到，不需要用uuid这种太长的，但是需要有自己特色标识的，于是晚上搜集了部分算法和思路，加工出来一个唯一随机id生成类</a></li>
-    <li><a href="#思路改造过的caesar算法利用随机数加密生成前12位--后4位随机数经测试大量数据和实际使用验证无重复值出现可以放心使用">思路：改造过的Caesar算法，利用随机数加密，生成前12位 + 后4位随机数，经测试大量数据和实际使用验证，无重复值出现，可以放心使用</a></li>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#思路">思路</a></li>
+    <li><a href="#1代码">1、代码</a></li>
+    <li><a href="#2凯撒算法工具类">2、凯撒算法工具类</a></li>
   </ul>
 </nav>
     </div>
@@ -203,258 +205,523 @@
         </div>
         
         <div class="post-content">
-            <h2 id="工作中需要用到不需要用uuid这种太长的但是需要有自己特色标识的于是晚上搜集了部分算法和思路加工出来一个唯一随机id生成类">工作中需要用到，不需要用uuid这种太长的，但是需要有自己特色标识的，于是晚上搜集了部分算法和思路，加工出来一个唯一随机id生成类</h2>
-<h2 id="思路改造过的caesar算法利用随机数加密生成前12位--后4位随机数经测试大量数据和实际使用验证无重复值出现可以放心使用">思路：改造过的Caesar算法，利用随机数加密，生成前12位 + 后4位随机数，经测试大量数据和实际使用验证，无重复值出现，可以放心使用</h2>
-<pre><code>// key  
-private static String KEYS = &quot;0123456789qwertyuiopasdfghjklzxcvbnm&quot;;  
+            <h2 id="前言">前言</h2>
+<p>工作中需要用到，不需要用uuid这种太长的，但是需要有自己特色标识的，于是晚上搜集了部分算法和思路，加工出来一个唯一随机id生成类</p>
+<h2 id="思路">思路</h2>
+<p>改造过的Caesar算法，利用随机数加密，生成前12位 + 后4位随机数，经测试大量数据和实际使用验证，无重复值出现，可以放心使用</p>
+<h2 id="1代码">1、代码</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">129
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">130
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">131
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">132
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">133
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">134
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">135
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">136
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">137
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">138
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">139
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">140
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">141
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">142
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">143
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#998;font-style:italic">// key  
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">static</span> String KEYS <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;0123456789qwertyuiopasdfghjklzxcvbnm&#34;</span><span style="color:#000;font-weight:bold">;</span>  
   
-/** 
- * 唯一id生成工具类，12位字母+数字 
- *  
- * @param id 随机整数即可 
- */  
-public static String getRandomId(int id)  
-{  
-    String ret = null;  
-    String num = String.format(&quot;%09d&quot;, id);  
-    Random random = new Random();  
-    int key = random.nextInt(10);  
-    int seed = random.nextInt(100);  
-    Caesar caesar = new Caesar(KEYS, seed);  
-    num = caesar.encode(key, num);  
-    ret = num + String.format(&quot;%01d&quot;, key) + String.format(&quot;%02x&quot;, seed);  
+<span style="color:#998;font-style:italic">/** 
+</span><span style="color:#998;font-style:italic"> * 唯一id生成工具类，12位字母+数字 
+</span><span style="color:#998;font-style:italic"> *  
+</span><span style="color:#998;font-style:italic"> * @param id 随机整数即可 
+</span><span style="color:#998;font-style:italic"> */</span>  
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getRandomId</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> id<span style="color:#000;font-weight:bold">)</span>  
+<span style="color:#000;font-weight:bold">{</span>  
+    String ret <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>  
+    String num <span style="color:#000;font-weight:bold">=</span> String<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;%09d&#34;</span><span style="color:#000;font-weight:bold">,</span> id<span style="color:#000;font-weight:bold">);</span>  
+    Random random <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">();</span>  
+    <span style="color:#458;font-weight:bold">int</span> key <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>10<span style="color:#000;font-weight:bold">);</span>  
+    <span style="color:#458;font-weight:bold">int</span> seed <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>100<span style="color:#000;font-weight:bold">);</span>  
+    Caesar caesar <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Caesar<span style="color:#000;font-weight:bold">(</span>KEYS<span style="color:#000;font-weight:bold">,</span> seed<span style="color:#000;font-weight:bold">);</span>  
+    num <span style="color:#000;font-weight:bold">=</span> caesar<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encode</span><span style="color:#000;font-weight:bold">(</span>key<span style="color:#000;font-weight:bold">,</span> num<span style="color:#000;font-weight:bold">);</span>  
+    ret <span style="color:#000;font-weight:bold">=</span> num <span style="color:#000;font-weight:bold">+</span> String<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;%01d&#34;</span><span style="color:#000;font-weight:bold">,</span> key<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">+</span> String<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;%02x&#34;</span><span style="color:#000;font-weight:bold">,</span> seed<span style="color:#000;font-weight:bold">);</span>  
   
-    return ret;  
-}  
+    <span style="color:#000;font-weight:bold">return</span> ret<span style="color:#000;font-weight:bold">;</span>  
+<span style="color:#000;font-weight:bold">}</span>  
   
-/** 
- * id唯一值生成工具类&lt;br&gt; 
- * 格式：test_xxxx，总共21位随机码  
- * @return test_+16位随机码 
- */  
-public static String getID()  
-{  
-    // 前缀  
-    String prefix = &quot;test_&quot;;  
-    // 随机码  
-    String main = TestRandomUUID.getRandomId(new Random().nextInt(1000000));  
-    String end = RandomUtils.getRandomAlphamericStrNew(4);  
+<span style="color:#998;font-style:italic">/** 
+</span><span style="color:#998;font-style:italic"> * id唯一值生成工具类&lt;br&gt; 
+</span><span style="color:#998;font-style:italic"> * 格式：test_xxxx，总共21位随机码  
+</span><span style="color:#998;font-style:italic"> * @return test_+16位随机码 
+</span><span style="color:#998;font-style:italic"> */</span>  
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getID</span><span style="color:#000;font-weight:bold">()</span>  
+<span style="color:#000;font-weight:bold">{</span>  
+    <span style="color:#998;font-style:italic">// 前缀  
+</span><span style="color:#998;font-style:italic"></span>    String prefix <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;test_&#34;</span><span style="color:#000;font-weight:bold">;</span>  
+    <span style="color:#998;font-style:italic">// 随机码  
+</span><span style="color:#998;font-style:italic"></span>    String main <span style="color:#000;font-weight:bold">=</span> TestRandomUUID<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getRandomId</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">().</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>1000000<span style="color:#000;font-weight:bold">));</span>  
+    String end <span style="color:#000;font-weight:bold">=</span> RandomUtils<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getRandomAlphamericStrNew</span><span style="color:#000;font-weight:bold">(</span>4<span style="color:#000;font-weight:bold">);</span>  
       
-    return prefix + main + end;  
-}  
+    <span style="color:#000;font-weight:bold">return</span> prefix <span style="color:#000;font-weight:bold">+</span> main <span style="color:#000;font-weight:bold">+</span> end<span style="color:#000;font-weight:bold">;</span>  
+<span style="color:#000;font-weight:bold">}</span>  
 
-public class RandomUtils  
-{  
-     /** 
-     * 获得特定长度的一串随机数字 
-     *  
-     * @param length  
-     * @return 
-     */  
-    public static String getRandomNumberStr(int length)  
-    {  
-        StringBuilder builder = new StringBuilder();  
-        Random random = new Random();  
-        for (int i = 0; i &lt; length; i++)  
-        {  
-            builder.append(random.nextInt(10));  
-        }  
-        return builder.toString();  
-    }  
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">RandomUtils</span>  
+<span style="color:#000;font-weight:bold">{</span>  
+     <span style="color:#998;font-style:italic">/** 
+</span><span style="color:#998;font-style:italic">     * 获得特定长度的一串随机数字 
+</span><span style="color:#998;font-style:italic">     *  
+</span><span style="color:#998;font-style:italic">     * @param length  
+</span><span style="color:#998;font-style:italic">     * @return 
+</span><span style="color:#998;font-style:italic">     */</span>  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getRandomNumberStr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> length<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        StringBuilder builder <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>  
+        Random random <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">();</span>  
+        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> length<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>10<span style="color:#000;font-weight:bold">));</span>  
+        <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">return</span> builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
   
-    /** 
-     * 获得特定长度的一个随机字母数字混编字符串（所包含的字符包括0-9A-Z) 
-     *  
-     * @param length 
-     * @return 
-     */  
-    public static String getRandomAlphamericStr(int length)  
-    {  
-        StringBuilder builder = new StringBuilder();  
-        Random random = new Random();  
-        for (int i = 0; i &lt; length; i++)  
-        {  
-            int n = random.nextInt(36);  
-            if (n &lt; 10)  
-            {  
-                builder.append(n);  
-            }  
-            else  
-            {  
-                builder.append((char) (n + 55));  
-            }  
-        }  
-        return builder.toString();  
-    }  
+    <span style="color:#998;font-style:italic">/** 
+</span><span style="color:#998;font-style:italic">     * 获得特定长度的一个随机字母数字混编字符串（所包含的字符包括0-9A-Z) 
+</span><span style="color:#998;font-style:italic">     *  
+</span><span style="color:#998;font-style:italic">     * @param length 
+</span><span style="color:#998;font-style:italic">     * @return 
+</span><span style="color:#998;font-style:italic">     */</span>  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getRandomAlphamericStr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> length<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        StringBuilder builder <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>  
+        Random random <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">();</span>  
+        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> length<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            <span style="color:#458;font-weight:bold">int</span> n <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>36<span style="color:#000;font-weight:bold">);</span>  
+            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">&lt;</span> 10<span style="color:#000;font-weight:bold">)</span>  
+            <span style="color:#000;font-weight:bold">{</span>  
+                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>n<span style="color:#000;font-weight:bold">);</span>  
+            <span style="color:#000;font-weight:bold">}</span>  
+            <span style="color:#000;font-weight:bold">else</span>  
+            <span style="color:#000;font-weight:bold">{</span>  
+                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">((</span><span style="color:#458;font-weight:bold">char</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">+</span> 55<span style="color:#000;font-weight:bold">));</span>  
+            <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">return</span> builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
   
-    /** 
-     * 获得特定长度的一个随机字母数字混编字符串（所包含的字符包括0-9a-z) 
-     *  
-     * @param length 
-     * @return 
-     */  
-    public static String getRandomAlphamericStrNew(int length)  
-    {  
-        StringBuilder builder = new StringBuilder();  
-        Random random = new Random();  
-        for (int i = 0; i &lt; length; i++)  
-        {  
-            int n = random.nextInt(36);  
-            if (n &lt; 10)  
-            {  
-                builder.append(n);  
-            }  
-            else  
-            {  
-                builder.append((char) (n + 87));  
-            }  
-        }  
-        return builder.toString();  
-    }  
+    <span style="color:#998;font-style:italic">/** 
+</span><span style="color:#998;font-style:italic">     * 获得特定长度的一个随机字母数字混编字符串（所包含的字符包括0-9a-z) 
+</span><span style="color:#998;font-style:italic">     *  
+</span><span style="color:#998;font-style:italic">     * @param length 
+</span><span style="color:#998;font-style:italic">     * @return 
+</span><span style="color:#998;font-style:italic">     */</span>  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getRandomAlphamericStrNew</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> length<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        StringBuilder builder <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>  
+        Random random <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">();</span>  
+        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> length<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            <span style="color:#458;font-weight:bold">int</span> n <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>36<span style="color:#000;font-weight:bold">);</span>  
+            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">&lt;</span> 10<span style="color:#000;font-weight:bold">)</span>  
+            <span style="color:#000;font-weight:bold">{</span>  
+                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>n<span style="color:#000;font-weight:bold">);</span>  
+            <span style="color:#000;font-weight:bold">}</span>  
+            <span style="color:#000;font-weight:bold">else</span>  
+            <span style="color:#000;font-weight:bold">{</span>  
+                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">((</span><span style="color:#458;font-weight:bold">char</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">+</span> 87<span style="color:#000;font-weight:bold">));</span>  
+            <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">return</span> builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
   
-    /** 
-     * 获得特定长度的一个随机十六进制数字字母混编字符串(所包含的字符包括0-9A-F) 
-     *  
-     * @param length 
-     * @return 
-     */  
-    public static String getRandomHexStr(int length)  
-    {  
-        StringBuilder builder = new StringBuilder();  
-        Random random = new Random();  
-        for (int i = 0; i &lt; length; i++)  
-        {  
-            int n = random.nextInt(16);  
-            if (n &lt; 10)  
-            {  
-                builder.append(n);  
-            }  
-            else  
-            {  
-                builder.append((char) (n + 55));  
-            }  
-        }  
-        return builder.toString();  
-    }  
+    <span style="color:#998;font-style:italic">/** 
+</span><span style="color:#998;font-style:italic">     * 获得特定长度的一个随机十六进制数字字母混编字符串(所包含的字符包括0-9A-F) 
+</span><span style="color:#998;font-style:italic">     *  
+</span><span style="color:#998;font-style:italic">     * @param length 
+</span><span style="color:#998;font-style:italic">     * @return 
+</span><span style="color:#998;font-style:italic">     */</span>  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getRandomHexStr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> length<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        StringBuilder builder <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>  
+        Random random <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">();</span>  
+        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> length<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            <span style="color:#458;font-weight:bold">int</span> n <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>16<span style="color:#000;font-weight:bold">);</span>  
+            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">&lt;</span> 10<span style="color:#000;font-weight:bold">)</span>  
+            <span style="color:#000;font-weight:bold">{</span>  
+                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>n<span style="color:#000;font-weight:bold">);</span>  
+            <span style="color:#000;font-weight:bold">}</span>  
+            <span style="color:#000;font-weight:bold">else</span>  
+            <span style="color:#000;font-weight:bold">{</span>  
+                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">((</span><span style="color:#458;font-weight:bold">char</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">+</span> 55<span style="color:#000;font-weight:bold">));</span>  
+            <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">return</span> builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
   
-    public static void main(String[] args)  
-    {  
-        for (int i = 0; i &lt; 100; i++)  
-        {  
-            System.out.println(RandomUtils.getRandomAlphamericStrNew(4));  
-            // String num = String.format(&quot;%09d&quot;, new Random().nextInt(100000));  
-            // System.out.println(num);  
-        }  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> 100<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>RandomUtils<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getRandomAlphamericStrNew</span><span style="color:#000;font-weight:bold">(</span>4<span style="color:#000;font-weight:bold">));</span>  
+            <span style="color:#998;font-style:italic">// String num = String.format(&#34;%09d&#34;, new Random().nextInt(100000));  
+</span><span style="color:#998;font-style:italic"></span>            <span style="color:#998;font-style:italic">// System.out.println(num);  
+</span><span style="color:#998;font-style:italic"></span>        <span style="color:#000;font-weight:bold">}</span>  
   
-    }  
-}  
-</code></pre><pre><code>public class Caesar  
-{  
-    private String table;  
-    private int seedA = 1103515245;  
-    private int seedB = 12345;  
+    <span style="color:#000;font-weight:bold">}</span>  
+<span style="color:#000;font-weight:bold">}</span>  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="2凯撒算法工具类">2、凯撒算法工具类</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Caesar</span>  
+<span style="color:#000;font-weight:bold">{</span>  
+    <span style="color:#000;font-weight:bold">private</span> String table<span style="color:#000;font-weight:bold">;</span>  
+    <span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> seedA <span style="color:#000;font-weight:bold">=</span> 1103515245<span style="color:#000;font-weight:bold">;</span>  
+    <span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> seedB <span style="color:#000;font-weight:bold">=</span> 12345<span style="color:#000;font-weight:bold">;</span>  
   
-    public Caesar(String table, int seed)  
-    {  
-        this.table = chaos(table, seed, table.length());  
-    }  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Caesar</span><span style="color:#000;font-weight:bold">(</span>String table<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> seed<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">table</span> <span style="color:#000;font-weight:bold">=</span> chaos<span style="color:#000;font-weight:bold">(</span>table<span style="color:#000;font-weight:bold">,</span> seed<span style="color:#000;font-weight:bold">,</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">());</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
   
-    public Caesar(String table)  
-    {  
-        this(table, 11);  
-    }  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Caesar</span><span style="color:#000;font-weight:bold">(</span>String table<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">(</span>table<span style="color:#000;font-weight:bold">,</span> 11<span style="color:#000;font-weight:bold">);</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
   
-    public Caesar()  
-    {  
-        this(11);  
-    }  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Caesar</span><span style="color:#000;font-weight:bold">()</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">(</span>11<span style="color:#000;font-weight:bold">);</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
   
-    public Caesar(int seed)  
-    {  
-        this(&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;, seed);  
-    }  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Caesar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> seed<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&#34;</span><span style="color:#000;font-weight:bold">,</span> seed<span style="color:#000;font-weight:bold">);</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
   
-    public char dict(int i, boolean reverse)  
-    {  
-        int s = table.length(), index = reverse ? s - i : i;  
-        return table.charAt(index);  
-    }  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">char</span> <span style="color:#900;font-weight:bold">dict</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">boolean</span> reverse<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#458;font-weight:bold">int</span> s <span style="color:#000;font-weight:bold">=</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">(),</span> index <span style="color:#000;font-weight:bold">=</span> reverse <span style="color:#000;font-weight:bold">?</span> s <span style="color:#000;font-weight:bold">-</span> i <span style="color:#000;font-weight:bold">:</span> i<span style="color:#000;font-weight:bold">;</span>  
+        <span style="color:#000;font-weight:bold">return</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">charAt</span><span style="color:#000;font-weight:bold">(</span>index<span style="color:#000;font-weight:bold">);</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
   
-    public int dict(char c, boolean reverse)  
-    {  
-        int s = table.length(), index = table.indexOf(c);  
-        return reverse ? s - index : index;  
-    }  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">dict</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">char</span> c<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">boolean</span> reverse<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#458;font-weight:bold">int</span> s <span style="color:#000;font-weight:bold">=</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">(),</span> index <span style="color:#000;font-weight:bold">=</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">indexOf</span><span style="color:#000;font-weight:bold">(</span>c<span style="color:#000;font-weight:bold">);</span>  
+        <span style="color:#000;font-weight:bold">return</span> reverse <span style="color:#000;font-weight:bold">?</span> s <span style="color:#000;font-weight:bold">-</span> index <span style="color:#000;font-weight:bold">:</span> index<span style="color:#000;font-weight:bold">;</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
   
-    public int seed(int seed)  
-    {  
-        long temp = seed;  
-        return (int) ((temp * seedA + seedB) &amp; 0x7fffffffL);  
-    }  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">seed</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> seed<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#458;font-weight:bold">long</span> temp <span style="color:#000;font-weight:bold">=</span> seed<span style="color:#000;font-weight:bold">;</span>  
+        <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">((</span>temp <span style="color:#000;font-weight:bold">*</span> seedA <span style="color:#000;font-weight:bold">+</span> seedB<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">&amp;</span> 0x7fffffffL<span style="color:#000;font-weight:bold">);</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
   
-    public String chaos(String data, int seed, int cnt)  
-    {  
-        StringBuffer buf = new StringBuffer(data);  
-        char tmp;  
-        int a, b, r = data.length();  
-        for (int i = 0; i &lt; cnt; i += 1)  
-        {  
-            seed = seed(seed);  
-            a = seed % r;  
-            seed = seed(seed);  
-            b = seed % r;  
-            tmp = buf.charAt(a);  
-            buf.setCharAt(a, buf.charAt(b));  
-            buf.setCharAt(b, tmp);  
-        }  
-        return buf.toString();  
-    }  
+    <span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">chaos</span><span style="color:#000;font-weight:bold">(</span>String data<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> seed<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> cnt<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        StringBuffer buf <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuffer<span style="color:#000;font-weight:bold">(</span>data<span style="color:#000;font-weight:bold">);</span>  
+        <span style="color:#458;font-weight:bold">char</span> tmp<span style="color:#000;font-weight:bold">;</span>  
+        <span style="color:#458;font-weight:bold">int</span> a<span style="color:#000;font-weight:bold">,</span> b<span style="color:#000;font-weight:bold">,</span> r <span style="color:#000;font-weight:bold">=</span> data<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">();</span>  
+        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> cnt<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">+=</span> 1<span style="color:#000;font-weight:bold">)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            seed <span style="color:#000;font-weight:bold">=</span> seed<span style="color:#000;font-weight:bold">(</span>seed<span style="color:#000;font-weight:bold">);</span>  
+            a <span style="color:#000;font-weight:bold">=</span> seed <span style="color:#000;font-weight:bold">%</span> r<span style="color:#000;font-weight:bold">;</span>  
+            seed <span style="color:#000;font-weight:bold">=</span> seed<span style="color:#000;font-weight:bold">(</span>seed<span style="color:#000;font-weight:bold">);</span>  
+            b <span style="color:#000;font-weight:bold">=</span> seed <span style="color:#000;font-weight:bold">%</span> r<span style="color:#000;font-weight:bold">;</span>  
+            tmp <span style="color:#000;font-weight:bold">=</span> buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">charAt</span><span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">);</span>  
+            buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setCharAt</span><span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">charAt</span><span style="color:#000;font-weight:bold">(</span>b<span style="color:#000;font-weight:bold">));</span>  
+            buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setCharAt</span><span style="color:#000;font-weight:bold">(</span>b<span style="color:#000;font-weight:bold">,</span> tmp<span style="color:#000;font-weight:bold">);</span>  
+        <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">return</span> buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
   
-    public String crypto(boolean reverse, int key, String text)  
-    {  
-        String ret = null;  
-        StringBuilder buf = new StringBuilder();  
-        int m, s = table.length(), e = text.length();  
+    <span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">crypto</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">boolean</span> reverse<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> key<span style="color:#000;font-weight:bold">,</span> String text<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        String ret <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>  
+        StringBuilder buf <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>  
+        <span style="color:#458;font-weight:bold">int</span> m<span style="color:#000;font-weight:bold">,</span> s <span style="color:#000;font-weight:bold">=</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">(),</span> e <span style="color:#000;font-weight:bold">=</span> text<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">();</span>  
   
-        for (int i = 0; i &lt; e; i += 1)  
-        {  
-            m = dict(text.charAt(i), reverse);  
-            if (m &lt; 0)  
-            {  
-                break;  
-            }  
-            m = m + key + i;  
-            buf.append(dict(m % s, reverse));  
-        }  
-        if (buf.length() == e)  
-        {  
-            ret = buf.toString();  
-        }  
-        return ret;  
-    }  
+        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> e<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">+=</span> 1<span style="color:#000;font-weight:bold">)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            m <span style="color:#000;font-weight:bold">=</span> dict<span style="color:#000;font-weight:bold">(</span>text<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">charAt</span><span style="color:#000;font-weight:bold">(</span>i<span style="color:#000;font-weight:bold">),</span> reverse<span style="color:#000;font-weight:bold">);</span>  
+            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>m <span style="color:#000;font-weight:bold">&lt;</span> 0<span style="color:#000;font-weight:bold">)</span>  
+            <span style="color:#000;font-weight:bold">{</span>  
+                <span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>  
+            <span style="color:#000;font-weight:bold">}</span>  
+            m <span style="color:#000;font-weight:bold">=</span> m <span style="color:#000;font-weight:bold">+</span> key <span style="color:#000;font-weight:bold">+</span> i<span style="color:#000;font-weight:bold">;</span>  
+            buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>dict<span style="color:#000;font-weight:bold">(</span>m <span style="color:#000;font-weight:bold">%</span> s<span style="color:#000;font-weight:bold">,</span> reverse<span style="color:#000;font-weight:bold">));</span>  
+        <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">==</span> e<span style="color:#000;font-weight:bold">)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            ret <span style="color:#000;font-weight:bold">=</span> buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
+        <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">return</span> ret<span style="color:#000;font-weight:bold">;</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
   
-    public String encode(int key, String text)  
-    {  
-        return crypto(false, key, text);  
+    <span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">encode</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> key<span style="color:#000;font-weight:bold">,</span> String text<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#000;font-weight:bold">return</span> crypto<span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span> key<span style="color:#000;font-weight:bold">,</span> text<span style="color:#000;font-weight:bold">);</span>  
   
-    }  
+    <span style="color:#000;font-weight:bold">}</span>  
   
-    public String decode(int key, String text)  
-    {  
-        return crypto(true, key, text);  
-    }  
+    <span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">decode</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> key<span style="color:#000;font-weight:bold">,</span> String text<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#000;font-weight:bold">return</span> crypto<span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">,</span> key<span style="color:#000;font-weight:bold">,</span> text<span style="color:#000;font-weight:bold">);</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
   
-    public static void main(String[] args)  
-    {  
-        Caesar caesar = new Caesar(&quot;0123456789qwertyuiopasdfghjklzxcvbnm&quot;);  
-        String data = caesar.encode(32, &quot;23423&quot;);  
-        System.out.println(data);  
-        String pass = caesar.decode(32, data);  
-        System.out.println(pass);  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        Caesar caesar <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Caesar<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;0123456789qwertyuiopasdfghjklzxcvbnm&#34;</span><span style="color:#000;font-weight:bold">);</span>  
+        String data <span style="color:#000;font-weight:bold">=</span> caesar<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encode</span><span style="color:#000;font-weight:bold">(</span>32<span style="color:#000;font-weight:bold">,</span> <span style="color:#d14">&#34;23423&#34;</span><span style="color:#000;font-weight:bold">);</span>  
+        System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>data<span style="color:#000;font-weight:bold">);</span>  
+        String pass <span style="color:#000;font-weight:bold">=</span> caesar<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">decode</span><span style="color:#000;font-weight:bold">(</span>32<span style="color:#000;font-weight:bold">,</span> data<span style="color:#000;font-weight:bold">);</span>  
+        System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>pass<span style="color:#000;font-weight:bold">);</span>  
   
-    }  
-}
-</code></pre>
+    <span style="color:#000;font-weight:bold">}</span>  
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
         </div>
 
         
