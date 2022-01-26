@@ -148,7 +148,12 @@
     <li><a href="#4找到程序目录">4、找到程序目录</a></li>
     <li><a href="#5查看进程">5、查看进程</a></li>
     <li><a href="#6查找程序本体">6、查找程序本体</a></li>
-    <li><a href="#7停容器">7、停容器</a></li>
+    <li><a href="#7查看镜像">7、查看镜像</a></li>
+    <li><a href="#7停容器">7、停容器</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
     <li><a href="#8删容器">8、删容器</a></li>
     <li><a href="#9删镜像">9、删镜像</a></li>
     <li><a href="#10入侵原因">10、入侵原因</a></li>
@@ -364,24 +369,37 @@ CONTAINER ID        IMAGE                                                       
 fd3a4ea7e1d9        ubuntu                                                                <span style="color:#d14">&#34;/bin/bash /var/tmp/./crypto/.../httpd-crypto&#34;</span>   <span style="color:#099">11</span> hours ago        Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">11</span> hours ago                                                    
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="7停容器">7、停容器</h2>
+</div><h2 id="7查看镜像">7、查看镜像</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker stop fd3a4ea7e1d9</span>
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker images |grep docker72590</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="8删容器">8、删容器</h2>
+</div><h2 id="7停容器">7、停容器</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker rm fd3a4ea7e1d9</span>
-c5607dd23d6b
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker stop c083afcd779c</span>
+<span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker stop d241358140a8</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="注意">注意：</h4>
+<p>要找到守护进程和主体进程，清理干净</p>
+<h2 id="8删容器">8、删容器</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker rm c083afcd779c</span>
+<span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker rm d241358140a8</span>
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="9删镜像">9、删镜像</h2>
@@ -390,7 +408,7 @@ c5607dd23d6b
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker rmi 4e5021d210f6</span>
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker rmi b39e0b392b7e</span>
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="10入侵原因">10、入侵原因</h2>
