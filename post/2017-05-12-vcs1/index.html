@@ -141,21 +141,19 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li></li>
-        <li><a href="#终于可以打开vcs模拟器界面了">终于可以打开VCS模拟器界面了：</a></li>
-        <li><a href="#既然是学的话先拿demo学习选中某个demo比如下图选择的solaris系统下的oracle举例点击start-cluster启动demo出现如下界面">既然是学的话，先拿demo学习，选中某个demo比如下图选择的Solaris系统下的Oracle举例，点击start cluster启动demo，出现如下界面：</a></li>
-        <li><a href="#然后点击launch-cluster进入模拟器的demo这时模拟器会调用manager因此之前说要安装manger-console的原因之后出现下图界面">然后点击Launch Cluster进入模拟器的demo，这时模拟器会调用Manager，因此之前说要安装Manger Console的原因，之后出现下图界面：</a></li>
-        <li><a href="#接着再出现manager-console的登录界面输入默认账号密码adminpassword进入manager加载资源的界面">接着再出现Manager Console的登录界面：输入默认账号密码admin/password，进入Manager加载资源的界面</a></li>
-        <li><a href="#加载资源中等待资源加载完毕正式进入manager管理界面">加载资源中：等待资源加载完毕，正式进入Manager管理界面</a></li>
-        <li><a href="#manager管理界面如下终于出现集群管理界面了">Manager管理界面如下：终于出现集群管理界面了</a></li>
-        <li><a href="#熟悉双机概念后就可以继续查看demo中的资源极其属性如下图">熟悉双机概念后就可以继续查看demo中的资源极其属性，如下图：</a></li>
-        <li><a href="#点开某一个资源查看属性这个就是vcs提供的接口便于定制开发">点开某一个资源查看属性，这个就是vcs提供的接口，便于定制开发：</a></li>
-        <li><a href="#资源之间还有些管理">资源之间还有些管理：</a></li>
-        <li><a href="#总结下集群的管理架构">总结下集群的管理架构：</a></li>
-      </ul>
-    </li>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1下载模拟器">1、下载模拟器</a></li>
+    <li><a href="#2启动模拟器">2、启动模拟器</a></li>
+    <li><a href="#3运行模拟器demo">3、运行模拟器demo</a></li>
+    <li><a href="#4进入管理界面">4、进入管理界面</a></li>
+    <li><a href="#5输入管理账号密码">5、输入管理账号密码</a></li>
+    <li><a href="#6加载">6、加载</a></li>
+    <li><a href="#7管理双机集群">7、管理双机、集群</a></li>
+    <li><a href="#8真实案例">8、真实案例</a></li>
+    <li><a href="#9属性">9、属性</a></li>
+    <li><a href="#10自定义开发">10、自定义开发</a></li>
+    <li><a href="#11资源依赖">11、资源依赖</a></li>
+    <li><a href="#12架构图和介绍">12、架构图和介绍</a></li>
   </ul>
 </nav>
     </div>
@@ -216,55 +214,72 @@
         </div>
         
         <div class="post-content">
-            <h4 id="换到互联网电商行业了以前电信行业的知识积累做下笔记谈到vcs就会想到ha-高可用方案做高可用方案的厂商比较多其中工作接触到veritas的vcs和ibm的hacmp这里先对vcs做下笔记整理互联网行业都喜欢用免费方案和热备vcs的冷备方案几乎没见到厂商使用但是vcs的简单易学习还是对高可用方案的知识积累很有帮助">换到互联网电商行业了，以前电信行业的知识积累做下笔记。谈到VCS，就会想到HA-高可用方案，做高可用方案的厂商比较多，其中工作接触到Veritas的VCS和IBM的HACMP，这里先对VCS做下笔记整理，互联网行业都喜欢用免费方案和热备，VCS的冷备方案几乎没见到厂商使用，但是VCS的简单易学习还是对高可用方案的知识积累很有帮助。</h4>
-<h4 id="所谓高可用方案个人理解就是在服务出现故障时能快速的响应并恢复服务电信行业比互联网行业要求更高很少使用免费开源的东西这里不是人傻钱多因为开源的东西需要自己维护付费的服务有专业的付费服务目标不一样所以选择的方案也就不一样了">所谓高可用方案，个人理解就是在服务出现故障时能快速的响应并恢复服务，电信行业比互联网行业要求更高，很少使用免费开源的东西，这里不是人傻钱多，因为开源的东西需要自己维护，付费的服务有专业的付费服务，目标不一样，所以选择的方案也就不一样了。</h4>
-<h4 id="废话不多说了vcs是套商业软件是veritas原赛门铁克收购的厂商后来独立成子公司的一套高可用方案sfha中的一个部件sfha比较强大包含双机容灾磁阵备份等整套方案不是有实力的厂基本上难以承受的vcs也是单独拎出来用的最多的">废话不多说了，VCS是套商业软件，是Veritas（原赛门铁克收购的厂商，后来独立成子公司）的一套高可用方案SFHA中的一个部件，SFHA比较强大，包含双机、容灾、磁阵备份等，整套方案不是有实力的厂，基本上难以承受的，VCS也是单独拎出来用的最多的。</h4>
-<h4 id="为了便于学习veritas厂提供了模拟器学习这样学习成本就低了而且还有windowslinuxunixsolaris等各种版本人性化吧下面提供下载链接包含模拟器simulator和控制管理平台manager需要相同版本都安装模拟器才能好好的玩起来">为了便于学习，Veritas厂提供了模拟器学习，这样学习成本就低了，而且还有windows、Linux、unix、solaris等各种版本，人性化吧，下面提供下载链接：（包含模拟器simulator和控制管理平台manager，需要相同版本都安装模拟器才能好好的玩起来）</h4>
-<p><a href="http://www.storagetutorials.com/free-download-veritas-cluster-server-simulator/">http://www.storagetutorials.com/free-download-veritas-cluster-server-simulator/</a>和https://www.veritas.com/content/trial/en/us/vcs-utilities.html</p>
-<h4 id="第一个下载地址有简单的介绍和图文说明第二个下载才是真实的原厂链接需要简单填写下载人的信息国家用途等简单透露下美国不对付的国家是无法下载到这个的比如north-koreairan等扯远了回到主题_">第一个下载地址有简单的介绍和图文说明，第二个下载才是真实的原厂链接，需要简单填写下载人的信息、国家、用途等。简单透露下，美国不对付的国家是无法下载到这个的，比如North Korea、Iran等，扯远了，回到主题^_^</h4>
-<h4 id="下载了模拟器后安装不用教了-不过运行需要有jre和vcs-manager-java-console作为java开发来说这点不是问题其他语言的朋友就需要在运行前安装下jdk并配置下环境变量这些依赖的东西提下就行了这里不一一去截图演示">下载了模拟器后，安装不用教了， 不过运行需要有JRE和VCS Manager Java Console，作为Java开发来说，这点不是问题，其他语言的朋友就需要在运行前安装下JDK并配置下环境变量。这些依赖的东西提下就行了，这里不一一去截图演示。</h4>
-<h3 id="终于可以打开vcs模拟器界面了">终于可以打开VCS模拟器界面了：</h3>
-<p>
-        <img class="mx-auto" alt="" src="/images/posts/vcs/start.jpg" />   
+            <h2 id="前言">前言</h2>
+<p>换到互联网电商行业了，以前电信行业的知识积累做下笔记。<br>
+谈到VCS，就会想到HA-高可用方案，做高可用方案的厂商比较多，其中工作接触到Veritas的VCS和IBM的HACMP，这里先对VCS做下笔记整理，互联网行业都喜欢用免费方案和热备，VCS的冷备方案几乎没见到厂商使用，但是VCS的简单易学习还是对高可用方案的知识积累很有帮助。</p>
+<p>所谓高可用方案，个人理解就是在服务出现故障时能快速的响应并恢复服务，电信行业比互联网行业要求更高，很少使用免费开源的东西，这里不是人傻钱多，因为开源的东西需要自己维护，付费的服务有专业的付费服务，目标不一样，所以选择的方案也就不一样了。</p>
+<p>废话不多说了，VCS是套商业软件，是Veritas（原赛门铁克收购的厂商，后来独立成子公司）的一套高可用方案SFHA中的一个部件，SFHA比较强大，包含双机、容灾、磁阵备份等，整套方案不是有实力的厂，基本上难以承受的，VCS也是单独拎出来用的最多的。</p>
+<h2 id="1下载模拟器">1、下载模拟器</h2>
+<p>为了便于学习，Veritas厂提供了模拟器学习，这样学习成本就低了，而且还有windows、Linux、unix、solaris等各种版本，人性化吧<br>
+下面提供下载链接：（包含模拟器simulator和控制管理平台manager，需要相同版本都安装模拟器才能好好的玩起来）<br>
+<a href="http://www.storagetutorials.com/free-download-veritas-cluster-server-simulator/">http://www.storagetutorials.com/free-download-veritas-cluster-server-simulator/</a><br>
+<a href="https://www.veritas.com/content/trial/en/us/vcs-utilities.html">https://www.veritas.com/content/trial/en/us/vcs-utilities.html</a></p>
+<p>第一个下载地址有简单的介绍和图文说明，第二个下载才是真实的原厂链接，需要简单填写下载人的信息、国家、用途等。简单透露下，美国不对付的国家是无法下载到这个的，比如North Korea、Iran等，扯远了，回到主题^_^</p>
+<p>下载了模拟器后，安装不用教了，不过运行需要有JRE和VCS Manager Java Console，作为Java开发来说，这点不是问题，其他语言的朋友就需要在运行前安装下JDK并配置下环境变量。<br>
+这些依赖的东西提前下好就行了，这里不一一去截图演示。</p>
+<h2 id="2启动模拟器">2、启动模拟器</h2>
+<p>终于可以打开VCS模拟器界面了：
+
+        <img class="mx-auto" alt="" src="/posts/vcs/start.jpg" />   
     </p>
 <pre><code>Add Cluster：是用于新增模拟集群的，可以自己新增一个模拟集群
 Verify Configuration：是校验配置是否合理，类似junit测试，验证配置cluster方案是否正确
 Start Cluster：可以启动demo或者你配置的集群
 Platform：一栏，可以看到支持各种主流服务器
-</code></pre><h3 id="既然是学的话先拿demo学习选中某个demo比如下图选择的solaris系统下的oracle举例点击start-cluster启动demo出现如下界面">既然是学的话，先拿demo学习，选中某个demo比如下图选择的Solaris系统下的Oracle举例，点击start cluster启动demo，出现如下界面：</h3>
-<p>
-        <img class="mx-auto" alt="" src="/images/posts/vcs/clusterManager.jpg" />   
+</code></pre><h2 id="3运行模拟器demo">3、运行模拟器demo</h2>
+<p>既然是学的话，先拿demo学习，选中某个demo比如下图选择的Solaris系统下的Oracle举例，点击start cluster启动demo，出现如下界面：
+
+        <img class="mx-auto" alt="" src="/posts/vcs/clusterManager.jpg" />   
     </p>
-<h3 id="然后点击launch-cluster进入模拟器的demo这时模拟器会调用manager因此之前说要安装manger-console的原因之后出现下图界面">然后点击Launch Cluster进入模拟器的demo，这时模拟器会调用Manager，因此之前说要安装Manger Console的原因，之后出现下图界面：</h3>
-<p>
-        <img class="mx-auto" alt="" src="/images/posts/vcs/startDemo.jpg" />   
+<h2 id="4进入管理界面">4、进入管理界面</h2>
+<p>然后点击Launch Cluster进入模拟器的demo，这时模拟器会调用Manager，因此之前说要安装Manger Console的原因，之后出现下图界面：
+
+        <img class="mx-auto" alt="" src="/posts/vcs/startDemo.jpg" />   
     </p>
-<h3 id="接着再出现manager-console的登录界面输入默认账号密码adminpassword进入manager加载资源的界面">接着再出现Manager Console的登录界面：输入默认账号密码admin/password，进入Manager加载资源的界面</h3>
-<p>
-        <img class="mx-auto" alt="" src="/images/posts/vcs/login.jpg" />   
+<h2 id="5输入管理账号密码">5、输入管理账号密码</h2>
+<p>接着再出现Manager Console的登录界面：输入默认账号密码admin/password，进入Manager加载资源的界面
+
+        <img class="mx-auto" alt="" src="/posts/vcs/login.jpg" />   
     </p>
-<h3 id="加载资源中等待资源加载完毕正式进入manager管理界面">加载资源中：等待资源加载完毕，正式进入Manager管理界面</h3>
-<p>
-        <img class="mx-auto" alt="" src="/images/posts/vcs/loading.jpg" />   
+<h2 id="6加载">6、加载</h2>
+<p>加载资源中：等待资源加载完毕，正式进入Manager管理界面
+
+        <img class="mx-auto" alt="" src="/posts/vcs/loading.jpg" />   
     </p>
-<h3 id="manager管理界面如下终于出现集群管理界面了">Manager管理界面如下：终于出现集群管理界面了</h3>
-<p>
-        <img class="mx-auto" alt="" src="/images/posts/vcs/manager.jpg" />   
+<h2 id="7管理双机集群">7、管理双机、集群</h2>
+<p>Manager管理界面如下：终于出现集群管理界面了
+
+        <img class="mx-auto" alt="" src="/posts/vcs/manager.jpg" />   
     </p>
-<h4 id="提到vcs-cluster下载再普及些cluster概念参考下面一位从vm安装vcs安装到oracle双机配置的详细图文指导手册可以理解很多名词概念httpswenkubaiducomview20f6aa6ab8f67c1cfad6b8a5html">提到VCS Cluster，下载再普及些Cluster概念：参考下面一位从vm安装、vcs安装到oracle双机配置的详细图文指导手册，可以理解很多名词、概念https://wenku.baidu.com/view/20f6aa6ab8f67c1cfad6b8a5.html</h4>
-<h3 id="熟悉双机概念后就可以继续查看demo中的资源极其属性如下图">熟悉双机概念后就可以继续查看demo中的资源极其属性，如下图：</h3>
-<p>
-        <img class="mx-auto" alt="" src="/images/posts/vcs/resources.jpg" />   
+<h2 id="8真实案例">8、真实案例</h2>
+<p>提到VCS Cluster，下载再普及些Cluster概念：参考下面一位从vm安装、vcs安装到oracle双机配置的详细图文指导手册，可以理解很多名词、概念https://wenku.baidu.com/view/20f6aa6ab8f67c1cfad6b8a5.html</p>
+<h2 id="9属性">9、属性</h2>
+<p>熟悉双机概念后就可以继续查看demo中的资源极其属性，如下图：
+
+        <img class="mx-auto" alt="" src="/posts/vcs/resources.jpg" />   
     </p>
-<h3 id="点开某一个资源查看属性这个就是vcs提供的接口便于定制开发">点开某一个资源查看属性，这个就是vcs提供的接口，便于定制开发：</h3>
-<p>
-        <img class="mx-auto" alt="" src="/images/posts/vcs/resourcesProperties.jpg" />   
+<h2 id="10自定义开发">10、自定义开发</h2>
+<p>点开某一个资源查看属性，这个就是vcs提供的接口，便于定制开发：
+
+        <img class="mx-auto" alt="" src="/posts/vcs/resourcesProperties.jpg" />   
     </p>
-<h3 id="资源之间还有些管理">资源之间还有些管理：</h3>
-<p>
-        <img class="mx-auto" alt="" src="/images/posts/vcs/rightClickMenu.jpg" />   
+<h2 id="11资源依赖">11、资源依赖</h2>
+<p>资源之间还有些管理：
+
+        <img class="mx-auto" alt="" src="/posts/vcs/rightClickMenu.jpg" />   
     </p>
-<h3 id="总结下集群的管理架构">总结下集群的管理架构：</h3>
+<h2 id="12架构图和介绍">12、架构图和介绍</h2>
+<p>总结下集群的管理架构：</p>
 <pre><code>Listener/Service       应用的服务器监听，一般数据库才需要，比如Oracle提供1521、DB2提供60000，常规后台应用不需要可以省去这个资源
       |
 Application            应用监控，监控应用的的进程，正常就返回100，不正常返回101，vcs依据这个来判断应用是否正常

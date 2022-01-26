@@ -143,30 +143,40 @@
   <ul>
     <li>
       <ul>
-        <li></li>
-        <li><a href="#vcs模块简介">VCS模块简介</a></li>
-        <li><a href="#一had">一、HAD</a></li>
-        <li><a href="#二llt">二、LLT</a></li>
-        <li><a href="#1llt是一个网络协议">1.LLT是一个网络协议</a></li>
-        <li><a href="#2llt的两大功能">2.LLT的两大功能：</a></li>
-        <li><a href="#3心跳信号的传递过程">3.心跳信号的传递过程:</a></li>
-        <li><a href="#4llt的查看">4.LLT的查看：</a></li>
-        <li><a href="#三gab">三、GAB</a></li>
-        <li><a href="#1cluster-membership-服务">1.Cluster membership 服务：</a></li>
-        <li><a href="#2atomic-broadcast">2.Atomic Broadcast：</a></li>
-        <li><a href="#3集群节点4个node中had的广播过程">3.集群节点（4个node）中HAD的广播过程：</a></li>
-        <li><a href="#4gab和llt结合的优势">4.GAB和LLT结合的优势</a></li>
-        <li><a href="#5gab的查看">5.GAB的查看</a></li>
-        <li><a href="#6gab端口对应表">6.GAB端口对应表：</a></li>
-        <li><a href="#7cluster-membership的初始化过程">7.Cluster Membership的初始化过程</a></li>
-        <li><a href="#四fencing">四、Fencing</a></li>
-        <li><a href="#1fencing模块的功能">1.Fencing模块的功能</a></li>
-        <li><a href="#2fencing模块主要动作">2.Fencing模块主要动作：</a></li>
-        <li><a href="#3coordination-points">3.Coordination Points：</a></li>
-        <li><a href="#4scsi-3-pr">4.SCSI-3 PR：</a></li>
-        <li><a href="#5fencing的工作过程">5.Fencing的工作过程：</a></li>
-        <li><a href="#6fencing模块检查是否有脑分裂的可能性存在">6.Fencing模块检查是否有脑分裂的可能性存在：</a></li>
-        <li><a href="#7fencing模块竞争coordinator-disk的策略">7.Fencing模块竞争coordinator disk的策略：</a></li>
+        <li><a href="#既然vcs用得多了原理还是要了解下的不然定位问题还是很吃力的知道了集群知识和vcs的工作原理对日常管理有很大的帮助">既然VCS用得多了，原理还是要了解下的，不然定位问题还是很吃力的，知道了集群知识和VCS的工作原理，对日常管理有很大的帮助</a></li>
+        <li><a href="#小结">小结</a></li>
+      </ul>
+    </li>
+    <li><a href="#1vcs模块简介">1、VCS模块简介</a></li>
+    <li><a href="#2had">2、HAD</a></li>
+    <li><a href="#3llt">3、LLT</a>
+      <ul>
+        <li><a href="#31-llt是一个网络协议">3.1 LLT是一个网络协议</a></li>
+        <li><a href="#32-llt的两大功能">3.2 LLT的两大功能</a></li>
+        <li><a href="#33-心跳信号的传递过程">3.3 心跳信号的传递过程</a></li>
+        <li><a href="#34-llt的查看">3.4 LLT的查看</a></li>
+      </ul>
+    </li>
+    <li><a href="#4gab">4、GAB</a>
+      <ul>
+        <li><a href="#41-cluster-membership-服务">4.1 Cluster membership 服务</a></li>
+        <li><a href="#42-atomic-broadcast">4.2 Atomic Broadcast</a></li>
+        <li><a href="#43-集群节点4个node中had的广播过程">4.3 集群节点（4个node）中HAD的广播过程</a></li>
+        <li><a href="#44-gab和llt结合的优势">4.4 GAB和LLT结合的优势</a></li>
+        <li><a href="#45-gab的查看">4.5 GAB的查看</a></li>
+        <li><a href="#46-gab端口对应表">4.6 GAB端口对应表</a></li>
+        <li><a href="#47-cluster-membership的初始化过程">4.7 Cluster Membership的初始化过程</a></li>
+      </ul>
+    </li>
+    <li><a href="#5fencing">5、Fencing</a>
+      <ul>
+        <li><a href="#51-fencing模块的功能">5.1 Fencing模块的功能</a></li>
+        <li><a href="#52-fencing模块主要动作">5.2 Fencing模块主要动作</a></li>
+        <li><a href="#53-coordination-points">5.3 Coordination Points</a></li>
+        <li><a href="#54-scsi-3-pr">5.4 SCSI-3 PR</a></li>
+        <li><a href="#55-fencing的工作过程">5.5 Fencing的工作过程</a></li>
+        <li><a href="#56-fencing模块检查是否有脑分裂的可能性存在">5.6 Fencing模块检查是否有脑分裂的可能性存在</a></li>
+        <li><a href="#57-fencing模块竞争coordinator-disk的策略">5.7 Fencing模块竞争coordinator disk的策略</a></li>
       </ul>
     </li>
   </ul>
@@ -229,19 +239,19 @@
         </div>
         
         <div class="post-content">
-            <h4 id="既然vcs用得多了原理还是要了解下的不然定位问题还是很吃力的知道了集群知识和vcs的工作原理对日常管理有很大的帮助">既然VCS用得多了，原理还是要了解下的，不然定位问题还是很吃力的，知道了集群知识和VCS的工作原理，对日常管理有很大的帮助</h4>
-<p>转至http://down.51cto.com/data/316764</p>
-<h4 id="总结下">总结下：</h4>
+            <h3 id="既然vcs用得多了原理还是要了解下的不然定位问题还是很吃力的知道了集群知识和vcs的工作原理对日常管理有很大的帮助">既然VCS用得多了，原理还是要了解下的，不然定位问题还是很吃力的，知道了集群知识和VCS的工作原理，对日常管理有很大的帮助</h3>
+<p>转自http://down.51cto.com/data/316764</p>
+<h3 id="小结">小结</h3>
 <pre><code>HAD用于是配合Agent做状态同步的工作进程
 LLT用于心跳通讯
 GAB用于Cluster内节点的广播，相互协同工作
 Fencing用于Cluster管理，相当于脑部，搜集其他部件返回的信息作出决策判断
-</code></pre><h3 id="vcs模块简介">VCS模块简介</h3>
+</code></pre><h2 id="1vcs模块简介">1、VCS模块简介</h2>
 <pre><code>HAD: HighAvailability Daemon，是一个后台程序，VCS用来管理Cluster配置信息，响应用户命令，跟踪VCS AGENT传来的各种resource状态变化。
 LLT: 是VCS底层的传输协议，同时也负责监控Cluster节点的心跳信息。
 GAB: Groupmembership / Atomic Broadcast。 是一个用于管理Cluster成员组成，并在Cluster节点间进行原子广播的内核模块。
 I/O Fencing: I/O Fencing 使用一种类似投票的机制，来防止Cluster分裂成两个或多个子群集，它保证在网络异常时，只有一个Cluster可以幸存下来。另外，I/O Fencing还利用SCSI-3协议的persistent reservation来保护共享磁盘上的数据。 
-</code></pre><h3 id="一had">一、HAD</h3>
+</code></pre><h2 id="2had">2、HAD</h2>
 <p>High Availability Daemon，是一个后台程序，VCS用来管理Cluster配置信息，响应用户命令，跟踪VCS AGENT传来的各种resource状态变化。并保持每个Node的状态同步，关于状态同步，有个专门的名称，叫做：“replicatedstate machine”，HAD就是这样一个machine。在每个Node上，都有一个HAD进程在运行。</p>
 <pre><code>h110121:/-&gt;ps-ef|grep had
 
@@ -254,78 +264,128 @@ root 3855     1  0  Feb 16 ?         1:13 /opt/VRTSvcs/bin/had
     
 以AGENT为例，它和本机的HAD通信的情形如下：
 
-        <img class="mx-auto" alt="" src="/images/posts/vcs_component/HAD2.jpg" />   
+        <img class="mx-auto" alt="" src="/images/posts/vcs_component/HAD4.jpg" />   
     
 如果用户在某个Node上通过命令或GUI，进行了操作，从而VCS的状态（例如配置信息改变了），或者某个AGENT检测到了 resource状态变化，则命令，或者GUI，或者AGENT，通过IPM将这些变化发送给本地的HAD。然后HAD要负责将这些变化通过网络通知给其 他Node的HAD进程，并且要保证其他节点都正确接收了这些信息，然后其他Node上的HAD进程会在各自的Node上，应用这些变化。由于每个 Node都运行着相同版本的HAD，因此每个Node上的HAD只需要简单地执行与首先发送通知消息的那个Node相同的代码序列。</p>
 <p>前面简略地提及，本地命令，GUI，AGENT通过IPM，与本地HAD通信，统称”intra-systemcommunication”。</p>
 <p>更加简略地提及：“HAD要负责将这些变化通过网络通知给其他Node的HAD进程”。通过网络，这个说得太过简略了，实际上这一部分，比想象中复杂得多，因为这忽然就涉及到了复杂的网络通信，并且引出了另外两大模块： GAB 和 LLT。Node之间通过网络进行的通信，统称为“inter-system communication”。</p>
-<h3 id="二llt">二、LLT</h3>
+<h2 id="3llt">3、LLT</h2>
 <p>LowLatency Transport protocol，是一个协议。但实际上LLT这个名字在VCS的语境中，包含的内容还要多一些。</p>
-<h3 id="1llt是一个网络协议">1.LLT是一个网络协议</h3>
+<h3 id="31-llt是一个网络协议">3.1 LLT是一个网络协议</h3>
 <p>LLT从OSI模型的角度来看，是处于第三层，VCS用LLT代替了IP协议，将其用于VCS Cluster内部节点之间进行网络通信的协议。LLT的特点是高效，低延迟。</p>
 <p>在我们说到LLT时，往往指的并不是一个协议，人们都喜欢描述一些实际看得见，摸得着的东西，所以，LLT从物理上来说，是“一个内核模块（llt） 一个用户进程（lltd）”。llt内核模块实现了LLT协议，而lltd，作为一个操作系统进程，则会定期调用llt内核模块的 功能，发送心跳信息给其它Node（同时也从其他Node接收心跳信息并保存其它Node的心跳状态）。</p>
-<h3 id="2llt的两大功能">2.LLT的两大功能：</h3>
+<h3 id="32-llt的两大功能">3.2 LLT的两大功能</h3>
 <p>网络传输：在VCS环境中，GAB调用LLT的功能进行实际的网络传输。当然，这是在内核中发生的内部调用。通过LLT进行的网络传输，为什么是 高效的呢？ 因为LLT在配置时，允许同时为LLT协议绑定多张网卡（准确的说法其实应该是“绑定多个网络链接”，也可以用“link”这个单词来表示链接的意思），多个网卡对于LLT来说，是对等的地位，是可以进行负载均衡和容错的冗余连接。LLT将数据平均分布在每个网络链路上，如果某个link挂掉了，则使用剩 余的link来传输数据。LLT最多也只能支持8个links。</p>
-<p>监控心跳： LLT负责监控每个Node的心跳，并负责通知GAB的Membership功能，以便处理这个一些丢失心跳的家伙。</p>
-<p>具 体地说，就像HAD一样，每个Node上都有一个lltd进程一直在运行。每半秒钟，lltd要通过绑定的links发送自己的心跳信号给其它Node。 LLT模块是知道Cluster中有哪些Node的，它通过unicast单波方式向其他节点逐一发送心跳信号（这里有个问题，将在下文说明）。</p>
-<p>心跳信号，大概是这样定义的：</p>
+<h4 id="监控心跳">监控心跳</h4>
+<p>LLT负责监控每个Node的心跳，并负责通知GAB的Membership功能，以便处理这个一些丢失心跳的家伙。</p>
+<p>具体地说，就像HAD一样，每个Node上都有一个lltd进程一直在运行。每半秒钟，lltd要通过绑定的links发送自己的心跳信号给其它Node。 LLT模块是知道Cluster中有哪些Node的，它通过unicast单波方式向其他节点逐一发送心跳信号（这里有个问题，将在下文说明）。</p>
+<h4 id="心跳信号大概是这样定义的">心跳信号，大概是这样定义的</h4>
 <pre><code> a. 每半秒钟，在每个LLT链接上发送一次
  b. 每个Node上运行的LLT模块，会跟踪每个其他Node（学名叫Peer）在每条LLT链路上的心跳信息
  c. LLT将每个Node的心跳状态信息通知自己Node上的GAB模块的Membership功能
  d. GAB接受到心跳状态信息后，根据该状态信息，决定是否对Membership进行改变
 </code></pre><p>说明一下前面提及的问题：当配置VCS的时候，我们只提供了IP地址或者主机名，作为一个第三层协议的LLT，在以太网中需要知道目标Node的MAC地址才能正确发送数据帧。而MAC地址并没有在安装的时候提供，也没有被安装程序通过ARP协议自动检测并写入配置文件，那么LLT如何发送数据帧 到目标Node呢？实际是这样的：LLT通过数据链路层的广播协议 – 即通过交换机发送一个广播数据帧（目标mac地址为全“1”，ffff.ffff.ffff的帧）进行广播，数据帧中包含Cluster ID（而Cluster ID是安装产品的时候指定的，并且每个Cluster是唯一的），然后局域网中所有拥有同一个Cluster ID的其它Node上的LLT模块，会应答，这样，Node就知道自己Cluster的Node中有哪些Node，以及每个Node的每个link的 mac地址了）。</p>
-<h3 id="3心跳信号的传递过程">3.心跳信号的传递过程:</h3>
+<h3 id="33-心跳信号的传递过程">3.3 心跳信号的传递过程</h3>
 <p>
         <img class="mx-auto" alt="" src="/images/posts/vcs_component/LLT.jpg" />   
-    
-LLT为什么不能替换IP协议？ LLT在VCS环境中确实可以很高效地传输数据，但它被设计为只在同一个局域网内工作的协议，而不能被路由，因此无法广泛使用作为通用传输协议。正因为 LLT只专注于服务VCS以及Veritas的其他产品，因此它才能高效地集成在VCS产品中。</p>
-<pre><code>LLT配置的一些考虑： LLT的link可以被指定为两种模式其中之一：
+    </p>
+<h4 id="llt为什么不能替换ip协议">LLT为什么不能替换IP协议？</h4>
+<p>LLT在VCS环境中确实可以很高效地传输数据，但它被设计为只在同一个局域网内工作的协议，而不能被路由，因此无法广泛使用作为通用传输协议。正因为 LLT只专注于服务VCS以及Veritas的其他产品，因此它才能高效地集成在VCS产品中。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">LLT配置的一些考虑： LLT的link可以被指定为两种模式其中之一：
 High priority link: 用于传输心跳及其他所有Cluster内部通信信息。
 Low priority link: 正常情况下，只用于传输心跳信息，以及状态信息，传输频率是正常频率的50%，如果其他的High priority都挂掉了，则使用第一个有效的Low priority link来传输所有的Cluster内部通信信息。一旦某一条High priority link恢复正常，则马上切换回去。
-</code></pre><p>虽然没有说强制，但是强烈建议配置至少2条high priority的link，然后至少1条low priority link。</p>
-<h3 id="4llt的查看">4.LLT的查看：</h3>
-<pre><code>h110121:/-&gt;ps-ef|grep -i llt    # llt  process
+</code></pre></td></tr></table>
+</div>
+</div><p>虽然没有说强制，但是强烈建议配置至少2条high priority的link，然后至少1条low priority link。</p>
+<h3 id="34-llt的查看">3.4 LLT的查看</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">h110121:/-&gt;ps-ef|grep -i llt    <span style="color:#998;font-style:italic"># llt  process</span>
 
-   root 28252  5564  1 22:35:06 pts/1     0:00 grep-i llt
+   root <span style="color:#099">28252</span>  <span style="color:#099">5564</span>  <span style="color:#099">1</span> 22:35:06 pts/1     0:00 grep-i llt
 
-   root  2860     0  0  Feb 16 ?         0:17 lltd
+   root  <span style="color:#099">2860</span>     <span style="color:#099">0</span>  <span style="color:#099">0</span>  Feb <span style="color:#099">16</span> ?         0:17 lltd
 
-h110121:/-&gt;kcmodule| grep llt    # llt module in kernel
+h110121:/-&gt;kcmodule| grep llt    <span style="color:#998;font-style:italic"># llt module in kernel</span>
 
 llt             loaded  explicit  auto-loadable, unloadable
 
-h110121:/-&gt;lltstat-l   # llt link status, see? the broadcast address is a link layeraddress with all bits ’1′ (mac address)
+h110121:/-&gt;lltstat-l   <span style="color:#998;font-style:italic"># llt link status, see? the broadcast address is a link layeraddress with all bits ’1′ (mac address)</span>
 
 LLTlink information:
 
 link0  lan0 on etherfp hipri
 
-       mtu 1500, sap 0xcafe, broadcast FF:FF:FF:FF:FF:FF, addrlen 6
+       mtu 1500, sap 0xcafe, broadcast FF:FF:FF:FF:FF:FF, addrlen <span style="color:#099">6</span>
 
-       txpkts 507598  txbytes 48499160
+       txpkts <span style="color:#099">507598</span>  txbytes <span style="color:#099">48499160</span>
 
-       rxpkts 376713  rxbytes 62064466
+       rxpkts <span style="color:#099">376713</span>  rxbytes <span style="color:#099">62064466</span>
 
-       latehb 0  badcksum 0  errors 0
+       latehb <span style="color:#099">0</span>  badcksum <span style="color:#099">0</span>  errors <span style="color:#099">0</span>
 
 link1  lan1 on etherfp hipri
 
-       mtu 1500, sap 0xcafe, broadcast FF:FF:FF:FF:FF:FF, addrlen 6
+       mtu 1500, sap 0xcafe, broadcast FF:FF:FF:FF:FF:FF, addrlen <span style="color:#099">6</span>
 
-       txpkts 507675  txbytes 48598260
+       txpkts <span style="color:#099">507675</span>  txbytes <span style="color:#099">48598260</span>
 
-       rxpkts 376589  rxbytes 43755496
+       rxpkts <span style="color:#099">376589</span>  rxbytes <span style="color:#099">43755496</span>
 
-       latehb 0  badcksum 0  errors 0
-</code></pre><h3 id="三gab">三、GAB</h3>
+       latehb <span style="color:#099">0</span>  badcksum <span style="color:#099">0</span>  errors <span style="color:#099">0</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="4gab">4、GAB</h2>
 <p>Groupmembership / Atomic Broadcast。如其英文词意反映该模块的功能，用斜杠割开的两部分，就是GAB的两大功能。</p>
 <p>GAB的物理存在是一个内核模块，它正如它的名字一样，提供下列两种服务：</p>
-<h3 id="1cluster-membership-服务">1.Cluster membership 服务：</h3>
+<h3 id="41-cluster-membership-服务">4.1 Cluster membership 服务</h3>
 <p>GAB职责之一，负责处理Cluster的成员变化情况，如果某个Node没有了 心跳，则GAB将其标记为DOWN，然后将其踢出Cluster （我知道这里有点问题，作为一个纯内核模块，GAB是没有后台进程的，那么它是不可能被schedle而得到执行的，也意味着GAB无法定期监控心跳状 态，所以我们只能说GAB负责处理成员变化，而不说它负责监控成员变化。由此可以推断，必然有一个操作系统后台进程要负责监控Node的心跳，并且在检测到心跳丢失后，要负责调用GAB中的Membership功能，要求其进行处理，这就是后面要看到的LLT了）。</p>
-<h3 id="2atomic-broadcast">2.Atomic Broadcast：</h3>
+<h3 id="42-atomic-broadcast">4.2 Atomic Broadcast</h3>
 <p>原子广播功能。这里，不要被Broadcast的字面意思所欺骗，这里所谓的“广播”，其实是局限在Cluster内部几个Node 之间的，并非传统意义的局域网广播。而且，所谓的“广播”其实是一系列Node到Node，点到点的单波组成。</p>
 <p>GAB的原子广播功能，为VCS提 供了可靠的消息传递机制（其实不仅仅是VCS，包括Veritas Storage Foundation的很多其他产品，例如CVM，CFS等等）。VCS的HAD，利用GAB的广播功能，将各种变化（或称之为消息），通过网络传递给所有其他Node上的HAD进程。GAB广播的原子性，将保证这些消息能够被正确传递到每个Node，如果整个传递过程发生了错误，则HAD会roll back到变化前的状态，因此才有了Atomic的说法。</p>
-<h3 id="3集群节点4个node中had的广播过程">3.集群节点（4个node）中HAD的广播过程：</h3>
+<h3 id="43-集群节点4个node中had的广播过程">4.3 集群节点（4个node）中HAD的广播过程</h3>
 <p>广播首先从发生变化那个Node开始，该Node上的HAD进程，要求本机内核中的GAB的Atomic Broadcast功能，在整个Cluster范围内广播一个变化消息。</p>
 <p>而GAB模块的Atomic Broadcast功能，则根据Cluster配置开始列举Cluster中的剩余Node，并一一进行点对点的单波。</p>
 <p>当目标机器上的HAD收到了这个消息之后，会发送一个回执，确认消息发送成功。</p>
@@ -335,37 +395,82 @@ link1  lan1 on etherfp hipri
         <img class="mx-auto" alt="" src="/images/posts/vcs_component/GAB.jpg" />   
     
 Gab不是一个进程：</p>
-<pre><code>h110121:/-&gt;ps-ef|grep -i gab
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">h110121:/-&gt;ps-ef|grep -i gab
 
-root 14881  5564  1 21:49:08pts/1     0:00 grep -i gab 
-</code></pre><p>Gab驻留在内核里，为内核服务：</p>
-<pre><code>h110121:/-&gt;kcmodule| grep gab  # gab in module
+root <span style="color:#099">14881</span>  <span style="color:#099">5564</span>  <span style="color:#099">1</span> 21:49:08pts/1     0:00 grep -i gab 
+</code></pre></td></tr></table>
+</div>
+</div><p>Gab驻留在内核里，为内核服务：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">h110121:/-&gt;kcmodule| grep gab  <span style="color:#998;font-style:italic"># gab in module</span>
 
 gab             loaded  explicit  auto-loadable, unloadable
-</code></pre><p>gabconfig-a命令列出GAB的端口信息</p>
-<pre><code>h110121:/-&gt;gabconfig-a
+</code></pre></td></tr></table>
+</div>
+</div><p>gabconfig-a命令列出GAB的端口信息</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">h110121:/-&gt;gabconfig-a
 
-GABPort Memberships
+GABPort <span style="color:#008080">Memberships</span>
 
-===============================================================
+<span style="color:#000;font-weight:bold">===============================================================</span>
 
-Porta gen   71f501 membership 01
+Porta gen   71f501 membership <span style="color:#099">01</span>
 
-Portb gen   71f505 membership 01
+Portb gen   71f505 membership <span style="color:#099">01</span>
 
-Portd gen   71f504 membership 01
+Portd gen   71f504 membership <span style="color:#099">01</span>
 
-Portf gen   71f50e membership 01
+Portf gen   71f50e membership <span style="color:#099">01</span>
 
-Porth gen   71f507 membership 01
+Porth gen   71f507 membership <span style="color:#099">01</span>
 
-Porto gen   71f504 membership 01
+Porto gen   71f504 membership <span style="color:#099">01</span>
 
-Portv gen   71f50a membership 01
+Portv gen   71f50a membership <span style="color:#099">01</span>
 
-Portw gen   71f50c membership 01
-</code></pre><p>这是一个状态良好的VCS GAB端口注册信息</p>
-<h3 id="4gab和llt结合的优势">4.GAB和LLT结合的优势</h3>
+Portw gen   71f50c membership <span style="color:#099">01</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这是一个状态良好的VCS GAB端口注册信息</p>
+<h3 id="44-gab和llt结合的优势">4.4 GAB和LLT结合的优势</h3>
 <p>GAB和LLT并非业界广泛使用的协议，而是专门针对VCS的底层架构，LLT直接构建在链路层之上，因此LLT的实现比TCP/IP协议精简，但效率更 高。然而GAB和LLT只为Veritas产品提供服务，这也是为什么后面的讲解中，会发现有一些模块间紧密耦合的情形（例如LLT不仅仅是一个网络层协 议，而且还是心跳接收者，LLT知道有个GAB模块，并且会主动与GAB交互心跳信息）。</p>
 <p>前面说到，GAB的两大功能之一，是Atomic Broadcast，可以在Cluster范围内进行广播。虽然名字是Broadcast，而在GAB内部，却是通过LLT对广播目标逐一进行unicast。</p>
 <pre><code>TCP/IP的广播，是对同一网段的所有机器进行广播，这个过程利用了链路层交换机的广播功能。
@@ -374,29 +479,64 @@ GAB广播，是对VCS Cluster内部的所有Node进行广播，这个过程没�
 <p>需要GAB广播功能的子产品（操作系统进程，或内核模块），首先调用本地GAB模块的对应功能，要求为自己保留一个GAB端口，这个过程叫做注册，这个注册信息会被GAB广播到Cluster的节点，让其他节点也能看到同样的GAB端口注册信息。</p>
 <p>然而，归根结底，所有的网络通信，都是位于进程间互相通信，这些互相通讯的进程，运行在不同Node上。对于GAB来说，每个Node上的同样功能的的进程，会注册同一个端口。例如，每个Node上的had进程，都会使用GAB端口h，然后通过端口h，广播had自己的消息，在Node间互 相update信息。</p>
 <p>与IP协议类似，GAB广播，是“进程：端口-&gt; 端口：进程”的广播。但是，这里的端口，并非传统意义的TCP/IP端口，而是GAB自己定义的一个数据结构，由GAB内核模块来维护。</p>
-<h3 id="5gab的查看">5.GAB的查看</h3>
+<h3 id="45-gab的查看">4.5 GAB的查看</h3>
 <p>现在来看一下前面的那条命令：</p>
-<pre><code>h110121:/-&gt;gabconfig-a
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">h110121:/-&gt;gabconfig-a
 
-GABPort Memberships
+GABPort <span style="color:#008080">Memberships</span>
 
-===============================================================
+<span style="color:#000;font-weight:bold">===============================================================</span>
 
-Porta gen   71f501 membership 01
+Porta gen   71f501 membership <span style="color:#099">01</span>
 
-Portb gen   71f505 membership 01
+Portb gen   71f505 membership <span style="color:#099">01</span>
 
-Portd gen   71f504 membership 01
+Portd gen   71f504 membership <span style="color:#099">01</span>
 
-Portf gen   71f50e membership 01
+Portf gen   71f50e membership <span style="color:#099">01</span>
 
-Porth gen   71f507 membership 01
+Porth gen   71f507 membership <span style="color:#099">01</span>
 
-Porto gen   71f504 membership 01
+Porto gen   71f504 membership <span style="color:#099">01</span>
 
-Portv gen   71f50a membership 01
+Portv gen   71f50a membership <span style="color:#099">01</span>
 
-Portw gen   71f50c membership 01
+Portw gen   71f50c membership <span style="color:#099">01</span>
 
 gabconfig-a ， 列举所有已经注册的端口，以及每个端口上注册的Node ID。来分析第一行：
 
@@ -404,124 +544,259 @@ gabconfig-a ， 列举所有已经注册的端口，以及每个端口上注册�
 
 71f501叫做 “MembershipGeneration Number”，每次成员变化，都会改变这个数值。
 
-最后一列的“01”，表示Node 0 和 Node1在端口上注册了。每个Node都有一个自己的ID，这个“01”有个学名叫做“Node map”。
+最后一列的“01”，表示Node <span style="color:#099">0</span> 和 Node1在端口上注册了。每个Node都有一个自己的ID，这个“01”有个学名叫做“Node map”。
 
 于是乎，端口号 “Node map”，形成了一个Membership，由于每个membership，都是相对某个Port而言，因此又叫做“Port Membership”。“Port Membership”由GAB模块维护。
-</code></pre><h3 id="6gab端口对应表">6.GAB端口对应表：</h3>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="46-gab端口对应表">4.6 GAB端口对应表</h3>
 <p>
         <img class="mx-auto" alt="" src="/images/posts/vcs_component/GAB-port.jpg" />   
     
 好了，有了前面的基础，下面的事情就好讲了。接着说一下GAB是如何维护Cluster Membership的（这也是GAB的两大功能之一）。</p>
 <p>Clustermembership，实际就是说GAB能及时更新每个端口的“Node map”，然后其他的进程或内核模块可以询问GAB，以得到当前的Membership。看下面这个输出：</p>
-<pre><code># gabconfig-a | grep “Port a”
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># gabconfig-a | grep “Port a”</span>
 
-Porta gen 7e6e7e04 membership ;1
-</code></pre><p>这里的分号“;”是一个占位符，表示Node 0本来是在Cluster里面的，但现在它挂了，所以给它留个位置，等它恢复正常后，仍然在这个位置填上0，表示0号Node回来了。</p>
+Porta gen 7e6e7e04 membership ;<span style="color:#099">1</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这里的分号“;”是一个占位符，表示Node 0本来是在Cluster里面的，但现在它挂了，所以给它留个位置，等它恢复正常后，仍然在这个位置填上0，表示0号Node回来了。</p>
 <p>GAB的Group Membership功能，由GAB自身提供，当一个VCS Cluster启动时，GAB自己会注册并占用一个端口，就是端口“a”。GAB通过这个端口来为其他模块提供服务，并且也用于所有Node的GAB模块 进行状态同步。其它模块通过GAB的端口a，可以向GAB询问当前的Membership状态。比如had，必须通过GAB获取当前的Membership，如果Membership发生了改变，则它进行相应的处理，例如对ServiceGroup做Faiover。</p>
 <p>GAB可以管理多个Membership，但是端口“a”上的membership，是特殊的，因为它代表的是Cluster Node Membership，出现在任何其他membership里的Nodes，都必须先出现在端口a上，因为这个membership表示每个物理的 Node是否处于Cluster中，如果物理Node都不在，那么其他端口上也不可能出现这个Node了。并且，端口a上的Nodemap由GAB亲自注册并维护。端口名称“a”本身，也表现出其特殊地位。这个Membership因此又有一个特殊的名字，叫做“seed membership”，相对应这个名称，GAB初始化端口a的过程，就叫做”seeding“。</p>
-<h3 id="7cluster-membership的初始化过程">7.Cluster Membership的初始化过程</h3>
-<h4 id="1准备好2个node的cluster集群正常运行">1.准备好2个node的cluster，集群正常运行</h4>
-<pre><code>#gabconfig -a
+<h3 id="47-cluster-membership的初始化过程">4.7 Cluster Membership的初始化过程</h3>
+<h4 id="471-准备">4.7.1 准备</h4>
+<p>准备好2个node的cluster，集群正常运行</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># gabconfig -a</span>
 
-GABPort Memberships
+GABPort <span style="color:#008080">Memberships</span>
 
-===============================================================
+<span style="color:#000;font-weight:bold">===============================================================</span>
 
-Porta gen   71f501 membership 01
+Porta gen   71f501 membership <span style="color:#099">01</span>
 
-Portb gen   71f505 membership 01
+Portb gen   71f505 membership <span style="color:#099">01</span>
 
-Portd gen   71f504 membership 01
+Portd gen   71f504 membership <span style="color:#099">01</span>
 
-Portf gen   71f50e membership 01
+Portf gen   71f50e membership <span style="color:#099">01</span>
 
-Porth gen   71f507 membership 01
+Porth gen   71f507 membership <span style="color:#099">01</span>
 
-Porto gen   71f504 membership 01
+Porto gen   71f504 membership <span style="color:#099">01</span>
 
-Portv gen   71f50a membership 01
+Portv gen   71f50a membership <span style="color:#099">01</span>
 
-Portw gen   71f50c membership 01
-</code></pre><h4 id="2shutdown其中一个然后reboot另外一个预计这个reboot的node启动之后无法seeding因为另一个node彻底down掉达不到预定node数量node启动后gab端口a没有打开">2.shutdown其中一个，然后reboot另外一个，预计这个reboot的node启动之后，无法seeding，因为另一个node彻底down掉，达不到预定node数量。node启动后，GAB端口a没有打开</h4>
-<pre><code>#gabconfig -a
+Portw gen   71f50c membership <span style="color:#099">01</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="472-关其中一个node">4.7.2 关其中一个node</h4>
+<p>shutdown其中一个，然后reboot另外一个，预计这个reboot的node启动之后，无法seeding，因为另一个node彻底down掉，达不到预定node数量。node启动后，GAB端口a没有打开</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># gabconfig -a</span>
 
-GABPort Memberships
+GABPort <span style="color:#008080">Memberships</span>
 
-===============================================================
-</code></pre><h4 id="3然后观察had的运行状况had在运行但它不会执行任何ha相关的管理功能">3.然后观察had的运行状况，had在运行，但它不会执行任何HA相关的管理功能</h4>
-<pre><code>#ps -ef|grep had
+<span style="color:#000;font-weight:bold">===============================================================</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="473-观察had">4.7.3 观察had</h4>
+<p>然后观察had的运行状况，had在运行，但它不会执行任何HA相关的管理功能</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># ps -ef|grep had</span>
 
-   root  3369     1  0 23:58:56?         0:00 /opt/VRTSvcs/bin/had
+   root  <span style="color:#099">3369</span>     <span style="color:#099">1</span>  <span style="color:#099">0</span> 23:58:56?         0:00 /opt/VRTSvcs/bin/had
 
-root  3531     1  0 23:59:08?         0:00 /opt/VRTSvcs/bin/hashadow
-</code></pre><h4 id="4然后在node上执行-gabconfig--c--x对它进行手工seeding它会启动一个不完整的cluster即只有1个node的cluster端口a的node-map中没有号占位符表示这个cluster只有一个node">4.然后在node上执行 gabconfig -c -x，对它进行手工seeding，它会启动一个不完整的Cluster，即只有1个Node的cluster。端口a的node map中没有”;“号占位符，表示这个Cluster只有一个Node</h4>
-<pre><code>#gabconfig -c -x
+root  <span style="color:#099">3531</span>     <span style="color:#099">1</span>  <span style="color:#099">0</span> 23:59:08?         0:00 /opt/VRTSvcs/bin/hashadow
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="474-检查">4.7.4 检查</h4>
+<p>然后在node上执行 gabconfig -c -x，对它进行手工seeding，它会启动一个不完整的Cluster，即只有1个Node的cluster。端口a的node map中没有”;“号占位符，表示这个Cluster只有一个Node</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># gabconfig -c -x</span>
 
-#gabconfig -a
+<span style="color:#998;font-style:italic"># gabconfig -a</span>
 
-GABPort Memberships
+GABPort <span style="color:#008080">Memberships</span>
 
-===============================================================
+<span style="color:#000;font-weight:bold">===============================================================</span>
 
-Porta gen   ab2801 membership 0
-</code></pre><h4 id="5等1分钟再看gab端口随着seed-membership的建立其他的软件模块都会相应地向gab注册自己的端口并开始工作">5.等1分钟，再看GAB端口，随着seed membership的建立，其他的软件模块都会相应地向GAB注册自己的端口，并开始工作：</h4>
-<pre><code>#gabconfig -a
+Porta gen   ab2801 membership <span style="color:#099">0</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="475-端口检查">4.7.5 端口检查</h4>
+<p>等1分钟，再看GAB端口，随着seed membership的建立，其他的软件模块都会相应地向GAB注册自己的端口，并开始工作：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># gabconfig -a</span>
 
-GABPort Memberships
+GABPort <span style="color:#008080">Memberships</span>
 
-===============================================================
+<span style="color:#000;font-weight:bold">===============================================================</span>
 
-Porta gen   ab2801 membership 0
+Porta gen   ab2801 membership <span style="color:#099">0</span>
 
-Portb gen   ab2806 membership 0
+Portb gen   ab2806 membership <span style="color:#099">0</span>
 
-Portd gen   ab2805 membership 0
+Portd gen   ab2805 membership <span style="color:#099">0</span>
 
-Portf gen   ab280c membership 0
+Portf gen   ab280c membership <span style="color:#099">0</span>
 
-Porth gen   ab2804 membership 0
+Porth gen   ab2804 membership <span style="color:#099">0</span>
 
-Porto gen   ab2803 membership 0
+Porto gen   ab2803 membership <span style="color:#099">0</span>
 
-Portv gen   ab2808 membership 0
+Portv gen   ab2808 membership <span style="color:#099">0</span>
 
-Portw gen   ab280a membership 0
-</code></pre><h4 id="6将那台shutdown的机器启动起来新启动的node可以自动加入cluster因为重启node的过程中会尝试自动seeding这时候的node数量已经满足要求">6.将那台shutdown的机器启动起来，新启动的Node可以自动加入Cluster。因为重启Node的过程中，会尝试自动Seeding，这时候的Node数量，已经满足要求。</h4>
-<pre><code>#gabconfig -a
+Portw gen   ab280a membership <span style="color:#099">0</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="476-启动">4.7.6 启动</h4>
+<p>将那台shutdown的机器启动起来，新启动的Node可以自动加入Cluster。因为重启Node的过程中，会尝试自动Seeding，这时候的Node数量，已经满足要求。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># gabconfig -a</span>
 
-GABPort Memberships
+GABPort <span style="color:#008080">Memberships</span>
 
-===============================================================
+<span style="color:#000;font-weight:bold">===============================================================</span>
 
-Porta gen   ab2802 membership 01
+Porta gen   ab2802 membership <span style="color:#099">01</span>
 
-Portb gen   ab2807 membership 01
+Portb gen   ab2807 membership <span style="color:#099">01</span>
 
-Portd gen   ab2806 membership 01
+Portd gen   ab2806 membership <span style="color:#099">01</span>
 
-Portf gen   ab280d membership 01
+Portf gen   ab280d membership <span style="color:#099">01</span>
 
-Porth gen   ab2805 membership 01
+Porth gen   ab2805 membership <span style="color:#099">01</span>
 
-Porto gen   ab2804 membership 01
+Porto gen   ab2804 membership <span style="color:#099">01</span>
 
-Portv gen   ab2809 membership 01
+Portv gen   ab2809 membership <span style="color:#099">01</span>
 
-Portw gen   ab280b membership 01
-</code></pre><h3 id="四fencing">四、Fencing</h3>
-<h3 id="1fencing模块的功能">1.Fencing模块的功能</h3>
+Portw gen   ab280b membership <span style="color:#099">01</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="5fencing">5、Fencing</h2>
+<h3 id="51-fencing模块的功能">5.1 Fencing模块的功能</h3>
 <p>集群node上都有一个内核模块叫做”vxfen“，它负责仲裁。在5.1以及之前的版本，Fencing模块只能通过一组叫做coordinate disk的共享磁盘来进行仲裁（从StorageFoundation 5.1开始，Fencing也可以使用第三方IPS服务器进行仲裁了）。</p>
-<h3 id="2fencing模块主要动作">2.Fencing模块主要动作：</h3>
+<h3 id="52-fencing模块主要动作">5.2 Fencing模块主要动作</h3>
 <p>Cluster正常操作时，Fencing模块在coordination disk上注册自己所在的这个node 。</p>
 <p>Clustermembership变化时，两个subcluster通过竞争coordination disk的控制权，来抢夺（race）重组cluster的资格。最少要有3块coordination disk，必须是基数，抢到其中大部分的subcluster，获得重组的权利，另外一个subcluster自动退出。Coordination disk可以使用DMP磁盘。</p>
-<h3 id="3coordination-points">3.Coordination Points：</h3>
+<h3 id="53-coordination-points">5.3 Coordination Points</h3>
 <p>就是指coordination disk或者IPS服务器。coordination必须支持SCSI-3协议的persistent reservation特性，以便于fencing模块register自己，eject其他node，这是抢夺控制权的技术手段。 coordination disk不能用于存放用户数据，因此越小越好。从/etc/vxfentab可以看到当前的coordination disk有哪些。IPS服务器是位于网络上的一个仲裁服务器，通过网络为Fencing模块提供仲裁服务。</p>
 <p>抢夺Coordination Disk的过程，都是由Fencing模块利用了SCSI-3协议的Persistent Reservation功能来实现的，后面简称SCSI-3 PR 。之所以叫做Persistent，是因为Reservation信息不会由于系统重启而丢失（不会由于SCSI总线reset而丢失）</p>
-<h3 id="4scsi-3-pr">4.SCSI-3 PR：</h3>
+<h3 id="54-scsi-3-pr">5.4 SCSI-3 PR</h3>
 <p>registrationand reservation。 SCSI-3 Registration允许主机在某个磁盘设备上注册一个自己的key。而多个主机注册的key，形成了一个membership，并且建立了一个 reservation，设置reservation的类型，一般是WERO – Write Exclusive Registrants Only。</p>
 <p>WERO设置只允许在其上注册过key的主机对该磁盘进行写操作，key当然是保存在存储硬件的controller中，而不是写在disk上 。对于某一个磁盘设备，只有一个reservation，但是可以有多个registrations。 使用 SCSI-3 技术，如果想禁止某个主机写入某块磁盘，只需简单地删除掉那个主机所注册的key。</p>
 <p>只有注册过key的主机，才能删掉其他主机的key。这个过程叫做”eject the registration of another member“。删掉别的主机的key的命令是”preempt and abort”，这是一个原子操作。被“eject”掉的主机，由于失去了key，因此无法再去eject别的主机 在WERO模式下，之前被eject掉的主机，可以再次注册自己的key然后又具有了eject别人的key的能力。</p>
-<h3 id="5fencing的工作过程">5.Fencing的工作过程：</h3>
+<h3 id="55-fencing的工作过程">5.5 Fencing的工作过程</h3>
 <p>fencing启动时：</p>
 <p>Coordination磁盘放在一个DG中，配置fencing的时候需要手工创建这个DG，有个名字叫做“Coordination Disk Group”，有个特殊的标志“coordinator=on”（# vxdg -o coordinator=on init）</p>
 <p>配置fencing的时候要将Coordinator DG的名字放在/etc/vxfendg文件里面</p>
@@ -531,7 +806,7 @@ Portw gen   ab280b membership 01
 <p>fencing内核驱动程序开始启动，读取/etc/vxfentab，使用其中的特殊设备文件路径，查询到磁盘的序列号，并构建内存中的列表</p>
 <p>fencing通过GAB端口b检查fencing的membership，如果没有其它成员，则表示自己是第一个启动fencing的node，进而认定自己的coordinatordisk配置是正确的</p>
 <p>如果端口b上已经有其他成员，说明自己不是第一个node，则向LLT ID最小的一个node请求coordinatordisk的配置信息，最小LLT ID那个node回复这个请求，发送coordinator disk的序列号列表给请求信息的node ，如果返回结果与自己在内存中构建的列表一致，这个node就加入cluster，如果返回结果与自己的列表不一致，就发生错误，这个过程能保证同一个cluster里的所有node都使用同一套coordinator disk 。</p>
-<h3 id="6fencing模块检查是否有脑分裂的可能性存在">6.Fencing模块检查是否有脑分裂的可能性存在：</h3>
+<h3 id="56-fencing模块检查是否有脑分裂的可能性存在">5.6 Fencing模块检查是否有脑分裂的可能性存在</h3>
 <p>这个检查的原理是：在coordinator disk上注册过key的node，也应该在GAB端口b的membership中出现。否则，说明自己可能是在不同的一个subcluster里。于是 fencing模块读取coordinator上的所有key，然后与自己的GAB端口b上的member进行比对，如果不一致，说明当前可能是一个脑分 裂的情形，于是fencingdriver打印warning信息到console和syslog，停止执行。</p>
 <p>如果所有的检查都通过了，则每个node各自的fencing模块向每个coordinatordisk的每条路径注册自己的key，每个node的在每条路径上注册的key的内容是一样的，是根据各自的LLT ID构建的（例如：LLT ID 0 = A）</p>
 <p>运行过程中：</p>
@@ -548,7 +823,7 @@ Portw gen   ab280b membership 01
 <p>重启后的node，会尝试seeding，假设重启后故障消除了（node可以与/etc/gabtab文件里规定个数的node交换心跳），则可以继续加入cluster。</p>
 <p>如果重启后仍然没有消除故障，（node无法与/etc/gabtab文件中规定个数的node交换心跳），则seeding失败，需 要手工干预。注意，手工干预不是说要管理员去手工seed，而是应该去排除故障。在Fencing enable的情况下，手工seeding虽然会成功，但是在尝试加入cluster时，fencing模块会去检查Coordinate Disk上的key，如果没有自己的key，会发生“mismatch”错误，vxfen不会继续执行，进而HAD也不会启动。</p>
 <p>如果fencing被人disable了的情况下，在这种情况下的手工seeding可能会造成“人工脑分裂”。</p>
-<h3 id="7fencing模块竞争coordinator-disk的策略">7.Fencing模块竞争coordinator disk的策略：</h3>
+<h3 id="57-fencing模块竞争coordinator-disk的策略">5.7 Fencing模块竞争coordinator disk的策略</h3>
 <p>原则是尽量保留大多数node，node数量高于51%的subcluster，优先级较高，node数量较小的subcluster，被延迟一会儿，然后才开始竞争</p>
 <p>原则是尽量让同一个subcluster赢得所有的coordinator disk。赢得第一个disk的subcluster，优先级较高，输掉第一个disk的subcluster，被延迟一会儿才继续参与下一块磁盘的竞 争。这样是为了避免3个或多个subcluster竞争时，各自赢得了一个coordinator disk，打成了平手。</p>
 <p>不干净地关闭cluster，例如整个机房同时断电，会在coordinator disk上留下很多残留的key，这些key在fencing启动时，会导致fencing认为出现了脑分裂而无法启动。这时需要人工的干预，用 vxfenclearpre清除掉残留的key 。</p>
