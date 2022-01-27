@@ -141,15 +141,18 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
+    <li><a href="#前言">前言</a></li>
     <li><a href="#1注册-oauth-application">1、注册 OAuth Application</a></li>
     <li><a href="#2引入-gitment">2、引入 Gitment</a>
       <ul>
-        <li></li>
+        <li><a href="#为了灵活我在_configyml中配置好全局参数">为了灵活，我在_config.yml中配置好全局参数：</a></li>
       </ul>
     </li>
     <li><a href="#3初始化评论">3、初始化评论</a>
       <ul>
-        <li></li>
+        <li><a href="#31-初始化">3.1 初始化</a></li>
+        <li><a href="#32-正常">3.2 正常</a></li>
+        <li><a href="#32-异常">3.2 异常</a></li>
       </ul>
     </li>
   </ul>
@@ -196,6 +199,12 @@
             
             <span class="meta-category"><a href='/categories/gitment'>gitment</a></span>
             
+            <span class="meta-category"><a href='/categories/jekyll'>jekyll</a></span>
+            
+            <span class="meta-category"><a href='/categories/blog'>blog</a></span>
+            
+            <span class="meta-category"><a href='/categories/gitpages'>gitpages</a></span>
+            
         </div>
         
         
@@ -212,8 +221,11 @@
         </div>
         
         <div class="post-content">
-            <p>Gitment 是作者<a href="https://imsun.net/posts/gitment-introduction/">imsun</a>实现的一款基于 GitHub Issues 的评论系统。支持在前端直接引入，不需要任何后端代码。可以在页面进行登录、查看、评论、点赞等操作，同时有完整的 Markdown / GFM 和代码高亮支持。尤为适合各种基于 GitHub Pages 的静态博客或项目页面。</p>
+            <h2 id="前言">前言</h2>
+<p>Gitment 是作者<a href="https://imsun.net/posts/gitment-introduction/">imsun</a>实现的一款基于 GitHub Issues 的评论系统。支持在前端直接引入，不需要任何后端代码。可以在页面进行登录、查看、评论、点赞等操作，同时有完整的 Markdown / GFM 和代码高亮支持。尤为适合各种基于 GitHub Pages 的静态博客或项目页面。</p>
 <p>本博客评论系统已迁移至 Gitment，参考作者的介绍部署成功，不过这里补充详细点，方便新手入门。</p>
+<p>Gitment是 jekyll 博客用的<br>
+最新的 hugo 已经改用 utteranc，不过仍然是用 issue 方式记录，跟 Gitment 原理一样</p>
 <h2 id="1注册-oauth-application">1、注册 OAuth Application</h2>
 <p>通过地址<a href="https://github.com/settings/applications/new">传送门</a>申请配置，注册一个新的 OAuth Application，其他内容可以随意填写，但要确保填入正确的 callback URL（一般是评论页面对应的域名，如 <a href="https://anttutu.github.io">https://anttutu.github.io</a>）。
 
@@ -261,27 +273,31 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
 <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#a61717;background-color:#e3d2d2">/script&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="为了灵活我在_configyml中配置好全局参数">为了灵活，我在_config.yml中配置好全局参数：</h4>
+</div><h3 id="为了灵活我在_configyml中配置好全局参数">为了灵活，我在_config.yml中配置好全局参数：</h3>
 <p>
         <img class="mx-auto" alt="" src="/posts/gitment/config.jpg" />   
     </p>
 <h2 id="3初始化评论">3、初始化评论</h2>
-<p>页面发布后，你需要访问页面并使用你的 GitHub 账号登录（请确保你的账号是第二步所填 repo 的 owner），点击初始化按钮。</p>
-<p>之后其他用户即可在该页面发表评论</p>
-<h4 id="初始化点击下初始化即可">初始化：点击下初始化即可</h4>
-<p>
+<p>页面发布后，你需要访问页面并使用你的 GitHub 账号登录（请确保你的账号是第二步所填 repo 的 owner），点击初始化按钮。<br>
+之后其他用户即可在该页面发表评论</p>
+<h3 id="31-初始化">3.1 初始化</h3>
+<p>点击下初始化即可
+
         <img class="mx-auto" alt="" src="/posts/gitment/init.jpg" />   
     </p>
-<h4 id="正常">正常：</h4>
+<h3 id="32-正常">3.2 正常</h3>
 <p>
         <img class="mx-auto" alt="" src="/posts/gitment/comment2.jpg" />   
      
         <img class="mx-auto" alt="" src="/posts/gitment/comment.jpg" />   
     </p>
-<h4 id="异常通常是repo或者owner配置不对请细心检测errornot-found--图1还有本地调测会出现callback不对提示error-comments-not-initialized-图2">异常：通常是repo或者owner配置不对，请细心检测Error：Not Found  图1。还有本地调测会出现callback不对提示Error: Comments Not Initialized 图2</h4>
-<p>
+<h3 id="32-异常">3.2 异常</h3>
+<p>图1 通常是repo或者owner配置不对，请细心检测Error：Not Found<br>
+
         <img class="mx-auto" alt="" src="/posts/gitment/Error1.jpg" />   
-     
+    
+图2 还有本地调测会出现callback不对，提示Error: Comments Not Initialized<br>
+
         <img class="mx-auto" alt="" src="/posts/gitment/Error3.jpg" />   
     </p>
 
@@ -305,6 +321,8 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     <h2>See Also</h2>
     <ul class="listing">
         
+        <li><a href="/post/2017-06-02-jekyll_ruby_blog/">jekyll搭建自己的静态blog</a></li>
+        
         <li><a href="/post/2017-07-28-shell_check/">开发技能-shell面试整理</a></li>
         
         <li><a href="/post/2017-07-15-sqlmap/">SQLMap初学使用和参数讲解</a></li>
@@ -312,8 +330,6 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
         <li><a href="/post/2017-07-15-kali/">初识Kali-linux及其工具</a></li>
         
         <li><a href="/post/2017-06-04-redis_cli/">Redis日常命令整理</a></li>
-        
-        <li><a href="/post/2017-06-04-jrebel/">eclipse之jrebel热部署插件</a></li>
         
     </ul>
 </div>
@@ -324,6 +340,12 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
             <ul class="clearfix">
                 
                 <li><a href='/tags/gitment'>gitment</a></li>
+                
+                <li><a href='/tags/jekyll'>jekyll</a></li>
+                
+                <li><a href='/tags/blog'>blog</a></li>
+                
+                <li><a href='/tags/gitpages'>gitpages</a></li>
                 
             </ul>
             
@@ -462,7 +484,11 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/blog/">blog (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
     
@@ -478,9 +504,13 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
     
@@ -489,6 +519,8 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
     
@@ -500,19 +532,25 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     
     <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/go/">go (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (21)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (22)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
     
@@ -522,9 +560,11 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     
     <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (14)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (16)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
     
@@ -546,6 +586,8 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     
     <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
@@ -554,7 +596,7 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     
     <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">python (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">python (6)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
     
@@ -562,7 +604,7 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/safe/">safe (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/safe/">safe (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">sdkman (1)</a></li>
     
@@ -580,11 +622,17 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     
     <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">virus (4)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
     
@@ -613,6 +661,10 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     
     <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
     
+    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    
     <a href="https://anTtutu.github.io/tags/blog/">blog</a>
     
     <a href="https://anTtutu.github.io/tags/bug/">bug</a>
@@ -623,11 +675,17 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     
     <a href="https://anTtutu.github.io/tags/check/">check</a>
     
+    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    
     <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
     
     <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
     
     <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
     
     <a href="https://anTtutu.github.io/tags/explain/">explain</a>
     
@@ -635,11 +693,15 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     
     <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
     
+    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    
     <a href="https://anTtutu.github.io/tags/go/">go</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">h2</a>
     
     <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
     
     <a href="https://anTtutu.github.io/tags/http/">http</a>
     
@@ -649,11 +711,15 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     
     <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
     
+    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    
     <a href="https://anTtutu.github.io/tags/js/">js</a>
     
     <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
     
     <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
     
@@ -671,6 +737,8 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     
     <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
     
+    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    
     <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
     
     <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
@@ -680,6 +748,8 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     <a href="https://anTtutu.github.io/tags/rec/">rec</a>
     
     <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
     
     <a href="https://anTtutu.github.io/tags/shell/">shell</a>
     
@@ -693,11 +763,17 @@ gitment.render(<span style="color:#d14">&#39;container&#39;</span>)
     
     <a href="https://anTtutu.github.io/tags/termux/">termux</a>
     
+    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    
     <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">virus</a>
     
+    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    
     <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
     
     <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
     

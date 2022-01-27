@@ -141,14 +141,23 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#1前言">1、前言</a></li>
-    <li><a href="#2下载aria2源码">2、下载aria2源码</a></li>
-    <li><a href="#3提前准备mac的编译环境">3、提前准备Mac的编译环境</a></li>
-    <li><a href="#4参考前人总结的源码修改经验修改aria2的源码">4、参考前人总结的源码修改经验修改aria2的源码</a></li>
-    <li><a href="#5编译">5、编译</a></li>
-    <li><a href="#6设置aria2的配置文件可选">6、设置aria2的配置文件(可选)</a></li>
-    <li><a href="#7测试下载">7、测试下载</a></li>
-    <li><a href="#注意">注意</a></li>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1下载aria2源码">1、下载aria2源码</a></li>
+    <li><a href="#2提前准备mac的编译环境">2、提前准备Mac的编译环境</a></li>
+    <li><a href="#3参考前人总结的源码修改经验修改aria2的源码">3、参考前人总结的源码修改经验修改aria2的源码</a>
+      <ul>
+        <li><a href="#31-将">3.1 将</a></li>
+        <li><a href="#32-将">3.2 将</a></li>
+        <li><a href="#33-将">3.3 将</a></li>
+        <li><a href="#34-将">3.4 将</a></li>
+        <li><a href="#35-将">3.5 将</a></li>
+        <li><a href="#36-将">3.6 将</a></li>
+      </ul>
+    </li>
+    <li><a href="#4编译">4、编译</a></li>
+    <li><a href="#5设置aria2的配置文件可选">5、设置aria2的配置文件(可选)</a></li>
+    <li><a href="#6测试下载">6、测试下载</a></li>
+    <li><a href="#7注意">7、注意</a></li>
   </ul>
 </nav>
     </div>
@@ -211,10 +220,10 @@
         </div>
         
         <div class="post-content">
-            <h2 id="1前言">1、前言</h2>
+            <h2 id="前言">前言</h2>
 <p>尝试在自己的Mac上源码方式安装aria2，根据教程修改了下限制的线程数，然后总结下经验</p>
-<h2 id="2下载aria2源码">2、下载aria2源码</h2>
-<p>下载地址：(<a href="https://github.com/aria2/aria2">https://github.com/aria2/aria2</a>)</p>
+<h2 id="1下载aria2源码">1、下载aria2源码</h2>
+<p>下载地址：<a href="https://github.com/aria2/aria2">https://github.com/aria2/aria2</a></p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -223,7 +232,7 @@
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone https://github.com/aria2/aria2.git
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="3提前准备mac的编译环境">3、提前准备Mac的编译环境</h2>
+</div><h2 id="2提前准备mac的编译环境">2、提前准备Mac的编译环境</h2>
 <p>因aria2是C++的，需要C++的环境，可以通过brew安装</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -237,7 +246,7 @@
 brew install autoconf automake cppunit libtool libxml2 gettext openssl pkg-config sqlite zlib
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="4参考前人总结的源码修改经验修改aria2的源码">4、参考前人总结的源码修改经验修改aria2的源码</h2>
+</div><h2 id="3参考前人总结的源码修改经验修改aria2的源码">3、参考前人总结的源码修改经验修改aria2的源码</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -248,7 +257,7 @@ brew install autoconf automake cppunit libtool libxml2 gettext openssl pkg-confi
 vim OptionHandlerFactory.cc
 </code></pre></td></tr></table>
 </div>
-</div><p>1、将</p>
+</div><h3 id="31-将">3.1 将</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -274,7 +283,7 @@ vim OptionHandlerFactory.cc
                                                <span style="color:#d14">&#34;128&#34;</span>, <span style="color:#099">1</span>, <span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>, <span style="color:#d14">&#39;x&#39;</span>));
 </code></pre></td></tr></table>
 </div>
-</div><p>2、将</p>
+</div><h3 id="32-将">3.2 将</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -292,7 +301,7 @@ vim OptionHandlerFactory.cc
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">PREF_MIN_SPLIT_SIZE, TEXT_MIN_SPLIT_SIZE, <span style="color:#d14">&#34;4K&#34;</span>, <span style="color:#099">1</span>_k, <span style="color:#099">1</span>_g, <span style="color:#d14">&#39;k&#39;</span>));
 </code></pre></td></tr></table>
 </div>
-</div><p>3、将</p>
+</div><h3 id="33-将">3.3 将</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -310,7 +319,7 @@ vim OptionHandlerFactory.cc
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">PREF_CONNECT_TIMEOUT, TEXT_CONNECT_TIMEOUT, <span style="color:#d14">&#34;30&#34;</span>, <span style="color:#099">1</span>, <span style="color:#099">600</span>));
 </code></pre></td></tr></table>
 </div>
-</div><p>4、将</p>
+</div><h3 id="34-将">3.4 将</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -328,7 +337,7 @@ vim OptionHandlerFactory.cc
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">PREF_PIECE_LENGTH, TEXT_PIECE_LENGTH, <span style="color:#d14">&#34;4k&#34;</span>, <span style="color:#099">1</span>_k, <span style="color:#099">1</span>_g));
 </code></pre></td></tr></table>
 </div>
-</div><p>5、将</p>
+</div><h3 id="35-将">3.5 将</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -346,7 +355,7 @@ vim OptionHandlerFactory.cc
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#000;font-weight:bold">new</span> <span style="color:#900;font-weight:bold">NumberOptionHandler</span>(PREF_RETRY_WAIT, TEXT_RETRY_WAIT, <span style="color:#d14">&#34;2&#34;</span>, <span style="color:#099">0</span>, <span style="color:#099">600</span>));
 </code></pre></td></tr></table>
 </div>
-</div><p>6、将</p>
+</div><h3 id="36-将">3.6 将</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -365,7 +374,7 @@ vim OptionHandlerFactory.cc
 </code></pre></td></tr></table>
 </div>
 </div><p>好的，到这里为止我们全部修改完成，保存退出。</p>
-<h2 id="5编译">5、编译</h2>
+<h2 id="4编译">4、编译</h2>
 <p>每一步都没ERROR，注意查看控制台信息并排错，如果前面编译环境准备到位，应该不会编译环节报错的</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -456,7 +465,7 @@ Options:
 </code></pre></td></tr></table>
 </div>
 </div><p>表示环境变量也准备成功</p>
-<h2 id="6设置aria2的配置文件可选">6、设置aria2的配置文件(可选)</h2>
+<h2 id="5设置aria2的配置文件可选">5、设置aria2的配置文件(可选)</h2>
 <p>aria2配置文件参考如下</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -593,7 +602,7 @@ file-allocation=prealloc
 # 启用磁盘缓存, 0为禁用缓存, 需1.16以上版本, 默认:16M
 disk-cache=64M
 </code></pre><p>如果新增了conf文件后下载报错，也可以去掉conf文件</p>
-<h2 id="7测试下载">7、测试下载</h2>
+<h2 id="6测试下载">6、测试下载</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -603,14 +612,14 @@ disk-cache=64M
 </code></pre></td></tr></table>
 </div>
 </div><p>稍等会看到下载目录下有centos的iso镜像</p>
-<h2 id="注意">注意</h2>
+<h2 id="7注意">7、注意</h2>
 <p>Mac下开启rpc配置项和ssl证书需要参考官方这里的讨论做下测试<br>
 打开rpc配置：</p>
 <pre><code class="language-properties" data-lang="properties">## RPC相关设置 ##
 
 # 启用RPC, 默认:false
 enable-rpc=true
-</code></pre><p>issue：(<a href="https://github.com/aria2/aria2/issues/1379">https://github.com/aria2/aria2/issues/1379</a>)</p>
+</code></pre><p>issue：<a href="https://github.com/aria2/aria2/issues/1379">https://github.com/aria2/aria2/issues/1379</a></p>
 
         </div>
 
@@ -791,7 +800,11 @@ enable-rpc=true
     
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/blog/">blog (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
     
@@ -807,9 +820,13 @@ enable-rpc=true
     
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
     
@@ -818,6 +835,8 @@ enable-rpc=true
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
     
@@ -829,19 +848,25 @@ enable-rpc=true
     
     <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/go/">go (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (21)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (22)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
     
@@ -851,9 +876,11 @@ enable-rpc=true
     
     <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (14)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (16)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
     
@@ -875,6 +902,8 @@ enable-rpc=true
     
     <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
@@ -883,7 +912,7 @@ enable-rpc=true
     
     <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">python (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">python (6)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
     
@@ -891,7 +920,7 @@ enable-rpc=true
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/safe/">safe (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/safe/">safe (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">sdkman (1)</a></li>
     
@@ -909,11 +938,17 @@ enable-rpc=true
     
     <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">virus (4)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
     
@@ -942,6 +977,10 @@ enable-rpc=true
     
     <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
     
+    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    
     <a href="https://anTtutu.github.io/tags/blog/">blog</a>
     
     <a href="https://anTtutu.github.io/tags/bug/">bug</a>
@@ -952,11 +991,17 @@ enable-rpc=true
     
     <a href="https://anTtutu.github.io/tags/check/">check</a>
     
+    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    
     <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
     
     <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
     
     <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
     
     <a href="https://anTtutu.github.io/tags/explain/">explain</a>
     
@@ -964,11 +1009,15 @@ enable-rpc=true
     
     <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
     
+    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    
     <a href="https://anTtutu.github.io/tags/go/">go</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">h2</a>
     
     <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
     
     <a href="https://anTtutu.github.io/tags/http/">http</a>
     
@@ -978,11 +1027,15 @@ enable-rpc=true
     
     <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
     
+    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    
     <a href="https://anTtutu.github.io/tags/js/">js</a>
     
     <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
     
     <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
     
@@ -1000,6 +1053,8 @@ enable-rpc=true
     
     <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
     
+    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    
     <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
     
     <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
@@ -1009,6 +1064,8 @@ enable-rpc=true
     <a href="https://anTtutu.github.io/tags/rec/">rec</a>
     
     <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
     
     <a href="https://anTtutu.github.io/tags/shell/">shell</a>
     
@@ -1022,11 +1079,17 @@ enable-rpc=true
     
     <a href="https://anTtutu.github.io/tags/termux/">termux</a>
     
+    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    
     <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">virus</a>
     
+    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    
     <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
     
     <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
     

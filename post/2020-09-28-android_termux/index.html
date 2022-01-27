@@ -141,16 +141,24 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#1前言">1、前言</a></li>
-    <li><a href="#2准备">2、准备</a></li>
-    <li><a href="#3安装">3、安装</a></li>
-    <li><a href="#4下载">4、下载</a></li>
-    <li><a href="#5安装apk">5、安装APK</a></li>
-    <li><a href="#6简单上手">6、简单上手</a></li>
-    <li><a href="#7安装个人需要的软件包">7、安装个人需要的软件包</a></li>
-    <li><a href="#8环境安装完毕后开始通过ssh控制termux">8、环境安装完毕后，开始通过ssh控制termux</a></li>
-    <li><a href="#9开始用ssh操作termux的一些服务">9、开始用ssh操作termux的一些服务</a></li>
-    <li><a href="#10基本功能完成还有很多进阶设置和玩法待开发和更新进来未完待续">10、基本功能完成，还有很多进阶设置和玩法待开发和更新进来(未完待续)</a></li>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1准备">1、准备</a></li>
+    <li><a href="#2安装">2、安装</a></li>
+    <li><a href="#3下载">3、下载</a></li>
+    <li><a href="#4安装apk">4、安装APK</a></li>
+    <li><a href="#5简单上手">5、简单上手</a></li>
+    <li><a href="#6安装个人需要的软件包">6、安装个人需要的软件包</a></li>
+    <li><a href="#7环境安装完毕后开始通过ssh控制termux">7、环境安装完毕后，开始通过ssh控制termux</a></li>
+    <li><a href="#8开始用ssh操作termux的一些服务">8、开始用ssh操作termux的一些服务</a>
+      <ul>
+        <li><a href="#81-设置mysql的root帐号密码">8.1 设置mysql的root帐号密码</a></li>
+        <li><a href="#82-启停mysql">8.2 启停mysql</a></li>
+        <li><a href="#83-启停redis">8.3 启停redis</a></li>
+        <li><a href="#84-启动nginx">8.4 启动nginx</a></li>
+        <li><a href="#85-启动mongodb">8.5 启动mongodb</a></li>
+      </ul>
+    </li>
+    <li><a href="#9基本功能完成还有很多进阶设置和玩法待开发和更新进来未完待续">9、基本功能完成，还有很多进阶设置和玩法待开发和更新进来(未完待续)</a></li>
   </ul>
 </nav>
     </div>
@@ -213,7 +221,7 @@
         </div>
         
         <div class="post-content">
-            <h2 id="1前言">1、前言</h2>
+            <h2 id="前言">前言</h2>
 <p>临近2020年国庆8天长假，因需要安装信息安全管理软件，由自带mbp更换公司的matebook新笔记本，想着还是用android机配置一套服务器环境更加便携，便试试找下不需要root的android模拟器，没想到还真找到了。</p>
 <p>有2套方案：</p>
 <table>
@@ -237,7 +245,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="2准备">2、准备</h2>
+<h2 id="1准备">1、准备</h2>
 <p>android手机一部，建议用吃灰的手机，不需要太新也不需要太久，建议android版本5.0或者以上，android版本7.0比较好。</p>
 <table>
 <thead>
@@ -275,7 +283,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="3安装">3、安装</h2>
+<h2 id="2安装">2、安装</h2>
 <p>可以通过Google Play、F-Droid、酷安3个途径下载apk<br>
 第一选择：Google Play，需要FQ<br>
 第二选择：F-Droid，官网，不需要FQ<br>
@@ -283,7 +291,7 @@
 <p>Termux官网和Github地址：<br>
 <a href="https://termux.com/" title="termux官网">termux官网</a><br>
 <a href="https://github.com/termux/termux-app" title="termux Github">termux Github</a></p>
-<h2 id="4下载">4、下载</h2>
+<h2 id="3下载">3、下载</h2>
 <p>Huawei手机之前的型号都是自带google服务框架的，前几年的手机不用担心去掉了服务框架，不过从被实体清单打压后的机型可能要安装，不过可以先进腾讯应用宝市场安装Google Play Store和Go谷歌安装器</p>
 <p><a href="https://sj.qq.com/myapp/detail.htm?apkName=com.goplaycn.googleinstall" title="Go谷歌安装器下载地址">Go谷歌安装器下载地址</a><br>
 可以检测Google服务框架是否存在</p>
@@ -295,7 +303,7 @@ Google Play Store官方的apk，无需FQ下载</p>
 官方下载，需要通过apk方式安装</p>
 <p><a href="https://www.coolapk.com/apk/com.termux" title="酷安的termux下载地址">酷安的termux下载地址</a><br>
 版本进度比Google Play Store稍慢</p>
-<h2 id="5安装apk">5、安装APK</h2>
+<h2 id="4安装apk">4、安装APK</h2>
 <p>这里没什么难度<br>
 
         <img class="mx-auto" alt="" src="/posts/termux/app_list.JPG" />   
@@ -342,7 +350,7 @@ Check your network connection and try again.
 </div><p>解决方式：<br>
 1、FQ<br>
 2、Wifi和4G来回切换试试</p>
-<h2 id="6简单上手">6、简单上手</h2>
+<h2 id="5简单上手">5、简单上手</h2>
 <p>Termux除了支持apt命令外，还在此基础上封装了pkg命令，pkg命令向下兼容apt命令。apt命令大家应该都比较熟悉了，这里直接简单的介绍下pkg命令:</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -385,7 +393,7 @@ dpkg -l                      <span style="color:#998;font-style:italic"># 查看
 man dpkg                     <span style="color:#998;font-style:italic"># 查看详细文档</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="7安装个人需要的软件包">7、安装个人需要的软件包</h2>
+</div><h2 id="6安装个人需要的软件包">6、安装个人需要的软件包</h2>
 <table>
 <thead>
 <tr>
@@ -573,7 +581,7 @@ en_US.UTF-8
 </div><p>
         <img class="mx-auto" alt="" src="/posts/termux/sdk_list.JPG" />   
     </p>
-<h2 id="8环境安装完毕后开始通过ssh控制termux">8、环境安装完毕后，开始通过ssh控制termux</h2>
+<h2 id="7环境安装完毕后开始通过ssh控制termux">7、环境安装完毕后，开始通过ssh控制termux</h2>
 <p>毕竟电脑端用键盘打字方便很多</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -605,8 +613,8 @@ sshd     <span style="color:#998;font-style:italic">#启动ssh服务，也可以
 
         <img class="mx-auto" alt="" src="/posts/termux/ssh.png" />   
     </p>
-<h2 id="9开始用ssh操作termux的一些服务">9、开始用ssh操作termux的一些服务</h2>
-<p>1、设置mysql的root帐号密码</p>
+<h2 id="8开始用ssh操作termux的一些服务">8、开始用ssh操作termux的一些服务</h2>
+<h3 id="81-设置mysql的root帐号密码">8.1 设置mysql的root帐号密码</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -637,7 +645,7 @@ mysql -u <span style="color:#000;font-weight:bold">$(</span>whoami<span style="c
 exit;
 </code></pre></td></tr></table>
 </div>
-</div><p>2、启停mysql</p>
+</div><h3 id="82-启停mysql">8.2 启停mysql</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -652,7 +660,7 @@ mysqld
 <span style="color:#0086b3">kill</span> -QUIT mysql_PID
 </code></pre></td></tr></table>
 </div>
-</div><p>3、启停redis</p>
+</div><h3 id="83-启停redis">8.3 启停redis</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -671,7 +679,7 @@ redis-cli
 <span style="color:#0086b3">kill</span> -QUIT redis_PID
 </code></pre></td></tr></table>
 </div>
-</div><p>4、启动nginx</p>
+</div><h3 id="84-启动nginx">8.4 启动nginx</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -686,8 +694,8 @@ nginx
 <span style="color:#0086b3">kill</span> -QUIT nginx_PID
 </code></pre></td></tr></table>
 </div>
-</div><p>5、启动mongodb
-需要配置好启动配置文件，否则可能提示无法创建db</p>
+</div><h3 id="85-启动mongodb">8.5 启动mongodb</h3>
+<p>需要配置好启动配置文件，否则可能提示无法创建db</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -747,7 +755,7 @@ mongodb
 
         <img class="mx-auto" alt="" src="/posts/termux/mongodb.png" />   
     </p>
-<h2 id="10基本功能完成还有很多进阶设置和玩法待开发和更新进来未完待续">10、基本功能完成，还有很多进阶设置和玩法待开发和更新进来(未完待续)</h2>
+<h2 id="9基本功能完成还有很多进阶设置和玩法待开发和更新进来未完待续">9、基本功能完成，还有很多进阶设置和玩法待开发和更新进来(未完待续)</h2>
 <p>未完待续，待补充进阶设置和玩法</p>
 
         </div>
@@ -929,7 +937,11 @@ mongodb
     
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/blog/">blog (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
     
@@ -945,9 +957,13 @@ mongodb
     
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
     
@@ -956,6 +972,8 @@ mongodb
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
     
@@ -967,19 +985,25 @@ mongodb
     
     <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/go/">go (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (21)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (22)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
     
@@ -989,9 +1013,11 @@ mongodb
     
     <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (14)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (16)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
     
@@ -1013,6 +1039,8 @@ mongodb
     
     <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
@@ -1021,7 +1049,7 @@ mongodb
     
     <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">python (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">python (6)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
     
@@ -1029,7 +1057,7 @@ mongodb
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/safe/">safe (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/safe/">safe (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">sdkman (1)</a></li>
     
@@ -1047,11 +1075,17 @@ mongodb
     
     <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">virus (4)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
     
@@ -1080,6 +1114,10 @@ mongodb
     
     <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
     
+    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    
     <a href="https://anTtutu.github.io/tags/blog/">blog</a>
     
     <a href="https://anTtutu.github.io/tags/bug/">bug</a>
@@ -1090,11 +1128,17 @@ mongodb
     
     <a href="https://anTtutu.github.io/tags/check/">check</a>
     
+    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    
     <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
     
     <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
     
     <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
     
     <a href="https://anTtutu.github.io/tags/explain/">explain</a>
     
@@ -1102,11 +1146,15 @@ mongodb
     
     <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
     
+    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    
     <a href="https://anTtutu.github.io/tags/go/">go</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">h2</a>
     
     <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
     
     <a href="https://anTtutu.github.io/tags/http/">http</a>
     
@@ -1116,11 +1164,15 @@ mongodb
     
     <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
     
+    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    
     <a href="https://anTtutu.github.io/tags/js/">js</a>
     
     <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
     
     <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
     
@@ -1138,6 +1190,8 @@ mongodb
     
     <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
     
+    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    
     <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
     
     <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
@@ -1147,6 +1201,8 @@ mongodb
     <a href="https://anTtutu.github.io/tags/rec/">rec</a>
     
     <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
     
     <a href="https://anTtutu.github.io/tags/shell/">shell</a>
     
@@ -1160,11 +1216,17 @@ mongodb
     
     <a href="https://anTtutu.github.io/tags/termux/">termux</a>
     
+    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    
     <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">virus</a>
     
+    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    
     <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
     
     <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
     
