@@ -141,23 +141,22 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1错误日志">1、错误日志</a></li>
+    <li><a href="#2检查代码和修改记录">2、检查代码和修改记录</a></li>
+    <li><a href="#3继续啃问题">3、继续啃问题</a></li>
+    <li><a href="#4抛弃baidu用google">4、抛弃baidu用google</a></li>
+    <li><a href="#5垃圾百度google有用">5、垃圾百度，google有用</a></li>
+    <li><a href="#6下载新update版本jdk">6、下载新update版本jdk</a></li>
+    <li><a href="#7附上错误信息截图">7、附上错误信息截图</a>
       <ul>
-        <li></li>
+        <li><a href="#openjdk的版本错误信息描述">OpenJDK的版本错误信息描述：</a></li>
+        <li><a href="#openjdk的错误样例">OpenJDK的错误样例：</a></li>
+        <li><a href="#业务日志中的错误信息">业务日志中的错误信息：</a></li>
+        <li><a href="#业务所在服务器的jdk版本和安装时间">业务所在服务器的JDK版本和安装时间：</a></li>
+        <li><a href="#ps">PS：</a></li>
       </ul>
     </li>
-    <li><a href="#一错误日志">一、错误日志</a></li>
-    <li><a href="#二检查代码和修改记录">二、检查代码和修改记录</a></li>
-    <li><a href="#三继续啃问题">三、继续啃问题</a></li>
-    <li><a href="#四抛弃baidu用google">四、抛弃baidu用google</a></li>
-    <li><a href="#五垃圾百度google有用">五、垃圾百度，google有用</a></li>
-    <li><a href="#六下载新update版本jdk">六、下载新update版本jdk</a></li>
-    <li><a href="#附上错误信息截图">附上错误信息截图：</a>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
-    <li><a href="#ps有一点是这个jdk跑了这个出bug的业务差不多1年了为啥这1年不出问题呢怀疑是header里的鉴权session字符串开始用完纯字母类型的出现带特殊字符的了从开始出现特殊字符就触发这个bug">PS：有一点是这个jdk跑了这个出bug的业务差不多1年了，为啥这1年不出问题呢？怀疑是header里的鉴权session字符串开始用完纯字母类型的，出现带特殊字符的了，从开始出现特殊字符就触发这个bug</a></li>
   </ul>
 </nav>
     </div>
@@ -220,44 +219,54 @@
         </div>
         
         <div class="post-content">
-            <h4 id="好好运行的系统突然故障无意间根据错误信息查找竟然是jdk的bug描述下曲折的定位过程">好好运行的系统，突然故障，无意间根据错误信息查找，竟然是jdk的bug，描述下曲折的定位过程。</h4>
-<h2 id="一错误日志">一、错误日志</h2>
-<p>有个老系统有使用到soap接口，采用CXF结合接口文件wsdl自动生成的接口开发的，突然在3月2日（后续日志定位才发现真正故障的时间）无法正常工作，但是实际发现时间已经到了3月6日了，直接查看日志文件，报错“组装saop报文头异常:Entity References are not allowed in SOAP documents”，想到看看是不是代码做了什么改动，进svn版本管理工具对比，没有改动，最近一次部署是在3月5日上午，3月2日周六突然就故障了，属于突发性异常，感觉可以排除自身的问题，然后去咨询服务端系统，对方说也没有任何改动，现在才接手，不可能进行新的开发。但是接口一直在日志中打印错误，对比svn提交记录，发现确实没人改动代码，难道是对方动了代码？抱着这种心态总觉得是服务端异常了。
+            <h2 id="前言">前言</h2>
+<p>好好运行的系统，突然故障，无意间根据错误信息查找，竟然是jdk的bug，描述下曲折的定位过程。</p>
+<h2 id="1错误日志">1、错误日志</h2>
+<p>有个老系统有使用到soap接口，采用CXF结合接口文件wsdl自动生成的接口开发的，突然在3月2日（后续日志定位才发现真正故障的时间）无法正常工作，但是实际发现时间已经到了3月6日了，直接查看日志文件，报错“组装saop报文头异常:Entity References are not allowed in SOAP documents”</p>
+<p>想到看看是不是代码做了什么改动，进svn版本管理工具对比，没有改动，最近一次部署是在3月5日上午，3月2日周六突然就故障了，属于突发性异常，感觉可以排除自身的问题，然后去咨询服务端系统，对方说也没有任何改动，现在才接手，不可能进行新的开发。</p>
+<p>但是接口一直在日志中打印错误，对比svn提交记录，发现确实没人改动代码，难道是对方动了代码？</p>
+<p>抱着这种心态总觉得是服务端异常了。
 
         <img class="mx-auto" alt="" src="/posts/jdkbug/error.jpg" />   
     </p>
-<h2 id="二检查代码和修改记录">二、检查代码和修改记录</h2>
-<p>有了这个排除自己代码改动造成异常的前提后，始终觉得是服务端异常了，然后通过抓包对比正常接口、异常接口，SoapUI发送，重现错误返回值等一系列对比，3月6、7日没有任何结果，唯一发现就是报错的接口没有soap请求没有head信息，只有UTF-8的字符集和body，这种结构就有些奇怪了，难道是鉴权账号被锁？继续用soapUI测试这个账号，其他接口跑起来正常，修改了一条数据返回是success，更加郁闷了，怎么可能head平白无故丢失呢？</p>
-<h2 id="三继续啃问题">三、继续啃问题</h2>
-<p>继续啃这个问题，因为有数据堵住了，慢慢积压越来越多，这样下去迟早会造成更大的失误。问题还是要继续解决，只好重新打包个测试包，去测试环境对接soap服务端，下个订单，查看日志和抓包，查看接口推送的请求，测试环境验证正常，说明代码OK，抓包查看xml报文，head和body都在。6、7日的对比把报错的信息复制到百度看看有没查询到类似的案例，结果都是乱七八糟的一堆东西，没什么价值。</p>
-<h2 id="四抛弃baidu用google">四、抛弃baidu用google</h2>
-<p>6、7号1天半没找到问题，但是又不可以继续拖了，试试google呗，一下眼前一亮，第一条查询就是openJDK的bug库，一直没怀疑jdk的bug，始终认为它是正常的，赶快找到jdk bug库，把关键字放进去一查询，查到结果有个bug单，心里一喜，终于找到问题原因了。啃了2天半了，终于找到问题的原因了：
-<a href="https://bugs.openjdk.java.net/browse/JDK-8196491">OpenJDK bug库</a> |
-<a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8196491">OracleJDK bug库</a> |
-<a href="https://stackoverflow.com/questions/48603942/latest-open-jdk-8-jaxb-library-fails-to-unmarshal-objects-with-properties-that-c">stackoverflow bug讨论</a></p>
-<h2 id="五垃圾百度google有用">五、垃圾百度，google有用</h2>
-<p>这里吐槽下，垃圾百度，以前还可以筛选一些有用的信息，这次白白浪费2天的时间，没有价值的信息一堆，就放弃网上找案例了。
-google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0版本的bug，2018年01月份暴露该bug，2018年04月份修复，修复版本是1.8.0.192。</p>
-<h2 id="六下载新update版本jdk">六、下载新update版本jdk</h2>
-<p>立马下载最新202 update版本，部署环境，重新，偶然没有出现相同的错了，然后一看时间，已经是3月8日21:30了，继续观察下，确认正常，问题得以修复。估算堵住的数据，预计还需要36小时才可以处理完，周末时间刚好。这下周末可以轻松下，不用跑来继续啃问题了。</p>
-<h2 id="附上错误信息截图">附上错误信息截图：</h2>
-<h4 id="openjdk的版本错误信息描述">OpenJDK的版本错误信息描述：</h4>
+<h2 id="2检查代码和修改记录">2、检查代码和修改记录</h2>
+<p>有了这个排除自己代码改动造成异常的前提后，始终觉得是服务端异常了，然后通过抓包对比正常接口、异常接口，SoapUI发送，重现错误返回值等一系列对比，3月6、7日没有任何结果，唯一发现就是报错的接口没有soap请求没有head信息，只有UTF-8的字符集和body，这种结构就有些奇怪了，难道是鉴权账号被锁？</p>
+<p>继续用soapUI测试这个账号，其他接口跑起来正常，修改了一条数据返回是success，更加郁闷了，怎么可能head平白无故丢失呢？</p>
+<h2 id="3继续啃问题">3、继续啃问题</h2>
+<p>继续啃这个问题，因为有数据堵住了，慢慢积压越来越多，这样下去迟早会造成更大的失误。</p>
+<p>问题还是要继续解决，只好重新打包个测试包，去测试环境对接soap服务端，下个订单，查看日志和抓包，查看接口推送的请求，测试环境验证正常，说明代码OK，抓包查看xml报文，head和body都在。</p>
+<p>6、7日的对比把报错的信息复制到百度看看有没查询到类似的案例，结果都是乱七八糟的一堆东西，没什么价值。</p>
+<h2 id="4抛弃baidu用google">4、抛弃baidu用google</h2>
+<p>6、7号1天半没找到问题，但是又不可以继续拖了，试试google呗，一下眼前一亮，第一条查询就是openJDK的bug库，一直没怀疑jdk的bug，始终认为它是正常的，赶快找到jdk bug库，把关键字放进去一查询，查到结果有个bug单，心里一喜，终于找到问题原因了。</p>
+<p>啃了2天半了，终于找到问题的原因了：<br>
+OpenJDK bug库: <a href="https://bugs.openjdk.java.net/browse/JDK-8196491">https://bugs.openjdk.java.net/browse/JDK-8196491</a><br>
+OracleJDK bug库: <a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8196491">https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8196491</a><br>
+stackoverflow bug讨论: <a href="https://stackoverflow.com/questions/48603942/latest-open-jdk-8-jaxb-library-fails-to-unmarshal-objects-with-properties-that-c">https://stackoverflow.com/questions/48603942/latest-open-jdk-8-jaxb-library-fails-to-unmarshal-objects-with-properties-that-c</a></p>
+<h2 id="5垃圾百度google有用">5、垃圾百度，google有用</h2>
+<p>这里吐槽下，垃圾百度，以前还可以筛选一些有用的信息，这次白白浪费2天的时间，没有价值的信息一堆，就放弃网上找案例了。</p>
+<p>google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0版本的bug，2018年01月份暴露该bug，2018年04月份修复，修复版本是1.8.0.192。</p>
+<h2 id="6下载新update版本jdk">6、下载新update版本jdk</h2>
+<p>立马下载最新202 update版本，部署环境，重新，偶然没有出现相同的错了，然后一看时间，已经是3月8日21:30了，继续观察下，确认正常，问题得以修复。</p>
+<p>估算堵住的数据，预计还需要36小时才可以处理完，周末时间刚好。这下周末可以轻松下，不用跑来继续啃问题了。</p>
+<h2 id="7附上错误信息截图">7、附上错误信息截图</h2>
+<h3 id="openjdk的版本错误信息描述">OpenJDK的版本错误信息描述：</h3>
 <p>
         <img class="mx-auto" alt="" src="/posts/jdkbug/jdkbug.jpg" />   
     </p>
-<h4 id="openjdk的错误样例">OpenJDK的错误样例：</h4>
+<h3 id="openjdk的错误样例">OpenJDK的错误样例：</h3>
 <p>
         <img class="mx-auto" alt="" src="/posts/jdkbug/bug2.jpg" />   
     </p>
-<h4 id="业务日志中的错误信息">业务日志中的错误信息：</h4>
+<h3 id="业务日志中的错误信息">业务日志中的错误信息：</h3>
 <p>
         <img class="mx-auto" alt="" src="/posts/jdkbug/buglog.jpg" />   
     </p>
-<h4 id="业务所在服务器的jdk版本和安装时间">业务所在服务器的JDK版本和安装时间：</h4>
+<h3 id="业务所在服务器的jdk版本和安装时间">业务所在服务器的JDK版本和安装时间：</h3>
 <p>
         <img class="mx-auto" alt="" src="/posts/jdkbug/log.jpg" />   
     </p>
-<h2 id="ps有一点是这个jdk跑了这个出bug的业务差不多1年了为啥这1年不出问题呢怀疑是header里的鉴权session字符串开始用完纯字母类型的出现带特殊字符的了从开始出现特殊字符就触发这个bug">PS：有一点是这个jdk跑了这个出bug的业务差不多1年了，为啥这1年不出问题呢？怀疑是header里的鉴权session字符串开始用完纯字母类型的，出现带特殊字符的了，从开始出现特殊字符就触发这个bug</h2>
+<h3 id="ps">PS：</h3>
+<p>有一点是这个jdk跑了这个出bug的业务差不多1年了，为啥这1年不出问题呢？怀疑是header里的鉴权session字符串开始用完纯字母类型的，出现带特殊字符的了，从开始出现特殊字符就触发这个bug</p>
 
         </div>
 
@@ -438,7 +447,11 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/blog/">blog (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
     
@@ -454,9 +467,13 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
     
@@ -465,6 +482,8 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
     
@@ -476,19 +495,25 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
     <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/go/">go (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (21)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (22)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
     
@@ -498,9 +523,11 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
     <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (14)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (16)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
     
@@ -522,6 +549,8 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
     <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
@@ -530,7 +559,7 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
     <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">python (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">python (6)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
     
@@ -538,7 +567,7 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/safe/">safe (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/safe/">safe (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">sdkman (1)</a></li>
     
@@ -556,11 +585,17 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
     <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">virus (4)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
     
@@ -589,6 +624,10 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
     <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
     
+    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    
     <a href="https://anTtutu.github.io/tags/blog/">blog</a>
     
     <a href="https://anTtutu.github.io/tags/bug/">bug</a>
@@ -599,11 +638,17 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
     <a href="https://anTtutu.github.io/tags/check/">check</a>
     
+    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    
     <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
     
     <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
     
     <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
     
     <a href="https://anTtutu.github.io/tags/explain/">explain</a>
     
@@ -611,11 +656,15 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
     <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
     
+    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    
     <a href="https://anTtutu.github.io/tags/go/">go</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">h2</a>
     
     <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
     
     <a href="https://anTtutu.github.io/tags/http/">http</a>
     
@@ -625,11 +674,15 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
     <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
     
+    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    
     <a href="https://anTtutu.github.io/tags/js/">js</a>
     
     <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
     
     <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
     
@@ -647,6 +700,8 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
     <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
     
+    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    
     <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
     
     <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
@@ -656,6 +711,8 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     <a href="https://anTtutu.github.io/tags/rec/">rec</a>
     
     <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
     
     <a href="https://anTtutu.github.io/tags/shell/">shell</a>
     
@@ -669,11 +726,17 @@ google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0�
     
     <a href="https://anTtutu.github.io/tags/termux/">termux</a>
     
+    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    
     <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">virus</a>
     
+    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    
     <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
     
     <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
     

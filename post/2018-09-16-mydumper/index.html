@@ -150,8 +150,8 @@
     </li>
     <li><a href="#2常用备份还原命令">2、常用备份、还原命令</a>
       <ul>
-        <li><a href="#导出备份">导出备份</a></li>
-        <li><a href="#导入恢复">导入恢复</a></li>
+        <li><a href="#21-备份">2.1 备份</a></li>
+        <li><a href="#22-恢复">2.2 恢复</a></li>
       </ul>
     </li>
     <li><a href="#3参数说明">3、参数说明</a>
@@ -205,6 +205,8 @@
             
             <span class="meta-category"><a href='/categories/mysql'>mysql</a></span>
             
+            <span class="meta-category"><a href='/categories/backup'>backup</a></span>
+            
         </div>
         
         
@@ -223,11 +225,11 @@
         <div class="post-content">
             <h2 id="前言">前言</h2>
 <p>Mydumper是一个针对MySQL和Drizzle的高性能多线程备份和恢复工具。开发人员主要来自MySQL,Facebook,SkySQL公司。性能比自带的mysqldump强劲<br>
-github:(<a href="https://github.com/mydumper/mydumper">https://github.com/mydumper/mydumper</a>)</p>
+github: <a href="https://github.com/mydumper/mydumper">https://github.com/mydumper/mydumper</a></p>
 <h2 id="1安装">1、安装</h2>
 <p>redhat、centos举例</p>
 <h3 id="11-安装依赖">1.1 安装依赖</h3>
-<h4 id="安装编译库">安装编译库</h4>
+<h4 id="111-安装编译库">1.1.1 安装编译库</h4>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -236,7 +238,7 @@ github:(<a href="https://github.com/mydumper/mydumper">https://github.com/mydump
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum install -y cmake gcc gcc-c++ git make
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="安装开发库">安装开发库</h4>
+</div><h4 id="112-安装开发库">1.1.2 安装开发库</h4>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -245,7 +247,7 @@ github:(<a href="https://github.com/mydumper/mydumper">https://github.com/mydump
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum install -y glib2-devel mysql-devel openssl-devel pcre-devel zlib-devel libzstd-devel
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="安装mysql开发版库">安装mysql开发版库</h4>
+</div><h4 id="113-安装mysql开发版库">1.1.3 安装mysql开发版库</h4>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -278,7 +280,7 @@ make install
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="2常用备份还原命令">2、常用备份、还原命令</h2>
-<h3 id="导出备份">导出备份</h3>
+<h3 id="21-备份">2.1 备份</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -287,7 +289,7 @@ make install
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mydumper -u root -p XXX -h localhost -B XXX -o /data/backup/20180916
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="导入恢复">导入恢复</h3>
+</div><h3 id="22-恢复">2.2 恢复</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -528,6 +530,8 @@ Finished dump at: 2021-06-10 17:23:25
                 
                 <li><a href='/tags/mysql'>mysql</a></li>
                 
+                <li><a href='/tags/backup'>backup</a></li>
+                
             </ul>
             
         </div>
@@ -665,7 +669,11 @@ Finished dump at: 2021-06-10 17:23:25
     
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/blog/">blog (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
     
@@ -681,9 +689,13 @@ Finished dump at: 2021-06-10 17:23:25
     
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
     
@@ -692,6 +704,8 @@ Finished dump at: 2021-06-10 17:23:25
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
     
@@ -703,19 +717,25 @@ Finished dump at: 2021-06-10 17:23:25
     
     <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/go/">go (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (21)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (22)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
     
@@ -725,9 +745,11 @@ Finished dump at: 2021-06-10 17:23:25
     
     <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (14)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (16)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
     
@@ -749,6 +771,8 @@ Finished dump at: 2021-06-10 17:23:25
     
     <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
@@ -757,7 +781,7 @@ Finished dump at: 2021-06-10 17:23:25
     
     <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">python (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">python (6)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
     
@@ -765,7 +789,7 @@ Finished dump at: 2021-06-10 17:23:25
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/safe/">safe (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/safe/">safe (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">sdkman (1)</a></li>
     
@@ -783,11 +807,17 @@ Finished dump at: 2021-06-10 17:23:25
     
     <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">virus (4)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
     
@@ -816,6 +846,10 @@ Finished dump at: 2021-06-10 17:23:25
     
     <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
     
+    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    
     <a href="https://anTtutu.github.io/tags/blog/">blog</a>
     
     <a href="https://anTtutu.github.io/tags/bug/">bug</a>
@@ -826,11 +860,17 @@ Finished dump at: 2021-06-10 17:23:25
     
     <a href="https://anTtutu.github.io/tags/check/">check</a>
     
+    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    
     <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
     
     <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
     
     <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
     
     <a href="https://anTtutu.github.io/tags/explain/">explain</a>
     
@@ -838,11 +878,15 @@ Finished dump at: 2021-06-10 17:23:25
     
     <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
     
+    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    
     <a href="https://anTtutu.github.io/tags/go/">go</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">h2</a>
     
     <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
     
     <a href="https://anTtutu.github.io/tags/http/">http</a>
     
@@ -852,11 +896,15 @@ Finished dump at: 2021-06-10 17:23:25
     
     <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
     
+    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    
     <a href="https://anTtutu.github.io/tags/js/">js</a>
     
     <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
     
     <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
     
@@ -874,6 +922,8 @@ Finished dump at: 2021-06-10 17:23:25
     
     <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
     
+    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    
     <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
     
     <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
@@ -883,6 +933,8 @@ Finished dump at: 2021-06-10 17:23:25
     <a href="https://anTtutu.github.io/tags/rec/">rec</a>
     
     <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
     
     <a href="https://anTtutu.github.io/tags/shell/">shell</a>
     
@@ -896,11 +948,17 @@ Finished dump at: 2021-06-10 17:23:25
     
     <a href="https://anTtutu.github.io/tags/termux/">termux</a>
     
+    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    
     <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">virus</a>
     
+    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    
     <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
     
     <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
     

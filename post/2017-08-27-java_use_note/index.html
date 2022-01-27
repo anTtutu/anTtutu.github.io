@@ -141,19 +141,20 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#1web项目远程调测---仅用于测试环境或者上线前的调测">1、web项目远程调测 - 仅用于测试环境或者上线前的调测</a>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1远程debug调测">1、远程debug调测</a>
       <ul>
-        <li></li>
+        <li><a href="#注意">注意：</a></li>
+        <li><a href="#11-关闭的问题">1.1 关闭的问题</a></li>
+        <li><a href="#12-eclipse">1.2 eclipse</a></li>
       </ul>
     </li>
-    <li><a href="#2生产环境的数据问题如何在本地开发环境重现">2、生产环境的数据问题如何在本地开发环境重现？</a>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
+    <li><a href="#2bug重现">2、bug重现</a></li>
     <li><a href="#3base64奇葩问题">3、base64奇葩问题</a>
       <ul>
-        <li></li>
+        <li><a href="#31-qq的sdk4j">3.1 QQ的Sdk4j</a></li>
+        <li><a href="#32-apache的commons-codec">3.2 Apache的commons-codec:</a></li>
+        <li><a href="#解决方案">解决方案</a></li>
       </ul>
     </li>
   </ul>
@@ -216,8 +217,12 @@
         </div>
         
         <div class="post-content">
-            <h2 id="1web项目远程调测---仅用于测试环境或者上线前的调测">1、web项目远程调测 - 仅用于测试环境或者上线前的调测</h2>
-<h4 id="注意仅限测试环境或者上线前的调测如果用于生产环境你的开发工具再debug模式起着的话会拦截所有的请求">注意：仅限测试环境或者上线前的调测，如果用于生产环境，你的开发工具再debug模式起着的话，会拦截所有的请求。</h4>
+            <h2 id="前言">前言</h2>
+<p>记录工作中碰到的一些 java 小日常积累</p>
+<h2 id="1远程debug调测">1、远程debug调测</h2>
+<p>web项目远程调测 - 仅用于测试环境或者上线前的调测</p>
+<h3 id="注意">注意：</h3>
+<p>仅限测试环境或者上线前的调测，如果用于生产环境，你的开发工具再debug模式起着的话，会拦截所有的请求。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -228,23 +233,35 @@
 <span style="color:#008080">CATALINA_OPTS</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5888&#34;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="添加了debug端口以后好像会出现shutdownsh-无法关闭tomcat需要手动kill">添加了debug端口以后好像会出现./shutdown.sh 无法关闭tomcat，需要手动kill</h4>
-<pre><code class="language-dos" data-lang="dos"># Windows下面修改catalina.bat，增加：  
-SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5888
-</code></pre><p>然后配置你的eclispe启动remote：新建remote java Application
+</div><h3 id="11-关闭的问题">1.1 关闭的问题</h3>
+<p>添加了debug端口以后好像会出现./shutdown.sh 无法关闭tomcat，需要手动kill</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bat" data-lang="bat"># Windows下面修改catalina.bat，增加：  
+<span style="color:#000;font-weight:bold">SET</span> <span style="color:#008080">CATALINA_OPTS</span>=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5888
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="12-eclipse">1.2 eclipse</h3>
+<p>然后配置你的eclispe启动remote：新建remote java Application
 
         <img class="mx-auto" alt="" src="/posts/debug/add-remote.jpg" />   
-    </p>
-<p>配置host和port：
+    
+配置host和port：
 
         <img class="mx-auto" alt="" src="/posts/debug/config.jpg" />   
-    </p>
-<p>然后就可以调测定位问题。</p>
-<h2 id="2生产环境的数据问题如何在本地开发环境重现">2、生产环境的数据问题如何在本地开发环境重现？</h2>
-<h4 id="这个问题碰不到还好碰到就头疼了我个人是把依赖的几个工程转成osgi的模式然后测试代码替换到spring的服务抓到生产的入参然后在测试代码中跟踪逻辑走向">这个问题碰不到还好，碰到就头疼了，我个人是把依赖的几个工程转成osgi的模式，然后测试代码，替换到spring的服务，抓到生产的入参，然后在测试代码中跟踪逻辑走向。</h4>
+    
+然后就可以调测定位问题。</p>
+<h2 id="2bug重现">2、bug重现</h2>
+<p>生产环境的数据问题如何在本地开发环境重现？</p>
+<p>这个问题碰不到还好，碰到就头疼了，我个人是把依赖的几个工程转成osgi的模式，然后测试代码，替换到spring的服务，抓到生产的入参，然后在测试代码中跟踪逻辑走向。</p>
+<p>这种是单项目可以，微服务就不行了。详细步骤后续待补充。</p>
 <h2 id="3base64奇葩问题">3、base64奇葩问题</h2>
-<h4 id="周五2017年6月10日晚碰到个诡异问题">周五（2017年6月10日晚）碰到个诡异问题：</h4>
-<h4 id="用maven引入commons-codec-110的包使用base64加密结果怎么都不对一直提示方法找不到如下面的报错">用maven引入commons-codec-1.10的包，使用base64加密，结果怎么都不对，一直提示方法找不到，如下面的报错</h4>
+<p>周五（2017年6月10日晚）碰到个诡异问题：<br>
+用maven引入commons-codec-1.10的包，使用base64加密，结果怎么都不对，一直提示方法找不到，如下面的报错</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -253,16 +270,18 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">lang</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">NoSuchMethodError</span><span style="color:#000;font-weight:bold">:</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">commons</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">codec</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">binary</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Base64</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">decodeBase64</span>
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="后来找了下发现qq的第三方登录sdk包重写了apache的base64而且包名都一样导致找不到对应的方法">后来找了下，发现QQ的第三方登录SDK包重写了apache的base64，而且包名都一样，导致找不到对应的方法，</h4>
-<h4 id="经打开两个包查看验证确实如此给自己做个记录以免再入坑">经打开两个包查看，验证确实如此，给自己做个记录，以免再入坑：</h4>
-<h4 id="qq的sdk4j">QQ的Sdk4j:</h4>
+</div><p>后来找了下，发现QQ的第三方登录SDK包重写了apache的base64，而且包名都一样，导致找不到对应的方法，<br>
+经打开两个包查看，验证确实如此，给自己做个记录，以免再入坑：</p>
+<h3 id="31-qq的sdk4j">3.1 QQ的Sdk4j</h3>
 <p>
         <img class="mx-auto" alt="" src="/posts/debug/tx.jpg" />   
     </p>
-<h4 id="apache的commons-codec">Apache的commons-codec:</h4>
+<h3 id="32-apache的commons-codec">3.2 Apache的commons-codec:</h3>
 <p>
         <img class="mx-auto" alt="" src="/posts/debug/apache.jpg" />   
     </p>
+<h3 id="解决方案">解决方案</h3>
+<p>只能继承 apache 的 base64了，成为自己的工具类，再用自己的工具类的 base64方法</p>
 
         </div>
 
@@ -288,11 +307,11 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
         
         <li><a href="/post/2017-06-04-jrebel/">eclipse之jrebel热部署插件</a></li>
         
+        <li><a href="/post/2017-05-22-log4j_config/">Log4j参数整理</a></li>
+        
         <li><a href="/post/2017-05-11-h2/">H2内存数据库</a></li>
         
         <li><a href="/post/2017-05-10-caeser/">利用网上的Caeser算法写了一个唯一id生成工具</a></li>
-        
-        <li><a href="/post/2017-05-09-java_captach/">Java高防OCR和机器人图形验证码</a></li>
         
     </ul>
 </div>
@@ -441,7 +460,11 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/blog/">blog (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
     
@@ -457,9 +480,13 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
     
@@ -468,6 +495,8 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
     
@@ -479,19 +508,25 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     
     <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/go/">go (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (21)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (22)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
     
@@ -501,9 +536,11 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     
     <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (14)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (16)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
     
@@ -525,6 +562,8 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     
     <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
@@ -533,7 +572,7 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     
     <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">python (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">python (6)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
     
@@ -541,7 +580,7 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/safe/">safe (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/safe/">safe (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">sdkman (1)</a></li>
     
@@ -559,11 +598,17 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     
     <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">virus (4)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
     
@@ -592,6 +637,10 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     
     <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
     
+    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    
     <a href="https://anTtutu.github.io/tags/blog/">blog</a>
     
     <a href="https://anTtutu.github.io/tags/bug/">bug</a>
@@ -602,11 +651,17 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     
     <a href="https://anTtutu.github.io/tags/check/">check</a>
     
+    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    
     <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
     
     <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
     
     <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
     
     <a href="https://anTtutu.github.io/tags/explain/">explain</a>
     
@@ -614,11 +669,15 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     
     <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
     
+    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    
     <a href="https://anTtutu.github.io/tags/go/">go</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">h2</a>
     
     <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
     
     <a href="https://anTtutu.github.io/tags/http/">http</a>
     
@@ -628,11 +687,15 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     
     <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
     
+    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    
     <a href="https://anTtutu.github.io/tags/js/">js</a>
     
     <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
     
     <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
     
@@ -650,6 +713,8 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     
     <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
     
+    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    
     <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
     
     <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
@@ -659,6 +724,8 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     <a href="https://anTtutu.github.io/tags/rec/">rec</a>
     
     <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
     
     <a href="https://anTtutu.github.io/tags/shell/">shell</a>
     
@@ -672,11 +739,17 @@ SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:trans
     
     <a href="https://anTtutu.github.io/tags/termux/">termux</a>
     
+    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    
     <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">virus</a>
     
+    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    
     <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
     
     <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
     

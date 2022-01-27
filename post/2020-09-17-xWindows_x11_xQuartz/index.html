@@ -141,17 +141,26 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#1前言">1、前言</a></li>
-    <li><a href="#2查询了下报错信息">2、查询了下报错信息</a></li>
-    <li><a href="#3xwindows介绍">3、Xwindows介绍</a></li>
-    <li><a href="#4在mac安装xquartz">4、在Mac安装XQuartz</a></li>
-    <li><a href="#5可能服务器上需要安装xauth可选参考验证后再决策">5、可能服务器上需要安装xauth(可选，参考验证后再决策)</a></li>
-    <li><a href="#6修改服务器上的配置">6、修改服务器上的配置</a></li>
-    <li><a href="#7在服务器上安装x11小工具可选步骤用于验证x11是否成功">7、在服务器上安装X11小工具（可选步骤，用于验证X11是否成功）</a></li>
-    <li><a href="#8在mac端连接服务器并启用x11转发功能">8、在Mac端连接服务器并启用X11转发功能</a></li>
-    <li><a href="#9测试运行x11验证小程序可选">9、测试运行X11验证小程序（可选）</a></li>
-    <li><a href="#10原理解析">10、原理解析</a></li>
-    <li><a href="#11结束语">11、结束语</a></li>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1查询了下报错信息">1、查询了下报错信息</a></li>
+    <li><a href="#2xwindows介绍">2、Xwindows介绍</a></li>
+    <li><a href="#3在mac安装xquartz">3、在Mac安装XQuartz</a></li>
+    <li><a href="#4可能服务器上需要安装xauth可选参考验证后再决策">4、可能服务器上需要安装xauth(可选，参考验证后再决策)</a>
+      <ul>
+        <li><a href="#41-如果没安装会提示">4.1 如果没安装会提示</a></li>
+        <li><a href="#42-安装命令">4.2 安装命令</a></li>
+      </ul>
+    </li>
+    <li><a href="#5修改服务器上的配置">5、修改服务器上的配置</a></li>
+    <li><a href="#6在服务器上安装x11小工具可选步骤用于验证x11是否成功">6、在服务器上安装X11小工具（可选步骤，用于验证X11是否成功）</a></li>
+    <li><a href="#7在mac端连接服务器并启用x11转发功能">7、在Mac端连接服务器并启用X11转发功能</a></li>
+    <li><a href="#8测试运行x11验证小程序可选">8、测试运行X11验证小程序（可选）</a></li>
+    <li><a href="#9原理解析">9、原理解析</a></li>
+    <li><a href="#10结束语">10、结束语</a>
+      <ul>
+        <li><a href="#注意">注意：</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
     </div>
@@ -214,7 +223,7 @@
         </div>
         
         <div class="post-content">
-            <h2 id="1前言">1、前言</h2>
+            <h2 id="前言">前言</h2>
 <p>2019年嫌公司发的E480定制16G太卡更换自己的MacBookPro2015后，一直也没碰到linux下的GUI程序，前阵子有程序jvm内存泄露，生成的dump文件有5G，用自己的mbp解析内存不足，就想到以前整理的IBM的dump分析工具jca458，然后盲目的试了试，修改了DISPLAY的ip，然后启动报错&hellip;</p>
 <p>看来windows下的X11脚本连接Xmanager行不通了，得另外想法子</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
@@ -267,20 +276,20 @@ java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080
         at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ibm</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">jinwoo</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">thread</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Analyzer</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">main</span><span style="color:#000;font-weight:bold">(</span>Analyzer<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>7029<span style="color:#000;font-weight:bold">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="2查询了下报错信息">2、查询了下报错信息</h2>
+</div><h2 id="1查询了下报错信息">1、查询了下报错信息</h2>
 <p>MacOS从v10.5附带了X11的升级版本XQuartz，但是从10.7后又不附带了，需要自己额外安装<br>
-苹果官网介绍X11：(<a href="https://support.apple.com/zh-cn/HT201341">https://support.apple.com/zh-cn/HT201341</a>)<br>
-XQuartz下载地址：(<a href="http://www.xquartz.org">www.xquartz.org</a>)</p>
-<h2 id="3xwindows介绍">3、Xwindows介绍</h2>
+苹果官网介绍X11：<a href="https://support.apple.com/zh-cn/HT201341">https://support.apple.com/zh-cn/HT201341</a><br>
+XQuartz下载地址：<a href="https://www.xquartz.org">https://www.xquartz.org</a></p>
+<h2 id="2xwindows介绍">2、Xwindows介绍</h2>
 <p>XWindow系统最初是由MIT在1984年开发的，目的是为了给Unix以及类Unix操作系统一个通用性强且硬件无关的GUI接口。</p>
 <p>目前常见的XWindow系统都是基于11版本进行改良的，所以统称为X11。</p>
 <p>目前像KDE、GNOME这些所谓的linux GUI其实就是Xwindows的一种。</p>
-<h2 id="4在mac安装xquartz">4、在Mac安装XQuartz</h2>
+<h2 id="3在mac安装xquartz">3、在Mac安装XQuartz</h2>
 <p>下载步骤2中的XQuartz,然后按照提示一路安装完成
 
         <img class="mx-auto" alt="" src="/posts/x11/xquartz.jpg" />   
     </p>
-<h2 id="5可能服务器上需要安装xauth可选参考验证后再决策">5、可能服务器上需要安装xauth(可选，参考验证后再决策)</h2>
+<h2 id="4可能服务器上需要安装xauth可选参考验证后再决策">4、可能服务器上需要安装xauth(可选，参考验证后再决策)</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -307,7 +316,7 @@ xorg-x11-xauth.x86_64 : X.Org X11 X authority utilities
   Name and summary matches only, use <span style="color:#d14">&#34;search all&#34;</span> <span style="color:#000;font-weight:bold">for</span> everything.
 </code></pre></td></tr></table>
 </div>
-</div><p>如果没安装会提示</p>
+</div><h3 id="41-如果没安装会提示">4.1 如果没安装会提示</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -330,7 +339,7 @@ Warning: No matches found <span style="color:#000;font-weight:bold">for</span>: 
 No Matches found
 </code></pre></td></tr></table>
 </div>
-</div><p>安装命令</p>
+</div><h3 id="42-安装命令">4.2 安装命令</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -339,7 +348,7 @@ No Matches found
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum install xauth
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="6修改服务器上的配置">6、修改服务器上的配置</h2>
+</div><h2 id="5修改服务器上的配置">5、修改服务器上的配置</h2>
 <p>打开服务器上的/etc/ssh/sshd_config</p>
 <p>然后将X11Forwarding以及X11UseLocalhost这两行修改为：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
@@ -361,7 +370,7 @@ X11UseLocalhost no
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">AddressFamily inet
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="7在服务器上安装x11小工具可选步骤用于验证x11是否成功">7、在服务器上安装X11小工具（可选步骤，用于验证X11是否成功）</h2>
+</div><h2 id="6在服务器上安装x11小工具可选步骤用于验证x11是否成功">6、在服务器上安装X11小工具（可选步骤，用于验证X11是否成功）</h2>
 <p>这步是为了验证X11是否配置成功并生效
 在服务器上执行</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
@@ -372,8 +381,8 @@ X11UseLocalhost no
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum install xorg-x11-apps
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="8在mac端连接服务器并启用x11转发功能">8、在Mac端连接服务器并启用X11转发功能</h2>
-<p>打开步骤4安装完成的XQuartz，然后选择XQuartz菜单的『应用程序』 - 『终端』
+</div><h2 id="7在mac端连接服务器并启用x11转发功能">7、在Mac端连接服务器并启用X11转发功能</h2>
+<p>打开步骤3安装完成的XQuartz，然后选择XQuartz菜单的『应用程序』 - 『终端』
 
         <img class="mx-auto" alt="" src="/posts/x11/run.jpg" />   
     </p>
@@ -395,8 +404,8 @@ X11UseLocalhost no
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">X11 forwarding request failed on channel <span style="color:#099">0</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="9测试运行x11验证小程序可选">9、测试运行X11验证小程序（可选）</h2>
-<p>步骤7中测试X11小程序派上用场了，虽然是可选步骤，为了保险，还是可以安装下一步一步测试</p>
+</div><h2 id="8测试运行x11验证小程序可选">8、测试运行X11验证小程序（可选）</h2>
+<p>步骤6中测试X11小程序派上用场了，虽然是可选步骤，为了保险，还是可以安装下一步一步测试</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -413,7 +422,7 @@ xclock
     
         <img class="mx-auto" alt="" src="/posts/x11/clock.jpg" />   
     </p>
-<h2 id="10原理解析">10、原理解析</h2>
+<h2 id="9原理解析">9、原理解析</h2>
 <p>当ssh连接简历完成并成功开启X11转发后，服务器默认会监听127.0.0.1(localhost)的6010端口</p>
 <p>可以在服务器上查看DISPLAY环境变量</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
@@ -433,13 +442,13 @@ localhost：表示X服务器的地址。
 0：表示在X服务器上的第0个显示器上输出。
 </code></pre><p>再继续在服务器上打开X应用，X应用就会和localhost:6010建立连接，然后服务器就会和客户端（Mac）建立起一条ssh隧道，对接客户端上的X服务器，从而实现服务器的X程序在客户端上显示的目的。</p>
 <p>而Mac上的XQuartz可以看成是一个带窗口管理功能的X服务器。</p>
-<h2 id="11结束语">11、结束语</h2>
+<h2 id="10结束语">10、结束语</h2>
 <p>最后自己需要的IBM jca分析工具也启动成功了。类似的linux GUI工具还有很多，如：Oracle家的linux安装软件，linux下的Wireshark，赛门铁克家的VCS等
 
         <img class="mx-auto" alt="" src="/posts/x11/jca.jpg" />   
     </p>
-<p>注意：<br>
-X11转发对网络传输要求较高，建议在服务器与客户端之间网络稳定的情况下使用，否则网络不畅可能出现窗口卡顿或显示不全的情况<br>
+<h3 id="注意">注意：</h3>
+<p>X11转发对网络传输要求较高，建议在服务器与客户端之间网络稳定的情况下使用，否则网络不畅可能出现窗口卡顿或显示不全的情况<br>
 一旦ssh掉线或者关闭XQuartz终端窗口，那么所有的X11应用也将被强制退出</p>
 
         </div>
@@ -621,7 +630,11 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/blog/">blog (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
     
@@ -637,9 +650,13 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
     
@@ -648,6 +665,8 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
     
@@ -659,19 +678,25 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     
     <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/go/">go (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (21)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (22)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
     
@@ -681,9 +706,11 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     
     <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (14)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (16)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
     
@@ -705,6 +732,8 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     
     <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
@@ -713,7 +742,7 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     
     <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">python (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">python (6)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
     
@@ -721,7 +750,7 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/safe/">safe (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/safe/">safe (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">sdkman (1)</a></li>
     
@@ -739,11 +768,17 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     
     <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">virus (4)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
     
@@ -772,6 +807,10 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     
     <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
     
+    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    
     <a href="https://anTtutu.github.io/tags/blog/">blog</a>
     
     <a href="https://anTtutu.github.io/tags/bug/">bug</a>
@@ -782,11 +821,17 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     
     <a href="https://anTtutu.github.io/tags/check/">check</a>
     
+    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    
     <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
     
     <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
     
     <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
     
     <a href="https://anTtutu.github.io/tags/explain/">explain</a>
     
@@ -794,11 +839,15 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     
     <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
     
+    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    
     <a href="https://anTtutu.github.io/tags/go/">go</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">h2</a>
     
     <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
     
     <a href="https://anTtutu.github.io/tags/http/">http</a>
     
@@ -808,11 +857,15 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     
     <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
     
+    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    
     <a href="https://anTtutu.github.io/tags/js/">js</a>
     
     <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
     
     <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
     
@@ -830,6 +883,8 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     
     <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
     
+    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    
     <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
     
     <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
@@ -839,6 +894,8 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     <a href="https://anTtutu.github.io/tags/rec/">rec</a>
     
     <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
     
     <a href="https://anTtutu.github.io/tags/shell/">shell</a>
     
@@ -852,11 +909,17 @@ X11转发对网络传输要求较高，建议在服务器与客户端之间网�
     
     <a href="https://anTtutu.github.io/tags/termux/">termux</a>
     
+    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    
     <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">virus</a>
     
+    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    
     <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
     
     <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
     

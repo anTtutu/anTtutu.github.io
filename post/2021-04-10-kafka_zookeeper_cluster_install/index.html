@@ -141,42 +141,48 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#1前言">1、前言</a></li>
-    <li><a href="#2准备工作">2、准备工作</a></li>
-    <li><a href="#3下载zk">3、下载zk</a></li>
-    <li><a href="#4下载kafka">4、下载kafka</a></li>
-    <li><a href="#5安装jdk">5、安装jdk</a>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1准备工作">1、准备工作</a>
       <ul>
-        <li><a href="#51-安装openjdk">5.1 安装openjdk</a></li>
-        <li><a href="#52-安装oracle-jdk">5.2 安装Oracle jdk</a></li>
-        <li><a href="#53-配置环境变量">5.3 配置环境变量</a></li>
-        <li><a href="#54-测试环境变量">5.4 测试环境变量</a></li>
+        <li><a href="#11-环境准备">1.1 环境准备</a></li>
+        <li><a href="#12-服务器">1.2 服务器</a></li>
+        <li><a href="#13-目录规划">1.3 目录规划</a></li>
       </ul>
     </li>
-    <li><a href="#6安装zk集群">6、安装zk集群</a>
+    <li><a href="#2下载zk">2、下载zk</a></li>
+    <li><a href="#3下载kafka">3、下载kafka</a></li>
+    <li><a href="#4安装jdk">4、安装jdk</a>
       <ul>
-        <li><a href="#61配置参数">6.1、配置参数</a></li>
-        <li><a href="#62启动zk集群">6.2、启动zk集群</a></li>
-        <li><a href="#62测试zk集群状态">6.2、测试zk集群状态</a></li>
+        <li><a href="#41-安装openjdk">4.1 安装openjdk</a></li>
+        <li><a href="#42-安装oracle-jdk">4.2 安装Oracle jdk</a></li>
+        <li><a href="#43-配置环境变量">4.3 配置环境变量</a></li>
+        <li><a href="#44-测试环境变量">4.4 测试环境变量</a></li>
       </ul>
     </li>
-    <li><a href="#7安装kafka集群">7、安装kafka集群</a>
+    <li><a href="#5安装zk集群">5、安装zk集群</a>
       <ul>
-        <li><a href="#71配置参数">7.1、配置参数</a></li>
-        <li><a href="#72启动kafka集群">7.2、启动kafka集群</a></li>
+        <li><a href="#51-配置参数">5.1 配置参数</a></li>
+        <li><a href="#52-启动zk集群">5.2 启动zk集群</a></li>
+        <li><a href="#54-测试zk集群状态">5.4 测试zk集群状态</a></li>
       </ul>
     </li>
-    <li><a href="#8检测kafka工作情况">8、检测kafka工作情况</a>
+    <li><a href="#6安装kafka集群">6、安装kafka集群</a>
       <ul>
-        <li><a href="#81创建topic">8.1、创建topic</a></li>
-        <li><a href="#82查询创建的topic">8.2、查询创建的topic</a></li>
-        <li><a href="#84测试生产端">8.4、测试生产端</a></li>
-        <li><a href="#85测试消费端">8.5、测试消费端</a></li>
-        <li><a href="#86发送测试数据">8.6、发送测试数据</a></li>
-        <li><a href="#87监控topic">8.7、监控topic</a></li>
+        <li><a href="#61-配置参数">6.1 配置参数</a></li>
+        <li><a href="#62-启动kafka集群">6.2 启动kafka集群</a></li>
       </ul>
     </li>
-    <li><a href="#9性能测试结果">9、性能测试结果</a></li>
+    <li><a href="#7检测kafka工作情况">7、检测kafka工作情况</a>
+      <ul>
+        <li><a href="#71-创建topic">7.1 创建topic</a></li>
+        <li><a href="#72-查询创建的topic">7.2 查询创建的topic</a></li>
+        <li><a href="#73-测试生产端">7.3 测试生产端</a></li>
+        <li><a href="#74-测试消费端">7.4 测试消费端</a></li>
+        <li><a href="#75-发送测试数据">7.5 发送测试数据</a></li>
+        <li><a href="#76-监控topic">7.6 监控topic</a></li>
+      </ul>
+    </li>
+    <li><a href="#8性能测试结果">8、性能测试结果</a></li>
   </ul>
 </nav>
     </div>
@@ -243,37 +249,112 @@
         </div>
         
         <div class="post-content">
-            <h2 id="1前言">1、前言</h2>
+            <h2 id="前言">前言</h2>
 <p>一台应用的第三方服务器的kafka只有3个分区，测试一直存在积压的消息，搭建了一套最简单集群测试下，记录中间的参数。</p>
-<h2 id="2准备工作">2、准备工作</h2>
-<p>环境准备
-环境|版本|说明
--|-|-
-centos|7.0|操作系统服务器，3台
-JDK|1.8.261|安装好jdk并设置好环境变量
-zookeeper|3.4.9|zk官方安装包
-kafka|2.2.0_2.12|kafka官方安装包</p>
-<p>服务器
-IP|端口|说明
--|-|-
-192.168.211.125|zk:2181<br>zk heartbeat:2888、3888<br>kafka:9092|zk默认端口<br>zk心跳默认端口<br>kafka默认监听端口
-192.168.211.126|zk:2181<br>zk heartbeat:2888、3888<br>kafka:9092|zk默认端口<br>zk心跳默认端口<br>kafka默认监听端口
-192.168.211.127|zk:2181<br>zk heartbeat:2888、3888<br>kafka:9092|zk默认端口<br>zk心跳默认端口<br>kafka默认监听端口</p>
-<p>目录规划
-中间件|安装目录|数据目录|日志目录|说明
--|-|-|-|-
-jdk|/home/jdk_version|-|-|Oracle jdk是直接tgz解压的，只需要安装目录<br>openjdk不需要这个目录规划
-zk|/home/zookeeper_version|/opt/data/zookeeper|/opt/data/zookeeper/zkdata<br>/opt/data/zookeeper/zklogs|zkdata是zk的数据目录，zklogs是日志目录
-kafka|/home/kafaka_version|/opt/data/kafka|/opt/data/kafka/kafka_logs|kafka_logs是日志目录</p>
-<h2 id="3下载zk">3、下载zk</h2>
-<p>官网：https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/<br>
-下载地址：https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/zookeeper-3.4.9.tar.gz</p>
-<h2 id="4下载kafka">4、下载kafka</h2>
-<p>官网：http://kafka.apache.org/<br>
-下载地址：https://archive.apache.org/dist/kafka/2.2.0/kafka_2.12-2.2.0.tgz</p>
-<h2 id="5安装jdk">5、安装jdk</h2>
+<h2 id="1准备工作">1、准备工作</h2>
+<h3 id="11-环境准备">1.1 环境准备</h3>
+<table>
+<thead>
+<tr>
+<th>环境</th>
+<th>版本</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>centos</td>
+<td>7.0</td>
+<td>操作系统服务器，3台</td>
+</tr>
+<tr>
+<td>JDK</td>
+<td>1.8.261</td>
+<td>安装好jdk并设置好环境变量</td>
+</tr>
+<tr>
+<td>zookeeper</td>
+<td>3.4.9</td>
+<td>zk官方安装包</td>
+</tr>
+<tr>
+<td>kafka</td>
+<td>2.2.0_2.12</td>
+<td>kafka官方安装包</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-服务器">1.2 服务器</h3>
+<table>
+<thead>
+<tr>
+<th>IP</th>
+<th>端口</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>192.168.211.125</td>
+<td>zk:2181<br>zk heartbeat:2888、3888<br>kafka:9092</td>
+<td>zk默认端口<br>zk心跳默认端口<br>kafka默认监听端口</td>
+</tr>
+<tr>
+<td>192.168.211.126</td>
+<td>zk:2181<br>zk heartbeat:2888、3888<br>kafka:9092</td>
+<td>zk默认端口<br>zk心跳默认端口<br>kafka默认监听端口</td>
+</tr>
+<tr>
+<td>192.168.211.127</td>
+<td>zk:2181<br>zk heartbeat:2888、3888<br>kafka:9092</td>
+<td>zk默认端口<br>zk心跳默认端口<br>kafka默认监听端口</td>
+</tr>
+</tbody>
+</table>
+<h3 id="13-目录规划">1.3 目录规划</h3>
+<table>
+<thead>
+<tr>
+<th>中间件</th>
+<th>安装目录</th>
+<th>数据目录</th>
+<th>日志目录</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jdk</td>
+<td>/home/jdk_version</td>
+<td>-</td>
+<td>-</td>
+<td>Oracle jdk是直接tgz解压的，只需要安装目录<br>openjdk不需要这个目录规划</td>
+</tr>
+<tr>
+<td>zk</td>
+<td>/home/zookeeper_version</td>
+<td>/opt/data/zookeeper</td>
+<td>/opt/data/zookeeper/zkdata<br>/opt/data/zookeeper/zklogs</td>
+<td>zkdata是zk的数据目录，zklogs是日志目录</td>
+</tr>
+<tr>
+<td>kafka</td>
+<td>/home/kafaka_version</td>
+<td>/opt/data/kafka</td>
+<td>/opt/data/kafka/kafka_logs</td>
+<td>kafka_logs是日志目录</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2下载zk">2、下载zk</h2>
+<p>官网：<a href="https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/">https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/</a><br>
+下载地址：<a href="https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/zookeeper-3.4.9.tar.gz">https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/zookeeper-3.4.9.tar.gz</a></p>
+<h2 id="3下载kafka">3、下载kafka</h2>
+<p>官网：<a href="http://kafka.apache.org/">http://kafka.apache.org/</a><br>
+下载地址：<a href="https://archive.apache.org/dist/kafka/2.2.0/kafka_2.12-2.2.0.tgz">https://archive.apache.org/dist/kafka/2.2.0/kafka_2.12-2.2.0.tgz</a></p>
+<h2 id="4安装jdk">4、安装jdk</h2>
 <p>这些作为java开发来说，很简单，只是简单记录下步骤，不做过多解释</p>
-<h3 id="51-安装openjdk">5.1 安装openjdk</h3>
+<h3 id="41-安装openjdk">4.1 安装openjdk</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -282,16 +363,9 @@ kafka|/home/kafaka_version|/opt/data/kafka|/opt/data/kafka/kafka_logs|kafka_logs
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum install java-1.8.0-openjdk
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="52-安装oracle-jdk">5.2 安装Oracle jdk</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bat" data-lang="bat">https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="53-配置环境变量">5.3 配置环境变量</h3>
+</div><h3 id="42-安装oracle-jdk">4.2 安装Oracle jdk</h3>
+<p>Oracle jdk下载地址： <a href="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html">https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html</a></p>
+<h3 id="43-配置环境变量">4.3 配置环境变量</h3>
 <p>新增JAVA_HOME、JRE_HOME并设置到PATH</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -305,7 +379,7 @@ kafka|/home/kafaka_version|/opt/data/kafka|/opt/data/kafka/kafka_logs|kafka_logs
 <span style="color:#008080">PATH</span><span style="color:#000;font-weight:bold">=</span><span style="color:#008080">$PATH</span>:<span style="color:#008080">$HOME</span>/bin:<span style="color:#008080">$JAVA_HOME</span>/bin
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="54-测试环境变量">5.4 测试环境变量</h3>
+</div><h3 id="44-测试环境变量">4.4 测试环境变量</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -322,7 +396,7 @@ Java<span style="color:#000;font-weight:bold">(</span>TM<span style="color:#000;
 Java HotSpot<span style="color:#000;font-weight:bold">(</span>TM<span style="color:#000;font-weight:bold">)</span> 64-Bit Server VM <span style="color:#000;font-weight:bold">(</span>build 25.281-b09, mixed mode<span style="color:#000;font-weight:bold">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="6安装zk集群">6、安装zk集群</h2>
+</div><h2 id="5安装zk集群">5、安装zk集群</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -331,7 +405,7 @@ Java HotSpot<span style="color:#000;font-weight:bold">(</span>TM<span style="col
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tar -zvxf zookeeper-3.4.9.tar.gz
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="61配置参数">6.1、配置参数</h3>
+</div><h3 id="51-配置参数">5.1 配置参数</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -385,7 +459,7 @@ touch /opt/data/zookeeper/zkdata/myid
 </code></pre></td></tr></table>
 </div>
 </div><p>注：没单独说明的3台都重复一样的安装步骤，只myid注意id值3台不一样</p>
-<h3 id="62启动zk集群">6.2、启动zk集群</h3>
+<h3 id="52-启动zk集群">5.2 启动zk集群</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -396,7 +470,7 @@ touch /opt/data/zookeeper/zkdata/myid
 ./zkServer.sh start
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="62测试zk集群状态">6.2、测试zk集群状态</h3>
+</div><h3 id="54-测试zk集群状态">5.4 测试zk集群状态</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -443,7 +517,7 @@ mode|说明
 leader|主节点
 follower|从节点
 standalone|单机</p>
-<h2 id="7安装kafka集群">7、安装kafka集群</h2>
+<h2 id="6安装kafka集群">6、安装kafka集群</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -452,7 +526,7 @@ standalone|单机</p>
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tar -zvxf kafka_2.12-2.2.0.tgz 
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="71配置参数">7.1、配置参数</h3>
+</div><h3 id="61-配置参数">6.1 配置参数</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -510,7 +584,7 @@ mkdir -p /opt/data/kafka/kafka_logs
 </code></pre></td></tr></table>
 </div>
 </div><p>注：没单独说明的3台都重复一样的安装步骤，只注意broker.id需要不一样、listeners和advertised.listeners本机的监听ip不一样</p>
-<h3 id="72启动kafka集群">7.2、启动kafka集群</h3>
+<h3 id="62-启动kafka集群">6.2 启动kafka集群</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -521,9 +595,9 @@ mkdir -p /opt/data/kafka/kafka_logs
 nohup ./kafka-server-start.sh /home/kafka_2.12-2.2.0/config/server.properties &amp;
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="8检测kafka工作情况">8、检测kafka工作情况</h2>
+</div><h2 id="7检测kafka工作情况">7、检测kafka工作情况</h2>
 <p>前面的集群都搭建好了，开始进行kafka的工作校验了</p>
-<h3 id="81创建topic">8.1、创建topic</h3>
+<h3 id="71-创建topic">7.1 创建topic</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -532,7 +606,7 @@ nohup ./kafka-server-start.sh /home/kafka_2.12-2.2.0/config/server.properties &a
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./kafka-topics.sh --zookeeper 192.168.211.125:2181,192.168.211.126:2181,192.168.211.127:2181 --create --replication-factor <span style="color:#099">1</span> --partitions <span style="color:#099">1</span> --topic <span style="color:#0086b3">test</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="82查询创建的topic">8.2、查询创建的topic</h3>
+</div><h3 id="72-查询创建的topic">7.2 查询创建的topic</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -547,7 +621,7 @@ __consumer_offsets
 <span style="color:#0086b3">test</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="84测试生产端">8.4、测试生产端</h3>
+</div><h3 id="73-测试生产端">7.3 测试生产端</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -556,7 +630,7 @@ __consumer_offsets
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./kafka-console-producer.sh --broker-list 192.168.211.127:9092 --topic <span style="color:#0086b3">test</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="85测试消费端">8.5、测试消费端</h3>
+</div><h3 id="74-测试消费端">7.4 测试消费端</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -569,7 +643,7 @@ __consumer_offsets
 ./kafka-console-consumer.sh --bootstrap-server 192.168.211.125:9092 --topic <span style="color:#0086b3">test</span> --from-beginning
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="86发送测试数据">8.6、发送测试数据</h3>
+</div><h3 id="75-发送测试数据">7.5 发送测试数据</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -611,7 +685,7 @@ __consumer_offsets
 
         <img class="mx-auto" alt="" src="/posts/kafka/consumer_126.png" />   
     </p>
-<h3 id="87监控topic">8.7、监控topic</h3>
+<h3 id="76-监控topic">7.6 监控topic</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -620,7 +694,7 @@ __consumer_offsets
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./kafka-topics.sh --zookeeper 192.168.211.125:2181,192.168.211.126:2181,192.168.211.127:2181 --describe --topic <span style="color:#0086b3">test</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="9性能测试结果">9、性能测试结果</h2>
+</div><h2 id="8性能测试结果">8、性能测试结果</h2>
 <p>性能测试结果等后续整理补充&hellip;</p>
 
         </div>
@@ -806,7 +880,11 @@ __consumer_offsets
     
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/blog/">blog (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
     
@@ -822,9 +900,13 @@ __consumer_offsets
     
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
     
@@ -833,6 +915,8 @@ __consumer_offsets
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
     
@@ -844,19 +928,25 @@ __consumer_offsets
     
     <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/go/">go (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (21)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (22)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
     
@@ -866,9 +956,11 @@ __consumer_offsets
     
     <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (14)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (16)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
     
@@ -890,6 +982,8 @@ __consumer_offsets
     
     <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
@@ -898,7 +992,7 @@ __consumer_offsets
     
     <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">python (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">python (6)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
     
@@ -906,7 +1000,7 @@ __consumer_offsets
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/safe/">safe (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/safe/">safe (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">sdkman (1)</a></li>
     
@@ -924,11 +1018,17 @@ __consumer_offsets
     
     <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">virus (4)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
     
@@ -957,6 +1057,10 @@ __consumer_offsets
     
     <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
     
+    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    
     <a href="https://anTtutu.github.io/tags/blog/">blog</a>
     
     <a href="https://anTtutu.github.io/tags/bug/">bug</a>
@@ -967,11 +1071,17 @@ __consumer_offsets
     
     <a href="https://anTtutu.github.io/tags/check/">check</a>
     
+    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    
     <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
     
     <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
     
     <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
     
     <a href="https://anTtutu.github.io/tags/explain/">explain</a>
     
@@ -979,11 +1089,15 @@ __consumer_offsets
     
     <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
     
+    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    
     <a href="https://anTtutu.github.io/tags/go/">go</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">h2</a>
     
     <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
     
     <a href="https://anTtutu.github.io/tags/http/">http</a>
     
@@ -993,11 +1107,15 @@ __consumer_offsets
     
     <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
     
+    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    
     <a href="https://anTtutu.github.io/tags/js/">js</a>
     
     <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
     
     <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
     
@@ -1015,6 +1133,8 @@ __consumer_offsets
     
     <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
     
+    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    
     <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
     
     <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
@@ -1024,6 +1144,8 @@ __consumer_offsets
     <a href="https://anTtutu.github.io/tags/rec/">rec</a>
     
     <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
     
     <a href="https://anTtutu.github.io/tags/shell/">shell</a>
     
@@ -1037,11 +1159,17 @@ __consumer_offsets
     
     <a href="https://anTtutu.github.io/tags/termux/">termux</a>
     
+    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    
     <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">virus</a>
     
+    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    
     <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
     
     <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
     

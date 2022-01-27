@@ -13,10 +13,10 @@
     <meta property="og:title" content="VCS第六波-磁阵管理LVM和VxVM2-VxVM - Anttu&#39;s Blog">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2017-05-21T21:46:20&#43;08:00'>
+    <meta property="article:published_time" content='2017-05-21T21:46:21&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2017-05-21T21:46:20&#43;08:00'>
+    <meta property="article:modified_time" content='2017-05-21T21:46:21&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
     <meta name="description" content="磁阵管理LVM和VxVM">
@@ -141,36 +141,32 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li></li>
-        <li><a href="#1-初始化磁盘命令">1 初始化磁盘命令</a></li>
-        <li><a href="#2-查看卷组">2 查看卷组</a></li>
-        <li><a href="#3-查看已激活卷组">3 查看已激活卷组</a></li>
-        <li><a href="#4-创建卷组">4 创建卷组</a></li>
-        <li><a href="#5-删除卷组">5 删除卷组</a></li>
-        <li><a href="#6-创建逻辑卷">6 创建逻辑卷</a></li>
-        <li><a href="#7-删除逻辑卷">7 删除逻辑卷</a></li>
-        <li><a href="#8-导出卷组">8 导出卷组</a></li>
-        <li><a href="#9-导入卷组">9 导入卷组</a></li>
-        <li><a href="#10-激活逻辑卷">10 激活逻辑卷</a></li>
-        <li><a href="#11-去激活逻辑卷">11 去激活逻辑卷</a></li>
-        <li><a href="#12-查看卷组剩余空间">12 查看卷组剩余空间</a></li>
-        <li><a href="#13-扩大卷组空间命令">13 扩大卷组空间命令</a></li>
-        <li><a href="#14-扩大逻辑卷">14 扩大逻辑卷</a></li>
-        <li><a href="#15-缩小逻辑卷">15 缩小逻辑卷</a></li>
-        <li><a href="#16-重命名卷组">16 重命名卷组</a></li>
-        <li><a href="#17-重命名逻辑卷">17 重命名逻辑卷</a></li>
-        <li><a href="#18-创建文件系统">18 创建文件系统</a></li>
-        <li><a href="#19-挂载文件系统">19 挂载文件系统</a></li>
-        <li><a href="#20-去挂载文件系统">20 去挂载文件系统</a></li>
-        <li><a href="#21-查看逻辑卷属性">21 查看逻辑卷属性</a></li>
-        <li><a href="#22-动态扩展缩小文件系统空间">22 动态扩展/缩小文件系统空间</a></li>
-        <li><a href="#23-动态扩展缩小文件系统空间">23 动态扩展/缩小文件系统空间</a></li>
-        <li><a href="#24-从主机组去掉lun映射后需要执行以下命令">24 从主机组去掉LUN映射后，需要执行以下命令</a></li>
-        <li><a href="#25-清除裸设备上的内容可以用dd命令">25 清除裸设备上的内容可以用dd命令</a></li>
-      </ul>
-    </li>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1初始化磁盘命令">1、初始化磁盘命令</a></li>
+    <li><a href="#2查看卷组">2、查看卷组</a></li>
+    <li><a href="#3查看已激活卷组">3、查看已激活卷组</a></li>
+    <li><a href="#4创建卷组">4、创建卷组</a></li>
+    <li><a href="#5删除卷组">5、删除卷组</a></li>
+    <li><a href="#6创建逻辑卷">6、创建逻辑卷</a></li>
+    <li><a href="#7删除逻辑卷">7、删除逻辑卷</a></li>
+    <li><a href="#8导出卷组">8、导出卷组</a></li>
+    <li><a href="#9导入卷组">9、导入卷组</a></li>
+    <li><a href="#10激活逻辑卷">10、激活逻辑卷</a></li>
+    <li><a href="#11去激活逻辑卷">11、去激活逻辑卷</a></li>
+    <li><a href="#12查看卷组剩余空间">12、查看卷组剩余空间</a></li>
+    <li><a href="#13扩大卷组空间命令">13、扩大卷组空间命令</a></li>
+    <li><a href="#14扩大逻辑卷">14、扩大逻辑卷</a></li>
+    <li><a href="#15缩小逻辑卷">15、缩小逻辑卷</a></li>
+    <li><a href="#16重命名卷组">16、重命名卷组</a></li>
+    <li><a href="#17重命名逻辑卷">17、重命名逻辑卷</a></li>
+    <li><a href="#18创建文件系统">18、创建文件系统</a></li>
+    <li><a href="#19挂载文件系统">19、挂载文件系统</a></li>
+    <li><a href="#20去挂载文件系统">20、去挂载文件系统</a></li>
+    <li><a href="#21查看逻辑卷属性">21、查看逻辑卷属性</a></li>
+    <li><a href="#22动态扩展缩小文件系统空间">22、动态扩展/缩小文件系统空间</a></li>
+    <li><a href="#23动态扩展缩小文件系统空间">23、动态扩展/缩小文件系统空间</a></li>
+    <li><a href="#24从主机组去掉lun映射后需要执行以下命令">24、从主机组去掉LUN映射后，需要执行以下命令</a></li>
+    <li><a href="#25清除裸设备上的内容可以用dd命令">25、清除裸设备上的内容可以用dd命令</a></li>
   </ul>
 </nav>
     </div>
@@ -215,6 +211,8 @@
             
             <span class="meta-category"><a href='/categories/vcs'>vcs</a></span>
             
+            <span class="meta-category"><a href='/categories/vxvm'>vxvm</a></span>
+            
         </div>
         
         
@@ -231,22 +229,84 @@
         </div>
         
         <div class="post-content">
-            <h4 id="vxvm虽然支持不同平台但是又是商业的需要支付昂贵的license费用基于veritas在存储界的地位还是需要了解下的">VxVM虽然支持不同平台，但是又是商业的，需要支付昂贵的license费用，基于Veritas在存储界的地位，还是需要了解下的。</h4>
-<h3 id="1-初始化磁盘命令">1 初始化磁盘命令</h3>
-<pre><code>vxdctl enable  
+            <h2 id="前言">前言</h2>
+<p>VxVM虽然支持不同平台，但是又是商业的，需要支付昂贵的license费用，基于Veritas在存储界的地位，还是需要了解下的。</p>
+<h2 id="1初始化磁盘命令">1、初始化磁盘命令</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxdctl <span style="color:#0086b3">enable</span>  
 vxdisksetup -if sdb  
-</code></pre><h3 id="2-查看卷组">2 查看卷组</h3>
-<pre><code>vxdisk -o alldgs list  
-</code></pre><h3 id="3-查看已激活卷组">3 查看已激活卷组</h3>
-<pre><code>vxdg list  
-</code></pre><h3 id="4-创建卷组">4 创建卷组</h3>
-<pre><code>vxdg init vgname diskname(sdd)/vgcdr0_1=sdf  
-vxdg init diskgroup disk_name=device_name  
-</code></pre><h3 id="5-删除卷组">5 删除卷组</h3>
-<pre><code>vxdg destroy vgname  
-</code></pre><h3 id="6-创建逻辑卷">6 创建逻辑卷</h3>
-<pre><code>vxassist -g vgname -U gen make volume size  //裸设备  
-vxassist -g vgname -U fsgen make volume size  //关联块设备(default)  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="2查看卷组">2、查看卷组</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxdisk -o alldgs list  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="3查看已激活卷组">3、查看已激活卷组</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxdg list  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="4创建卷组">4、创建卷组</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxdg init vgname diskname<span style="color:#000;font-weight:bold">(</span>sdd<span style="color:#000;font-weight:bold">)</span>/vgcdr0_1<span style="color:#000;font-weight:bold">=</span>sdf  
+vxdg init diskgroup <span style="color:#008080">disk_name</span><span style="color:#000;font-weight:bold">=</span>device_name  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="5删除卷组">5、删除卷组</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxdg destroy vgname  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="6创建逻辑卷">6、创建逻辑卷</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxassist -g vgname -U gen make volume size  //裸设备  
+vxassist -g vgname -U fsgen make volume size  //关联块设备<span style="color:#000;font-weight:bold">(</span>default<span style="color:#000;font-weight:bold">)</span>  
 vxassist -b -g vgdata make lvworkdbs3 8192m  
 vxassist -b -g vgdata make lvworkdbs4 8192m  
 vxassist -b -g vgdata make lvworkdbs5 8192m  
@@ -261,65 +321,216 @@ vxassist -b -g vgdata make lvworkdbs13 8192m
 vxassist -b -g vgdata make lvworkdbs14 8192m  
 vxassist -b -g vgdata make lvarworkdbs15 8192m  
    
-vxedit -g vgdata set user=Oracle group=dba mode=0660 *  
-vxedit -g vgora set user=oracle group=oinstall mode=0660 *  
+vxedit -g vgdata <span style="color:#0086b3">set</span> <span style="color:#008080">user</span><span style="color:#000;font-weight:bold">=</span>Oracle <span style="color:#008080">group</span><span style="color:#000;font-weight:bold">=</span>dba <span style="color:#008080">mode</span><span style="color:#000;font-weight:bold">=</span><span style="color:#099">0660</span> *  
+vxedit -g vgora <span style="color:#0086b3">set</span> <span style="color:#008080">user</span><span style="color:#000;font-weight:bold">=</span>oracle <span style="color:#008080">group</span><span style="color:#000;font-weight:bold">=</span>oinstall <span style="color:#008080">mode</span><span style="color:#000;font-weight:bold">=</span><span style="color:#099">0660</span> *  
 chown oracle:dba /ora_arch  
-chmod 775 /ora_arch  
-</code></pre><h3 id="7-删除逻辑卷">7 删除逻辑卷</h3>
-<pre><code>vxassist -g vgname remove volume lvname  
-</code></pre><h3 id="8-导出卷组">8 导出卷组</h3>
-<pre><code>vxdg deport vgname  
-</code></pre><h3 id="9-导入卷组">9 导入卷组</h3>
-<pre><code>vxdg import vgname  
-</code></pre><h3 id="10-激活逻辑卷">10 激活逻辑卷</h3>
-<pre><code>vxvol -g vgname startall  
-</code></pre><h3 id="11-去激活逻辑卷">11 去激活逻辑卷</h3>
-<pre><code>vxvol -g vgname stopall  
-</code></pre><h3 id="12-查看卷组剩余空间">12 查看卷组剩余空间</h3>
-<pre><code>vxassist -g vgname maxsize  
-</code></pre><h3 id="13-扩大卷组空间命令">13 扩大卷组空间命令</h3>
-<pre><code>vxdg -g vgname adddisk/rmdisk sdd  
-</code></pre><h3 id="14-扩大逻辑卷">14 扩大逻辑卷</h3>
-<pre><code>vxassist -g vgname growto lvname 2g  
-</code></pre><h3 id="15-缩小逻辑卷">15 缩小逻辑卷</h3>
-<pre><code>vxassist -g vgname shrinkto lvname 400GB  
+chmod <span style="color:#099">775</span> /ora_arch  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="7删除逻辑卷">7、删除逻辑卷</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxassist -g vgname remove volume lvname  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="8导出卷组">8、导出卷组</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxdg deport vgname  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="9导入卷组">9、导入卷组</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxdg import vgname  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="10激活逻辑卷">10、激活逻辑卷</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxvol -g vgname startall  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="11去激活逻辑卷">11、去激活逻辑卷</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxvol -g vgname stopall  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="12查看卷组剩余空间">12、查看卷组剩余空间</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxassist -g vgname maxsize  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="13扩大卷组空间命令">13、扩大卷组空间命令</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxdg -g vgname adddisk/rmdisk sdd  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="14扩大逻辑卷">14、扩大逻辑卷</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxassist -g vgname growto lvname 2g  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="15缩小逻辑卷">15、缩小逻辑卷</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxassist -g vgname shrinkto lvname 400GB  
 vxassist -f -g vgname shrinkto lvname 400GB  
-</code></pre><h3 id="16-重命名卷组">16 重命名卷组</h3>
-<pre><code>vxdg -n newname import oldname  
-</code></pre><h3 id="17-重命名逻辑卷">17 重命名逻辑卷</h3>
-<pre><code>vxedit -g vgname rename oldname newname  
-</code></pre><h3 id="18-创建文件系统">18 创建文件系统</h3>
-<pre><code>mkfs.vxfs /dev/vx/dsk/vgname/lvname  
-</code></pre><h3 id="19-挂载文件系统">19 挂载文件系统</h3>
-<pre><code>mount.vxfs /dev/vx/dsk/vgname/lvname  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="16重命名卷组">16、重命名卷组</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxdg -n newname import oldname  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="17重命名逻辑卷">17、重命名逻辑卷</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxedit -g vgname rename oldname newname  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="18创建文件系统">18、创建文件系统</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkfs.vxfs /dev/vx/dsk/vgname/lvname  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="19挂载文件系统">19、挂载文件系统</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mount.vxfs /dev/vx/dsk/vgname/lvname  
 mount -t vxfs /dev/vx/dsk/vgname/lvname  
-</code></pre><h3 id="20-去挂载文件系统">20 去挂载文件系统</h3>
-<pre><code>umount /dev/vx/dsk/vgname/lvname  
-</code></pre><h3 id="21-查看逻辑卷属性">21 查看逻辑卷属性</h3>
-<pre><code>vxprint -g vgopt  
-</code></pre><h3 id="22-动态扩展缩小文件系统空间">22 动态扩展/缩小文件系统空间</h3>
-<pre><code>vxresize -g vgcbp1 lvcbp1 +/-250g  
-</code></pre><h3 id="23-动态扩展缩小文件系统空间">23 动态扩展/缩小文件系统空间</h3>
-<pre><code>vxresize -g vgcbp1 lvcbp1 +/-250g  
-mrbillingdb:/ # vxdg init vgopt sdd_1=sdd  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="20去挂载文件系统">20、去挂载文件系统</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">umount /dev/vx/dsk/vgname/lvname  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="21查看逻辑卷属性">21、查看逻辑卷属性</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxprint -g vgopt  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="22动态扩展缩小文件系统空间">22、动态扩展/缩小文件系统空间</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxresize -g vgcbp1 lvcbp1 +/-250g  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="23动态扩展缩小文件系统空间">23、动态扩展/缩小文件系统空间</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vxresize -g vgcbp1 lvcbp1 +/-250g  
+mrbillingdb:/ <span style="color:#998;font-style:italic"># vxdg init vgopt sdd_1=sdd  </span>
 VxVM vxdg ERROR V-5-1-6478 Device sdd cannot be added to a CDS disk group  
-mrbillingdb:/ # /usr/lib/vxvm/bin/vxdiskunsetup sdd  
-mrbillingdb:/ # vxdisk rm sdd  
-mrbillingdb:/ # vxdisk scandisks  
-mrbillingdb:/ # /usr/lib/vxvm/bin/vxdisksetup -i sdd  
-mrbillingdb:/ # vxdg init vgopt sdd  
-mrbillingdb:/ # /usr/lib/vxvm/bin/vxdiskunsetup sdd  
+mrbillingdb:/ <span style="color:#998;font-style:italic"># /usr/lib/vxvm/bin/vxdiskunsetup sdd  </span>
+mrbillingdb:/ <span style="color:#998;font-style:italic"># vxdisk rm sdd  </span>
+mrbillingdb:/ <span style="color:#998;font-style:italic"># vxdisk scandisks  </span>
+mrbillingdb:/ <span style="color:#998;font-style:italic"># /usr/lib/vxvm/bin/vxdisksetup -i sdd  </span>
+mrbillingdb:/ <span style="color:#998;font-style:italic"># vxdg init vgopt sdd  </span>
+mrbillingdb:/ <span style="color:#998;font-style:italic"># /usr/lib/vxvm/bin/vxdiskunsetup sdd  </span>
 VxVM vxdiskunsetup ERROR V-5-2-3522 sdd: Disk is not a volume manager disk  
-mrbillingdb:/ # /usr/lib/vxvm/bin/vxdisksetup sdd  
-</code></pre><h3 id="24-从主机组去掉lun映射后需要执行以下命令">24 从主机组去掉LUN映射后，需要执行以下命令</h3>
-<pre><code>mv /etc/vx/disk.info /etc/vx/disk_bak  
+mrbillingdb:/ <span style="color:#998;font-style:italic"># /usr/lib/vxvm/bin/vxdisksetup sdd  </span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="24从主机组去掉lun映射后需要执行以下命令">24、从主机组去掉LUN映射后，需要执行以下命令</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mv /etc/vx/disk.info /etc/vx/disk_bak  
 hot_add  
-vxdctl enable  
-</code></pre><h3 id="25-清除裸设备上的内容可以用dd命令">25 清除裸设备上的内容可以用dd命令</h3>
-<pre><code>如：可以根据裸设备的大小，多谢几个块，保证全部清除即可  
-dd if=/dev/zero of=/dev/rdsk/V1064_vote_01_20m.dbf bs=8192 count=2560  
-dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800    
-</code></pre>
+vxdctl <span style="color:#0086b3">enable</span>  
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="25清除裸设备上的内容可以用dd命令">25、清除裸设备上的内容可以用dd命令</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">如：可以根据裸设备的大小，多谢几个块，保证全部清除即可  
+dd <span style="color:#000;font-weight:bold">if</span><span style="color:#000;font-weight:bold">=</span>/dev/zero <span style="color:#008080">of</span><span style="color:#000;font-weight:bold">=</span>/dev/rdsk/V1064_vote_01_20m.dbf <span style="color:#008080">bs</span><span style="color:#000;font-weight:bold">=</span><span style="color:#099">8192</span> <span style="color:#008080">count</span><span style="color:#000;font-weight:bold">=</span><span style="color:#099">2560</span>  
+dd <span style="color:#000;font-weight:bold">if</span><span style="color:#000;font-weight:bold">=</span>/dev/zero <span style="color:#008080">of</span><span style="color:#000;font-weight:bold">=</span>/dev/rdsk/ocrV1064_100m.ora <span style="color:#008080">bs</span><span style="color:#000;font-weight:bold">=</span><span style="color:#099">8192</span> <span style="color:#008080">count</span><span style="color:#000;font-weight:bold">=</span><span style="color:#099">12800</span>    
+</code></pre></td></tr></table>
+</div>
+</div>
         </div>
 
         
@@ -340,8 +551,6 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/2017-05-21-lvm_vxvm3/">VCS第七波-磁阵管理LVM和VxVM3-LVM</a></li>
-        
         <li><a href="/post/2017-05-21-lvm_vxvm/">VCS第五波-磁阵管理LVM和VxVM1-LVM</a></li>
         
         <li><a href="/post/2017-05-15-vcs4/">VCS第四波-main.cf解读</a></li>
@@ -349,6 +558,8 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
         <li><a href="/post/2017-05-14-vcs3/">VCS第三波-VCS的模块工作原理</a></li>
         
         <li><a href="/post/2017-05-13-vcs2/">VCS第二波-命令管理</a></li>
+        
+        <li><a href="/post/2017-05-12-vcs1/">VCS第一波-HA-VCS</a></li>
         
     </ul>
 </div>
@@ -359,6 +570,8 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
             <ul class="clearfix">
                 
                 <li><a href='/tags/vcs'>vcs</a></li>
+                
+                <li><a href='/tags/vxvm'>vxvm</a></li>
                 
             </ul>
             
@@ -497,7 +710,11 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/blog/">blog (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
     
@@ -513,9 +730,13 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
     
@@ -524,6 +745,8 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
     
@@ -535,19 +758,25 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     
     <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/go/">go (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (21)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (22)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
     
@@ -557,9 +786,11 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     
     <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (14)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (16)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
     
@@ -581,6 +812,8 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     
     <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
@@ -589,7 +822,7 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     
     <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">python (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">python (6)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
     
@@ -597,7 +830,7 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/safe/">safe (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/safe/">safe (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">sdkman (1)</a></li>
     
@@ -615,11 +848,17 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     
     <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">virus (4)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
     
@@ -648,6 +887,10 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     
     <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
     
+    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    
     <a href="https://anTtutu.github.io/tags/blog/">blog</a>
     
     <a href="https://anTtutu.github.io/tags/bug/">bug</a>
@@ -658,11 +901,17 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     
     <a href="https://anTtutu.github.io/tags/check/">check</a>
     
+    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    
     <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
     
     <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
     
     <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
     
     <a href="https://anTtutu.github.io/tags/explain/">explain</a>
     
@@ -670,11 +919,15 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     
     <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
     
+    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    
     <a href="https://anTtutu.github.io/tags/go/">go</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">h2</a>
     
     <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
     
     <a href="https://anTtutu.github.io/tags/http/">http</a>
     
@@ -684,11 +937,15 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     
     <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
     
+    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    
     <a href="https://anTtutu.github.io/tags/js/">js</a>
     
     <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
     
     <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
     
@@ -706,6 +963,8 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     
     <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
     
+    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    
     <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
     
     <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
@@ -715,6 +974,8 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     <a href="https://anTtutu.github.io/tags/rec/">rec</a>
     
     <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
     
     <a href="https://anTtutu.github.io/tags/shell/">shell</a>
     
@@ -728,11 +989,17 @@ dd if=/dev/zero of=/dev/rdsk/ocrV1064_100m.ora bs=8192 count=12800
     
     <a href="https://anTtutu.github.io/tags/termux/">termux</a>
     
+    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    
     <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">virus</a>
     
+    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    
     <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
     
     <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
     

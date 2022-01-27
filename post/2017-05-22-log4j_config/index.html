@@ -141,11 +141,14 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li><a href="#1-配置文件">1. 配置文件</a></li>
-      </ul>
-    </li>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1-配置文件">1. 配置文件</a></li>
+    <li><a href="#2日志输出级别">2、日志输出级别</a></li>
+    <li><a href="#3appender">3、Appender</a></li>
+    <li><a href="#4layout">4、Layout</a></li>
+    <li><a href="#5打印参数">5、打印参数</a></li>
+    <li><a href="#6格式">6、格式</a></li>
+    <li><a href="#7完整的demo">7、完整的demo</a></li>
   </ul>
 </nav>
     </div>
@@ -190,6 +193,8 @@
             
             <span class="meta-category"><a href='/categories/log4j'>log4j</a></span>
             
+            <span class="meta-category"><a href='/categories/java'>java</a></span>
+            
         </div>
         
         
@@ -206,9 +211,11 @@
         </div>
         
         <div class="post-content">
-            <h3 id="1-配置文件">1. 配置文件</h3>
+            <h2 id="前言">前言</h2>
+<p>Log4j 1.x的知识点回顾，2015年8月5日，Apache的Logging Services项目管理委员会宣布Log4j 1.x已经结束生命周期，建议升级 Log4j 2.x。</p>
+<h2 id="1-配置文件">1. 配置文件</h2>
 <p>Log4J配置文件的基本格式如下：</p>
-<pre><code>#配置根Logger
+<pre><code class="language-properties" data-lang="properties">#配置根Logger
 log4j.rootLogger  =   [ level ]   ,  appenderName1 ,  appenderName2 ,  …
 
 #配置日志信息输出目的地Appender
@@ -222,43 +229,49 @@ log4j.appender.appenderName.layout  =  fully.qualified.name.of.layout.class
 　　log4j.appender.appenderName.layout.option1  =  value1 
 　　… 
 　　log4j.appender.appenderName.layout.optionN  =  valueN 
-</code></pre><p>其中 [level] 是日志输出级别，共有5级：</p>
-<pre><code>FATAL       0  
+</code></pre><h2 id="2日志输出级别">2、日志输出级别</h2>
+<p>其中 [level] 共有5级，如下：</p>
+<pre><code class="language-properties" data-lang="properties">FATAL       0  
 ERROR       3  
 WARN        4  
 INFO        6  
 DEBUG       7 
-</code></pre><p>Appender 为日志输出目的地，Log4j提供的appender有以下几种：</p>
-<pre><code>org.apache.log4j.ConsoleAppender（控制台），
+</code></pre><h2 id="3appender">3、Appender</h2>
+<p>为日志输出目的地，Log4j提供的appender有以下几种：</p>
+<pre><code class="language-properties" data-lang="properties">org.apache.log4j.ConsoleAppender（控制台），
 org.apache.log4j.FileAppender（文件），
 org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件），
 org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件），
 org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）
-</code></pre><p>Layout：日志输出格式，Log4j提供的layout有以下几种：</p>
-<pre><code>org.apache.log4j.HTMLLayout（以HTML表格形式布局），
+</code></pre><h2 id="4layout">4、Layout</h2>
+<p>日志输出格式，Log4j提供的layout有以下几种：</p>
+<pre><code class="language-properties" data-lang="properties">org.apache.log4j.HTMLLayout（以HTML表格形式布局），
 org.apache.log4j.PatternLayout（可以灵活地指定布局模式），
 org.apache.log4j.SimpleLayout（包含日志信息的级别和信息字符串），
 org.apache.log4j.TTCCLayout（包含日志产生的时间、线程、类别等等信息）
-</code></pre><p>打印参数: Log4J采用类似C语言中的printf函数的打印格式格式化日志信息，如下:</p>
-<pre><code>%m   输出代码中指定的消息
-%p   输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL 
-%r   输出自应用启动到输出该log信息耗费的毫秒数 
-%c   输出所属的类目，通常就是所在类的全名 
-%t   输出产生该日志事件的线程名 
-%n   输出一个回车换行符，Windows平台为“/r/n”，Unix平台为“/n” 
-%d   输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyy MMM dd HH:mm:ss ,SSS}，输出类似：2002年10月18日  22 ： 10 ： 28 ， 921  
-%l   输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java: 10 ) 
-%x   输出和当前线程相关联的NDC(嵌套诊断环境),尤其用到像java servlets这样的多客户多线程的应用中。
-%%   输出一个&quot;%&quot;字符
-%F   输出日志消息产生时所在的文件名称
-%L   输出代码中的行号
-</code></pre><p>可以在%与模式字符之间加上修饰符来控制其最小宽度、最大宽度、和文本的对齐方式。如：</p>
-<pre><code>1)%20c：指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，默认的情况下右对齐。
+</code></pre><h2 id="5打印参数">5、打印参数</h2>
+<p>Log4J采用类似C语言中的printf函数的打印格式格式化日志信息，如下:</p>
+<pre><code class="language-properties" data-lang="properties">%m 输出代码中指定的消息
+%p 输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL 
+%r 输出自应用启动到输出该log信息耗费的毫秒数 
+%c 输出所属的类目，通常就是所在类的全名 
+%t 输出产生该日志事件的线程名 
+%n 输出一个回车换行符，Windows平台为“/r/n”，Unix平台为“/n” 
+%d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyyyMMdd HH:mm:ss,SSS}，输出类似：2002年10月18日 22:10:28,921  
+%l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java:10) 
+%x 输出和当前线程相关联的NDC(嵌套诊断环境),尤其用到像java servlets这样的多客户多线程的应用中。
+%% 输出一个&quot;%&quot;字符
+%F 输出日志消息产生时所在的文件名称
+%L 输出代码中的行号
+</code></pre><h2 id="6格式">6、格式</h2>
+<p>可以在%与模式字符之间加上修饰符来控制其最小宽度、最大宽度、和文本的对齐方式。如：</p>
+<pre><code class="language-properties" data-lang="properties">1)%20c：指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，默认的情况下右对齐。
 2)%-20c:指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，&quot;-&quot;号指定左对齐。
 3)%.30c:指定输出category的名称，最大的宽度是30，如果category的名称大于30的话，就会将左边多出的字符截掉，但小于30的话也不会有空格。
 4)%20.30c:如果category的名称小于20就补空格，并且右对齐，如果其名称长于30字符，就从左边较远输出的字符截掉。
-</code></pre><p>下面给出的Log4J配置文件实现了输出到控制台，文件，回滚文件，发送日志邮件，输出到数据库日志表，自定义标签等全套功能。</p>
-<pre><code>log4j.rootLogger=DEBUG,CONSOLE,A1,im   
+</code></pre><h2 id="7完整的demo">7、完整的demo</h2>
+<p>下面给出的Log4J配置文件实现了输出到控制台，文件，回滚文件，发送日志邮件，输出到数据库日志表，自定义标签等全套功能。</p>
+<pre><code class="language-properties" data-lang="properties">log4j.rootLogger=DEBUG,CONSOLE,A1,im   
 #DEBUG,CONSOLE,FILE,ROLLING_FILE,MAIL,DATABASE  
 log4j.addivity.org.apache=true  
 ###################   
@@ -363,15 +376,15 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     <h2>See Also</h2>
     <ul class="listing">
         
+        <li><a href="/post/2017-05-11-h2/">H2内存数据库</a></li>
+        
+        <li><a href="/post/2017-05-10-caeser/">利用网上的Caeser算法写了一个唯一id生成工具</a></li>
+        
+        <li><a href="/post/2017-05-09-java_captach/">Java高防OCR和机器人图形验证码</a></li>
+        
         <li><a href="/post/2017-05-22-oracle11gr2_dataguard/">Oracle11gR2手工配置dataguard</a></li>
         
         <li><a href="/post/2017-05-21-lvm_vxvm3/">VCS第七波-磁阵管理LVM和VxVM3-LVM</a></li>
-        
-        <li><a href="/post/2017-05-21-lvm_vxvm/">VCS第五波-磁阵管理LVM和VxVM1-LVM</a></li>
-        
-        <li><a href="/post/2017-05-21-lvm_vxvm2/">VCS第六波-磁阵管理LVM和VxVM2-VxVM</a></li>
-        
-        <li><a href="/post/2017-05-15-vcs4/">VCS第四波-main.cf解读</a></li>
         
     </ul>
 </div>
@@ -382,6 +395,8 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
             <ul class="clearfix">
                 
                 <li><a href='/tags/log4j'>log4j</a></li>
+                
+                <li><a href='/tags/java'>java</a></li>
                 
             </ul>
             
@@ -520,7 +535,11 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/blog/">blog (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
     
@@ -536,9 +555,13 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
     
@@ -547,6 +570,8 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
     
@@ -558,19 +583,25 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/go/">go (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (21)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (22)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
     
@@ -580,9 +611,11 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (14)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (16)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
     
@@ -604,6 +637,8 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
@@ -612,7 +647,7 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">python (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">python (6)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
     
@@ -620,7 +655,7 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/safe/">safe (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/safe/">safe (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">sdkman (1)</a></li>
     
@@ -638,11 +673,17 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">virus (4)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
     
@@ -671,6 +712,10 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
     
+    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    
     <a href="https://anTtutu.github.io/tags/blog/">blog</a>
     
     <a href="https://anTtutu.github.io/tags/bug/">bug</a>
@@ -681,11 +726,17 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <a href="https://anTtutu.github.io/tags/check/">check</a>
     
+    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    
     <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
     
     <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
     
     <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
     
     <a href="https://anTtutu.github.io/tags/explain/">explain</a>
     
@@ -693,11 +744,15 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
     
+    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    
     <a href="https://anTtutu.github.io/tags/go/">go</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">h2</a>
     
     <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
     
     <a href="https://anTtutu.github.io/tags/http/">http</a>
     
@@ -707,11 +762,15 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
     
+    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    
     <a href="https://anTtutu.github.io/tags/js/">js</a>
     
     <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
     
     <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
     
@@ -729,6 +788,8 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
     
+    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    
     <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
     
     <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
@@ -738,6 +799,8 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     <a href="https://anTtutu.github.io/tags/rec/">rec</a>
     
     <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
     
     <a href="https://anTtutu.github.io/tags/shell/">shell</a>
     
@@ -751,11 +814,17 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <a href="https://anTtutu.github.io/tags/termux/">termux</a>
     
+    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    
     <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">virus</a>
     
+    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    
     <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
     
     <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
     
