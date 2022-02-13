@@ -164,6 +164,12 @@
         <li><a href="#mac-1">mac:</a></li>
       </ul>
     </li>
+    <li><a href="#11挖矿病毒二进制命令无法被删除">11、挖矿病毒二进制命令无法被删除</a>
+      <ul>
+        <li><a href="#111-文件属性介绍">11.1 文件属性介绍</a></li>
+        <li><a href="#112-参数介绍">11.2 参数介绍</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
     </div>
@@ -598,6 +604,125 @@ CertUtil: -hashfile 命令成功完成。
 </div><h4 id="注-1">注:</h4>
 <p>linux下的其他摘要跟mac的命令差不多<br>
 windows下没测试出字符串的方式，只能针对文件生成md5摘要</p>
+<h2 id="11挖矿病毒二进制命令无法被删除">11、挖矿病毒二进制命令无法被删除</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@kubernetes-master sbin<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># lsattr scoutd </span>
+----i--------e-- scoutd
+<span style="color:#000;font-weight:bold">[</span>root@kubernetes-master sbin<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># chattr -i scoutd </span>
+<span style="color:#000;font-weight:bold">[</span>root@kubernetes-master sbin<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># lsattr scoutd    </span>
+-------------e-- scoutd
+<span style="color:#000;font-weight:bold">[</span>root@kubernetes-master sbin<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># rm scoutd </span>
+rm: remove regular file ‘scoutd’? y
+<span style="color:#000;font-weight:bold">[</span>root@kubernetes-master sbin<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># lsattr scoutd </span>
+lsattr: No such file or directory <span style="color:#000;font-weight:bold">while</span> trying to stat scoutd
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="111-文件属性介绍">11.1 文件属性介绍</h3>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>即Atime，告诉系统不要修改对这个文件的最后访问时间。</td>
+</tr>
+<tr>
+<td>S</td>
+<td>即Sync，一旦应用程序对这个文件执行了写操作，使系统立刻把修改的结果写到磁盘。</td>
+</tr>
+<tr>
+<td>a</td>
+<td>即Append Only，系统只允许在这个文件之后追加数据，不允许任何进程覆盖或截断这个文件。如果目录具有这个属性，系统将只允许在这个目录下建立和修改文件，而不允许删除任何文件。</td>
+</tr>
+<tr>
+<td>b</td>
+<td>不更新文件或目录的最后存取时间。</td>
+</tr>
+<tr>
+<td>c</td>
+<td>将文件或目录压缩后存放。</td>
+</tr>
+<tr>
+<td>d</td>
+<td>当dump程序执行时，该文件或目录不会被dump备份。</td>
+</tr>
+<tr>
+<td>D</td>
+<td>检查压缩文件中的错误。</td>
+</tr>
+<tr>
+<td>i</td>
+<td>即Immutable，系统不允许对这个文件进行任何的修改。如果目录具有这个属性，那么任何的进程只能修改目录之下的文件，不允许建立和删除文件。</td>
+</tr>
+<tr>
+<td>s</td>
+<td>彻底删除文件，不可恢复，因为是从磁盘上删除，然后用0填充文件所在区域。</td>
+</tr>
+<tr>
+<td>u</td>
+<td>当一个应用程序请求删除这个文件，系统会保留其数据块以便以后能够恢复删除这个文件，用来防止意外删除文件或目录。</td>
+</tr>
+<tr>
+<td>t</td>
+<td>文件系统支持尾部合并（tail-merging）。</td>
+</tr>
+<tr>
+<td>X</td>
+<td>可以直接访问压缩文件的内容。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="112-参数介绍">11.2 参数介绍</h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-R</td>
+<td>递归处理，将指定目录下的所有文件及子目录一并处理。</td>
+</tr>
+<tr>
+<td>-v&lt;版本编号&gt;</td>
+<td>设置文件或目录版本。</td>
+</tr>
+<tr>
+<td>-V</td>
+<td>显示指令执行过程。</td>
+</tr>
+<tr>
+<td>+&lt;属性&gt;</td>
+<td>开启文件或目录的该项属性。</td>
+</tr>
+<tr>
+<td>-&lt;属性&gt;</td>
+<td>关闭文件或目录的该项属性。</td>
+</tr>
+<tr>
+<td>=&lt;属性&gt;</td>
+<td>指定文件或目录的该项属性。</td>
+</tr>
+</tbody>
+</table>
 
         </div>
 
@@ -722,6 +847,10 @@ windows下没测试出字符串的方式，只能针对文件生成md5摘要</p>
     </li>
     
     <li>
+        <a href="https://anTtutu.github.io/post/2022-02-13-logrotate/" title="spring boot cli&amp;spring cloud cli简单介绍">spring boot cli&amp;spring cloud cli简单介绍</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2022-01-26-miner_virus_4/" title="挖矿病毒4-容器挖矿病毒清理">挖矿病毒4-容器挖矿病毒清理</a>
     </li>
     
@@ -751,10 +880,6 @@ windows下没测试出字符串的方式，只能针对文件生成md5摘要</p>
     
     <li>
         <a href="https://anTtutu.github.io/post/2021-11-19-lombok/" title="lombok一些注解的含义">lombok一些注解的含义</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-10-19-git/" title=" git的日常操作命令整理"> git的日常操作命令整理</a>
     </li>
     
 </ul>
@@ -796,7 +921,7 @@ windows下没测试出字符串的方式，只能针对文件生成md5摘要</p>
     
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cli/">cli (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cli/">cli (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
     
@@ -840,7 +965,7 @@ windows下没测试出字符串的方式，只能针对文件生成md5摘要</p>
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (23)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
     
@@ -904,7 +1029,7 @@ windows下没测试出字符串的方式，只能针对文件生成md5摘要</p>
     
     <li><a href="https://anTtutu.github.io/categories/shell/">shell (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
     
