@@ -9,20 +9,20 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     
 
-    <title>java小日常记录-不定期更新 | Anttu&#39;s Blog</title>
-    <meta property="og:title" content="java小日常记录-不定期更新 - Anttu&#39;s Blog">
+    <title>vmstat介绍 | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="vmstat介绍 - Anttu&#39;s Blog">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2017-08-27T21:46:20&#43;08:00'>
+    <meta property="article:published_time" content='2022-02-06T00:29:47&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2017-08-27T21:46:20&#43;08:00'>
+    <meta property="article:modified_time" content='2022-02-06T00:29:47&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
-    <meta name="description" content="java小日常记录">
+    <meta name="description" content="vmstat介绍">
         
     <meta name="author" content="Anttu">
-    <meta property="og:url" content="https://anTtutu.github.io/post/2017-08-27-java_use_note/">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2022-02-06-vmstat/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -142,21 +142,10 @@
         <nav id="TableOfContents">
   <ul>
     <li><a href="#前言">前言</a></li>
-    <li><a href="#1远程debug调测">1、远程debug调测</a>
-      <ul>
-        <li><a href="#注意">注意：</a></li>
-        <li><a href="#11-关闭的问题">1.1 关闭的问题</a></li>
-        <li><a href="#12-eclipse">1.2 eclipse</a></li>
-      </ul>
-    </li>
-    <li><a href="#2bug重现">2、bug重现</a></li>
-    <li><a href="#3base64奇葩问题">3、base64奇葩问题</a>
-      <ul>
-        <li><a href="#31-qq的sdk4j">3.1 QQ的Sdk4j</a></li>
-        <li><a href="#32-apache的commons-codec">3.2 Apache的commons-codec:</a></li>
-        <li><a href="#解决方案">解决方案</a></li>
-      </ul>
-    </li>
+    <li><a href="#1语法">1、语法</a></li>
+    <li><a href="#2字段说明">2、字段说明</a></li>
+    <li><a href="#3常见选项">3、常见选项</a></li>
+    <li><a href="#4常见用法">4、常见用法</a></li>
   </ul>
 </nav>
     </div>
@@ -190,16 +179,16 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title">java小日常记录-不定期更新</h1>
+            <h1 class="post-title">vmstat介绍</h1>
         </header>
         <date class="post-meta meta-date">
-            2017年8月27日
+            2022年2月6日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/java'>java</a></span>
+            <span class="meta-category"><a href='/categories/linux'>linux</a></span>
             
         </div>
         
@@ -218,70 +207,203 @@
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>记录工作中碰到的一些 java 小日常积累</p>
-<h2 id="1远程debug调测">1、远程debug调测</h2>
-<p>web项目远程调测 - 仅用于测试环境或者上线前的调测</p>
-<h3 id="注意">注意：</h3>
-<p>仅限测试环境或者上线前的调测，如果用于生产环境，你的开发工具再debug模式起着的话，会拦截所有的请求。</p>
+<p>vmstat是virtual memory statistics 的缩写，它是Linux下一个非常有用的监控工具，除了内存之外，还提供 块 IO、CPU 时间 等额外的信息</p>
+<h2 id="1语法">1、语法</h2>
+<p>vmstat 命令的执行不需要特殊的权限，普通用户就可以执行，其语法形式如下</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vmstat <span style="color:#000;font-weight:bold">[</span>options<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>delay <span style="color:#000;font-weight:bold">[</span>count<span style="color:#000;font-weight:bold">]]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>delay 表示数据更新间隔，单位是秒，如果没有指定此值，表示系统启动以来的平均时间，而且此时只输出一次结果<br>
+count 表示输出次数，如果没有指定该值，但是指定了 delay 的值，则表示无限次</p>
+<h2 id="2字段说明">2、字段说明</h2>
+<p>在命令行输入 vmstat 并回车， 会输出一次结果</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># linux增加以下这段就可以远程连接服务器的5888端口了</span>
-<span style="color:#008080">CATALINA_OPTS</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5888&#34;</span>
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@cghost22 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># vmstat</span>
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ <span style="color:#099">3</span>  <span style="color:#099">0</span>      <span style="color:#099">0</span> <span style="color:#099">991324</span>    <span style="color:#099">932</span> <span style="color:#099">537336</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">3</span>    <span style="color:#099">4</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span> <span style="color:#099">100</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+<span style="color:#000;font-weight:bold">[</span>root@cghost22 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic">#</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="11-关闭的问题">1.1 关闭的问题</h3>
-<p>添加了debug端口以后好像会出现./shutdown.sh 无法关闭tomcat，需要手动kill</p>
+</div><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>r</td>
+<td>可运行进程的数量，包括运行态和就绪态</td>
+</tr>
+<tr>
+<td>b</td>
+<td>处于不可中断睡眠状态的进程数量</td>
+</tr>
+<tr>
+<td>swpd</td>
+<td>虚拟内存使用量</td>
+</tr>
+<tr>
+<td>free</td>
+<td>空闲内存</td>
+</tr>
+<tr>
+<td>buff</td>
+<td>用作buffer的内存数量</td>
+</tr>
+<tr>
+<td>cache</td>
+<td>用作cache的内存数量</td>
+</tr>
+<tr>
+<td>si</td>
+<td>从磁盘换入内存的数量</td>
+</tr>
+<tr>
+<td>so</td>
+<td>从内存换出到磁盘的数量</td>
+</tr>
+<tr>
+<td>bi</td>
+<td>从块设备接收的块，单位：块/秒</td>
+</tr>
+<tr>
+<td>bo</td>
+<td>发送到块设备的块，单位：块/秒</td>
+</tr>
+<tr>
+<td>in</td>
+<td>每秒中断数，包括时钟中断</td>
+</tr>
+<tr>
+<td>cs</td>
+<td>每秒上下文切换数</td>
+</tr>
+<tr>
+<td>us</td>
+<td>用户态执行时间</td>
+</tr>
+<tr>
+<td>sy</td>
+<td>内核态执行时间</td>
+</tr>
+<tr>
+<td>id</td>
+<td>CPU空闲时间</td>
+</tr>
+<tr>
+<td>wa</td>
+<td>等待IO的时间</td>
+</tr>
+<tr>
+<td>st</td>
+<td>从虚拟机中偷取的时间</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3常见选项">3、常见选项</h2>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-a</td>
+<td>显示活跃和非活跃内存</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>从系统启动至今 fork 的数量，包括 fork、vfork 以及 clone 等系统调用</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>显示系统事件计数以及内存统计信息</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>报告磁盘统计信息</td>
+</tr>
+<tr>
+<td>-D</td>
+<td>统计活动磁盘信息</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>指定分区的详细信息</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>追加一列时间显示</td>
+</tr>
+<tr>
+<td>-S</td>
+<td>按照指定字节单位显示</td>
+</tr>
+<tr>
+<td>-w</td>
+<td>结果按照宽模式显示</td>
+</tr>
+<tr>
+<td>-V</td>
+<td>vmstat的版本</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4常见用法">4、常见用法</h2>
+<p>vmstat 命令主要用于识别系统的瓶颈，统计数据的时候，它不会包含自身进程<br>
+按照指定时间间隔和次数输出</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bat" data-lang="bat"># Windows下面修改catalina.bat，增加：  
-<span style="color:#000;font-weight:bold">SET</span> <span style="color:#008080">CATALINA_OPTS</span>=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5888
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@cghost22 ~<span style="color:#000;font-weight:bold">]</span>$ vmstat <span style="color:#099">2</span> <span style="color:#099">10</span>
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ <span style="color:#099">2</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148356</span> <span style="color:#099">234324</span> <span style="color:#099">3382956</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">1</span>    <span style="color:#099">21</span>    <span style="color:#099">4</span>    <span style="color:#099">4</span>  <span style="color:#099">2</span>  <span style="color:#099">2</span> <span style="color:#099">97</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+ <span style="color:#099">1</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148264</span> <span style="color:#099">234324</span> <span style="color:#099">3382980</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">0</span> <span style="color:#099">14974</span> <span style="color:#099">27478</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">96</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+ <span style="color:#099">1</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148232</span> <span style="color:#099">234324</span> <span style="color:#099">3382984</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">14</span> <span style="color:#099">14384</span> <span style="color:#099">27181</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">96</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+ <span style="color:#099">0</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148376</span> <span style="color:#099">234332</span> <span style="color:#099">3383052</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>   <span style="color:#099">204</span> <span style="color:#099">14197</span> <span style="color:#099">26812</span>  <span style="color:#099">4</span>  <span style="color:#099">2</span> <span style="color:#099">94</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+ <span style="color:#099">0</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148512</span> <span style="color:#099">234332</span> <span style="color:#099">3383088</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">4</span> <span style="color:#099">14398</span> <span style="color:#099">27155</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">95</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+ <span style="color:#099">0</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">147892</span> <span style="color:#099">234332</span> <span style="color:#099">3383128</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>   <span style="color:#099">210</span> <span style="color:#099">15515</span> <span style="color:#099">28802</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">95</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+ <span style="color:#099">1</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148388</span> <span style="color:#099">234332</span> <span style="color:#099">3383156</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">0</span> <span style="color:#099">15147</span> <span style="color:#099">28042</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">95</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+ <span style="color:#099">0</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148264</span> <span style="color:#099">234332</span> <span style="color:#099">3383168</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">4</span> <span style="color:#099">14380</span> <span style="color:#099">27395</span>  <span style="color:#099">3</span>  <span style="color:#099">1</span> <span style="color:#099">96</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+ <span style="color:#099">0</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148264</span> <span style="color:#099">234336</span> <span style="color:#099">3383216</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>   <span style="color:#099">198</span> <span style="color:#099">14430</span> <span style="color:#099">27008</span>  <span style="color:#099">3</span>  <span style="color:#099">1</span> <span style="color:#099">95</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+ <span style="color:#099">2</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148140</span> <span style="color:#099">234336</span> <span style="color:#099">3383252</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">6</span> <span style="color:#099">14233</span> <span style="color:#099">27161</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">95</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="12-eclipse">1.2 eclipse</h3>
-<p>然后配置你的eclispe启动remote：新建remote java Application
-
-        <img class="mx-auto" alt="" src="/posts/debug/add-remote.jpg" />   
-    
-配置host和port：
-
-        <img class="mx-auto" alt="" src="/posts/debug/config.jpg" />   
-    
-然后就可以调测定位问题。</p>
-<h2 id="2bug重现">2、bug重现</h2>
-<p>生产环境的数据问题如何在本地开发环境重现？</p>
-<p>这个问题碰不到还好，碰到就头疼了，我个人是把依赖的几个工程转成osgi的模式，然后测试代码，替换到spring的服务，抓到生产的入参，然后在测试代码中跟踪逻辑走向。</p>
-<p>这种是单项目可以，微服务就不行了。详细步骤后续待补充。</p>
-<h2 id="3base64奇葩问题">3、base64奇葩问题</h2>
-<p>周五（2017年6月10日晚）碰到个诡异问题：<br>
-用maven引入commons-codec-1.10的包，使用base64加密，结果怎么都不对，一直提示方法找不到，如下面的报错</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">lang</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">NoSuchMethodError</span><span style="color:#000;font-weight:bold">:</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">commons</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">codec</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">binary</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Base64</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">decodeBase64</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>后来找了下，发现QQ的第三方登录SDK包重写了apache的base64，而且包名都一样，导致找不到对应的方法，<br>
-经打开两个包查看，验证确实如此，给自己做个记录，以免再入坑：</p>
-<h3 id="31-qq的sdk4j">3.1 QQ的Sdk4j</h3>
-<p>
-        <img class="mx-auto" alt="" src="/posts/debug/tx.jpg" />   
-    </p>
-<h3 id="32-apache的commons-codec">3.2 Apache的commons-codec:</h3>
-<p>
-        <img class="mx-auto" alt="" src="/posts/debug/apache.jpg" />   
-    </p>
-<h3 id="解决方案">解决方案</h3>
-<p>只能继承 apache 的 base64了，成为自己的工具类，再用自己的工具类的 base64方法</p>
+</div><p>2 表示每隔 2 秒输出一次结果<br>
+10 表示总共输出 10 次，10 次之后程序自动结束</p>
 
         </div>
 
@@ -289,7 +411,7 @@
 <div class="post-archive">
     <ul class="post-copyright">
         <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
-        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2017-08-27-java_use_note/">https://anTtutu.github.io/post/2017-08-27-java_use_note/</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2022-02-06-vmstat/">https://anTtutu.github.io/post/2022-02-06-vmstat/</a></li>
         <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
     </ul>
 </div>
@@ -303,15 +425,15 @@
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/2017-08-23-xrebel/">web应用分析利器-xrebel</a></li>
+        <li><a href="/post/2022-01-26-miner_virus_4/">挖矿病毒4-容器挖矿病毒清理</a></li>
         
-        <li><a href="/post/2017-06-05-jrebel/">eclipse之jrebel热部署插件</a></li>
+        <li><a href="/post/2022-01-24-miner_virus_3/">挖矿病毒3-分析和清理过程</a></li>
         
-        <li><a href="/post/2017-05-25-log4j_config/">Log4j参数整理</a></li>
+        <li><a href="/post/2022-01-07-regexp/">一些正则小细节-不定期补充</a></li>
         
-        <li><a href="/post/2017-05-11-h2/">H2内存数据库</a></li>
+        <li><a href="/post/2022-01-06-sdkman/">sdkman的使用</a></li>
         
-        <li><a href="/post/2017-04-10-caeser/">利用网上的Caeser算法写了一个唯一id生成工具</a></li>
+        <li><a href="/post/2021-12-23-mysql_table_clean/">mysql大表的数据清理</a></li>
         
     </ul>
 </div>
@@ -319,11 +441,7 @@
 
         <div class="post-meta meta-tags">
             
-            <ul class="clearfix">
-                
-                <li><a href='/tags/java'>java</a></li>
-                
-            </ul>
+            没有标签
             
         </div>
     </article>
