@@ -1,0 +1,1339 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+
+    <title>mongodb安装后的初始化操作 | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="mongodb安装后的初始化操作 - Anttu&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2018-10-14T21:46:20&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2018-10-14T21:46:20&#43;08:00'>
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
+    <meta name="description" content="mongodb安装后的初始化操作">
+        
+    <meta name="author" content="Anttu">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2018-10-14-mongodb_init/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/asciinema-player.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://anTtutu.github.io/">
+                        Anttu&#39;s Blog
+                    </a>
+                
+                <p class="description">一位Java开发者，喜欢研究技术，同时也在学习Golang和Python中，对服务器、Linux使用比较熟悉。欢迎添加技术交流QQ群：655158296</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://anTtutu.github.io/">首页</a>
+                    
+                    <a  href="https://anTtutu.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://anTtutu.github.io/tags/" title="分类">分类</a>
+                    
+                    <a  href="https://anTtutu.github.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1启动">1、启动</a></li>
+    <li><a href="#2进入命令行">2、进入命令行</a></li>
+    <li><a href="#3创建超级管理账号">3、创建超级管理账号</a></li>
+    <li><a href="#5conf文件demoyaml格式注意空格">5、conf文件demo，yaml格式，注意空格</a></li>
+    <li><a href="#6参数解读">6、参数解读：</a></li>
+    <li><a href="#7常见操作">7、常见操作</a></li>
+    <li><a href="#8聚集集合操作">8、聚集集合操作</a>
+      <ul>
+        <li><a href="#81查询所有记录">8.1、查询所有记录</a></li>
+        <li><a href="#82查询去掉后的当前聚集集合中的某列的重复数据">8.2、查询去掉后的当前聚集集合中的某列的重复数据</a></li>
+        <li><a href="#83查询age--22的记录">8.3、查询age = 22的记录</a></li>
+        <li><a href="#84查询age--22的记录">8.4、查询age &gt; 22的记录</a></li>
+        <li><a href="#85查询age--22的记录">8.5、查询age &lt; 22的记录</a></li>
+        <li><a href="#86查询age--25的记录">8.6、查询age &gt;= 25的记录</a></li>
+        <li><a href="#87查询age--25的记录">8.7、查询age &lt;= 25的记录</a></li>
+        <li><a href="#88查询age--23-并且-age--26">8.8、查询age &gt;= 23 并且 age &lt;= 26</a></li>
+        <li><a href="#89查询name中包含-mongo的数据">8.9、查询name中包含 mongo的数据</a></li>
+        <li><a href="#810查询name中以mongo开头的">8.10、查询name中以mongo开头的</a></li>
+        <li><a href="#811查询指定列nameage数据">8.11、查询指定列name、age数据</a></li>
+        <li><a href="#812查询指定列nameage数据-age--25">8.12、查询指定列name、age数据, age &gt; 25</a></li>
+        <li><a href="#813按照年龄排序">8.13、按照年龄排序</a></li>
+        <li><a href="#814查询name--zhangsan-age--22的数据">8.14、查询name = zhangsan, age = 22的数据</a></li>
+        <li><a href="#815查询前5条数据">8.15、查询前5条数据</a></li>
+        <li><a href="#816查询10条以后的数据">8.16、查询10条以后的数据</a></li>
+        <li><a href="#817查询在5-10之间的数据">8.17、查询在5-10之间的数据</a></li>
+        <li><a href="#818or与-查询">8.18、or与 查询</a></li>
+        <li><a href="#819查询第一条数据">8.19、查询第一条数据</a></li>
+        <li><a href="#820查询某个结果集的记录条数">8.20、查询某个结果集的记录条数</a></li>
+        <li><a href="#821按照某列进行排序">8.21、按照某列进行排序</a></li>
+      </ul>
+    </li>
+    <li><a href="#9索引">9、索引</a>
+      <ul>
+        <li><a href="#91创建索引">9.1、创建索引</a></li>
+        <li><a href="#92查询当前聚集集合所有索引">9.2、查询当前聚集集合所有索引</a></li>
+        <li><a href="#93查看总索引记录大小">9.3、查看总索引记录大小</a></li>
+        <li><a href="#94读取当前集合的所有index信息">9.4、读取当前集合的所有index信息</a></li>
+        <li><a href="#95删除指定索引">9.5、删除指定索引</a></li>
+        <li><a href="#96删除所有索引索引">9.6、删除所有索引索引</a></li>
+      </ul>
+    </li>
+    <li><a href="#10crud">10、CRUD</a>
+      <ul>
+        <li><a href="#101添加">10.1、添加</a></li>
+        <li><a href="#102修改">10.2、修改</a></li>
+        <li><a href="#103删除">10.3、删除</a></li>
+        <li><a href="#104查询修改删除">10.4、查询修改删除</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">mongodb安装后的初始化操作</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年10月14日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/mongodb'>mongodb</a></span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>mongodb安装成功后的初始化操作，安装步骤比较简单略过不讲</p>
+<h2 id="1启动">1、启动</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./mongobd -f /etc/mongodb.conf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2进入命令行">2、进入命令行</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./mongo 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3创建超级管理账号">3、创建超级管理账号</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>use admin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>db.createUser<span style="color:#000;font-weight:bold">({</span>user:<span style="color:#d14">&#34;adminuser&#34;</span>,pwd:<span style="color:#d14">&#34;12345678&#34;</span>,roles:<span style="color:#000;font-weight:bold">[</span><span style="color:#d14">&#34;userAdminAnyDatabase&#34;</span><span style="color:#000;font-weight:bold">]})</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">## 4、用超级管理账号创建业务账号</span>
+</span></span><span style="display:flex;"><span>db.auth<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#39;adminuser&#39;</span>, <span style="color:#d14">&#39;12345678&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>use testdb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>db.createUser<span style="color:#000;font-weight:bold">({</span>user:<span style="color:#d14">&#34;testuser&#34;</span>,pwd:<span style="color:#d14">&#34;12345678&#34;</span>,roles: <span style="color:#000;font-weight:bold">[{</span>role:<span style="color:#d14">&#34;readWrite&#34;</span>, db:<span style="color:#d14">&#34;testdb&#34;</span><span style="color:#000;font-weight:bold">}]})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="5conf文件demoyaml格式注意空格">5、conf文件demo，yaml格式，注意空格</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#000080">systemLog</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">destination</span>:<span style="color:#bbb"> </span>file<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">logAppend</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">path</span>:<span style="color:#bbb"> </span>/usr/local/mongodb/logs/mongodb.log<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">storage</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">dbPath</span>:<span style="color:#bbb"> </span>/usr/local/mongodb/data/db<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">journal</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#000080">enabled</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">processManagement</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">fork</span>:<span style="color:#bbb">        
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">pidFilePath</span>:<span style="color:#bbb"> </span>/var/run/mongodb/mongod.pid<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">timeZoneInfo</span>:<span style="color:#bbb"> </span>/usr/share/zoneinfo<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">net</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">port</span>:<span style="color:#bbb"> </span><span style="color:#099">27017</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">bindIp</span>:<span style="color:#bbb"> </span><span style="color:#099">0.0.0.0</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">security</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">authorization</span>:<span style="color:#bbb"> </span>enabled<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="6参数解读">6、参数解读：</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#000080">systemLog</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">destination</span>:<span style="color:#bbb"> </span>file//指定是一个文件<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">path</span>:<span style="color:#bbb"> </span>/data/logs/mongod.log//日志存放位置<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">logAppend</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//产生日志内容追加到文件<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">#  quiet: true//在quite模式下会限制输出信息</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">#  timeStampFormat: iso8601-utc //默认是iso8601-local，日志信息中还有其他时间戳格式：ctime,iso8601-utc,iso8601-local</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">processManagement</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">fork</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//以守护进程的方式运行MongoDB，创建服务器进程<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">pidFilePath</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;/data/mongo-data/mongod.pid&#34;</span>//pid文件路径<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">net</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#998;font-style:italic"># bindIp: 192.168.33.131//绑定ip地址访问mongodb，多个ip逗号分隔</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">port</span>:<span style="color:#bbb"> </span><span style="color:#099">27017</span>//端口<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span>maxIncomingConnections：10000//默认65535，mongodb实例接受的最多连接数，如果高于操作系统接受的最大线程数，设置无效。<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">#  http:</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">#    enabled: true//http端口最好关闭</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">#RESTInterfaceEnabled: false//即使http接口选项关闭，如果这个选项打开后会有更多的不安全因素</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">storage</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">dbPath</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;/data/mongo-data&#34;</span>//数据文件存放路径<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">engine</span>:<span style="color:#bbb"> </span>wiredTiger//数据引擎<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">wiredTiger</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>engineConfig://wt引擎配置<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#000080">cacheSizeGB</span>:<span style="color:#bbb"> </span><span style="color:#099">1</span>//看服务器情况来进行设置<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#000080">directoryForIndexes</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//索引是否按数据库名进行单独存储<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">collectionConfig</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#000080">blockCompressor</span>:<span style="color:#bbb"> </span>zlib//压缩配置<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">indexConfig</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#000080">prefixCompression</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//索引配置<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">journal</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">enabled</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//记录操作日志，防止数据丢失。<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">directoryPerDB</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//指定存储每个数据库文件到单独的数据目录。如果在一个已存在的系统使用该选项，需要事先把存在的数据文件移动到目录。<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">operationProfiling</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">slowOpThresholdMs</span>:<span style="color:#bbb"> </span><span style="color:#099">100</span><span style="color:#bbb"> </span>//指定慢查询时间，单位毫秒，如果打开功能，则向system.profile集合写入数据<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">mode</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;slowOp&#34;</span>//off、slowOp、all，分别对应关闭，仅打开慢查询，记录所有操作。<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">security</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">keyFile</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;/data/mongodb-keyfile&#34;</span>//指定分片集或副本集成员之间身份验证的key文件存储位置<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">clusterAuthMode</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;keyFile&#34;</span>//集群认证模式，默认是keyFile<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">authorization</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;disabled&#34;</span>//访问数据库和进行操作的用户角色认证<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="7常见操作">7、常见操作</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>show dbs</td>
+<td>显示数据库列表</td>
+</tr>
+<tr>
+<td>show collections</td>
+<td>显示当前数据库中的集合（类似关系数据库中的表）</td>
+</tr>
+<tr>
+<td>show users</td>
+<td>显示用户</td>
+</tr>
+<tr>
+<td>use dbname</td>
+<td>切换当前数据库，这和MS-SQL里面的意思一样</td>
+</tr>
+<tr>
+<td>db.help()</td>
+<td>显示数据库操作命令，里面有很多的命令</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8聚集集合操作">8、聚集集合操作</h2>
+<h3 id="81查询所有记录">8.1、查询所有记录</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">()</span>;
+</span></span><span style="display:flex;"><span>相当于：select* from userInfo;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="82查询去掉后的当前聚集集合中的某列的重复数据">8.2、查询去掉后的当前聚集集合中的某列的重复数据</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.distinct<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;name&#34;</span><span style="color:#000;font-weight:bold">)</span>;
+</span></span><span style="display:flex;"><span>会过滤掉name中的相同数据
+</span></span><span style="display:flex;"><span>相当于：select distinct name from userInfo;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="83查询age--22的记录">8.3、查询age = 22的记录</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span><span style="color:#d14">&#34;age&#34;</span>: 22<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>相当于： <span style="color:#000;font-weight:bold">select</span> * from userInfo where <span style="color:#008080">age</span> <span style="color:#000;font-weight:bold">=</span> 22;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="84查询age--22的记录">8.4、查询age &gt; 22的记录</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gt</span>: 22<span style="color:#000;font-weight:bold">}})</span>;
+</span></span><span style="display:flex;"><span>相当于：select * from userInfo where age &gt;22;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="85查询age--22的记录">8.5、查询age &lt; 22的记录</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$lt</span>: 22<span style="color:#000;font-weight:bold">}})</span>;
+</span></span><span style="display:flex;"><span>相当于：select * from userInfo where age &lt;22;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="86查询age--25的记录">8.6、查询age &gt;= 25的记录</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gte</span>: 25<span style="color:#000;font-weight:bold">}})</span>;
+</span></span><span style="display:flex;"><span>相当于：select * from userInfo where age &gt;<span style="color:#000;font-weight:bold">=</span> 25;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="87查询age--25的记录">8.7、查询age &lt;= 25的记录</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$lte</span>: 25<span style="color:#000;font-weight:bold">}})</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="88查询age--23-并且-age--26">8.8、查询age &gt;= 23 并且 age &lt;= 26</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gte</span>: 23, <span style="color:#008080">$lte</span>: 26<span style="color:#000;font-weight:bold">}})</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="89查询name中包含-mongo的数据">8.9、查询name中包含 mongo的数据</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>name: /mongo/<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>//相当于%%
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">select</span> * from userInfo where name like ‘%mongo%<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="810查询name中以mongo开头的">8.10、查询name中以mongo开头的</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>name: /^mongo/<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">select</span> * from userInfo where name like ‘mongo%<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="811查询指定列nameage数据">8.11、查询指定列name、age数据</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({}</span>, <span style="color:#000;font-weight:bold">{</span>name: 1, age: 1<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>相当于：select name, age from userInfo;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然name也可以用true或false,当用true的情况下河name:1效果一样，如果用false就是排除name，显示name以外的列信息。</p>
+<h3 id="812查询指定列nameage数据-age--25">8.12、查询指定列name、age数据, age &gt; 25</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gt</span>: 25<span style="color:#000;font-weight:bold">}}</span>, <span style="color:#000;font-weight:bold">{</span>name: 1, age: 1<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>相当于：select name, age from userInfo where age &gt;25;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="813按照年龄排序">8.13、按照年龄排序</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>升序：db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.sort<span style="color:#000;font-weight:bold">({</span>age: 1<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>降序：db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.sort<span style="color:#000;font-weight:bold">({</span>age: -1<span style="color:#000;font-weight:bold">})</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="814查询name--zhangsan-age--22的数据">8.14、查询name = zhangsan, age = 22的数据</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>name: <span style="color:#d14">&#39;zhangsan&#39;</span>, age: 22<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>相当于：select * from userInfo where <span style="color:#008080">name</span> <span style="color:#000;font-weight:bold">=</span> ‘zhangsan<span style="color:#d14">&#39; and age = ‘22&#39;</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="815查询前5条数据">8.15、查询前5条数据</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.limit<span style="color:#000;font-weight:bold">(</span>5<span style="color:#000;font-weight:bold">)</span>;
+</span></span><span style="display:flex;"><span>相当于：select top <span style="color:#099">5</span> * from userInfo;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="816查询10条以后的数据">8.16、查询10条以后的数据</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.skip<span style="color:#000;font-weight:bold">(</span>10<span style="color:#000;font-weight:bold">)</span>;
+</span></span><span style="display:flex;"><span>相当于：select * from userInfo where id not in <span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">select</span> top <span style="color:#099">10</span> * from userInfo
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="817查询在5-10之间的数据">8.17、查询在5-10之间的数据</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.limit<span style="color:#000;font-weight:bold">(</span>10<span style="color:#000;font-weight:bold">)</span>.skip<span style="color:#000;font-weight:bold">(</span>5<span style="color:#000;font-weight:bold">)</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可用于分页，limit是pageSize，skip是第几页*pageSize</p>
+<h3 id="818or与-查询">8.18、or与 查询</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span><span style="color:#008080">$or</span>: <span style="color:#000;font-weight:bold">[{</span>age: 22<span style="color:#000;font-weight:bold">}</span>, <span style="color:#000;font-weight:bold">{</span>age: 25<span style="color:#000;font-weight:bold">}]})</span>;
+</span></span><span style="display:flex;"><span>相当于：select * from userInfo where <span style="color:#008080">age</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">22</span> or <span style="color:#008080">age</span> <span style="color:#000;font-weight:bold">=</span> 25;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="819查询第一条数据">8.19、查询第一条数据</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.findOne<span style="color:#000;font-weight:bold">()</span>;
+</span></span><span style="display:flex;"><span>相当于：select top <span style="color:#099">1</span> * from userInfo;
+</span></span><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.limit<span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="820查询某个结果集的记录条数">8.20、查询某个结果集的记录条数</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gte</span>: 25<span style="color:#000;font-weight:bold">}})</span>.count<span style="color:#000;font-weight:bold">()</span>;
+</span></span><span style="display:flex;"><span>相当于：select count<span style="color:#000;font-weight:bold">(</span>*<span style="color:#000;font-weight:bold">)</span> from userInfo where age &gt;<span style="color:#000;font-weight:bold">=</span> 20;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="821按照某列进行排序">8.21、按照某列进行排序</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>sex: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$exists</span>: true<span style="color:#000;font-weight:bold">}})</span>.count<span style="color:#000;font-weight:bold">()</span>;
+</span></span><span style="display:flex;"><span>相当于：select count<span style="color:#000;font-weight:bold">(</span>sex<span style="color:#000;font-weight:bold">)</span> from userInfo;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="9索引">9、索引</h2>
+<h3 id="91创建索引">9.1、创建索引</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.ensureIndex<span style="color:#000;font-weight:bold">({</span>name: 1<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>db.userInfo.ensureIndex<span style="color:#000;font-weight:bold">({</span>name: 1, ts: -1<span style="color:#000;font-weight:bold">})</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="92查询当前聚集集合所有索引">9.2、查询当前聚集集合所有索引</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.getIndexes<span style="color:#000;font-weight:bold">()</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="93查看总索引记录大小">9.3、查看总索引记录大小</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.totalIndexSize<span style="color:#000;font-weight:bold">()</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="94读取当前集合的所有index信息">9.4、读取当前集合的所有index信息</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.users.reIndex<span style="color:#000;font-weight:bold">()</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="95删除指定索引">9.5、删除指定索引</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.users.dropIndex<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;name_1&#34;</span><span style="color:#000;font-weight:bold">)</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="96删除所有索引索引">9.6、删除所有索引索引</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.users.dropIndexes<span style="color:#000;font-weight:bold">()</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="10crud">10、CRUD</h2>
+<h3 id="101添加">10.1、添加</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.users.save<span style="color:#000;font-weight:bold">({</span>name: ‘zhangsan<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>, age: 25, sex: true<span style="color:#000;font-weight:bold">})</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>添加的数据的数据列，没有固定，根据添加的数据为准</p>
+<h3 id="102修改">10.2、修改</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.users.update<span style="color:#000;font-weight:bold">({</span>age: 25<span style="color:#000;font-weight:bold">}</span>, <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$set</span>: <span style="color:#000;font-weight:bold">{</span>name: <span style="color:#d14">&#39;changeName&#39;</span><span style="color:#000;font-weight:bold">}}</span>, false, <span style="color:#0086b3">true</span><span style="color:#000;font-weight:bold">)</span>;
+</span></span><span style="display:flex;"><span>相当于：update users <span style="color:#0086b3">set</span> <span style="color:#008080">name</span> <span style="color:#000;font-weight:bold">=</span> ‘changeName<span style="color:#d14">&#39; where age = 25;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">db.users.update({name: &#39;</span>Lisi<span style="color:#d14">&#39;}, {$inc: {age: 50}}, false, true);
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">相当于：update users set age = age + 50 where name = ‘Lisi&#39;</span>;
+</span></span><span style="display:flex;"><span>db.users.update<span style="color:#000;font-weight:bold">({</span>name: <span style="color:#d14">&#39;Lisi&#39;</span><span style="color:#000;font-weight:bold">}</span>, <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$inc</span>: <span style="color:#000;font-weight:bold">{</span>age: 50<span style="color:#000;font-weight:bold">}</span>, <span style="color:#008080">$set</span>: <span style="color:#000;font-weight:bold">{</span>name: <span style="color:#d14">&#39;hoho&#39;</span><span style="color:#000;font-weight:bold">}}</span>, false, <span style="color:#0086b3">true</span><span style="color:#000;font-weight:bold">)</span>;
+</span></span><span style="display:flex;"><span>相当于：update users <span style="color:#0086b3">set</span> <span style="color:#008080">age</span> <span style="color:#000;font-weight:bold">=</span> age + 50, <span style="color:#008080">name</span> <span style="color:#000;font-weight:bold">=</span> ‘hoho<span style="color:#d14">&#39; where name = ‘Lisi&#39;</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="103删除">10.3、删除</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.users.remove<span style="color:#000;font-weight:bold">({</span>age: 132<span style="color:#000;font-weight:bold">})</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="104查询修改删除">10.4、查询修改删除</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.users.findAndModify<span style="color:#000;font-weight:bold">({</span>
+</span></span><span style="display:flex;"><span>    query: <span style="color:#000;font-weight:bold">{</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gte</span>: 25<span style="color:#000;font-weight:bold">}}</span>,
+</span></span><span style="display:flex;"><span>    sort: <span style="color:#000;font-weight:bold">{</span>age: -1<span style="color:#000;font-weight:bold">}</span>,
+</span></span><span style="display:flex;"><span>    update: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$set</span>: <span style="color:#000;font-weight:bold">{</span>name: <span style="color:#d14">&#39;a2&#39;</span><span style="color:#000;font-weight:bold">}</span>, <span style="color:#008080">$inc</span>: <span style="color:#000;font-weight:bold">{</span>age: 2<span style="color:#000;font-weight:bold">}}</span>,
+</span></span><span style="display:flex;"><span>    remove: <span style="color:#0086b3">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>db.runCommand<span style="color:#000;font-weight:bold">({</span> findandmodify : <span style="color:#d14">&#34;users&#34;</span>,
+</span></span><span style="display:flex;"><span>    query: <span style="color:#000;font-weight:bold">{</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gte</span>: 25<span style="color:#000;font-weight:bold">}}</span>,
+</span></span><span style="display:flex;"><span>    sort: <span style="color:#000;font-weight:bold">{</span>age: -1<span style="color:#000;font-weight:bold">}</span>,
+</span></span><span style="display:flex;"><span>    update: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$set</span>: <span style="color:#000;font-weight:bold">{</span>name: <span style="color:#d14">&#39;a2&#39;</span><span style="color:#000;font-weight:bold">}</span>, <span style="color:#008080">$inc</span>: <span style="color:#000;font-weight:bold">{</span>age: 2<span style="color:#000;font-weight:bold">}}</span>,
+</span></span><span style="display:flex;"><span>    remove: <span style="color:#0086b3">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">})</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2018-10-14-mongodb_init/">https://anTtutu.github.io/post/2018-10-14-mongodb_init/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/2018-09-16-mydumper/">mydumper第三方备份还原工具</a></li>
+        
+        <li><a href="/post/2018-08-14-mysql_install/">mysql低版本源代码安装</a></li>
+        
+        <li><a href="/post/2018-05-08-oom/">java OOM的种类整理</a></li>
+        
+        <li><a href="/post/2018-04-10-orangepi/">OrangePi</a></li>
+        
+        <li><a href="/post/2018-03-19-springmvc/">springmvc的参数校验注解整理</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/mongodb'>mongodb</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "anTtutu/anTtutu.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2022 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/asciinema-player.js'></script>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://anTtutu.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://anTtutu.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-02-13-logrotate/" title="logrotate日志切割">logrotate日志切割</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-02-07-spring_cli/" title="spring boot cli&amp;spring cloud cli简单介绍">spring boot cli&amp;spring cloud cli简单介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-02-06-vmstat/" title="vmstat介绍">vmstat介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-01-26-miner_virus_4/" title="挖矿病毒4-容器挖矿病毒清理">挖矿病毒4-容器挖矿病毒清理</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-01-24-miner_virus_3/" title="挖矿病毒3-分析和清理过程">挖矿病毒3-分析和清理过程</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-01-07-regexp/" title="一些正则小细节-不定期补充">一些正则小细节-不定期补充</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://anTtutu.github.io/categories/about/">about (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/android/">android (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/app/">app (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/aria2/">aria2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/build/">build (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cache/">cache (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/caffeine/">caffeine (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/captcha/">captcha (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/check/">check (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cli/">cli (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/faker/">faker (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gcc/">gcc (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/git/">git (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/go/">go (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jsr/">jsr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jvm/">jvm (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/lombok/">lombok (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mac/">mac (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/matplotlib/">matplotlib (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/maven/">maven (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mine/">mine (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mysql/">mysql (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/nginx/">nginx (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pandas/">pandas (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/python/">python (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/redis/">redis (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/safe/">safe (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdkman/">sdkman (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/shell/">shell (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ssd/">ssd (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tcp/">tcp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/termux/">termux (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/virus/">virus (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zk/">zk (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zookeeper/">zookeeper (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://anTtutu.github.io/tags/about/">about</a>
+    
+    <a href="https://anTtutu.github.io/tags/android/">android</a>
+    
+    <a href="https://anTtutu.github.io/tags/app/">app</a>
+    
+    <a href="https://anTtutu.github.io/tags/aria2/">aria2</a>
+    
+    <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
+    
+    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    
+    <a href="https://anTtutu.github.io/tags/blog/">blog</a>
+    
+    <a href="https://anTtutu.github.io/tags/bug/">bug</a>
+    
+    <a href="https://anTtutu.github.io/tags/build/">build</a>
+    
+    <a href="https://anTtutu.github.io/tags/captcha/">captcha</a>
+    
+    <a href="https://anTtutu.github.io/tags/check/">check</a>
+    
+    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    
+    <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
+    
+    <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
+    
+    <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
+    
+    <a href="https://anTtutu.github.io/tags/explain/">explain</a>
+    
+    <a href="https://anTtutu.github.io/tags/gcc/">gcc</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    
+    <a href="https://anTtutu.github.io/tags/go/">go</a>
+    
+    <a href="https://anTtutu.github.io/tags/h2/">h2</a>
+    
+    <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
+    
+    <a href="https://anTtutu.github.io/tags/http/">http</a>
+    
+    <a href="https://anTtutu.github.io/tags/hugo/">hugo</a>
+    
+    <a href="https://anTtutu.github.io/tags/java/">java</a>
+    
+    <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
+    
+    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    
+    <a href="https://anTtutu.github.io/tags/js/">js</a>
+    
+    <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
+    
+    <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
+    
+    <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
+    
+    <a href="https://anTtutu.github.io/tags/linux/">linux</a>
+    
+    <a href="https://anTtutu.github.io/tags/log4j/">log4j</a>
+    
+    <a href="https://anTtutu.github.io/tags/mac/">mac</a>
+    
+    <a href="https://anTtutu.github.io/tags/mine/">mine</a>
+    
+    <a href="https://anTtutu.github.io/tags/mongodb/">mongodb</a>
+    
+    <a href="https://anTtutu.github.io/tags/mysql/">mysql</a>
+    
+    <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
+    
+    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    
+    <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
+    
+    <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
+    
+    <a href="https://anTtutu.github.io/tags/python/">python</a>
+    
+    <a href="https://anTtutu.github.io/tags/rec/">rec</a>
+    
+    <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
+    
+    <a href="https://anTtutu.github.io/tags/shell/">shell</a>
+    
+    <a href="https://anTtutu.github.io/tags/springboot/">springboot</a>
+    
+    <a href="https://anTtutu.github.io/tags/sqlmap/">sqlmap</a>
+    
+    <a href="https://anTtutu.github.io/tags/ssd/">ssd</a>
+    
+    <a href="https://anTtutu.github.io/tags/tcp/">tcp</a>
+    
+    <a href="https://anTtutu.github.io/tags/termux/">termux</a>
+    
+    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    
+    <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
+    
+    <a href="https://anTtutu.github.io/tags/virus/">virus</a>
+    
+    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
+    
+    <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
+    
+    <a href="https://anTtutu.github.io/tags/zk/">zk</a>
+    
+    <a href="https://anTtutu.github.io/tags/zookeeper/">zookeeper</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://anTtutu.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

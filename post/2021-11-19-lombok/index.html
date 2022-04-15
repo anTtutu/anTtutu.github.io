@@ -1,0 +1,831 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+
+    <title>lombok一些注解的含义 | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="lombok一些注解的含义 - Anttu&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2021-11-19T00:29:47&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2021-11-19T00:29:47&#43;08:00'>
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
+    <meta name="description" content="lombok一些注解的含义">
+        
+    <meta name="author" content="Anttu">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2021-11-19-lombok/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/asciinema-player.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://anTtutu.github.io/">
+                        Anttu&#39;s Blog
+                    </a>
+                
+                <p class="description">一位Java开发者，喜欢研究技术，同时也在学习Golang和Python中，对服务器、Linux使用比较熟悉。欢迎添加技术交流QQ群：655158296</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://anTtutu.github.io/">首页</a>
+                    
+                    <a  href="https://anTtutu.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://anTtutu.github.io/tags/" title="分类">分类</a>
+                    
+                    <a  href="https://anTtutu.github.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1accessorschain--true">1、@Accessors(chain = true)</a></li>
+    <li><a href="#2data">2、@Data</a></li>
+    <li><a href="#3getter">3、@getter</a></li>
+    <li><a href="#4setter">4、@setter</a></li>
+    <li><a href="#5noargsconstructor">5、@NoArgsConstructor</a></li>
+    <li><a href="#6allargsconstructor">6、@AllArgsConstructor</a></li>
+    <li><a href="#7requiredargsconstructor">7、@RequiredArgsConstructor</a></li>
+    <li><a href="#8tostring">8、@ToString</a></li>
+    <li><a href="#9equalsandhashcode">9、@EqualsAndHashCode</a></li>
+    <li><a href="#10slf4j">10、@Slf4j</a></li>
+    <li><a href="#11log4j">11、@Log4j</a></li>
+    <li><a href="#12value">12、@Value</a></li>
+    <li><a href="#13builder">13、@Builder</a></li>
+    <li><a href="#14sneakythrows">14、@SneakyThrows</a></li>
+    <li><a href="#15synchronized">15、@Synchronized</a></li>
+    <li><a href="#16val">16、@val</a></li>
+    <li><a href="#17nonnull">17、@NonNull</a></li>
+    <li><a href="#18cleanup">18、@Cleanup</a></li>
+    <li><a href="#19log">19、@Log</a></li>
+    <li><a href="#20额外用法">20、额外用法</a>
+      <ul>
+        <li><a href="#getterlazytrue">@Getter(lazy=true)</a></li>
+        <li><a href="#tostringexcludecolumn">@ToString(exclude=&ldquo;column&rdquo;)</a></li>
+        <li><a href="#tostringexcludecolumn1column2">@ToString(exclude={&ldquo;column1&rdquo;,&ldquo;column2&rdquo;})</a></li>
+        <li><a href="#tostringofcolumn">@ToString(of=&ldquo;column&rdquo;)</a></li>
+        <li><a href="#tostringofcolumn1column2">@ToString(of={&ldquo;column1&rdquo;,&ldquo;column2&rdquo;})</a></li>
+        <li><a href="#tostringcallsupertrue-includefieldnamestrue">@ToString(callSuper=true, includeFieldNames=true)</a></li>
+        <li><a href="#requiredargscontructorstaticname--of">@RequiredArgsContructor(staticName = &ldquo;of&rdquo;)</a></li>
+      </ul>
+    </li>
+    <li><a href="#21参考和引用">21、参考和引用</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">lombok一些注解的含义</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年11月19日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/lombok'>lombok</a></span>
+            
+            <span class="meta-category"><a href='/categories/java'>java</a></span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>lombok一些注解的含义整理</p>
+<h2 id="1accessorschain--true">1、@Accessors(chain = true)</h2>
+<p>链式风格，在调用set方法时，返回这个类的实例对象，比如：a.b.c</p>
+<h2 id="2data">2、@Data</h2>
+<p>在JavaBean或类JavaBean中使用，这个注解包含范围最广，它包含getter、setter、NoArgsConstructor、equals、canEqual、hashCode、toString 注解，即当使用当前注解时，会自动生成包含的所有方法；</p>
+<h2 id="3getter">3、@getter</h2>
+<p>在JavaBean或类JavaBean中使用，使用此注解会生成对应的getter方法；</p>
+<h2 id="4setter">4、@setter</h2>
+<p>在JavaBean或类JavaBean中使用，使用此注解会生成对应的setter方法；</p>
+<h2 id="5noargsconstructor">5、@NoArgsConstructor</h2>
+<p>在JavaBean或类JavaBean中使用，使用此注解会生成对应的无参构造方法；</p>
+<h2 id="6allargsconstructor">6、@AllArgsConstructor</h2>
+<p>在JavaBean或类JavaBean中使用，使用此注解会生成对应的有参构造方法；</p>
+<h2 id="7requiredargsconstructor">7、@RequiredArgsConstructor</h2>
+<p>@NoArgsConstructor 注解是针对标有 @NonNull 注解的变量和 final 变量进行参数的构造方法。</p>
+<h2 id="8tostring">8、@ToString</h2>
+<p>在JavaBean或类JavaBean中使用，使用此注解会自动重写对应的toStirng方法；</p>
+<h2 id="9equalsandhashcode">9、@EqualsAndHashCode</h2>
+<p>在JavaBean或类JavaBean中使用，使用此注解会自动重写对应的equals方法和hashCode方法；</p>
+<h2 id="10slf4j">10、@Slf4j</h2>
+<p>在需要打印日志的类中使用，当项目中使用了slf4j打印日志框架时使用该注解，会简化日志的打印流程，只需调用info方法即可；</p>
+<h2 id="11log4j">11、@Log4j</h2>
+<p>在需要打印日志的类中使用，当项目中使用了log4j打印日志框架时使用该注解，会简化日志的打印流程，只需调用info方法即可；</p>
+<h2 id="12value">12、@Value</h2>
+<p>用在类上，是@Data的不可变形式，相当于为属性添加final声明，只提供getter方法，而不提供setter方法</p>
+<h2 id="13builder">13、@Builder</h2>
+<p>用在类、构造器、方法上，为你提供复杂的builder APIs，让你可以像如下方式一样调用Person.builder().name(&ldquo;Adam Savage&rdquo;).city(&ldquo;San Francisco&rdquo;).job(&ldquo;Mythbusters&rdquo;).job(&ldquo;Unchained Reaction&rdquo;).build();  更多说明参考Builder</p>
+<h2 id="14sneakythrows">14、@SneakyThrows</h2>
+<p>自动抛受检异常，而无需显式在方法上使用throws语句</p>
+<h2 id="15synchronized">15、@Synchronized</h2>
+<p>用在方法上，将方法声明为同步的，并自动加锁，而锁对象是一个私有的属性$lock或$LOCK，而java中的synchronized关键字锁对象是this，锁在this或者自己的类对象上存在副作用，就是你不能阻止非受控代码去锁this或者类对象，这可能会导致竞争条件或者其它线程错误</p>
+<h2 id="16val">16、@val</h2>
+<p>用在局部变量前面，相当于将变量声明为final</p>
+<h2 id="17nonnull">17、@NonNull</h2>
+<p>给方法参数增加这个注解会自动在方法内对该参数进行是否为空的校验，如果为空，则抛出NPE（NullPointerException）</p>
+<h2 id="18cleanup">18、@Cleanup</h2>
+<p>自动管理资源，用在局部变量之前，在当前变量范围内即将执行完毕退出之前会自动清理资源，自动生成try-finally这样的代码来关闭流</p>
+<h2 id="19log">19、@Log</h2>
+<p>根据不同的注解生成不同类型的log对象，但是实例名称都是log，有六种可选实现类</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@CommonsLog</span> 
+</span></span><span style="display:flex;"><span>Creates log <span style="color:#000;font-weight:bold">=</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">commons</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">logging</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">LogFactory</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLog</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@Log</span> 
+</span></span><span style="display:flex;"><span>Creates log <span style="color:#000;font-weight:bold">=</span> java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">util</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">logging</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Logger</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLogger</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getName</span><span style="color:#000;font-weight:bold">());</span>
+</span></span><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@Log4j</span> 
+</span></span><span style="display:flex;"><span>Creates log <span style="color:#000;font-weight:bold">=</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">log4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Logger</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLogger</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@Log4j2</span> 
+</span></span><span style="display:flex;"><span>Creates log <span style="color:#000;font-weight:bold">=</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">logging</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">log4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">LogManager</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLogger</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@Slf4j</span> 
+</span></span><span style="display:flex;"><span>Creates log <span style="color:#000;font-weight:bold">=</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">slf4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">LoggerFactory</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLogger</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@XSlf4j</span> 
+</span></span><span style="display:flex;"><span>Creates log <span style="color:#000;font-weight:bold">=</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">slf4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ext</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">XLoggerFactory</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getXLogger</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="20额外用法">20、额外用法</h2>
+<p>在使用以上注解需要处理参数时，处理方法如下（以@ToString注解为例，其他注解同@ToString注解）：</p>
+<h3 id="getterlazytrue">@Getter(lazy=true)</h3>
+<p>可以替代经典的Double Check Lock样板代码</p>
+<h3 id="tostringexcludecolumn">@ToString(exclude=&ldquo;column&rdquo;)</h3>
+<p>意义：排除column列所对应的元素，即在生成toString方法时不包含column参数；</p>
+<h3 id="tostringexcludecolumn1column2">@ToString(exclude={&ldquo;column1&rdquo;,&ldquo;column2&rdquo;})</h3>
+<p>意义：排除多个column列所对应的元素，其中间用英文状态下的逗号进行分割，即在生成toString方法时不包含多个column参数；</p>
+<h3 id="tostringofcolumn">@ToString(of=&ldquo;column&rdquo;)</h3>
+<p>意义：只生成包含column列所对应的元素的参数的toString方法，即在生成toString方法时只包含column参数；</p>
+<h3 id="tostringofcolumn1column2">@ToString(of={&ldquo;column1&rdquo;,&ldquo;column2&rdquo;})</h3>
+<p>意义：只生成包含多个column列所对应的元素的参数的toString方法，其中间用英文状态下的逗号进行分割，即在生成toString方法时只包含多个column参数；</p>
+<h3 id="tostringcallsupertrue-includefieldnamestrue">@ToString(callSuper=true, includeFieldNames=true)</h3>
+<p>意义：调用父类的toString方法，包含所有属性</p>
+<h3 id="requiredargscontructorstaticname--of">@RequiredArgsContructor(staticName = &ldquo;of&rdquo;)</h3>
+<p>生成一个静态方法，用于构建本类对象，与@NonNull联用，指定那些属性是本方法参数</p>
+<h2 id="21参考和引用">21、参考和引用</h2>
+<p>lombok1： <a href="https://www.cnblogs.com/pascall/p/10281169.html">https://www.cnblogs.com/pascall/p/10281169.html</a>
+lombok2： <a href="https://www.cnblogs.com/mayhh/p/10113169.html">https://www.cnblogs.com/mayhh/p/10113169.html</a></p>
+
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2021-11-19-lombok/">https://anTtutu.github.io/post/2021-11-19-lombok/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/2021-10-19-git/"> git的日常操作命令整理</a></li>
+        
+        <li><a href="/post/2021-10-11-caffeine_springcache/">caffeine和springcache</a></li>
+        
+        <li><a href="/post/2021-10-07-safe_coding_js/">前端编码安全</a></li>
+        
+        <li><a href="/post/2021-09-30-safe_coding_java/">java编码安全</a></li>
+        
+        <li><a href="/post/2021-09-19-maven_verify/">maven校验依赖包CVE漏洞</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            没有标签
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "anTtutu/anTtutu.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2022 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/asciinema-player.js'></script>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://anTtutu.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://anTtutu.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-02-13-logrotate/" title="logrotate日志切割">logrotate日志切割</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-02-07-spring_cli/" title="spring boot cli&amp;spring cloud cli简单介绍">spring boot cli&amp;spring cloud cli简单介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-02-06-vmstat/" title="vmstat介绍">vmstat介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-01-26-miner_virus_4/" title="挖矿病毒4-容器挖矿病毒清理">挖矿病毒4-容器挖矿病毒清理</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-01-24-miner_virus_3/" title="挖矿病毒3-分析和清理过程">挖矿病毒3-分析和清理过程</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-01-07-regexp/" title="一些正则小细节-不定期补充">一些正则小细节-不定期补充</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://anTtutu.github.io/categories/about/">about (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/android/">android (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/app/">app (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/aria2/">aria2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/build/">build (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cache/">cache (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/caffeine/">caffeine (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/captcha/">captcha (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/check/">check (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cli/">cli (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/faker/">faker (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gcc/">gcc (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/git/">git (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/go/">go (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jsr/">jsr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jvm/">jvm (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/lombok/">lombok (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mac/">mac (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/matplotlib/">matplotlib (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/maven/">maven (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mine/">mine (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mysql/">mysql (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/nginx/">nginx (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pandas/">pandas (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/python/">python (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/redis/">redis (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/safe/">safe (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdkman/">sdkman (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/shell/">shell (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ssd/">ssd (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tcp/">tcp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/termux/">termux (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/virus/">virus (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zk/">zk (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zookeeper/">zookeeper (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://anTtutu.github.io/tags/about/">about</a>
+    
+    <a href="https://anTtutu.github.io/tags/android/">android</a>
+    
+    <a href="https://anTtutu.github.io/tags/app/">app</a>
+    
+    <a href="https://anTtutu.github.io/tags/aria2/">aria2</a>
+    
+    <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
+    
+    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    
+    <a href="https://anTtutu.github.io/tags/blog/">blog</a>
+    
+    <a href="https://anTtutu.github.io/tags/bug/">bug</a>
+    
+    <a href="https://anTtutu.github.io/tags/build/">build</a>
+    
+    <a href="https://anTtutu.github.io/tags/captcha/">captcha</a>
+    
+    <a href="https://anTtutu.github.io/tags/check/">check</a>
+    
+    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    
+    <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
+    
+    <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
+    
+    <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
+    
+    <a href="https://anTtutu.github.io/tags/explain/">explain</a>
+    
+    <a href="https://anTtutu.github.io/tags/gcc/">gcc</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    
+    <a href="https://anTtutu.github.io/tags/go/">go</a>
+    
+    <a href="https://anTtutu.github.io/tags/h2/">h2</a>
+    
+    <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
+    
+    <a href="https://anTtutu.github.io/tags/http/">http</a>
+    
+    <a href="https://anTtutu.github.io/tags/hugo/">hugo</a>
+    
+    <a href="https://anTtutu.github.io/tags/java/">java</a>
+    
+    <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
+    
+    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    
+    <a href="https://anTtutu.github.io/tags/js/">js</a>
+    
+    <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
+    
+    <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
+    
+    <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
+    
+    <a href="https://anTtutu.github.io/tags/linux/">linux</a>
+    
+    <a href="https://anTtutu.github.io/tags/log4j/">log4j</a>
+    
+    <a href="https://anTtutu.github.io/tags/mac/">mac</a>
+    
+    <a href="https://anTtutu.github.io/tags/mine/">mine</a>
+    
+    <a href="https://anTtutu.github.io/tags/mongodb/">mongodb</a>
+    
+    <a href="https://anTtutu.github.io/tags/mysql/">mysql</a>
+    
+    <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
+    
+    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    
+    <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
+    
+    <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
+    
+    <a href="https://anTtutu.github.io/tags/python/">python</a>
+    
+    <a href="https://anTtutu.github.io/tags/rec/">rec</a>
+    
+    <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
+    
+    <a href="https://anTtutu.github.io/tags/shell/">shell</a>
+    
+    <a href="https://anTtutu.github.io/tags/springboot/">springboot</a>
+    
+    <a href="https://anTtutu.github.io/tags/sqlmap/">sqlmap</a>
+    
+    <a href="https://anTtutu.github.io/tags/ssd/">ssd</a>
+    
+    <a href="https://anTtutu.github.io/tags/tcp/">tcp</a>
+    
+    <a href="https://anTtutu.github.io/tags/termux/">termux</a>
+    
+    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    
+    <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
+    
+    <a href="https://anTtutu.github.io/tags/virus/">virus</a>
+    
+    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
+    
+    <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
+    
+    <a href="https://anTtutu.github.io/tags/zk/">zk</a>
+    
+    <a href="https://anTtutu.github.io/tags/zookeeper/">zookeeper</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://anTtutu.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
