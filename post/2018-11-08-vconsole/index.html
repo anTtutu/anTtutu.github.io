@@ -1,0 +1,1075 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+
+    <title>手机端调测H5页面神器-vConsole | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="手机端调测H5页面神器-vConsole - Anttu&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2018-11-08T21:46:20&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2018-11-08T21:46:20&#43;08:00'>
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
+    <meta name="description" content="手机端调测H5页面神器-vConsole">
+        
+    <meta name="author" content="Anttu">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2018-11-08-vconsole/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/asciinema-player.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://anTtutu.github.io/">
+                        Anttu&#39;s Blog
+                    </a>
+                
+                <p class="description">一位Java开发者，喜欢研究技术，同时也在学习Golang和Python中，对服务器、Linux使用比较熟悉。欢迎添加技术交流QQ群：655158296</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://anTtutu.github.io/">首页</a>
+                    
+                    <a  href="https://anTtutu.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://anTtutu.github.io/tags/" title="分类">分类</a>
+                    
+                    <a  href="https://anTtutu.github.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1导入引用">1、导入引用</a></li>
+    <li><a href="#2属性">2、属性</a>
+      <ul>
+        <li><a href="#vconsoleversion">vConsole.version</a></li>
+        <li><a href="#vconsoleoption">vConsole.option</a></li>
+      </ul>
+    </li>
+    <li><a href="#3方法">3、方法</a>
+      <ul>
+        <li><a href="#vconsolesetoptionkeyorobj-value">vConsole.setOption(keyOrObj[, value])</a></li>
+        <li><a href="#vconsolesetswitchpositionx-y">vConsole.setSwitchPosition(x, y)</a></li>
+        <li><a href="#vconsoledestroy">vConsole.destroy()</a></li>
+        <li><a href="#vconsoleaddpluginplugin">vConsole.addPlugin(plugin)</a></li>
+        <li><a href="#vconsoleremovepluginpluginid">vConsole.removePlugin(pluginID)</a></li>
+        <li><a href="#vconsoleshowpluginpluginid">vConsole.showPlugin(pluginID)</a></li>
+        <li><a href="#vconsoleshow">vConsole.show()</a></li>
+        <li><a href="#vconsolehide">vConsole.hide()</a></li>
+        <li><a href="#vconsoleshowswitch">vConsole.showSwitch()</a></li>
+        <li><a href="#vconsolehideswitch">vConsole.hideSwitch()</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">手机端调测H5页面神器-vConsole</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年11月8日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/h5'>h5</a></span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>手机端调测H5页面是比较麻烦的，需要借助腾讯的vConsole神器<br>
+下载地址： <a href="https://github.com/Tencent/vConsole.git">https://github.com/Tencent/vConsole.git</a></p>
+<h2 id="1导入引用">1、导入引用</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">&lt;</span>script src<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;https://unpkg.com/vconsole@latest/dist/vconsole.min.js&#34;</span><span style="color:#000;font-weight:bold">&gt;&lt;</span><span style="color:#a61717;background-color:#e3d2d2">/script&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">&lt;</span>script<span style="color:#000;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#998;font-style:italic">// 初始化
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span>  <span style="color:#000;font-weight:bold">var</span> vConsole <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> VConsole();
+</span></span><span style="display:flex;"><span>  console.log(<span style="color:#d14">&#39;VConsole is cool&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#a61717;background-color:#e3d2d2">/script&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如下图：
+
+        <img class="mx-auto" alt="" src="/posts/javascript/vconsole.gif" />   
+    </p>
+<h2 id="2属性">2、属性</h2>
+<h3 id="vconsoleversion">vConsole.version</h3>
+<p>当前 vConsole 的版本号。</p>
+<ul>
+<li>只读</li>
+<li>类型：string</li>
+</ul>
+<p>例子：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>vConsole.version <span style="color:#998;font-style:italic">// =&gt; &#34;3.11.0&#34;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="vconsoleoption">vConsole.option</h3>
+<p>配置项。</p>
+<ul>
+<li>可写</li>
+<li>类型：object</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>键名</th>
+<th>类型</th>
+<th>可选</th>
+<th>默认值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>defaultPlugins</td>
+<td>Array</td>
+<td>true</td>
+<td>[&lsquo;system&rsquo;, &rsquo;network&rsquo;, &rsquo;element&rsquo;, &lsquo;storage&rsquo;]</td>
+<td>需要自动初始化并加载的内置插件。</td>
+</tr>
+<tr>
+<td>onReady</td>
+<td>Function</td>
+<td>true</td>
+<td></td>
+<td>回调方法，当 vConsole 完成初始化并加载完内置插件后触发。</td>
+</tr>
+<tr>
+<td>onClearLog</td>
+<td>Function</td>
+<td>true</td>
+<td></td>
+<td>回调方法，点击 Log 或 System 面板的 &ldquo;Clear&rdquo; 按钮后出发。</td>
+</tr>
+<tr>
+<td>maxLogNumber</td>
+<td>Number</td>
+<td>true</td>
+<td>1000</td>
+<td>超出数量上限的日志会被自动清除。</td>
+</tr>
+<tr>
+<td>maxNetworkNumber</td>
+<td>Number</td>
+<td>true</td>
+<td>1000</td>
+<td>超出数量上限的请求记录会被自动清除。</td>
+</tr>
+<tr>
+<td>disableLogScrolling</td>
+<td>Boolean</td>
+<td>true</td>
+<td></td>
+<td>若为 <code>false</code>，有新日志时面板将不会自动滚动到底部。</td>
+</tr>
+<tr>
+<td>theme</td>
+<td>String</td>
+<td>true</td>
+<td>&rsquo;light&rsquo;</td>
+<td>主题颜色，可选值为 &rsquo;light'</td>
+</tr>
+<tr>
+<td>target</td>
+<td>String, HTMLElement</td>
+<td>true</td>
+<td><code>document.documentElement</code></td>
+<td>挂载到的节点，可为 HTMLElement 或 CSS selector。</td>
+</tr>
+</tbody>
+</table>
+<p>例子：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#998;font-style:italic">// get
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span>vConsole.option <span style="color:#998;font-style:italic">// =&gt; {...}
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">// set
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span>vConsole.setOption(<span style="color:#d14">&#39;maxLogNumber&#39;</span>, <span style="color:#099">5000</span>);
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">// 或者：
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span>vConsole.setOption({maxLogNumber<span style="color:#000;font-weight:bold">:</span> <span style="color:#099">5000</span>});
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3方法">3、方法</h2>
+<h3 id="vconsolesetoptionkeyorobj-value">vConsole.setOption(keyOrObj[, value])</h3>
+<p>更新 <code>vConsole.option</code> 配置项。</p>
+<h5 id="参数">参数：</h5>
+<ul>
+<li>(required) keyOrObj: 配置项的 key 值，或直接传入 key-value 格式的 object 对象。</li>
+<li>(optional) value: 配置项的 value 值。</li>
+</ul>
+<h5 id="返回">返回：</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5 id="例子">例子：</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>vConsole.setOption(<span style="color:#d14">&#39;maxLogNumber&#39;</span>, <span style="color:#099">5000</span>);
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">// 或者：
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span>vConsole.setOption({maxLogNumber<span style="color:#000;font-weight:bold">:</span> <span style="color:#099">5000</span>});
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="vconsolesetswitchpositionx-y">vConsole.setSwitchPosition(x, y)</h3>
+<p>设置开关按钮的位置。</p>
+<h5 id="参数-1">参数：</h5>
+<ul>
+<li>(required) x: X 坐标，坐标原点位于屏幕右下角。</li>
+<li>(required) y: Y 坐标，坐标原点位于屏幕右下角。</li>
+</ul>
+<h5 id="返回-1">返回：</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5 id="例子-1">例子：</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>vConsole.setSwitchPosition(<span style="color:#099">20</span>, <span style="color:#099">20</span>);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="vconsoledestroy">vConsole.destroy()</h3>
+<p>析构一个 vConsole 对象实例，并将 vConsole 面板从页面中移除。</p>
+<h5 id="参数-2">参数：</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5 id="返回-2">返回：</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5 id="例子-2">例子：</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">var</span> vConsole <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> VConsole();
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">// ... do something
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span>vConsole.destroy();
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="vconsoleaddpluginplugin">vConsole.addPlugin(plugin)</h3>
+<p>添加一个新插件。重名的插件会被忽略。</p>
+<h5 id="参数-3">参数：</h5>
+<ul>
+<li>(required) plugin: 一个 VConsolePlugin 对象。</li>
+</ul>
+<h5 id="返回-3">返回：</h5>
+<ul>
+<li>Boolean: 成功为 <code>true</code>，失败为 <code>false</code>。</li>
+</ul>
+<h5 id="例子-3">例子：</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">var</span> myPlugin <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> VConsolePlugin(<span style="color:#d14">&#39;my_plugin&#39;</span>, <span style="color:#d14">&#39;My Plugin&#39;</span>);
+</span></span><span style="display:flex;"><span>vConsole.addPlugin(myPlugin);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="vconsoleremovepluginpluginid">vConsole.removePlugin(pluginID)</h3>
+<p>卸载一个插件。</p>
+<h5 id="参数-4">参数：</h5>
+<ul>
+<li>(required) pluginID: 插件的 plugin id。</li>
+</ul>
+<h5 id="返回-4">返回：</h5>
+<ul>
+<li>Boolean: 成功为 <code>true</code>，失败为 <code>false</code>。</li>
+</ul>
+<h5 id="例子-4">例子：</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>vConsole.removePlugin(<span style="color:#d14">&#39;my_plugin&#39;</span>);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="vconsoleshowpluginpluginid">vConsole.showPlugin(pluginID)</h3>
+<p>根据 plugin id 激活显示一个面板。</p>
+<p>此方法会触发先前激活态面板的 <code>hide</code> 事件，并触发当前激活态面板的 <code>show</code> 事件。</p>
+<h5 id="参数-5">参数：</h5>
+<ul>
+<li>(required) pluginID: 字符串，面板的 plugin id。</li>
+</ul>
+<h5 id="返回-5">返回：</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5 id="例子-5">例子：</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>vConsole.showPlugin(<span style="color:#d14">&#34;system&#34;</span>); <span style="color:#998;font-style:italic">// 显示 System 面板
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="vconsoleshow">vConsole.show()</h3>
+<p>显示 vConsole 主面板。这个方法会触发插件事件 <code>showConsole</code>。</p>
+<h5 id="参数-6">参数：</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5 id="返回-6">返回：</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5 id="例子-6">例子：</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>vConsole.show();
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="vconsolehide">vConsole.hide()</h3>
+<p>隐藏 vConsole 主面板。这个方法会触发插件事件 <code>hideConsole</code>。</p>
+<h5 id="参数-7">参数：</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5 id="返回-7">返回：</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5 id="例子-7">例子：</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>vConsole.hide();
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="vconsoleshowswitch">vConsole.showSwitch()</h3>
+<p>显示 vConsole 的开关按钮。</p>
+<h5 id="参数-8">参数：</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5 id="返回-8">返回：</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5 id="例子-8">例子：</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>vConsole.showSwitch();
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="vconsolehideswitch">vConsole.hideSwitch()</h3>
+<p>隐藏 vConsole 的开关按钮</p>
+<p>隐藏后，用户将无法手动唤起 vConsole 面板。因此按钮或面板必须通过 <code>vConsole.showSwitch()</code> 或 <code>vConsole.show()</code> 来展示出来。</p>
+<h5 id="参数-9">参数：</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5 id="返回-9">返回：</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5 id="例子-9">例子：</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>vConsole.hideSwitch();
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2018-11-08-vconsole/">https://anTtutu.github.io/post/2018-11-08-vconsole/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/2018-10-14-mongodb_init/">mongodb安装后的初始化操作</a></li>
+        
+        <li><a href="/post/2018-09-16-mydumper/">mydumper第三方备份还原工具</a></li>
+        
+        <li><a href="/post/2018-08-14-mysql_install/">mysql低版本源代码安装</a></li>
+        
+        <li><a href="/post/2018-05-08-oom/">java OOM的种类整理</a></li>
+        
+        <li><a href="/post/2018-04-10-orangepi/">OrangePi</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/h5'>h5</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "anTtutu/anTtutu.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2022 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/asciinema-player.js'></script>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://anTtutu.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://anTtutu.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-02-13-logrotate/" title="logrotate日志切割">logrotate日志切割</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-02-07-spring_cli/" title="spring boot cli&amp;spring cloud cli简单介绍">spring boot cli&amp;spring cloud cli简单介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-02-06-vmstat/" title="vmstat介绍">vmstat介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-01-26-miner_virus_4/" title="挖矿病毒4-容器挖矿病毒清理">挖矿病毒4-容器挖矿病毒清理</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-01-24-miner_virus_3/" title="挖矿病毒3-分析和清理过程">挖矿病毒3-分析和清理过程</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-01-07-regexp/" title="一些正则小细节-不定期补充">一些正则小细节-不定期补充</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://anTtutu.github.io/categories/about/">about (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/android/">android (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/app/">app (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/aria2/">aria2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/build/">build (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cache/">cache (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/caffeine/">caffeine (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/captcha/">captcha (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/check/">check (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cli/">cli (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/faker/">faker (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gcc/">gcc (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/git/">git (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/go/">go (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jsr/">jsr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jvm/">jvm (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/lombok/">lombok (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mac/">mac (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/matplotlib/">matplotlib (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/maven/">maven (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mine/">mine (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mysql/">mysql (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/nginx/">nginx (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pandas/">pandas (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/python/">python (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/redis/">redis (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/safe/">safe (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdkman/">sdkman (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/shell/">shell (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ssd/">ssd (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tcp/">tcp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/termux/">termux (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/virus/">virus (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zk/">zk (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zookeeper/">zookeeper (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://anTtutu.github.io/tags/about/">about</a>
+    
+    <a href="https://anTtutu.github.io/tags/android/">android</a>
+    
+    <a href="https://anTtutu.github.io/tags/app/">app</a>
+    
+    <a href="https://anTtutu.github.io/tags/aria2/">aria2</a>
+    
+    <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
+    
+    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    
+    <a href="https://anTtutu.github.io/tags/blog/">blog</a>
+    
+    <a href="https://anTtutu.github.io/tags/bug/">bug</a>
+    
+    <a href="https://anTtutu.github.io/tags/build/">build</a>
+    
+    <a href="https://anTtutu.github.io/tags/captcha/">captcha</a>
+    
+    <a href="https://anTtutu.github.io/tags/check/">check</a>
+    
+    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    
+    <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
+    
+    <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
+    
+    <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
+    
+    <a href="https://anTtutu.github.io/tags/explain/">explain</a>
+    
+    <a href="https://anTtutu.github.io/tags/gcc/">gcc</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    
+    <a href="https://anTtutu.github.io/tags/go/">go</a>
+    
+    <a href="https://anTtutu.github.io/tags/h2/">h2</a>
+    
+    <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
+    
+    <a href="https://anTtutu.github.io/tags/http/">http</a>
+    
+    <a href="https://anTtutu.github.io/tags/hugo/">hugo</a>
+    
+    <a href="https://anTtutu.github.io/tags/java/">java</a>
+    
+    <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
+    
+    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    
+    <a href="https://anTtutu.github.io/tags/js/">js</a>
+    
+    <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
+    
+    <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
+    
+    <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
+    
+    <a href="https://anTtutu.github.io/tags/linux/">linux</a>
+    
+    <a href="https://anTtutu.github.io/tags/log4j/">log4j</a>
+    
+    <a href="https://anTtutu.github.io/tags/mac/">mac</a>
+    
+    <a href="https://anTtutu.github.io/tags/mine/">mine</a>
+    
+    <a href="https://anTtutu.github.io/tags/mongodb/">mongodb</a>
+    
+    <a href="https://anTtutu.github.io/tags/mysql/">mysql</a>
+    
+    <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
+    
+    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    
+    <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
+    
+    <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
+    
+    <a href="https://anTtutu.github.io/tags/python/">python</a>
+    
+    <a href="https://anTtutu.github.io/tags/rec/">rec</a>
+    
+    <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
+    
+    <a href="https://anTtutu.github.io/tags/shell/">shell</a>
+    
+    <a href="https://anTtutu.github.io/tags/springboot/">springboot</a>
+    
+    <a href="https://anTtutu.github.io/tags/sqlmap/">sqlmap</a>
+    
+    <a href="https://anTtutu.github.io/tags/ssd/">ssd</a>
+    
+    <a href="https://anTtutu.github.io/tags/tcp/">tcp</a>
+    
+    <a href="https://anTtutu.github.io/tags/termux/">termux</a>
+    
+    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    
+    <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
+    
+    <a href="https://anTtutu.github.io/tags/virus/">virus</a>
+    
+    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
+    
+    <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
+    
+    <a href="https://anTtutu.github.io/tags/zk/">zk</a>
+    
+    <a href="https://anTtutu.github.io/tags/zookeeper/">zookeeper</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://anTtutu.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
