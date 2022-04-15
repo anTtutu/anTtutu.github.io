@@ -302,8 +302,8 @@
         var postToc = $(".post-toc");
         if (postToc.length) {
             var leftPos = $("#main").offset().left;
-            if(leftPos<220){
-                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
             }
 
             var t = postToc.offset().top - 20,
@@ -321,6 +321,10 @@
                 var e = $(window).scrollTop();
                 e < t ? postToc.css(a.start) : postToc.css(a.process)
             })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
         }
     })
 </script>
@@ -364,87 +368,87 @@
 <p>VxVM在linux、unix、HP-Unix、Solaris都有版本，可以跨平台，但是容灾方案一般不太建议跨平台做，比较难于设计和难于维护，建议在财务允许情况下采用相同的硬件设备。</p>
 <h2 id="1常用命令">1、常用命令</h2>
 <p>谈谈LVM的命令，目前linux下用的是2.0版本，兼容早期的1.1版本</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pvdisplay  
-pvcreate  
-pvremove  
-pvchange  
-vgdisplay  
-vgchange  
-vgcreate  
-vgextend  
-vgreduce  
-vgremove  
-lvdisplay  
-lvcreate  
-lvextend  
-lvreduce  
-lvremove  
-vgexpot  
-vgimport  
-vgcfgbackup  
-vgcfgrestore  
-vgscan  
-newfs  
-fsck  
-mount  
-umount  
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pvdisplay  
+</span></span><span style="display:flex;"><span>pvcreate  
+</span></span><span style="display:flex;"><span>pvremove  
+</span></span><span style="display:flex;"><span>pvchange  
+</span></span><span style="display:flex;"><span>vgdisplay  
+</span></span><span style="display:flex;"><span>vgchange  
+</span></span><span style="display:flex;"><span>vgcreate  
+</span></span><span style="display:flex;"><span>vgextend  
+</span></span><span style="display:flex;"><span>vgreduce  
+</span></span><span style="display:flex;"><span>vgremove  
+</span></span><span style="display:flex;"><span>lvdisplay  
+</span></span><span style="display:flex;"><span>lvcreate  
+</span></span><span style="display:flex;"><span>lvextend  
+</span></span><span style="display:flex;"><span>lvreduce  
+</span></span><span style="display:flex;"><span>lvremove  
+</span></span><span style="display:flex;"><span>vgexpot  
+</span></span><span style="display:flex;"><span>vgimport  
+</span></span><span style="display:flex;"><span>vgcfgbackup  
+</span></span><span style="display:flex;"><span>vgcfgrestore  
+</span></span><span style="display:flex;"><span>vgscan  
+</span></span><span style="display:flex;"><span>newfs  
+</span></span><span style="display:flex;"><span>fsck  
+</span></span><span style="display:flex;"><span>mount  
+</span></span><span style="display:flex;"><span>umount  
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="11-pvdisplay">1.1 pvdisplay</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pvdisplay <span style="color:#000;font-weight:bold">[</span>-v<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-b BlockList<span style="color:#000;font-weight:bold">]</span> pv_path   
-pvdisplay -l <span style="color:#000;font-weight:bold">[</span>-u<span style="color:#000;font-weight:bold">]</span> pv_path    
-  
--v    详细显示pv信息，包括每个block    
--b    BlockList   显示指定block的信息，可以用于查看该block 所属的lv，pe及其状态    
--l     显示该盘是否为lvm disk   
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pvdisplay <span style="color:#000;font-weight:bold">[</span>-v<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-b BlockList<span style="color:#000;font-weight:bold">]</span> pv_path   
+</span></span><span style="display:flex;"><span>pvdisplay -l <span style="color:#000;font-weight:bold">[</span>-u<span style="color:#000;font-weight:bold">]</span> pv_path    
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-v    详细显示pv信息，包括每个block    
+</span></span><span style="display:flex;"><span>-b    BlockList   显示指定block的信息，可以用于查看该block 所属的lv，pe及其状态    
+</span></span><span style="display:flex;"><span>-l     显示该盘是否为lvm disk   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例">例:</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># pvdisplay -b 04183 /dev/dsk/c1t6d0   </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># pvdisplay -b 04183 /dev/dsk/c1t6d0   </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="过程">过程：</h3>
 <p>该命令首先检查所要查看的pv是否在lvmtab中，如果在读取该pv所属vg的的group id，然后再从内存中查找该vg的信息，获取相应pv的信息。</p>
@@ -455,32 +459,32 @@ pvdisplay -l <span style="color:#000;font-weight:bold">[</span>-u<span style="co
 <li>3、有此可见当vg激活时，pv状态正常并不一定能够说明该盘状态正常。</li>
 </ul>
 <h2 id="12-pvcreate">1.2 pvcreate</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pvcreate <span style="color:#000;font-weight:bold">[</span>-b<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-B<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-d soft_defects<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-s disk_size<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-f<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-t disk_type<span style="color:#000;font-weight:bold">]</span> pv_path     
--B   创建boot盘，预留boot区，后用mkboot创建BDRA区，故pvcreate –B并不创建BDRA区    
--f   强制创建，即使disk上存在数据或曾经被lvm管理过。   
--s   disk_size  定义pv有效扇区的数量    
--t   disk_type  当pvcreate无法返回pv的大小时，需要指定设备类型， 如hp7959S，如不加disk_type则获取pv的设备信息。    
--d  soft_defects   指定BBR区block的最小数量，此值不能超过7039，默认为每8k一个block,   
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pvcreate <span style="color:#000;font-weight:bold">[</span>-b<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-B<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-d soft_defects<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-s disk_size<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-f<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-t disk_type<span style="color:#000;font-weight:bold">]</span> pv_path     
+</span></span><span style="display:flex;"><span>-B   创建boot盘，预留boot区，后用mkboot创建BDRA区，故pvcreate –B并不创建BDRA区    
+</span></span><span style="display:flex;"><span>-f   强制创建，即使disk上存在数据或曾经被lvm管理过。   
+</span></span><span style="display:flex;"><span>-s   disk_size  定义pv有效扇区的数量    
+</span></span><span style="display:flex;"><span>-t   disk_type  当pvcreate无法返回pv的大小时，需要指定设备类型， 如hp7959S，如不加disk_type则获取pv的设备信息。    
+</span></span><span style="display:flex;"><span>-d  soft_defects   指定BBR区block的最小数量，此值不能超过7039，默认为每8k一个block,   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-1">例:</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># pvcreate –f /dev/rdsk/c0t1d0 pvcreate –B /dev/rdsk/c0t1d0   </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># pvcreate –f /dev/rdsk/c0t1d0 pvcreate –B /dev/rdsk/c0t1d0   </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-1">注：</h3>
 <p>该命令重建PV的盘头信息，该命令用主机的CPU number和创建的时间生成一个唯一的PVID，并将其写入PVRA中用以标识每个PV，pv的盘头信息每个区大小固定，该命令只对盘头信息进行重建，对其他区如数据区的内容不作任何改变，故一个盘被重新pvcreate后用vgcfgrestore恢复其vg信息后，该盘上的数据不会丢失，仍可使用（不建议使用）。</p>
@@ -490,91 +494,91 @@ pvdisplay -l <span style="color:#000;font-weight:bold">[</span>-u<span style="co
 <li>3、 一个盘被重新pvcreate后，其上的VGRA的信息也将被删除，所有lv的信息也将被删除。</li>
 </ul>
 <h2 id="13-pvremove">1.3 pvremove</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pvremove pv_path （rdsk设备）  用于删除一个pv的LVM机构信息，删除后该pv不再是一个LVM结构的盘。   
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pvremove pv_path （rdsk设备）  用于删除一个pv的LVM机构信息，删除后该pv不再是一个LVM结构的盘。   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>该命令检查该硬盘的盘头信息，如果发现该盘包含VGRA的信息，则提示改判属于某个vg，无法完成（即使该vg已经不在lvmtab中，它仍然会报属于某个export掉的vg），需先用vgremove将该pv从vg中取出来（或者pvcreate 该盘）。</p>
 <h3 id="注-2">注：</h3>
 <p>该命令去除盘头的LVM信息，该信息删除后可以用vgcfgrestore（要先做pvcreate，而且该命令执行成功后，pvcreate 不加-f 也可成功执行）。</p>
 <h2 id="14--pvchange">1.4  pvchange</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pvchange <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> -s pv_path          
-pvchange <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> -S autoswitch pv_path         
-pvchange <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> -x extensibility pv_path         
-pvchange <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> -t IO_timeout pv_path         
-pvchange <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> -z sparepv pv_path    
-改变一个pv在vg中的访问路径，但如果该vg以共享方式被激活时，该命令不能执行。   
-  
--A：是否对所作的修改进行保存， y 保存，vgcfgbackup被执行，默认值；n不保存。   
--s立即执行使用其它路径访问该盘。    
--S 是否执行自动切换：y 当有一条更好的路径可用时进行切换，默认值；n 当有更好的路径可用时不切换，直至指定的路径不可用才切换到其它路径    
--t 设置pv不可访问的延时时间，超过该时间，驱动则认为该设备已坏。为0表示用该设备的默认值    
--z y  将一个vg内的pv转换成spare盘，n将spare盘转为一般的pv。旋转mirrodisk.   
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pvchange <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> -s pv_path          
+</span></span><span style="display:flex;"><span>pvchange <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> -S autoswitch pv_path         
+</span></span><span style="display:flex;"><span>pvchange <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> -x extensibility pv_path         
+</span></span><span style="display:flex;"><span>pvchange <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> -t IO_timeout pv_path         
+</span></span><span style="display:flex;"><span>pvchange <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> -z sparepv pv_path    
+</span></span><span style="display:flex;"><span>改变一个pv在vg中的访问路径，但如果该vg以共享方式被激活时，该命令不能执行。   
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-A：是否对所作的修改进行保存， y 保存，vgcfgbackup被执行，默认值；n不保存。   
+</span></span><span style="display:flex;"><span>-s立即执行使用其它路径访问该盘。    
+</span></span><span style="display:flex;"><span>-S 是否执行自动切换：y 当有一条更好的路径可用时进行切换，默认值；n 当有更好的路径可用时不切换，直至指定的路径不可用才切换到其它路径    
+</span></span><span style="display:flex;"><span>-t 设置pv不可访问的延时时间，超过该时间，驱动则认为该设备已坏。为0表示用该设备的默认值    
+</span></span><span style="display:flex;"><span>-z y  将一个vg内的pv转换成spare盘，n将spare盘转为一般的pv。旋转mirrodisk.   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-2">例：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic">#当路径不可用时切换，且切换后即使原路径可用也不切换回来。   </span>
-<span style="color:#998;font-style:italic"># pvchange -S n /dev/dsk/c0t0d0     </span>
-  
-<span style="color:#998;font-style:italic">#手动设置pv使用其它路径    </span>
-<span style="color:#998;font-style:italic"># pvchange -s /dev/dsk/c2t0d2     </span>
-  
-<span style="color:#998;font-style:italic">#设置 IO_timeout 值到60秒    </span>
-<span style="color:#998;font-style:italic"># pvchange -t 60 /dev/dsk/c2t0d2     </span>
-  
-<span style="color:#998;font-style:italic">#改变一个空盘成spare盘    </span>
-<span style="color:#998;font-style:italic">#pvchange -z y /dev/dsk/c2t0d2     </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic">#当路径不可用时切换，且切换后即使原路径可用也不切换回来。   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># pvchange -S n /dev/dsk/c0t0d0     </span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#手动设置pv使用其它路径    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># pvchange -s /dev/dsk/c2t0d2     </span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#设置 IO_timeout 值到60秒    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># pvchange -t 60 /dev/dsk/c2t0d2     </span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#改变一个空盘成spare盘    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#pvchange -z y /dev/dsk/c2t0d2     </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="15-vgdisplay">1.5 vgdisplay</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pvdisplay <span style="color:#000;font-weight:bold">[</span>-v<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-b BlockList<span style="color:#000;font-weight:bold">]</span> pv_path    
-  
--v   详细显示vg的信息，包括lv及pv的简要信息。   
-不加参数显示所有的vg信息。   
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pvdisplay <span style="color:#000;font-weight:bold">[</span>-v<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-b BlockList<span style="color:#000;font-weight:bold">]</span> pv_path    
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-v   详细显示vg的信息，包括lv及pv的简要信息。   
+</span></span><span style="display:flex;"><span>不加参数显示所有的vg信息。   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-3">注：</h3>
 <ul>
@@ -586,7 +590,7 @@ pvchange <span style="color:#000;font-weight:bold">[</span>-A autobackup<span st
 <li>6、如果在激活之前其中一块硬盘不正常（盘头信息不正常或者盘不能访问），则该盘在激活过程中就无法将该盘的盘头信息读入内存，激活后该vg就会报can’t query physical volume，同时所显示的act pv（激活的pv数量）就会比cur pv（盘头信息中该vg包含的pv数量）少一个。</li>
 </ul>
 <h2 id="16-vgchange">1.6 vgchange</h2>
-<pre><code>vgchange –a y 以普通模式激活VG        
+<pre tabindex="0"><code>vgchange –a y 以普通模式激活VG        
 vgchange –a y –q n 以去掉qurom的方式激活vg        
 vgchange –a e 以独享方式激活vg,一般为cluster中的vg,设置成exclusive VG    
 vgchange –c y  添加exclusive属性    
@@ -603,64 +607,64 @@ vgchange  -c n  去除exclusive属性，如果该vg原来是share方式，执行
 </ul>
 <p>在VGRA中记录了VG的激活方式，所以我们必须根据VG的特点选择对应的激活方式。</p>
 <h2 id="17-vgcreate">1.7 vgcreate</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">创建vg，并在创建vg的硬盘上创建VGRA区。    
-vgcreate <span style="color:#000;font-weight:bold">[</span>-f<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-x extensibility<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-e max_pe<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-l max_lv<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-p max_pv<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-s pe_size<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-g pvg_name<span style="color:#000;font-weight:bold">]</span> vg_name pv_path ...    
-  
-－f   强制执行，即使该 pv含数据或属于某个vg.    
-－l max_lv   一个vg内lv的最大数量，（默认值255个）   
-－e max_pe   PE/Pv最大值（默认1016个，最大值65535）    
-－p max_pv   一个vg内pv的最大数量（默认16个，最大值255个）   
-－s pe_size  设置pe的大小 （默认4M，最大值256），   
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>创建vg，并在创建vg的硬盘上创建VGRA区。    
+</span></span><span style="display:flex;"><span>vgcreate <span style="color:#000;font-weight:bold">[</span>-f<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-x extensibility<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-e max_pe<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-l max_lv<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-p max_pv<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-s pe_size<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-g pvg_name<span style="color:#000;font-weight:bold">]</span> vg_name pv_path ...    
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>－f   强制执行，即使该 pv含数据或属于某个vg.    
+</span></span><span style="display:flex;"><span>－l max_lv   一个vg内lv的最大数量，（默认值255个）   
+</span></span><span style="display:flex;"><span>－e max_pe   PE/Pv最大值（默认1016个，最大值65535）    
+</span></span><span style="display:flex;"><span>－p max_pv   一个vg内pv的最大数量（默认16个，最大值255个）   
+</span></span><span style="display:flex;"><span>－s pe_size  设置pe的大小 （默认4M，最大值256），   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-3">例：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># mkdir /dev/vg01    </span>
-<span style="color:#998;font-style:italic"># mknod /dev/vg01/group c 64 0x010000   </span>
-<span style="color:#998;font-style:italic"># chown –R root:sys /dev/vg01   </span>
-<span style="color:#998;font-style:italic"># chmod 755 /dev/vg01    </span>
-<span style="color:#998;font-style:italic"># chmod 640 /dev/vg01/group    </span>
-<span style="color:#998;font-style:italic"># vgcreate vg01 /dev/dsk/c0t1d0 /dev/dsk/c0t2d0     </span>
-  
-Specify the maximum number of LVs allowed in the VG <span style="color:#000;font-weight:bold">(</span>Default: 255<span style="color:#000;font-weight:bold">)</span>   
-<span style="color:#998;font-style:italic"># vgcreate –l 1-255 vg01 /dev/dsk/c0t1d0 /dev/dsk/c0t2d0    </span>
-Specify the maximum number of PVs allowed in the VG <span style="color:#000;font-weight:bold">(</span>Default: 16<span style="color:#000;font-weight:bold">)</span>   
-<span style="color:#998;font-style:italic"># vgcreate –p 1-255 vg01 /dev/dsk/c0t1d0 /dev/dsk/c0t2d0   </span>
-Specify the extent size <span style="color:#000;font-weight:bold">(</span>Default: 4MB<span style="color:#000;font-weight:bold">)</span>    
-<span style="color:#998;font-style:italic"># vgcreate –s 1-256 vg01 /dev/dsk/c0t1d0 /dev/dsk/c0t2d0    </span>
-Specify the maximum PE/PV <span style="color:#000;font-weight:bold">(</span>Default: 1016, or the number of PEs on largest initial disk<span style="color:#000;font-weight:bold">)</span>    
-<span style="color:#998;font-style:italic"># vgcreate –e 1-65535 vg01 /dev/dsk/c0t1d0 /dev/dsk/c0t2d0      </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># mkdir /dev/vg01    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># mknod /dev/vg01/group c 64 0x010000   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># chown –R root:sys /dev/vg01   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># chmod 755 /dev/vg01    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># chmod 640 /dev/vg01/group    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgcreate vg01 /dev/dsk/c0t1d0 /dev/dsk/c0t2d0     </span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>Specify the maximum number of LVs allowed in the VG <span style="color:#000;font-weight:bold">(</span>Default: 255<span style="color:#000;font-weight:bold">)</span>   
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgcreate –l 1-255 vg01 /dev/dsk/c0t1d0 /dev/dsk/c0t2d0    </span>
+</span></span><span style="display:flex;"><span>Specify the maximum number of PVs allowed in the VG <span style="color:#000;font-weight:bold">(</span>Default: 16<span style="color:#000;font-weight:bold">)</span>   
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgcreate –p 1-255 vg01 /dev/dsk/c0t1d0 /dev/dsk/c0t2d0   </span>
+</span></span><span style="display:flex;"><span>Specify the extent size <span style="color:#000;font-weight:bold">(</span>Default: 4MB<span style="color:#000;font-weight:bold">)</span>    
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgcreate –s 1-256 vg01 /dev/dsk/c0t1d0 /dev/dsk/c0t2d0    </span>
+</span></span><span style="display:flex;"><span>Specify the maximum PE/PV <span style="color:#000;font-weight:bold">(</span>Default: 1016, or the number of PEs on largest initial disk<span style="color:#000;font-weight:bold">)</span>    
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgcreate –e 1-65535 vg01 /dev/dsk/c0t1d0 /dev/dsk/c0t2d0      </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="过程-2">过程：</h3>
 <ul>
@@ -677,93 +681,93 @@ Specify the maximum PE/PV <span style="color:#000;font-weight:bold">(</span>Defa
 </ul>
 <p>系统中的内核参数max_vg设定，如果这一值对于客户将来的业务发展可能不够的话建议尽早修改，避免后期修改需要重起主机。</p>
 <h2 id="18-vgextend">1.8 vgextend</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vgextend <span style="color:#000;font-weight:bold">[</span>-f<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-g pvg_name<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-x extensibility<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-z sparepv<span style="color:#000;font-weight:bold">]</span> vg_name pv_path ... 添加pv扩展vg    
-  
--A是否对所作的修改进行保存， y 保存，vgcfgbackup被执行，默认值；n不保存。   
--x 可扩展性设置    
--z  添加入的盘作为spare盘使用或普通盘使用。y为spare  n为普通盘   
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vgextend <span style="color:#000;font-weight:bold">[</span>-f<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-g pvg_name<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-x extensibility<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-z sparepv<span style="color:#000;font-weight:bold">]</span> vg_name pv_path ... 添加pv扩展vg    
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-A是否对所作的修改进行保存， y 保存，vgcfgbackup被执行，默认值；n不保存。   
+</span></span><span style="display:flex;"><span>-x 可扩展性设置    
+</span></span><span style="display:flex;"><span>-z  添加入的盘作为spare盘使用或普通盘使用。y为spare  n为普通盘   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-4">例：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># vgextend /dev/vg03 /dev/dsk/c0t1d0 /dev/dsk/c0t2d0   </span>
-<span style="color:#998;font-style:italic">#向pvg0上的vg03加载两块硬盘    </span>
-<span style="color:#998;font-style:italic"># vgextend -g PVG0 /dev/vg03 /dev/dsk/c0t3d0 /dev/dsk/c0t4d0   </span>
-<span style="color:#998;font-style:italic">#添加一块host spare盘    </span>
-<span style="color:#998;font-style:italic"># vgextend -z y /dev/vg03 /dev/dsk/c2t4d0   </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgextend /dev/vg03 /dev/dsk/c0t1d0 /dev/dsk/c0t2d0   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#向pvg0上的vg03加载两块硬盘    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgextend -g PVG0 /dev/vg03 /dev/dsk/c0t3d0 /dev/dsk/c0t4d0   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#添加一块host spare盘    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgextend -z y /dev/vg03 /dev/dsk/c2t4d0   </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-6">注：</h3>
 <p>vg共享激活时不可使用该命令<br>
 对于多路径硬盘，用vgextend还可用于添加多路径，如果客户没有使用多路径软件，使用系统的pv link功能，系统按照lvmtab中的顺序使用路径进行读写，并且不具备balance功能，仅起到链路切换的功能，有些多路径软件并不聚合路径，但具有balance功能（当然同时也需要存储本身支持），如powerpath，那么即使vg中仅包含其中一条路径，IO仍然会分布在多条路径上，并且即使这条路径损害，也仍然可以对该盘进行访问。</p>
 <h2 id="19-vgreduce">1.9 vgreduce</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/usr/sbin/vgreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> vg_name pv_path ...         
-/usr/sbin/vgreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-l<span style="color:#000;font-weight:bold">]</span> vg_name pv_path         
-/usr/sbin/vgreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-f<span style="color:#000;font-weight:bold">]</span> vg_name 从vg中删除pv    
-  
--A是否对所作的修改进行保存， y 保存，vgcfgbackup被执行，默认值；n不保存。   
-－f 删除vg中丢失的pv，所谓丢失的pv主要是当cur pv大于act pv是，将没有被加载如内存中的pv去掉，该步骤同样需要该pv上没有lv的信息。  
--l删除lvmtab中pv的信息，同时清除掉该盘盘头中vgid的信息（当然如果该盘不能访问则忽略改步骤），同样要求该pv上不能含有lv信息。     
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/sbin/vgreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> vg_name pv_path ...         
+</span></span><span style="display:flex;"><span>/usr/sbin/vgreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-l<span style="color:#000;font-weight:bold">]</span> vg_name pv_path         
+</span></span><span style="display:flex;"><span>/usr/sbin/vgreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-f<span style="color:#000;font-weight:bold">]</span> vg_name 从vg中删除pv    
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-A是否对所作的修改进行保存， y 保存，vgcfgbackup被执行，默认值；n不保存。   
+</span></span><span style="display:flex;"><span>－f 删除vg中丢失的pv，所谓丢失的pv主要是当cur pv大于act pv是，将没有被加载如内存中的pv去掉，该步骤同样需要该pv上没有lv的信息。  
+</span></span><span style="display:flex;"><span>-l删除lvmtab中pv的信息，同时清除掉该盘盘头中vgid的信息（当然如果该盘不能访问则忽略改步骤），同样要求该pv上不能含有lv信息。     
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-5">例：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">从vg01中去除c0t1d0    
-vgreduce /dev/vg01 /dev/dsk/c0t1d0       
-将vg01中丢失的pv全部去掉，    
-vgreduce -f /dev/vg01    
-将vg01中标示为丢失的pv去除（虽然还在lvmtab中）    
-PV with key <span style="color:#099">0</span> successfully deleted from vg /dev/vg01 Repair <span style="color:#000;font-weight:bold">done</span>, please <span style="color:#000;font-weight:bold">do</span> the following steps.....:   
-1.  Save /etc/lvmtab to another file.   
-2.  Remove /etc/lvmtab.    
-3.  Use vgscan -v to recreate /etc/lvmtab.    
-4.  NOW use vgcfgbackup<span style="color:#000;font-weight:bold">(</span>1M<span style="color:#000;font-weight:bold">)</span> to save the LVM setup.   
-  
-<span style="color:#998;font-style:italic"># vgreduce -l /dev/vg01   </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>从vg01中去除c0t1d0    
+</span></span><span style="display:flex;"><span>vgreduce /dev/vg01 /dev/dsk/c0t1d0       
+</span></span><span style="display:flex;"><span>将vg01中丢失的pv全部去掉，    
+</span></span><span style="display:flex;"><span>vgreduce -f /dev/vg01    
+</span></span><span style="display:flex;"><span>将vg01中标示为丢失的pv去除（虽然还在lvmtab中）    
+</span></span><span style="display:flex;"><span>PV with key <span style="color:#099">0</span> successfully deleted from vg /dev/vg01 Repair <span style="color:#000;font-weight:bold">done</span>, please <span style="color:#000;font-weight:bold">do</span> the following steps.....:   
+</span></span><span style="display:flex;"><span>1.  Save /etc/lvmtab to another file.   
+</span></span><span style="display:flex;"><span>2.  Remove /etc/lvmtab.    
+</span></span><span style="display:flex;"><span>3.  Use vgscan -v to recreate /etc/lvmtab.    
+</span></span><span style="display:flex;"><span>4.  NOW use vgcfgbackup<span style="color:#000;font-weight:bold">(</span>1M<span style="color:#000;font-weight:bold">)</span> to save the LVM setup.   
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgreduce -l /dev/vg01   </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-7">注：</h3>
 <ul>
@@ -772,91 +776,91 @@ PV with key <span style="color:#099">0</span> successfully deleted from vg /dev/
 <li>3、当被删除的pv上包含lv的信息时，该pv无法被删除，即使使用-f参数。</li>
 </ul>
 <h2 id="110-vgremove">1.10 Vgremove</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vgremove vg_name ...    
-在系统中删除指定的vg，删除前要求该vg中只剩下一个pv,同时所有的lv均已被删除。   
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vgremove vg_name ...    
+</span></span><span style="display:flex;"><span>在系统中删除指定的vg，删除前要求该vg中只剩下一个pv,同时所有的lv均已被删除。   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-6">例：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># vgremove /dev/vg02   </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgremove /dev/vg02   </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-8">注：</h3>
 <p>使用该命令后，lvmtab中vg的信息和盘头中的vgid信息被删除。盘头其他信息及系统中的设备文件将不会被删除。即使该vg 处于激活状态该命令仍将vg删除掉。</p>
 <h2 id="111-vgmodify">1.11 Vgmodify</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vgmodify - 处理现有LVM 卷组的物理卷大小更改以及修改其配置参数    
-  
--e max_pe 设置可从卷组中任何物理卷分配的最大物理盘区数（请参阅vgcreate<span style="color:#000;font-weight:bold">(</span>1M<span style="color:#000;font-weight:bold">)</span> -e）    
--l max_lv 设置卷组中允许包含的最大逻辑卷数（请参阅vgcreate<span style="color:#000;font-weight:bold">(</span>1M<span style="color:#000;font-weight:bold">)</span> -l）。   
--o 优化卷组设置。尽可能上调盘区和物理卷的最大数量，以便充分利用每个物理卷 上为LVM 配置数据保留的空间。  
-  
-此选项不能与-l、-p、-n、-t 或-e 一起使用。    
--p max_pv 设置卷组中允许包含的最大物理卷数（请参阅vgcreate<span style="color:#000;font-weight:bold">(</span>1M<span style="color:#000;font-weight:bold">)</span> -p）   
--r 报告所使用的其他选项的效果。不会对卷组进行任何更改。    
--t 生成一个显示卷组的最佳可能设置（max_pe、max_pv 和最大磁盘大小）的表。     
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vgmodify - 处理现有LVM 卷组的物理卷大小更改以及修改其配置参数    
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-e max_pe 设置可从卷组中任何物理卷分配的最大物理盘区数（请参阅vgcreate<span style="color:#000;font-weight:bold">(</span>1M<span style="color:#000;font-weight:bold">)</span> -e）    
+</span></span><span style="display:flex;"><span>-l max_lv 设置卷组中允许包含的最大逻辑卷数（请参阅vgcreate<span style="color:#000;font-weight:bold">(</span>1M<span style="color:#000;font-weight:bold">)</span> -l）。   
+</span></span><span style="display:flex;"><span>-o 优化卷组设置。尽可能上调盘区和物理卷的最大数量，以便充分利用每个物理卷 上为LVM 配置数据保留的空间。  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>此选项不能与-l、-p、-n、-t 或-e 一起使用。    
+</span></span><span style="display:flex;"><span>-p max_pv 设置卷组中允许包含的最大物理卷数（请参阅vgcreate<span style="color:#000;font-weight:bold">(</span>1M<span style="color:#000;font-weight:bold">)</span> -p）   
+</span></span><span style="display:flex;"><span>-r 报告所使用的其他选项的效果。不会对卷组进行任何更改。    
+</span></span><span style="display:flex;"><span>-t 生成一个显示卷组的最佳可能设置（max_pe、max_pv 和最大磁盘大小）的表。     
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-7">例：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic">#将每个物理卷的最大物理盘区数设置为4000，将最大物理卷数设置为50，并尽可能利用盘区重新编号：    </span>
-<span style="color:#998;font-style:italic"># vgmodify -p 50 -e 4000 -n /dev/vg02   </span>
-<span style="color:#998;font-style:italic">#详细检查（不更改）优化卷组设置的影响：   </span>
-<span style="color:#998;font-style:italic"># vgmodify -v -r -o /dev/vg02    </span>
-<span style="color:#998;font-style:italic">#详细应用由优化卷组设置所导致的更改：    </span>
-<span style="color:#998;font-style:italic"># vgmodify -v -o /dev/vg02    </span>
-<span style="color:#998;font-style:italic">#如果vgmodify 命令发生中断，可以输入以下内容为卷组中的所有物理卷恢复新配置：   </span>
-<span style="color:#998;font-style:italic"># /etc/lvmconf/vg02_restore /etc/lvmconf/vg02.conf  </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic">#将每个物理卷的最大物理盘区数设置为4000，将最大物理卷数设置为50，并尽可能利用盘区重新编号：    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgmodify -p 50 -e 4000 -n /dev/vg02   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#详细检查（不更改）优化卷组设置的影响：   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgmodify -v -r -o /dev/vg02    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#详细应用由优化卷组设置所导致的更改：    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgmodify -v -o /dev/vg02    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#如果vgmodify 命令发生中断，可以输入以下内容为卷组中的所有物理卷恢复新配置：   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># /etc/lvmconf/vg02_restore /etc/lvmconf/vg02.conf  </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="112-lvdisplay">1.12 lvdisplay</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lvdisplay <span style="color:#000;font-weight:bold">[</span>-k<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-v<span style="color:#000;font-weight:bold">]</span> lv_path   
-  
--v  详细显示该lv的信息。    
--k   同-v，除了显示pvkey<span style="color:#000;font-weight:bold">(</span>Physical Volume Number in VG<span style="color:#000;font-weight:bold">)</span>,而非pvname。   
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lvdisplay <span style="color:#000;font-weight:bold">[</span>-k<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-v<span style="color:#000;font-weight:bold">]</span> lv_path   
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-v  详细显示该lv的信息。    
+</span></span><span style="display:flex;"><span>-k   同-v，除了显示pvkey<span style="color:#000;font-weight:bold">(</span>Physical Volume Number in VG<span style="color:#000;font-weight:bold">)</span>,而非pvname。   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-9">注：</h3>
 <ul>
@@ -864,110 +868,110 @@ PV with key <span style="color:#099">0</span> successfully deleted from vg /dev/
 <li>2、如果硬盘故障lv在进行io读写时出现错误，被访问的lv会处于stale状态，其他没有被访问的lv仍处于current状态。</li>
 </ul>
 <h2 id="113-lvcreate">1.13 lvcreate</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lvcreate <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-c mirror_consistency<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-C contiguous<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-d schedule<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-D distributed<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-i stripes -I stripe_size<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-l le_number | -L lv_size<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-m mirror_copies<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-M mirror_write_cache<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-n lv_name<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-p permission<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-r relocate<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-s strict<span style="color:#000;font-weight:bold">]</span> vg_name 创建lv    
-  
--d 当设置了mirror时，设置向原盘和mirro 盘写方式，  
--p 为Parallel –s 为Sequential方式：   
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lvcreate <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-c mirror_consistency<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-C contiguous<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-d schedule<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-D distributed<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-i stripes -I stripe_size<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-l le_number | -L lv_size<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-m mirror_copies<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-M mirror_write_cache<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-n lv_name<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-p permission<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-r relocate<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-s strict<span style="color:#000;font-weight:bold">]</span> vg_name 创建lv    
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-d 当设置了mirror时，设置向原盘和mirro 盘写方式，  
+</span></span><span style="display:flex;"><span>-p 为Parallel –s 为Sequential方式：   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-8">例：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Create a mirrored LV using the parallel scheduling policy:   
-<span style="color:#998;font-style:italic"># lvcreate –L 32 –n data –m 1 –d p  vg01    </span>
-reate a mirrored LV using the sequential scheduling policy:   
-<span style="color:#998;font-style:italic"># lvcreate –L 32 –n data –m 1 –d s  vg01   </span>
-Change the scheduling policy on an existing LV:   
-<span style="color:#998;font-style:italic"># lvchange  –d p  /dev/vg01/data      </span>
-  
--c 数据一致性恢复设置，配合-M n参数使用，  
-y <span style="color:#000;font-weight:bold">(</span>默认<span style="color:#000;font-weight:bold">)</span> 系统crash后 nomwcsyncd 自动同步整个lv，对于大文件系统则需要花费比较长的时间。  
-n 不进行恢复，常用于向swap这样的区域。     
-  
--M  写缓冲设置    
-•Create a 32-entry MWC table in memory to track pending write requests    
-•Subdivide each LV into 256K “Logical Track Groups” <span style="color:#000;font-weight:bold">(</span>LTGs<span style="color:#000;font-weight:bold">)</span>.    
-•When an LTG has a pending write request, mark that LTG “dirty” in the MWC.   
-•When a write request completes, mark that LTG “clean” in the MWC. How does LVM retain MWC information across reboots/crashes?   
-•Create an MCR table in the VGRA on disk •If a write is scheduled to a new LTG, create an MWC entry and flush to the MCR on-disk   
-•If a write is scheduled to an LTG already in the MWC, no need to flush   
-•After a crash, LVM only resyncs LTGs listed in the MCR 有y（默认） n 两个参数   
-  
-例2：   
-Create an LV using the MWC consistency recovery policy   
-<span style="color:#998;font-style:italic"># lvcreate –L 32 –m 1 –n data  –M y  vg01    </span>
-Create an LV using the NOMWC consistency recovery policy   
-<span style="color:#998;font-style:italic"># lvcreate –L 32 –m 1 –n data  –M n –c y  vg01    </span>
-Create an LV with using the NONE consistency recovery policy   
-<span style="color:#998;font-style:italic"># lvcreate –L 32 –m 1 –n data  –M n –c n  vg01    </span>
-Change the consistency recovery policy on an existing LV <span style="color:#000;font-weight:bold">(</span>umount required!<span style="color:#000;font-weight:bold">)</span>   
-<span style="color:#998;font-style:italic"># umount /data    </span>
-<span style="color:#998;font-style:italic"># lvchange –M y /dev/vg01/data   </span>
-<span style="color:#998;font-style:italic"># mount /data     </span>
-  
--s mirror分布设置，
-g PVG-Strict     并行分布在不同的pv上（需在不同的链路上）     
-y Strict 在不同的盘上   
-n Non-Strict可在同一块盘上。      
-  
--l le的数量设置LV的大小（1－65535）    
--L LV的实际大小（以M为单位，1－1666772） 如果这两个值都没有设，默认值为0   
-    
--n lv的名字，如没有则用lvol，  
--m  mirror数量的设置。  
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Create a mirrored LV using the parallel scheduling policy:   
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># lvcreate –L 32 –n data –m 1 –d p  vg01    </span>
+</span></span><span style="display:flex;"><span>reate a mirrored LV using the sequential scheduling policy:   
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># lvcreate –L 32 –n data –m 1 –d s  vg01   </span>
+</span></span><span style="display:flex;"><span>Change the scheduling policy on an existing LV:   
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># lvchange  –d p  /dev/vg01/data      </span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-c 数据一致性恢复设置，配合-M n参数使用，  
+</span></span><span style="display:flex;"><span>y <span style="color:#000;font-weight:bold">(</span>默认<span style="color:#000;font-weight:bold">)</span> 系统crash后 nomwcsyncd 自动同步整个lv，对于大文件系统则需要花费比较长的时间。  
+</span></span><span style="display:flex;"><span>n 不进行恢复，常用于向swap这样的区域。     
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-M  写缓冲设置    
+</span></span><span style="display:flex;"><span>•Create a 32-entry MWC table in memory to track pending write requests    
+</span></span><span style="display:flex;"><span>•Subdivide each LV into 256K “Logical Track Groups” <span style="color:#000;font-weight:bold">(</span>LTGs<span style="color:#000;font-weight:bold">)</span>.    
+</span></span><span style="display:flex;"><span>•When an LTG has a pending write request, mark that LTG “dirty” in the MWC.   
+</span></span><span style="display:flex;"><span>•When a write request completes, mark that LTG “clean” in the MWC. How does LVM retain MWC information across reboots/crashes?   
+</span></span><span style="display:flex;"><span>•Create an MCR table in the VGRA on disk •If a write is scheduled to a new LTG, create an MWC entry and flush to the MCR on-disk   
+</span></span><span style="display:flex;"><span>•If a write is scheduled to an LTG already in the MWC, no need to flush   
+</span></span><span style="display:flex;"><span>•After a crash, LVM only resyncs LTGs listed in the MCR 有y（默认） n 两个参数   
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>例2：   
+</span></span><span style="display:flex;"><span>Create an LV using the MWC consistency recovery policy   
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># lvcreate –L 32 –m 1 –n data  –M y  vg01    </span>
+</span></span><span style="display:flex;"><span>Create an LV using the NOMWC consistency recovery policy   
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># lvcreate –L 32 –m 1 –n data  –M n –c y  vg01    </span>
+</span></span><span style="display:flex;"><span>Create an LV with using the NONE consistency recovery policy   
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># lvcreate –L 32 –m 1 –n data  –M n –c n  vg01    </span>
+</span></span><span style="display:flex;"><span>Change the consistency recovery policy on an existing LV <span style="color:#000;font-weight:bold">(</span>umount required!<span style="color:#000;font-weight:bold">)</span>   
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># umount /data    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># lvchange –M y /dev/vg01/data   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># mount /data     </span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-s mirror分布设置，
+</span></span><span style="display:flex;"><span>g PVG-Strict     并行分布在不同的pv上（需在不同的链路上）     
+</span></span><span style="display:flex;"><span>y Strict 在不同的盘上   
+</span></span><span style="display:flex;"><span>n Non-Strict可在同一块盘上。      
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-l le的数量设置LV的大小（1－65535）    
+</span></span><span style="display:flex;"><span>-L LV的实际大小（以M为单位，1－1666772） 如果这两个值都没有设，默认值为0   
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>-n lv的名字，如没有则用lvol，  
+</span></span><span style="display:flex;"><span>-m  mirror数量的设置。  
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-10">注：</h3>
 <ul>
@@ -976,98 +980,98 @@ n Non-Strict可在同一块盘上。
 <li>3、如果lv使用了条带划，那么以后如果扩盘用以扩展该lv，那么所扩盘的数量必须是创建时指定的-i stripes 的整数倍。  该命令同时在该vg目录中生成lv设备文件，所以在双击环境中需要通过vgimport命令同步设备文件的信息，通过mknod命令生成相应的设备文件。</li>
 </ul>
 <h2 id="114-lvextend">1.14 lvextend</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lvextend <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">{</span>-l le_number | -L lv_size | -m mirror_copies<span style="color:#000;font-weight:bold">}</span> lv_path <span style="color:#000;font-weight:bold">[</span>pv_path ... | pvg_name ...<span style="color:#000;font-weight:bold">]</span> 增加空间或增加mirror    
-  
--l le的数量设置LV的大小（1－65535）    
--L LV的实际大小（以M为单位，1－1666772）   
--m 设置mirror,     
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lvextend <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">{</span>-l le_number | -L lv_size | -m mirror_copies<span style="color:#000;font-weight:bold">}</span> lv_path <span style="color:#000;font-weight:bold">[</span>pv_path ... | pvg_name ...<span style="color:#000;font-weight:bold">]</span> 增加空间或增加mirror    
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-l le的数量设置LV的大小（1－65535）    
+</span></span><span style="display:flex;"><span>-L LV的实际大小（以M为单位，1－1666772）   
+</span></span><span style="display:flex;"><span>-m 设置mirror,     
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-9">例：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic">#增加lvol3到100个pe    </span>
-<span style="color:#998;font-style:italic"># lvextend -l 100 /dev/vg01/lvol3   </span>
-<span style="color:#998;font-style:italic">#增加lvol3到400M    </span>
-<span style="color:#998;font-style:italic"># lvextend -L 400 /dev/vg01/lvol4   </span>
-<span style="color:#998;font-style:italic">#在一个指定的硬盘上创建lv的mirror    </span>
-<span style="color:#998;font-style:italic"># lvextend -m 1 /dev/vg00/lvol3 /dev/dsk/c0t3d0   </span>
-  
-<span style="color:#998;font-style:italic">#增加文件系统步骤：    </span>
-<span style="color:#998;font-style:italic"># lvextend -L 400 /dev/vg06/lvol3   </span>
-<span style="color:#998;font-style:italic"># umount /dev/vg06/lvol3    </span>
-<span style="color:#998;font-style:italic"># extendfs /dev/vg06/rlvol3  (注意要使用带r的设备文件)   </span>
-<span style="color:#998;font-style:italic"># mount /dev/vg06/lvol3 /mnt    </span>
-  
-<span style="color:#998;font-style:italic">#如果使用了onlineJFS 在线扩展文件系统   </span>
-<span style="color:#998;font-style:italic"># lvextend -L 400 /dev/vg06/lvol3  fsadm –b 400M /mnt  （注意要加M 兆,否则默认单位为b，byte）    </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic">#增加lvol3到100个pe    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># lvextend -l 100 /dev/vg01/lvol3   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#增加lvol3到400M    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># lvextend -L 400 /dev/vg01/lvol4   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#在一个指定的硬盘上创建lv的mirror    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># lvextend -m 1 /dev/vg00/lvol3 /dev/dsk/c0t3d0   </span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#增加文件系统步骤：    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># lvextend -L 400 /dev/vg06/lvol3   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># umount /dev/vg06/lvol3    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># extendfs /dev/vg06/rlvol3  (注意要使用带r的设备文件)   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># mount /dev/vg06/lvol3 /mnt    </span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#如果使用了onlineJFS 在线扩展文件系统   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># lvextend -L 400 /dev/vg06/lvol3  fsadm –b 400M /mnt  （注意要加M 兆,否则默认单位为b，byte）    </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-11">注：</h3>
 <p>使用lvextend扩展lv后，如果不指定硬盘，lvm会按照vg中pv key的顺序，寻找每一个没有分配的pe，将扩展的pe 按照空闲pe num从小到大顺序分配下去，所以使用该命令是要注意pv中pe的使用情况，避免造成lv过多的碎片。</p>
 <h2 id="115-lvreduce">1.15 lvreduce</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lvreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-f<span style="color:#000;font-weight:bold">]</span> -l le_number lv_path        
-lvreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-f<span style="color:#000;font-weight:bold">]</span> -L lv_size lv_path         
-lvreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> -m mirror_copies lv_path  <span style="color:#000;font-weight:bold">[</span>pv_path ...<span style="color:#000;font-weight:bold">]</span>   
-lvreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> -k -m mirror_copies lv_path 减少lv的空间或mirror的数量。      
--f 强制执行，如果较少到的空间小于数据空间，不会出现提示执行，数据将被破坏且无法mount,    
--k 针对missed盘删除lv，常配合-m 使用，    
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lvreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-f<span style="color:#000;font-weight:bold">]</span> -l le_number lv_path        
+</span></span><span style="display:flex;"><span>lvreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-f<span style="color:#000;font-weight:bold">]</span> -L lv_size lv_path         
+</span></span><span style="display:flex;"><span>lvreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> -m mirror_copies lv_path  <span style="color:#000;font-weight:bold">[</span>pv_path ...<span style="color:#000;font-weight:bold">]</span>   
+</span></span><span style="display:flex;"><span>lvreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> -k -m mirror_copies lv_path 减少lv的空间或mirror的数量。      
+</span></span><span style="display:flex;"><span>-f 强制执行，如果较少到的空间小于数据空间，不会出现提示执行，数据将被破坏且无法mount,    
+</span></span><span style="display:flex;"><span>-k 针对missed盘删除lv，常配合-m 使用，    
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-10">例：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic">#减少lv到100个pe    </span>
-<span style="color:#998;font-style:italic"># lvreduce -l 100 /dev/vg01/lvol3   </span>
-<span style="color:#998;font-style:italic">#减少lv的mirror到一个    </span>
-<span style="color:#998;font-style:italic"># lvreduce -m 1 /dev/vg01/lvol5   </span>
-<span style="color:#998;font-style:italic">#去除mirror    </span>
-<span style="color:#998;font-style:italic"># lvreduce -m 0 /dev/vg01/lvol4 /dev/dsk/c1t0d0    </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic">#减少lv到100个pe    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># lvreduce -l 100 /dev/vg01/lvol3   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#减少lv的mirror到一个    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># lvreduce -m 1 /dev/vg01/lvol5   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#去除mirror    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># lvreduce -m 0 /dev/vg01/lvol4 /dev/dsk/c1t0d0    </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-12">注：</h3>
 <ul>
@@ -1078,17 +1082,17 @@ lvreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span st
 使用-k方式，如果该盘无法访问则跳过该步骤，仅将信息写到该lv所在的其它盘头上。</li>
 </ul>
 <h2 id="116-lvremove">1.16 lvremove</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lvremove <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-f<span style="color:#000;font-weight:bold">]</span> lv_path ... 删除指定的lv    
-  
--f 没有用户提示，直接强制执行。不加-f，系统会提示你敲y确认。  
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lvremove <span style="color:#000;font-weight:bold">[</span>-A autobackup<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-f<span style="color:#000;font-weight:bold">]</span> lv_path ... 删除指定的lv    
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-f 没有用户提示，直接强制执行。不加-f，系统会提示你敲y确认。  
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-11">例：</h3>
 <p>lvremove -f /dev/vg01/lvol5</p>
@@ -1098,76 +1102,76 @@ lvreduce <span style="color:#000;font-weight:bold">[</span>-A autobackup<span st
 <li>2、该命令同时会删除该vg目录中lv设备文件，所以在双击环境中需要通过vgimport命令同步设备文件的信息，或直接将该设备文件在另外一台主机中删除掉。</li>
 </ul>
 <h2 id="117-vgexpot">1.17 vgexpot</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vgexport <span style="color:#000;font-weight:bold">[</span>-m mapfile<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-p<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-v<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-f outfile<span style="color:#000;font-weight:bold">]</span> vg_name   
-vgexport -m mapfile -s -p -v vg_name   
-导出vg信息或从系统中删除vg信息。   
-  
--m  指定所存取的map名    
--p  执行命令但不从lvmtab中去除相应的vg及设备文件   
--v  显示执行过程及结果    
--f  将pv_path的信息写入outfile中    
--s  配和-v –p-m  命令使用，将vg信息写如一个map文件   
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vgexport <span style="color:#000;font-weight:bold">[</span>-m mapfile<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-p<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-v<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-f outfile<span style="color:#000;font-weight:bold">]</span> vg_name   
+</span></span><span style="display:flex;"><span>vgexport -m mapfile -s -p -v vg_name   
+</span></span><span style="display:flex;"><span>导出vg信息或从系统中删除vg信息。   
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-m  指定所存取的map名    
+</span></span><span style="display:flex;"><span>-p  执行命令但不从lvmtab中去除相应的vg及设备文件   
+</span></span><span style="display:flex;"><span>-v  显示执行过程及结果    
+</span></span><span style="display:flex;"><span>-f  将pv_path的信息写入outfile中    
+</span></span><span style="display:flex;"><span>-s  配和-v –p-m  命令使用，将vg信息写如一个map文件   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-12">例：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># vgexport vg01  导出vg，该操作从lvmtab中删除vg信息，并输出/dev/下对应vg的目录，设备文件，但对硬盘本身不做修改。   </span>
-<span style="color:#998;font-style:italic"># vgexport  -m /tmp/vg01.map –p –s vg01    导出vg，并存到vg01.map中，且不从lvmtab中去除相应的vg及设备文件   </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgexport vg01  导出vg，该操作从lvmtab中删除vg信息，并输出/dev/下对应vg的目录，设备文件，但对硬盘本身不做修改。   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgexport  -m /tmp/vg01.map –p –s vg01    导出vg，并存到vg01.map中，且不从lvmtab中去除相应的vg及设备文件   </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-14">注：</h3>
 <p>该操仅修改操作系统内关于vg的设备文件等信息，不会对硬盘造成破坏。</p>
 <h2 id="118-vgimport">1.18 vgimport</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vgimport <span style="color:#000;font-weight:bold">[</span>-m mapfile<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-p<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-v<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-f infile<span style="color:#000;font-weight:bold">]</span> vg_name pv_path   
-vgimport -m mapfile -s -v vg_name   
-  
--m  指定所存取的map名    
--p  执行命令但不向lvmtab中加入相应的vg及设备文件   
--v  显示执行过程及结果    
--s  配和-v -m  命令使用，基于一个map文件向系统中导入相应的信息   
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vgimport <span style="color:#000;font-weight:bold">[</span>-m mapfile<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-p<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-v<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-f infile<span style="color:#000;font-weight:bold">]</span> vg_name pv_path   
+</span></span><span style="display:flex;"><span>vgimport -m mapfile -s -v vg_name   
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-m  指定所存取的map名    
+</span></span><span style="display:flex;"><span>-p  执行命令但不向lvmtab中加入相应的vg及设备文件   
+</span></span><span style="display:flex;"><span>-v  显示执行过程及结果    
+</span></span><span style="display:flex;"><span>-s  配和-v -m  命令使用，基于一个map文件向系统中导入相应的信息   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-13">例:</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic">#导入c0t1d0 c0t3d0上的vg01    </span>
-<span style="color:#998;font-style:italic"># vgimport -v /dev/vg01 /dev/dsk/c0t1d0 /dev/dsk/c0t3d0 利用vg01.map加载vg01的信息    </span>
-<span style="color:#998;font-style:italic"># vgimport –m /tmp/vg01.map –s vg01</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic">#导入c0t1d0 c0t3d0上的vg01    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgimport -v /dev/vg01 /dev/dsk/c0t1d0 /dev/dsk/c0t3d0 利用vg01.map加载vg01的信息    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgimport –m /tmp/vg01.map –s vg01</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-15">注：</h3>
 <h4 id="vgimport操作一般包含以下几种方式">vgimport操作一般包含以下几种方式：</h4>
@@ -1179,66 +1183,66 @@ vgimport -m mapfile -s -v vg_name
 <p>这种情况下就必须要知道要导入的vg使用了那些硬盘，不管是ch设备还是c设备，因为这是没有map文件，就需要系统自己从这些硬盘的盘头读出这些信息，而不仅仅是像上一种方法一样仅仅是从map文件中读出vgid，然后匹配和这个id相同的硬盘。<br>
 由于这种方法是从盘头读出信息，而盘头本身并没有vg下lv的名字的信息，所以导入后所有的lv变成lvol1  lvol2&hellip;&hellip;&hellip;&hellip;等，这时就比较麻烦了，除非你知道原来的lv的名字及每个lv对应的0x0******的号码，然后将相同号码的lv  通过mv改名成你要的lv，否则就是数据都在你也没法用了。</p>
 <h2 id="119-vgcfgbackup">1.19 vgcfgbackup</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vgcfgbackup <span style="color:#000;font-weight:bold">[</span>-f vg_conf_path<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-u<span style="color:#000;font-weight:bold">]</span> vg_name    
-  
--f  将保存的vg的lvm配置信息保存到指定的路径中，默认情况为/etc/lvmconf/中   
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vgcfgbackup <span style="color:#000;font-weight:bold">[</span>-f vg_conf_path<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-u<span style="color:#000;font-weight:bold">]</span> vg_name    
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-f  将保存的vg的lvm配置信息保存到指定的路径中，默认情况为/etc/lvmconf/中   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-14">例：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># vgcfgbackup -f /tmp/vg00.backup vg00   </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgcfgbackup -f /tmp/vg00.backup vg00   </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-16">注：</h3>
 <p>该过程需要vg处于激活状态</p>
 <h2 id="120-vgcfgrestore">1.20 vgcfgrestore</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vgcfgrestore -n vg_name -l    
-vgcfgrestore <span style="color:#000;font-weight:bold">[</span>-R<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-F<span style="color:#000;font-weight:bold">]</span> -n vg_name <span style="color:#000;font-weight:bold">[</span>-o old_pv_path<span style="color:#000;font-weight:bold">]</span> pv_path   
-vgcfgrestore -f vg_conf_path -l    
-vgcfgrestore <span style="color:#000;font-weight:bold">[</span>-R<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-F<span style="color:#000;font-weight:bold">]</span> -f vg_conf_path <span style="color:#000;font-weight:bold">[</span>-o old_pv_path<span style="color:#000;font-weight:bold">]</span>   
-恢复硬盘的VGRA信息。   
-  
--n  指定的vg的名称   
--F  强制执行   
--l  显示配置信息    
--R  强制执行，即使vg处于激活状态   
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vgcfgrestore -n vg_name -l    
+</span></span><span style="display:flex;"><span>vgcfgrestore <span style="color:#000;font-weight:bold">[</span>-R<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-F<span style="color:#000;font-weight:bold">]</span> -n vg_name <span style="color:#000;font-weight:bold">[</span>-o old_pv_path<span style="color:#000;font-weight:bold">]</span> pv_path   
+</span></span><span style="display:flex;"><span>vgcfgrestore -f vg_conf_path -l    
+</span></span><span style="display:flex;"><span>vgcfgrestore <span style="color:#000;font-weight:bold">[</span>-R<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-F<span style="color:#000;font-weight:bold">]</span> -f vg_conf_path <span style="color:#000;font-weight:bold">[</span>-o old_pv_path<span style="color:#000;font-weight:bold">]</span>   
+</span></span><span style="display:flex;"><span>恢复硬盘的VGRA信息。   
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-n  指定的vg的名称   
+</span></span><span style="display:flex;"><span>-F  强制执行   
+</span></span><span style="display:flex;"><span>-l  显示配置信息    
+</span></span><span style="display:flex;"><span>-R  强制执行，即使vg处于激活状态   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-15">例：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic">#向c0t4d0上加载lvm配置信息    </span>
-<span style="color:#998;font-style:italic"># vgcfgrestore -f /tmp/vg00.backup /dev/rdsk/c0t4d0   </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic">#向c0t4d0上加载lvm配置信息    </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># vgcfgrestore -f /tmp/vg00.backup /dev/rdsk/c0t4d0   </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-17">注：</h3>
 <ul>
@@ -1255,60 +1259,60 @@ vgcfgrestore <span style="color:#000;font-weight:bold">[</span>-R<span style="co
 <li>2、我们可以假设一种情况，一个vg包含两个pv，其中一个损坏，且无法reduce掉，即VGRA中包含的pv信息没有变化，我们把lvmtab mv掉，重新vgscan，生成新的lvmtab,但此时只能找回一个pv,激活vg时当然会报错，另外vgdisplay我们将看到act pv （少一）数和cur pv数不一致，即vg盘头信息中应该包含的pv数和内存中的数目不一致。</li>
 </ul>
 <h2 id="122-newfs">1.22 newfs</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">newfs <span style="color:#000;font-weight:bold">[</span>-F FStype<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-o specific_options<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-V<span style="color:#000;font-weight:bold">]</span> special   
-创建文件系统   
--F  创建文件系统的类型（默认参数由/etc/default/fs定义）   
--o  文件系统的类型   
--v  显示执行过程及结果    
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>newfs <span style="color:#000;font-weight:bold">[</span>-F FStype<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-o specific_options<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-V<span style="color:#000;font-weight:bold">]</span> special   
+</span></span><span style="display:flex;"><span>创建文件系统   
+</span></span><span style="display:flex;"><span>-F  创建文件系统的类型（默认参数由/etc/default/fs定义）   
+</span></span><span style="display:flex;"><span>-o  文件系统的类型   
+</span></span><span style="display:flex;"><span>-v  显示执行过程及结果    
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="例-16">例：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># newfs -F hfs /dev/rdsk/c1t0d2   :在整个硬盘上创建文件系统   </span>
-<span style="color:#998;font-style:italic"># newfs –F vxfs –o largefiles /dev/vg01/rdata  在一个lv上创建，并支持大文件系统 </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># newfs -F hfs /dev/rdsk/c1t0d2   :在整个硬盘上创建文件系统   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># newfs –F vxfs –o largefiles /dev/vg01/rdata  在一个lv上创建，并支持大文件系统 </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-19">注：</h3>
 <p>该命令将重新刷新文件系统的目录树结构，整个文件系统将显示为空，此时实际的数据还在，如果之前用metasave命令曾经备份过文件系统结构信息，可以用metasave命令重新恢复该信息。但如果newfs后有新的数据读写，即使恢复回去，文件系统仍将被破坏。<br>
 如果对现有的文件系统或lv重新执行newfs，一定要确保该lv上的数据为无用数据或已经备份。</p>
 <h2 id="123-fsck">1.23 fsck</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">文件系统的一致性检测并进行恢复   
-fsck <span style="color:#000;font-weight:bold">[</span>-F FSType<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-m<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-V<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>special ...<span style="color:#000;font-weight:bold">]</span>   
-fsck <span style="color:#000;font-weight:bold">[</span>-F FSType<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-o FSspecific-options<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-V<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>special ...<span style="color:#000;font-weight:bold">]</span>   
--F  文件系统的类型   
--m  只进行完整性检查   
--o  定义类型   
- y  进行全数据校验   
--v  显示执行过程及结果    
-我们目前使用的文件主要包括hfs 非日志性文件系统和vxfs日志性文件系统。 
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>文件系统的一致性检测并进行恢复   
+</span></span><span style="display:flex;"><span>fsck <span style="color:#000;font-weight:bold">[</span>-F FSType<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-m<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-V<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>special ...<span style="color:#000;font-weight:bold">]</span>   
+</span></span><span style="display:flex;"><span>fsck <span style="color:#000;font-weight:bold">[</span>-F FSType<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-o FSspecific-options<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-V<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>special ...<span style="color:#000;font-weight:bold">]</span>   
+</span></span><span style="display:flex;"><span>-F  文件系统的类型   
+</span></span><span style="display:flex;"><span>-m  只进行完整性检查   
+</span></span><span style="display:flex;"><span>-o  定义类型   
+</span></span><span style="display:flex;"><span> y  进行全数据校验   
+</span></span><span style="display:flex;"><span>-v  显示执行过程及结果    
+</span></span><span style="display:flex;"><span>我们目前使用的文件主要包括hfs 非日志性文件系统和vxfs日志性文件系统。 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="过程-4">过程：</h3>
 <ul>
@@ -1316,7 +1320,7 @@ fsck <span style="color:#000;font-weight:bold">[</span>-F FSType<span style="col
 <li>2、当文件系统在进行io读写过程中出现异常umount（如reboot主机或主机异常down掉），由于文件系统的所有改动都记录在日志中，我们就可以通过查看日志来检查文件系统的一致性，而不必扫描整个文件系统。在挂载时，如果找到一个目的改变条目，而且它没有标记为clean，则检查那个块对应的文件结构，并在需要时进行整。</li>
 <li>3、而非日志性文件系统则需要对整个文件系统的各个数据元进行扫描校验，所以这个过程就可能比较长。</li>
 <li>4、另一方面用户写数据的时候，实际上并不立即发生写磁盘的动作，数据会被拷贝到一个内存的缓冲区里。数据同inode信息一起，会在以后的一些时间被写到磁盘上，通常是在缓冲区满的时候和新需要清除一下缓冲空间的时候。如果系统在还没有将缓冲区中的信息写到磁盘上去之前，系统关闭。文件系统的一致性就会被破坏。这有些像数据库的异步io方式。</li>
-<li>5、如果fsck检查到一个文件系统不完整，它会报告这个问题，然后询问是否对其进行修复。如果你回答”yes”，fsck会试图修正这个问题。如果你回答“no”，fsck会忽略这个问题，继续进行检查。一般都要选择&quot;yes&rdquo;，让系统自动修复发现的问题。</li>
+<li>5、如果fsck检查到一个文件系统不完整，它会报告这个问题，然后询问是否对其进行修复。如果你回答”yes”，fsck会试图修正这个问题。如果你回答“no”，fsck会忽略这个问题，继续进行检查。一般都要选择&quot;yes&quot;，让系统自动修复发现的问题。</li>
 <li>6、为了修正文件系统的错误，fsck会删除一个或者多个文件，观察fsck输出的”REMOVE&quot;的信息，确保从磁带上恢复受影响的文件。</li>
 <li>7、fsck将所有检查有问题的文件放在lost+found目录下。在fsck完成之后，你应该检查这个目录的内容。文件名是以inode号来命名。</li>
 <li>8、fsck会重新链接孤儿文件。如果和看到任何重链接的信息，检查文件系统的lost+found目录。</li>
@@ -1324,32 +1328,32 @@ fsck <span style="color:#000;font-weight:bold">[</span>-F FSType<span style="col
 <h2 id="124-mount">1.24 mount</h2>
 <p>加载文件系统点</p>
 <h3 id="例-17">例：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># mount  -o  ro   /dev/dsk/c0t1d0(光驱的设备文件)  /cdrom   以只读方式加载光驱   </span>
-<span style="color:#998;font-style:italic"># mount /dev/vg01/mydata  /mydata   </span>
-<span style="color:#998;font-style:italic"># mount –a   加载fstab中定义的所有的文件系统   </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># mount  -o  ro   /dev/dsk/c0t1d0(光驱的设备文件)  /cdrom   以只读方式加载光驱   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># mount /dev/vg01/mydata  /mydata   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># mount –a   加载fstab中定义的所有的文件系统   </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-20">注：</h3>
 <p>Mount之前系统会检测文件系统的状态，如果发现不正常会提示需要进行fsck。</p>
 <h2 id="125-umount">1.25 umount</h2>
 <p>卸载文件系统的mount点</p>
 <h3 id="例-18">例：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># umont /cdrom   </span>
-<span style="color:#998;font-style:italic"># umount /opt   &lt;卸除opt&gt;   </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># umont /cdrom   </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># umount /opt   &lt;卸除opt&gt;   </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="注-21">注：</h3>
 <ul>
@@ -1479,6 +1483,14 @@ fsck <span style="color:#000;font-weight:bold">[</span>-F FSType<span style="col
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
     </li>
     
@@ -1510,14 +1522,6 @@ fsck <span style="color:#000;font-weight:bold">[</span>-F FSType<span style="col
         <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理">mysql大表的数据清理</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-17-nmap/" title="nmap参数详解">nmap参数详解</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -1538,6 +1542,8 @@ fsck <span style="color:#000;font-weight:bold">[</span>-F FSType<span style="col
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
     
@@ -1601,7 +1607,7 @@ fsck <span style="color:#000;font-weight:bold">[</span>-F FSType<span style="col
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (23)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
     
@@ -1619,7 +1625,7 @@ fsck <span style="color:#000;font-weight:bold">[</span>-F FSType<span style="col
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (18)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
     
@@ -1670,6 +1676,8 @@ fsck <span style="color:#000;font-weight:bold">[</span>-F FSType<span style="col
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
     

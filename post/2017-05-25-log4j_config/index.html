@@ -158,8 +158,8 @@
         var postToc = $(".post-toc");
         if (postToc.length) {
             var leftPos = $("#main").offset().left;
-            if(leftPos<220){
-                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
             }
 
             var t = postToc.offset().top - 20,
@@ -177,6 +177,10 @@
                 var e = $(window).scrollTop();
                 e < t ? postToc.css(a.start) : postToc.css(a.process)
             })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
         }
     })
 </script>
@@ -215,7 +219,7 @@
 <p>Log4j 1.x的知识点回顾，2015年8月5日，Apache的Logging Services项目管理委员会宣布Log4j 1.x已经结束生命周期，建议升级 Log4j 2.x。</p>
 <h2 id="1-配置文件">1. 配置文件</h2>
 <p>Log4J配置文件的基本格式如下：</p>
-<pre><code class="language-properties" data-lang="properties">#配置根Logger
+<pre tabindex="0"><code class="language-properties" data-lang="properties">#配置根Logger
 log4j.rootLogger  =   [ level ]   ,  appenderName1 ,  appenderName2 ,  …
 
 #配置日志信息输出目的地Appender
@@ -231,27 +235,27 @@ log4j.appender.appenderName.layout  =  fully.qualified.name.of.layout.class
 　　log4j.appender.appenderName.layout.optionN  =  valueN 
 </code></pre><h2 id="2日志输出级别">2、日志输出级别</h2>
 <p>其中 [level] 共有5级，如下：</p>
-<pre><code class="language-properties" data-lang="properties">FATAL       0  
+<pre tabindex="0"><code class="language-properties" data-lang="properties">FATAL       0  
 ERROR       3  
 WARN        4  
 INFO        6  
 DEBUG       7 
 </code></pre><h2 id="3appender">3、Appender</h2>
 <p>为日志输出目的地，Log4j提供的appender有以下几种：</p>
-<pre><code class="language-properties" data-lang="properties">org.apache.log4j.ConsoleAppender（控制台），
+<pre tabindex="0"><code class="language-properties" data-lang="properties">org.apache.log4j.ConsoleAppender（控制台），
 org.apache.log4j.FileAppender（文件），
 org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件），
 org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件），
 org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）
 </code></pre><h2 id="4layout">4、Layout</h2>
 <p>日志输出格式，Log4j提供的layout有以下几种：</p>
-<pre><code class="language-properties" data-lang="properties">org.apache.log4j.HTMLLayout（以HTML表格形式布局），
+<pre tabindex="0"><code class="language-properties" data-lang="properties">org.apache.log4j.HTMLLayout（以HTML表格形式布局），
 org.apache.log4j.PatternLayout（可以灵活地指定布局模式），
 org.apache.log4j.SimpleLayout（包含日志信息的级别和信息字符串），
 org.apache.log4j.TTCCLayout（包含日志产生的时间、线程、类别等等信息）
 </code></pre><h2 id="5打印参数">5、打印参数</h2>
 <p>Log4J采用类似C语言中的printf函数的打印格式格式化日志信息，如下:</p>
-<pre><code class="language-properties" data-lang="properties">%m 输出代码中指定的消息
+<pre tabindex="0"><code class="language-properties" data-lang="properties">%m 输出代码中指定的消息
 %p 输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL 
 %r 输出自应用启动到输出该log信息耗费的毫秒数 
 %c 输出所属的类目，通常就是所在类的全名 
@@ -260,18 +264,18 @@ org.apache.log4j.TTCCLayout（包含日志产生的时间、线程、类别等�
 %d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyyyMMdd HH:mm:ss,SSS}，输出类似：2002年10月18日 22:10:28,921  
 %l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java:10) 
 %x 输出和当前线程相关联的NDC(嵌套诊断环境),尤其用到像java servlets这样的多客户多线程的应用中。
-%% 输出一个&quot;%&quot;字符
+%% 输出一个&#34;%&#34;字符
 %F 输出日志消息产生时所在的文件名称
 %L 输出代码中的行号
 </code></pre><h2 id="6格式">6、格式</h2>
 <p>可以在%与模式字符之间加上修饰符来控制其最小宽度、最大宽度、和文本的对齐方式。如：</p>
-<pre><code class="language-properties" data-lang="properties">1)%20c：指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，默认的情况下右对齐。
-2)%-20c:指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，&quot;-&quot;号指定左对齐。
+<pre tabindex="0"><code class="language-properties" data-lang="properties">1)%20c：指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，默认的情况下右对齐。
+2)%-20c:指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，&#34;-&#34;号指定左对齐。
 3)%.30c:指定输出category的名称，最大的宽度是30，如果category的名称大于30的话，就会将左边多出的字符截掉，但小于30的话也不会有空格。
 4)%20.30c:如果category的名称小于20就补空格，并且右对齐，如果其名称长于30字符，就从左边较远输出的字符截掉。
 </code></pre><h2 id="7完整的demo">7、完整的demo</h2>
 <p>下面给出的Log4J配置文件实现了输出到控制台，文件，回滚文件，发送日志邮件，输出到数据库日志表，自定义标签等全套功能。</p>
-<pre><code class="language-properties" data-lang="properties">log4j.rootLogger=DEBUG,CONSOLE,A1,im   
+<pre tabindex="0"><code class="language-properties" data-lang="properties">log4j.rootLogger=DEBUG,CONSOLE,A1,im   
 #DEBUG,CONSOLE,FILE,ROLLING_FILE,MAIL,DATABASE  
 log4j.addivity.org.apache=true  
 ###################   
@@ -338,12 +342,12 @@ log4j.appender.DATABASE.URL=jdbc:mysql://localhost:3306/test
 log4j.appender.DATABASE.driver=com.mysql.jdbc.Driver   
 log4j.appender.DATABASE.user=root   
 log4j.appender.DATABASE.password=   
-log4j.appender.DATABASE.sql=INSERT INTO LOG4J (Message) VALUES ('[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n')   
+log4j.appender.DATABASE.sql=INSERT INTO LOG4J (Message) VALUES (&#39;[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n&#39;)   
 log4j.appender.DATABASE.layout=org.apache.log4j.PatternLayout   
 log4j.appender.DATABASE.layout.ConversionPattern=[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n  
 log4j.appender.A1=org.apache.log4j.DailyRollingFileAppender   
 log4j.appender.A1.File=SampleMessages.log4j   
-log4j.appender.A1.DatePattern=yyyyMMdd-HH'.log4j'   
+log4j.appender.A1.DatePattern=yyyyMMdd-HH&#39;.log4j&#39;   
 log4j.appender.A1.layout=org.apache.log4j.xml.XMLLayout  
 ###################   
 #自定义Appender   
@@ -477,6 +481,14 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
     </li>
     
@@ -508,14 +520,6 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
         <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理">mysql大表的数据清理</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-17-nmap/" title="nmap参数详解">nmap参数详解</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -536,6 +540,8 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
     
@@ -599,7 +605,7 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (23)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
     
@@ -617,7 +623,7 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (18)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
     
@@ -668,6 +674,8 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
     

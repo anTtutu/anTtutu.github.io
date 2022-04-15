@@ -156,8 +156,8 @@
         var postToc = $(".post-toc");
         if (postToc.length) {
             var leftPos = $("#main").offset().left;
-            if(leftPos<220){
-                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
             }
 
             var t = postToc.offset().top - 20,
@@ -175,6 +175,10 @@
                 var e = $(window).scrollTop();
                 e < t ? postToc.css(a.start) : postToc.css(a.process)
             })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
         }
     })
 </script>
@@ -210,72 +214,72 @@
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>mysql的表日积月累也会出现过千万的大表，有些历史数据可以定期归档清理的，保留最近的数据即可。但是delete table_name where id = &lsquo;';这种方式只是逻辑上的删除，不会释放表空间和索引的。因此需要在历史数据归档后做表分析才行</p>
+<p>mysql的表日积月累也会出现过千万的大表，有些历史数据可以定期归档清理的，保留最近的数据即可。但是delete table_name where id = &lsquo;&rsquo;;这种方式只是逻辑上的删除，不会释放表空间和索引的。因此需要在历史数据归档后做表分析才行</p>
 <h2 id="1大表归档大量数据">1、大表归档大量数据</h2>
 <p>先远程备份，可以开发成shell脚本，设置crontab定期备份</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mysqldump -h 192.168.XX.XX -P <span style="color:#099">3306</span> -u<span style="color:#d14">${</span><span style="color:#008080">USER</span><span style="color:#d14">}</span> -p<span style="color:#d14">${</span><span style="color:#008080">PWD</span><span style="color:#d14">}</span> --database <span style="color:#0086b3">test</span> --tables t_event | gzip &gt; /data/backup/20211223/t_event.sql.gz
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mysqldump -h 192.168.XX.XX -P <span style="color:#099">3306</span> -u<span style="color:#d14">${</span><span style="color:#008080">USER</span><span style="color:#d14">}</span> -p<span style="color:#d14">${</span><span style="color:#008080">PWD</span><span style="color:#d14">}</span> --database <span style="color:#0086b3">test</span> --tables t_event | gzip &gt; /data/backup/20211223/t_event.sql.gz
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>可以根据自己的业务策略进行历史数据清理</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">delete</span> <span style="color:#000;font-weight:bold">from</span> t_event <span style="color:#000;font-weight:bold">where</span> id <span style="color:#000;font-weight:bold">in</span> (<span style="color:#d14">&#39;...&#39;</span>);
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">delete</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">from</span><span style="color:#bbb"> </span>t_event<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">where</span><span style="color:#bbb"> </span>id<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">in</span><span style="color:#bbb"> </span>(<span style="color:#d14">&#39;...&#39;</span>);<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="2表分析">2、表分析</h2>
 <p>OPTIMIZE TABLE $(table_name);</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">OPTIMIZE <span style="color:#000;font-weight:bold">TABLE</span> t_event;
-
-<span style="color:#000;font-weight:bold">Table</span>	        Op	        Msg_type	Msg_text
-test.t_event	optimize	note	    <span style="color:#000;font-weight:bold">Table</span> does <span style="color:#000;font-weight:bold">not</span> support optimize, doing recreate <span style="color:#000;font-weight:bold">+</span> <span style="color:#000;font-weight:bold">analyze</span> <span style="color:#000;font-weight:bold">instead</span>
-test.t_event	optimize	status	    OK
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>OPTIMIZE<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">TABLE</span><span style="color:#bbb"> </span>t_event;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">Table</span><span style="color:#bbb">	        </span>Op<span style="color:#bbb">	        </span>Msg_type<span style="color:#bbb">	</span>Msg_text<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>test.t_event<span style="color:#bbb">	</span>optimize<span style="color:#bbb">	</span>note<span style="color:#bbb">	    </span><span style="color:#000;font-weight:bold">Table</span><span style="color:#bbb"> </span>does<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">not</span><span style="color:#bbb"> </span>support<span style="color:#bbb"> </span>optimize,<span style="color:#bbb"> </span>doing<span style="color:#bbb"> </span>recreate<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">+</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">analyze</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">instead</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>test.t_event<span style="color:#bbb">	</span>optimize<span style="color:#bbb">	</span>status<span style="color:#bbb">	    </span>OK<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>发现optimize失效，提示不支持
 查了下资料，有说innoDB不支持，用alert替代</p>
-<pre><code>OPTIMIZE TABLE continues to use ALGORITHM=COPY under the following conditions:
+<pre tabindex="0"><code>OPTIMIZE TABLE continues to use ALGORITHM=COPY under the following conditions:
 When the old_alter_table system variable is turned ON.
 set old_alter_table=on; //alter table 修改表采用 algorithm=copy 方式
 When the mysqld --skip-new option is enabled.
 </code></pre><p>例如:</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mysqld --datadir<span style="color:#000;font-weight:bold">=</span>/data --basedir<span style="color:#000;font-weight:bold">=</span>/usr/local/mysql56 --user<span style="color:#000;font-weight:bold">=</span>mysql --gdb --skip-new
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mysqld --datadir<span style="color:#000;font-weight:bold">=</span>/data --basedir<span style="color:#000;font-weight:bold">=</span>/usr/local/mysql56 --user<span style="color:#000;font-weight:bold">=</span>mysql --gdb --skip-new
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="3alter表">3、ALTER表</h2>
 <p>ALTER TABLE ${tableName} ENGINE=INNODB</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">ALTER</span> <span style="color:#000;font-weight:bold">TABLE</span> t_event ENGINE<span style="color:#000;font-weight:bold">=</span>INNODB;
-
-OK, Time: <span style="color:#099">0</span>.<span style="color:#099">014000</span>s
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">ALTER</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">TABLE</span><span style="color:#bbb"> </span>t_event<span style="color:#bbb"> </span>ENGINE<span style="color:#000;font-weight:bold">=</span>INNODB;<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>OK,<span style="color:#bbb"> </span>Time:<span style="color:#bbb"> </span><span style="color:#099">0</span>.<span style="color:#099">014000</span>s<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="4对比前后表数据的条数">4、对比前后表数据的条数</h2>
 <p>重建表后确实生效了数据释放和索引释放，连表空间的占用也少了很多
@@ -288,43 +292,43 @@ OK, Time: <span style="color:#099">0</span>.<span style="color:#099">014000</spa
     </p>
 <h2 id="5另外一种方式">5、另外一种方式</h2>
 <p>还可以使用pt-online-schema-change脚本在线DDL，属于percona-toolki运维工具系列</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> pt-online-schema-change  
-  -h地址
-  -P端口号
-  -u用户名
-  -p密码   
-  --database<span style="color:#000;font-weight:bold">=</span>数据库
-  <span style="color:#008080">t</span><span style="color:#000;font-weight:bold">=</span>表名字
-  --charset<span style="color:#000;font-weight:bold">=</span>utf8 
-  --max-lag<span style="color:#000;font-weight:bold">=</span><span style="color:#099">300</span> 
-  --check-interval<span style="color:#000;font-weight:bold">=</span><span style="color:#099">5</span> 
-  --alter<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;ENGINE=InnoDB&#34;</span> 
-  --max-load<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;Threads_running:400&#34;</span> 
-  --critical-load<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;Threads_running:400&#34;</span> 
-  --nocheck-replication-filters 
-  --alter-foreign-keys-method<span style="color:#000;font-weight:bold">=</span>auto  
-  --execute
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> pt-online-schema-change  
+</span></span><span style="display:flex;"><span>  -h地址
+</span></span><span style="display:flex;"><span>  -P端口号
+</span></span><span style="display:flex;"><span>  -u用户名
+</span></span><span style="display:flex;"><span>  -p密码   
+</span></span><span style="display:flex;"><span>  --database<span style="color:#000;font-weight:bold">=</span>数据库
+</span></span><span style="display:flex;"><span>  <span style="color:#008080">t</span><span style="color:#000;font-weight:bold">=</span>表名字
+</span></span><span style="display:flex;"><span>  --charset<span style="color:#000;font-weight:bold">=</span>utf8 
+</span></span><span style="display:flex;"><span>  --max-lag<span style="color:#000;font-weight:bold">=</span><span style="color:#099">300</span> 
+</span></span><span style="display:flex;"><span>  --check-interval<span style="color:#000;font-weight:bold">=</span><span style="color:#099">5</span> 
+</span></span><span style="display:flex;"><span>  --alter<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;ENGINE=InnoDB&#34;</span> 
+</span></span><span style="display:flex;"><span>  --max-load<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;Threads_running:400&#34;</span> 
+</span></span><span style="display:flex;"><span>  --critical-load<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;Threads_running:400&#34;</span> 
+</span></span><span style="display:flex;"><span>  --nocheck-replication-filters 
+</span></span><span style="display:flex;"><span>  --alter-foreign-keys-method<span style="color:#000;font-weight:bold">=</span>auto  
+</span></span><span style="display:flex;"><span>  --execute
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
         </div>
@@ -442,6 +446,14 @@ OK, Time: <span style="color:#099">0</span>.<span style="color:#099">014000</spa
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
     </li>
     
@@ -473,14 +485,6 @@ OK, Time: <span style="color:#099">0</span>.<span style="color:#099">014000</spa
         <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理">mysql大表的数据清理</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-17-nmap/" title="nmap参数详解">nmap参数详解</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -501,6 +505,8 @@ OK, Time: <span style="color:#099">0</span>.<span style="color:#099">014000</spa
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
     
@@ -564,7 +570,7 @@ OK, Time: <span style="color:#099">0</span>.<span style="color:#099">014000</spa
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (23)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
     
@@ -582,7 +588,7 @@ OK, Time: <span style="color:#099">0</span>.<span style="color:#099">014000</spa
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (18)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
     
@@ -633,6 +639,8 @@ OK, Time: <span style="color:#099">0</span>.<span style="color:#099">014000</spa
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
     

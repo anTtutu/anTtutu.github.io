@@ -179,8 +179,8 @@
         var postToc = $(".post-toc");
         if (postToc.length) {
             var leftPos = $("#main").offset().left;
-            if(leftPos<220){
-                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
             }
 
             var t = postToc.offset().top - 20,
@@ -198,6 +198,10 @@
                 var e = $(window).scrollTop();
                 e < t ? postToc.css(a.start) : postToc.css(a.process)
             })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
         }
     })
 </script>
@@ -235,51 +239,51 @@
             <h2 id="前言">前言</h2>
 <p>一些 linux 和 shell 的小细节记录</p>
 <h2 id="1清理cache">1、清理cache</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">仅清除页面缓存（PageCache）
-sync; <span style="color:#0086b3">echo</span> <span style="color:#099">1</span> &gt; /proc/sys/vm/drop_caches
-
-清除目录项和inode
-sync; <span style="color:#0086b3">echo</span> <span style="color:#099">2</span> &gt; /proc/sys/vm/drop_caches
-
-清除页面缓存，目录项和inode
-sync; <span style="color:#0086b3">echo</span> <span style="color:#099">3</span> &gt; /proc/sys/vm/drop_caches
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>仅清除页面缓存（PageCache）
+</span></span><span style="display:flex;"><span>sync; <span style="color:#0086b3">echo</span> <span style="color:#099">1</span> &gt; /proc/sys/vm/drop_caches
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>清除目录项和inode
+</span></span><span style="display:flex;"><span>sync; <span style="color:#0086b3">echo</span> <span style="color:#099">2</span> &gt; /proc/sys/vm/drop_caches
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>清除页面缓存，目录项和inode
+</span></span><span style="display:flex;"><span>sync; <span style="color:#0086b3">echo</span> <span style="color:#099">3</span> &gt; /proc/sys/vm/drop_caches
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="2crontab定时任务取值范围">2、crontab定时任务取值范围</h2>
 <p>文件/etc/crontab中每行任务的描述格式如下:</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">minute hour day month dayofweek <span style="color:#0086b3">command</span>
-
-minute - 从0到59的整数 
-hour - 从0到23的整数 
-day - 从1到31的整数 <span style="color:#000;font-weight:bold">(</span>必须是指定月份的有效日期<span style="color:#000;font-weight:bold">)</span>
-month - 从1到12的整数 <span style="color:#000;font-weight:bold">(</span>或如Jan或Feb简写的月份<span style="color:#000;font-weight:bold">)</span>
-dayofweek - 从0到7的整数，0或7用来描述周日 <span style="color:#000;font-weight:bold">(</span>或用Sun或Mon简写来表示<span style="color:#000;font-weight:bold">)</span>
-<span style="color:#0086b3">command</span> - 需要执行的命令<span style="color:#000;font-weight:bold">(</span>可用as ls /proc &gt;&gt; /tmp/proc或 执行自定义脚本的命令<span style="color:#000;font-weight:bold">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>minute hour day month dayofweek <span style="color:#0086b3">command</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>minute - 从0到59的整数 
+</span></span><span style="display:flex;"><span>hour - 从0到23的整数 
+</span></span><span style="display:flex;"><span>day - 从1到31的整数 <span style="color:#000;font-weight:bold">(</span>必须是指定月份的有效日期<span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>month - 从1到12的整数 <span style="color:#000;font-weight:bold">(</span>或如Jan或Feb简写的月份<span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>dayofweek - 从0到7的整数，0或7用来描述周日 <span style="color:#000;font-weight:bold">(</span>或用Sun或Mon简写来表示<span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">command</span> - 需要执行的命令<span style="color:#000;font-weight:bold">(</span>可用as ls /proc &gt;&gt; /tmp/proc或 执行自定义脚本的命令<span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="前面五个号代表五个数字数字的取值范围和含义如下">前面五个*号代表五个数字，数字的取值范围和含义如下：</h3>
 <p>分钟 (0-59)<br>
@@ -289,356 +293,356 @@ dayofweek - 从0到7的整数，0或7用来描述周日 <span style="color:#000;
 星期(0-6) //0代表星期天</p>
 <h2 id="3删除乱码文件">3、删除乱码文件</h2>
 <h3 id="31-linux下删除乱码文件名">3.1 linux下删除乱码文件名</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">1. ls -i 列出文件的节点ID, 如: <span style="color:#099">123456789</span> 
-2. find ./ -inum <span style="color:#099">123456789</span> -print -exec rm -rf <span style="color:#000;font-weight:bold">{}</span> <span style="color:#d14">\;</span> 
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>1. ls -i 列出文件的节点ID, 如: <span style="color:#099">123456789</span> 
+</span></span><span style="display:flex;"><span>2. find ./ -inum <span style="color:#099">123456789</span> -print -exec rm -rf <span style="color:#000;font-weight:bold">{}</span> <span style="color:#d14">\;</span> 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="32-批量删除">3.2 批量删除</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">for</span> n in <span style="color:#099">123456789</span> 987654321; <span style="color:#000;font-weight:bold">do</span> find . -inum <span style="color:#008080">$n</span> -exec rm -f <span style="color:#000;font-weight:bold">{}</span> <span style="color:#d14">\;</span> <span style="color:#000;font-weight:bold">done</span> 
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">for</span> n in <span style="color:#099">123456789</span> 987654321; <span style="color:#000;font-weight:bold">do</span> find . -inum <span style="color:#008080">$n</span> -exec rm -f <span style="color:#000;font-weight:bold">{}</span> <span style="color:#d14">\;</span> <span style="color:#000;font-weight:bold">done</span> 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="4shell中参数含义">4、shell中$参数含义</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#008080">$#</span> 是传给脚本的参数个数
-<span style="color:#008080">$0</span> 是脚本本身的名字
-<span style="color:#008080">$1</span> 是传递给该shell脚本的第一个参数
-<span style="color:#008080">$2</span> 是传递给该shell脚本的第二个参数
-<span style="color:#008080">$@</span> 是传给脚本的所有参数的列表
-<span style="color:#008080">$*</span> 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个
-<span style="color:#008080">$$</span> 是脚本运行的当前进程ID号
-<span style="color:#008080">$?</span> 是显示最后命令的退出状态，0表示没有错误，其他表示有错误
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#008080">$#</span> 是传给脚本的参数个数
+</span></span><span style="display:flex;"><span><span style="color:#008080">$0</span> 是脚本本身的名字
+</span></span><span style="display:flex;"><span><span style="color:#008080">$1</span> 是传递给该shell脚本的第一个参数
+</span></span><span style="display:flex;"><span><span style="color:#008080">$2</span> 是传递给该shell脚本的第二个参数
+</span></span><span style="display:flex;"><span><span style="color:#008080">$@</span> 是传给脚本的所有参数的列表
+</span></span><span style="display:flex;"><span><span style="color:#008080">$*</span> 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个
+</span></span><span style="display:flex;"><span><span style="color:#008080">$$</span> 是脚本运行的当前进程ID号
+</span></span><span style="display:flex;"><span><span style="color:#008080">$?</span> 是显示最后命令的退出状态，0表示没有错误，其他表示有错误
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="5查找">5、查找</h2>
 <h3 id="51-查找某类型文件下包含的字符块">5.1 查找某类型文件下包含的字符块</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@qm app<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># grep loading.gif  ./css/*.css</span>
-
-./css/index.css:.d-loading <span style="color:#000;font-weight:bold">{</span> height:32px; text-align:left; text-indent:-999em; overflow:hidden; background:url<span style="color:#000;font-weight:bold">(</span>http://img1.qmsdstatic.com/mres/res/base/images/loading.gif<span style="color:#000;font-weight:bold">)</span> no-repeat center center; <span style="color:#000;font-weight:bold">}</span>
-
-./css/index.css:.loading <span style="color:#000;font-weight:bold">{</span>   width:100%;    height:56px;    position: fixed;    top:50%;  text-indent: 0px;       line-height:56px;    color:#fff;    padding-left:60px;    font-size:15px;    background: <span style="color:#998;font-style:italic">#000 url(http://img1.qmsdstatic.com/mres/res/base/images/loading.gif) no-repeat 40% 50%;  text-align: center;   opacity: 0.7;    z-index:9999;    -moz-border-radius:20px;    -webkit-border-radius:20px;    border-radius:20px;    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70);  }</span>
-
-./css/index.css:.lazy <span style="color:#000;font-weight:bold">{</span> background: url<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://img1.qmsdstatic.com/mres/res/base/images/loading.gif&#34;</span><span style="color:#000;font-weight:bold">)</span> no-repeat center center; display: block;<span style="color:#000;font-weight:bold">}</span>
-
-<span style="color:#000;font-weight:bold">[</span>root@qm app<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># </span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@qm app<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># grep loading.gif  ./css/*.css</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>./css/index.css:.d-loading <span style="color:#000;font-weight:bold">{</span> height:32px; text-align:left; text-indent:-999em; overflow:hidden; background:url<span style="color:#000;font-weight:bold">(</span>http://img1.qmsdstatic.com/mres/res/base/images/loading.gif<span style="color:#000;font-weight:bold">)</span> no-repeat center center; <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>./css/index.css:.loading <span style="color:#000;font-weight:bold">{</span>   width:100%;    height:56px;    position: fixed;    top:50%;  text-indent: 0px;       line-height:56px;    color:#fff;    padding-left:60px;    font-size:15px;    background: <span style="color:#998;font-style:italic">#000 url(http://img1.qmsdstatic.com/mres/res/base/images/loading.gif) no-repeat 40% 50%;  text-align: center;   opacity: 0.7;    z-index:9999;    -moz-border-radius:20px;    -webkit-border-radius:20px;    border-radius:20px;    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70);  }</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>./css/index.css:.lazy <span style="color:#000;font-weight:bold">{</span> background: url<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://img1.qmsdstatic.com/mres/res/base/images/loading.gif&#34;</span><span style="color:#000;font-weight:bold">)</span> no-repeat center center; display: block;<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@qm app<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># </span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="52-查找文件名称">5.2 查找文件名称</h3>
-<pre><code>find ./ -name &quot;loading.gif&quot;
+<pre tabindex="0"><code>find ./ -name &#34;loading.gif&#34;
 </code></pre><h2 id="6linux系统的timezone">6、linux系统的TimeZone</h2>
 <p>使用Centos，遇到本地时间对不上，直接敲命令：date -s &ldquo;2014-12-25 15:15:15&quot;是立即生效了，但是重启后，系统时间还是原来的。
 后面经过查找资料，做个小结.<br>
 我的Centos是安装在虚拟机上。在虚拟机有分系统时间和硬件时间。修改了其一是没有办法奏效，必须两者都更改。</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">1.date <span style="color:#000;font-weight:bold">{</span>查看目前本地的时间<span style="color:#000;font-weight:bold">}</span>
-2.hwclock --show <span style="color:#000;font-weight:bold">{</span>查看硬件的时间<span style="color:#000;font-weight:bold">}</span>
-3.如果硬件的时间是对不上，那就对硬件的时间进行修改、
-4.hwclock --set --date <span style="color:#d14">&#39;014-12-15 15:15:15&#39;</span> <span style="color:#000;font-weight:bold">{</span>设置硬件时间<span style="color:#000;font-weight:bold">}</span>
-5.hwclock --hctosys <span style="color:#000;font-weight:bold">{</span>设置系统时间和硬件时间同步<span style="color:#000;font-weight:bold">}</span>
-6.clock -w <span style="color:#000;font-weight:bold">{</span>保存时钟<span style="color:#000;font-weight:bold">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>1.date <span style="color:#000;font-weight:bold">{</span>查看目前本地的时间<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>2.hwclock --show <span style="color:#000;font-weight:bold">{</span>查看硬件的时间<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>3.如果硬件的时间是对不上，那就对硬件的时间进行修改、
+</span></span><span style="display:flex;"><span>4.hwclock --set --date <span style="color:#d14">&#39;014-12-15 15:15:15&#39;</span> <span style="color:#000;font-weight:bold">{</span>设置硬件时间<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>5.hwclock --hctosys <span style="color:#000;font-weight:bold">{</span>设置系统时间和硬件时间同步<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>6.clock -w <span style="color:#000;font-weight:bold">{</span>保存时钟<span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>7.最后在通过重启，init 6 快速重启后，查看系统时间是否真正生效！！！！</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@qm-wap1 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># tzselect </span>
-Please identify a location so that <span style="color:#0086b3">time</span> zone rules can be <span style="color:#0086b3">set</span> correctly.
-Please <span style="color:#000;font-weight:bold">select</span> a continent or ocean.
- 1<span style="color:#000;font-weight:bold">)</span> Africa
- 2<span style="color:#000;font-weight:bold">)</span> Americas
- 3<span style="color:#000;font-weight:bold">)</span> Antarctica
- 4<span style="color:#000;font-weight:bold">)</span> Arctic Ocean
- 5<span style="color:#000;font-weight:bold">)</span> Asia
- 6<span style="color:#000;font-weight:bold">)</span> Atlantic Ocean
- 7<span style="color:#000;font-weight:bold">)</span> Australia
- 8<span style="color:#000;font-weight:bold">)</span> Europe
- 9<span style="color:#000;font-weight:bold">)</span> Indian Ocean
-10<span style="color:#000;font-weight:bold">)</span> Pacific Ocean
-11<span style="color:#000;font-weight:bold">)</span> none - I want to specify the <span style="color:#0086b3">time</span> zone using the Posix TZ format.
-<span style="color:#998;font-style:italic">#? 5</span>
-Please <span style="color:#000;font-weight:bold">select</span> a country.
- 1<span style="color:#000;font-weight:bold">)</span> Afghanistan          18<span style="color:#000;font-weight:bold">)</span> Israel            35<span style="color:#000;font-weight:bold">)</span> Palestine
- 2<span style="color:#000;font-weight:bold">)</span> Armenia          19<span style="color:#000;font-weight:bold">)</span> Japan            36<span style="color:#000;font-weight:bold">)</span> Philippines
- 3<span style="color:#000;font-weight:bold">)</span> Azerbaijan          20<span style="color:#000;font-weight:bold">)</span> Jordan            37<span style="color:#000;font-weight:bold">)</span> Qatar
- 4<span style="color:#000;font-weight:bold">)</span> Bahrain          21<span style="color:#000;font-weight:bold">)</span> Kazakhstan        38<span style="color:#000;font-weight:bold">)</span> Russia
- 5<span style="color:#000;font-weight:bold">)</span> Bangladesh          22<span style="color:#000;font-weight:bold">)</span> Korea <span style="color:#000;font-weight:bold">(</span>North<span style="color:#000;font-weight:bold">)</span>        39<span style="color:#000;font-weight:bold">)</span> Saudi Arabia
- 6<span style="color:#000;font-weight:bold">)</span> Bhutan          23<span style="color:#000;font-weight:bold">)</span> Korea <span style="color:#000;font-weight:bold">(</span>South<span style="color:#000;font-weight:bold">)</span>        40<span style="color:#000;font-weight:bold">)</span> Singapore
- 7<span style="color:#000;font-weight:bold">)</span> Brunei          24<span style="color:#000;font-weight:bold">)</span> Kuwait            41<span style="color:#000;font-weight:bold">)</span> Sri Lanka
- 8<span style="color:#000;font-weight:bold">)</span> Cambodia          25<span style="color:#000;font-weight:bold">)</span> Kyrgyzstan        42<span style="color:#000;font-weight:bold">)</span> Syria
- 9<span style="color:#000;font-weight:bold">)</span> China          26<span style="color:#000;font-weight:bold">)</span> Laos            43<span style="color:#000;font-weight:bold">)</span> Taiwan
-10<span style="color:#000;font-weight:bold">)</span> Cyprus          27<span style="color:#000;font-weight:bold">)</span> Lebanon            44<span style="color:#000;font-weight:bold">)</span> Tajikistan
-11<span style="color:#000;font-weight:bold">)</span> East Timor          28<span style="color:#000;font-weight:bold">)</span> Macau            45<span style="color:#000;font-weight:bold">)</span> Thailand
-12<span style="color:#000;font-weight:bold">)</span> Georgia          29<span style="color:#000;font-weight:bold">)</span> Malaysia            46<span style="color:#000;font-weight:bold">)</span> Turkmenistan
-13<span style="color:#000;font-weight:bold">)</span> Hong Kong          30<span style="color:#000;font-weight:bold">)</span> Mongolia            47<span style="color:#000;font-weight:bold">)</span> United Arab Emirates
-14<span style="color:#000;font-weight:bold">)</span> India          31<span style="color:#000;font-weight:bold">)</span> Myanmar <span style="color:#000;font-weight:bold">(</span>Burma<span style="color:#000;font-weight:bold">)</span>        48<span style="color:#000;font-weight:bold">)</span> Uzbekistan
-15<span style="color:#000;font-weight:bold">)</span> Indonesia          32<span style="color:#000;font-weight:bold">)</span> Nepal            49<span style="color:#000;font-weight:bold">)</span> Vietnam
-16<span style="color:#000;font-weight:bold">)</span> Iran          33<span style="color:#000;font-weight:bold">)</span> Oman            50<span style="color:#000;font-weight:bold">)</span> Yemen
-17<span style="color:#000;font-weight:bold">)</span> Iraq          34<span style="color:#000;font-weight:bold">)</span> Pakistan
-<span style="color:#998;font-style:italic">#? 9</span>
-Please <span style="color:#000;font-weight:bold">select</span> one of the following <span style="color:#0086b3">time</span> zone regions.
-1<span style="color:#000;font-weight:bold">)</span> Beijing Time
-2<span style="color:#000;font-weight:bold">)</span> Xinjiang Time
-<span style="color:#998;font-style:italic">#? 1</span>
-
-The following information has been given:
-
-    China
-    Beijing Time
-
-Therefore <span style="color:#008080">TZ</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;Asia/Shanghai&#39;</span> will be used.
-Local <span style="color:#0086b3">time</span> is now:    Thu Oct <span style="color:#099">20</span> 20:34:58 CST 2016.
-Universal Time is now:    Thu Oct <span style="color:#099">20</span> 12:34:58 UTC 2016.
-Is the above information OK?
-1<span style="color:#000;font-weight:bold">)</span> Yes
-2<span style="color:#000;font-weight:bold">)</span> No
-<span style="color:#998;font-style:italic">#? 1</span>
-
-You can make this change permanent <span style="color:#000;font-weight:bold">for</span> yourself by appending the line
-    <span style="color:#008080">TZ</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;Asia/Shanghai&#39;</span>; <span style="color:#0086b3">export</span> TZ
-to the file <span style="color:#d14">&#39;.profile&#39;</span> in your home directory; <span style="color:#000;font-weight:bold">then</span> log out and log in again.
-
-Here is that TZ value again, this <span style="color:#0086b3">time</span> on standard output so that you
-can use the /usr/bin/tzselect <span style="color:#0086b3">command</span> in shell scripts:
-Asia/Shanghai
-<span style="color:#000;font-weight:bold">[</span>root@qm-wap1 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># </span>
-<span style="color:#000;font-weight:bold">[</span>root@qm-wap1 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># vi /etc/profile    增加    export TZ=&#39;Asia/Shanghai&#39; </span>
-<span style="color:#000;font-weight:bold">[</span>root@qm-wap1 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># date -R Thu, 20 Oct 2016 12:41:17 +0000</span>
-<span style="color:#000;font-weight:bold">[</span>root@qm-wap1 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># . /etc/profile    使环境变量生效</span>
-<span style="color:#000;font-weight:bold">[</span>root@qm-wap1 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># date -R Thu, 20 Oct 2016 20:41:35 +0800</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@qm-wap1 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># tzselect </span>
+</span></span><span style="display:flex;"><span>Please identify a location so that <span style="color:#0086b3">time</span> zone rules can be <span style="color:#0086b3">set</span> correctly.
+</span></span><span style="display:flex;"><span>Please <span style="color:#000;font-weight:bold">select</span> a continent or ocean.
+</span></span><span style="display:flex;"><span> 1<span style="color:#000;font-weight:bold">)</span> Africa
+</span></span><span style="display:flex;"><span> 2<span style="color:#000;font-weight:bold">)</span> Americas
+</span></span><span style="display:flex;"><span> 3<span style="color:#000;font-weight:bold">)</span> Antarctica
+</span></span><span style="display:flex;"><span> 4<span style="color:#000;font-weight:bold">)</span> Arctic Ocean
+</span></span><span style="display:flex;"><span> 5<span style="color:#000;font-weight:bold">)</span> Asia
+</span></span><span style="display:flex;"><span> 6<span style="color:#000;font-weight:bold">)</span> Atlantic Ocean
+</span></span><span style="display:flex;"><span> 7<span style="color:#000;font-weight:bold">)</span> Australia
+</span></span><span style="display:flex;"><span> 8<span style="color:#000;font-weight:bold">)</span> Europe
+</span></span><span style="display:flex;"><span> 9<span style="color:#000;font-weight:bold">)</span> Indian Ocean
+</span></span><span style="display:flex;"><span>10<span style="color:#000;font-weight:bold">)</span> Pacific Ocean
+</span></span><span style="display:flex;"><span>11<span style="color:#000;font-weight:bold">)</span> none - I want to specify the <span style="color:#0086b3">time</span> zone using the Posix TZ format.
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#? 5</span>
+</span></span><span style="display:flex;"><span>Please <span style="color:#000;font-weight:bold">select</span> a country.
+</span></span><span style="display:flex;"><span> 1<span style="color:#000;font-weight:bold">)</span> Afghanistan          18<span style="color:#000;font-weight:bold">)</span> Israel            35<span style="color:#000;font-weight:bold">)</span> Palestine
+</span></span><span style="display:flex;"><span> 2<span style="color:#000;font-weight:bold">)</span> Armenia          19<span style="color:#000;font-weight:bold">)</span> Japan            36<span style="color:#000;font-weight:bold">)</span> Philippines
+</span></span><span style="display:flex;"><span> 3<span style="color:#000;font-weight:bold">)</span> Azerbaijan          20<span style="color:#000;font-weight:bold">)</span> Jordan            37<span style="color:#000;font-weight:bold">)</span> Qatar
+</span></span><span style="display:flex;"><span> 4<span style="color:#000;font-weight:bold">)</span> Bahrain          21<span style="color:#000;font-weight:bold">)</span> Kazakhstan        38<span style="color:#000;font-weight:bold">)</span> Russia
+</span></span><span style="display:flex;"><span> 5<span style="color:#000;font-weight:bold">)</span> Bangladesh          22<span style="color:#000;font-weight:bold">)</span> Korea <span style="color:#000;font-weight:bold">(</span>North<span style="color:#000;font-weight:bold">)</span>        39<span style="color:#000;font-weight:bold">)</span> Saudi Arabia
+</span></span><span style="display:flex;"><span> 6<span style="color:#000;font-weight:bold">)</span> Bhutan          23<span style="color:#000;font-weight:bold">)</span> Korea <span style="color:#000;font-weight:bold">(</span>South<span style="color:#000;font-weight:bold">)</span>        40<span style="color:#000;font-weight:bold">)</span> Singapore
+</span></span><span style="display:flex;"><span> 7<span style="color:#000;font-weight:bold">)</span> Brunei          24<span style="color:#000;font-weight:bold">)</span> Kuwait            41<span style="color:#000;font-weight:bold">)</span> Sri Lanka
+</span></span><span style="display:flex;"><span> 8<span style="color:#000;font-weight:bold">)</span> Cambodia          25<span style="color:#000;font-weight:bold">)</span> Kyrgyzstan        42<span style="color:#000;font-weight:bold">)</span> Syria
+</span></span><span style="display:flex;"><span> 9<span style="color:#000;font-weight:bold">)</span> China          26<span style="color:#000;font-weight:bold">)</span> Laos            43<span style="color:#000;font-weight:bold">)</span> Taiwan
+</span></span><span style="display:flex;"><span>10<span style="color:#000;font-weight:bold">)</span> Cyprus          27<span style="color:#000;font-weight:bold">)</span> Lebanon            44<span style="color:#000;font-weight:bold">)</span> Tajikistan
+</span></span><span style="display:flex;"><span>11<span style="color:#000;font-weight:bold">)</span> East Timor          28<span style="color:#000;font-weight:bold">)</span> Macau            45<span style="color:#000;font-weight:bold">)</span> Thailand
+</span></span><span style="display:flex;"><span>12<span style="color:#000;font-weight:bold">)</span> Georgia          29<span style="color:#000;font-weight:bold">)</span> Malaysia            46<span style="color:#000;font-weight:bold">)</span> Turkmenistan
+</span></span><span style="display:flex;"><span>13<span style="color:#000;font-weight:bold">)</span> Hong Kong          30<span style="color:#000;font-weight:bold">)</span> Mongolia            47<span style="color:#000;font-weight:bold">)</span> United Arab Emirates
+</span></span><span style="display:flex;"><span>14<span style="color:#000;font-weight:bold">)</span> India          31<span style="color:#000;font-weight:bold">)</span> Myanmar <span style="color:#000;font-weight:bold">(</span>Burma<span style="color:#000;font-weight:bold">)</span>        48<span style="color:#000;font-weight:bold">)</span> Uzbekistan
+</span></span><span style="display:flex;"><span>15<span style="color:#000;font-weight:bold">)</span> Indonesia          32<span style="color:#000;font-weight:bold">)</span> Nepal            49<span style="color:#000;font-weight:bold">)</span> Vietnam
+</span></span><span style="display:flex;"><span>16<span style="color:#000;font-weight:bold">)</span> Iran          33<span style="color:#000;font-weight:bold">)</span> Oman            50<span style="color:#000;font-weight:bold">)</span> Yemen
+</span></span><span style="display:flex;"><span>17<span style="color:#000;font-weight:bold">)</span> Iraq          34<span style="color:#000;font-weight:bold">)</span> Pakistan
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#? 9</span>
+</span></span><span style="display:flex;"><span>Please <span style="color:#000;font-weight:bold">select</span> one of the following <span style="color:#0086b3">time</span> zone regions.
+</span></span><span style="display:flex;"><span>1<span style="color:#000;font-weight:bold">)</span> Beijing Time
+</span></span><span style="display:flex;"><span>2<span style="color:#000;font-weight:bold">)</span> Xinjiang Time
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#? 1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The following information has been given:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    China
+</span></span><span style="display:flex;"><span>    Beijing Time
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Therefore <span style="color:#008080">TZ</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;Asia/Shanghai&#39;</span> will be used.
+</span></span><span style="display:flex;"><span>Local <span style="color:#0086b3">time</span> is now:    Thu Oct <span style="color:#099">20</span> 20:34:58 CST 2016.
+</span></span><span style="display:flex;"><span>Universal Time is now:    Thu Oct <span style="color:#099">20</span> 12:34:58 UTC 2016.
+</span></span><span style="display:flex;"><span>Is the above information OK?
+</span></span><span style="display:flex;"><span>1<span style="color:#000;font-weight:bold">)</span> Yes
+</span></span><span style="display:flex;"><span>2<span style="color:#000;font-weight:bold">)</span> No
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#? 1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>You can make this change permanent <span style="color:#000;font-weight:bold">for</span> yourself by appending the line
+</span></span><span style="display:flex;"><span>    <span style="color:#008080">TZ</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;Asia/Shanghai&#39;</span>; <span style="color:#0086b3">export</span> TZ
+</span></span><span style="display:flex;"><span>to the file <span style="color:#d14">&#39;.profile&#39;</span> in your home directory; <span style="color:#000;font-weight:bold">then</span> log out and log in again.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Here is that TZ value again, this <span style="color:#0086b3">time</span> on standard output so that you
+</span></span><span style="display:flex;"><span>can use the /usr/bin/tzselect <span style="color:#0086b3">command</span> in shell scripts:
+</span></span><span style="display:flex;"><span>Asia/Shanghai
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@qm-wap1 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># </span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@qm-wap1 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># vi /etc/profile    增加    export TZ=&#39;Asia/Shanghai&#39; </span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@qm-wap1 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># date -R Thu, 20 Oct 2016 12:41:17 +0000</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@qm-wap1 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># . /etc/profile    使环境变量生效</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@qm-wap1 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># date -R Thu, 20 Oct 2016 20:41:35 +0800</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="7调整文件句柄数">7、调整文件句柄数</h2>
 <h3 id="71-查看进程开发的文件句柄数量">7.1 查看进程开发的文件句柄数量</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lsof -n | awk <span style="color:#d14">&#39;{print $2}&#39;</span> | sort | uniq -c | sort -nr | more
-
-ps -aef | grep 进程号
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lsof -n | awk <span style="color:#d14">&#39;{print $2}&#39;</span> | sort | uniq -c | sort -nr | more
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ps -aef | grep 进程号
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="72-修改系统的文件句柄数">7.2 修改系统的文件句柄数</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root登录服务器
-vi /etc/security/limits.conf
-
-* hard nofile <span style="color:#099">65535</span> 或 * - nofile <span style="color:#099">65535</span>
-
-vi .profile  添加 <span style="color:#0086b3">ulimit</span> -n <span style="color:#099">65535</span>
-
-. ~/.profile
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root登录服务器
+</span></span><span style="display:flex;"><span>vi /etc/security/limits.conf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>* hard nofile <span style="color:#099">65535</span> 或 * - nofile <span style="color:#099">65535</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vi .profile  添加 <span style="color:#0086b3">ulimit</span> -n <span style="color:#099">65535</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>. ~/.profile
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="73-修改系统内核参数">7.3 修改系统内核参数</h3>
 <p>linux TIME_WAIT过多的解决方法</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">查看TCP状态：netstat -n | awk <span style="color:#d14">&#39;/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}&#39;</span>
-查看SOCKET状态：cat /proc/net/sockstat
-TIME_WAIT状态的socket一般需要等到2msl时间后，socket才会被回收。
-修改<span style="color:#000;font-weight:bold">(</span>添加<span style="color:#000;font-weight:bold">)</span>系统内核参数:/etc/sysctl.conf
-<span style="color:#998;font-style:italic">#改系統默认的TIMEOUT时间</span>
-net.ipv4.tcp_fin_timeout<span style="color:#000;font-weight:bold">=</span><span style="color:#099">2</span>
-<span style="color:#998;font-style:italic">#启重用,允许将TIME-WAIT sockets重新用于新的TCP连接 默认为0表示关闭</span>
-net.ipv4.tcp_tw_reuse<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span>
-<span style="color:#998;font-style:italic">#开启TCP连接中TIME-WAIT sockets的快速回收 默认为0 表示关闭</span>
-net.ipv4.tcp_tw_recycle<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span>
-使新增参数生效：sysctl -p
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>查看TCP状态：netstat -n | awk <span style="color:#d14">&#39;/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}&#39;</span>
+</span></span><span style="display:flex;"><span>查看SOCKET状态：cat /proc/net/sockstat
+</span></span><span style="display:flex;"><span>TIME_WAIT状态的socket一般需要等到2msl时间后，socket才会被回收。
+</span></span><span style="display:flex;"><span>修改<span style="color:#000;font-weight:bold">(</span>添加<span style="color:#000;font-weight:bold">)</span>系统内核参数:/etc/sysctl.conf
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#改系統默认的TIMEOUT时间</span>
+</span></span><span style="display:flex;"><span>net.ipv4.tcp_fin_timeout<span style="color:#000;font-weight:bold">=</span><span style="color:#099">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#启重用,允许将TIME-WAIT sockets重新用于新的TCP连接 默认为0表示关闭</span>
+</span></span><span style="display:flex;"><span>net.ipv4.tcp_tw_reuse<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#开启TCP连接中TIME-WAIT sockets的快速回收 默认为0 表示关闭</span>
+</span></span><span style="display:flex;"><span>net.ipv4.tcp_tw_recycle<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>使新增参数生效：sysctl -p
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="8监控参数">8、监控参数</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@qm ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># vmstat 2 10</span>
-procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----
- r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
- <span style="color:#099">2</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17992080</span> <span style="color:#099">309016</span> <span style="color:#099">8748008</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">5</span>     <span style="color:#099">3</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>  <span style="color:#099">1</span>  <span style="color:#099">0</span> <span style="color:#099">99</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
- <span style="color:#099">3</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17992072</span> <span style="color:#099">309016</span> <span style="color:#099">8747976</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">26</span> <span style="color:#099">2895</span>  <span style="color:#099">710</span> <span style="color:#099">17</span>  <span style="color:#099">0</span> <span style="color:#099">83</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
- <span style="color:#099">2</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17992196</span> <span style="color:#099">309016</span> <span style="color:#099">8747976</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">0</span> <span style="color:#099">2481</span>  <span style="color:#099">598</span> <span style="color:#099">17</span>  <span style="color:#099">0</span> <span style="color:#099">83</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
- <span style="color:#099">2</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17991824</span> <span style="color:#099">309016</span> <span style="color:#099">8747976</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">18</span> <span style="color:#099">2916</span>  <span style="color:#099">684</span> <span style="color:#099">18</span>  <span style="color:#099">0</span> <span style="color:#099">81</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
- <span style="color:#099">2</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17992196</span> <span style="color:#099">309016</span> <span style="color:#099">8747976</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>   <span style="color:#099">132</span> <span style="color:#099">2989</span>  <span style="color:#099">731</span> <span style="color:#099">19</span>  <span style="color:#099">0</span> <span style="color:#099">80</span>  <span style="color:#099">1</span>  <span style="color:#099">0</span>    
- <span style="color:#099">3</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17991948</span> <span style="color:#099">309016</span> <span style="color:#099">8747980</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">10</span> <span style="color:#099">3630</span>  <span style="color:#099">905</span> <span style="color:#099">22</span>  <span style="color:#099">0</span> <span style="color:#099">78</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
- <span style="color:#099">3</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17991700</span> <span style="color:#099">309016</span> <span style="color:#099">8747980</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">38</span> <span style="color:#099">3170</span>  <span style="color:#099">796</span> <span style="color:#099">21</span>  <span style="color:#099">0</span> <span style="color:#099">78</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
- <span style="color:#099">2</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17991204</span> <span style="color:#099">309016</span> <span style="color:#099">8747948</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>   <span style="color:#099">364</span> <span style="color:#099">2576</span>  <span style="color:#099">685</span> <span style="color:#099">17</span>  <span style="color:#099">0</span> <span style="color:#099">82</span>  <span style="color:#099">1</span>  <span style="color:#099">0</span>    
- <span style="color:#099">2</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17991204</span> <span style="color:#099">309016</span> <span style="color:#099">8747948</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">16</span> <span style="color:#099">2939</span>  <span style="color:#099">647</span> <span style="color:#099">17</span>  <span style="color:#099">0</span> <span style="color:#099">83</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
- <span style="color:#099">3</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17991328</span> <span style="color:#099">309016</span> <span style="color:#099">8747948</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">0</span> <span style="color:#099">2768</span>  <span style="color:#099">651</span> <span style="color:#099">17</span>  <span style="color:#099">0</span> <span style="color:#099">83</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
-<span style="color:#000;font-weight:bold">[</span>root@qm ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic">#  iostat</span>
-Linux 2.6.32-358.el6.x86_64 <span style="color:#000;font-weight:bold">(</span>qm.web10<span style="color:#000;font-weight:bold">)</span>     2016年04月26日     _x86_64_    <span style="color:#000;font-weight:bold">(</span><span style="color:#099">12</span> CPU<span style="color:#000;font-weight:bold">)</span>
-
-avg-cpu:  %user   %nice %system %iowait  %steal   %idle
-           0.91    0.00    0.03    0.06    0.00   99.00
-
-Device:            tps   Blk_read/s   Blk_wrtn/s   Blk_read   Blk_wrtn
-sda               2.51       122.19        72.73 <span style="color:#099">7081933849</span> <span style="color:#099">4215403284</span>
-dm-0              0.58         1.76         4.39  <span style="color:#099">101952970</span>  <span style="color:#099">254331472</span>
-dm-1              7.14       120.27        68.10 <span style="color:#099">6970687410</span> <span style="color:#099">3946930248</span>
-
-可以用iostat/iotop查看具体的io状况
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@qm ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># vmstat 2 10</span>
+</span></span><span style="display:flex;"><span>procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----
+</span></span><span style="display:flex;"><span> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+</span></span><span style="display:flex;"><span> <span style="color:#099">2</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17992080</span> <span style="color:#099">309016</span> <span style="color:#099">8748008</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">5</span>     <span style="color:#099">3</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>  <span style="color:#099">1</span>  <span style="color:#099">0</span> <span style="color:#099">99</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
+</span></span><span style="display:flex;"><span> <span style="color:#099">3</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17992072</span> <span style="color:#099">309016</span> <span style="color:#099">8747976</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">26</span> <span style="color:#099">2895</span>  <span style="color:#099">710</span> <span style="color:#099">17</span>  <span style="color:#099">0</span> <span style="color:#099">83</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
+</span></span><span style="display:flex;"><span> <span style="color:#099">2</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17992196</span> <span style="color:#099">309016</span> <span style="color:#099">8747976</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">0</span> <span style="color:#099">2481</span>  <span style="color:#099">598</span> <span style="color:#099">17</span>  <span style="color:#099">0</span> <span style="color:#099">83</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
+</span></span><span style="display:flex;"><span> <span style="color:#099">2</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17991824</span> <span style="color:#099">309016</span> <span style="color:#099">8747976</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">18</span> <span style="color:#099">2916</span>  <span style="color:#099">684</span> <span style="color:#099">18</span>  <span style="color:#099">0</span> <span style="color:#099">81</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
+</span></span><span style="display:flex;"><span> <span style="color:#099">2</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17992196</span> <span style="color:#099">309016</span> <span style="color:#099">8747976</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>   <span style="color:#099">132</span> <span style="color:#099">2989</span>  <span style="color:#099">731</span> <span style="color:#099">19</span>  <span style="color:#099">0</span> <span style="color:#099">80</span>  <span style="color:#099">1</span>  <span style="color:#099">0</span>    
+</span></span><span style="display:flex;"><span> <span style="color:#099">3</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17991948</span> <span style="color:#099">309016</span> <span style="color:#099">8747980</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">10</span> <span style="color:#099">3630</span>  <span style="color:#099">905</span> <span style="color:#099">22</span>  <span style="color:#099">0</span> <span style="color:#099">78</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
+</span></span><span style="display:flex;"><span> <span style="color:#099">3</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17991700</span> <span style="color:#099">309016</span> <span style="color:#099">8747980</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">38</span> <span style="color:#099">3170</span>  <span style="color:#099">796</span> <span style="color:#099">21</span>  <span style="color:#099">0</span> <span style="color:#099">78</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
+</span></span><span style="display:flex;"><span> <span style="color:#099">2</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17991204</span> <span style="color:#099">309016</span> <span style="color:#099">8747948</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>   <span style="color:#099">364</span> <span style="color:#099">2576</span>  <span style="color:#099">685</span> <span style="color:#099">17</span>  <span style="color:#099">0</span> <span style="color:#099">82</span>  <span style="color:#099">1</span>  <span style="color:#099">0</span>    
+</span></span><span style="display:flex;"><span> <span style="color:#099">2</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17991204</span> <span style="color:#099">309016</span> <span style="color:#099">8747948</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">16</span> <span style="color:#099">2939</span>  <span style="color:#099">647</span> <span style="color:#099">17</span>  <span style="color:#099">0</span> <span style="color:#099">83</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
+</span></span><span style="display:flex;"><span> <span style="color:#099">3</span>  <span style="color:#099">0</span> <span style="color:#099">258952</span> <span style="color:#099">17991328</span> <span style="color:#099">309016</span> <span style="color:#099">8747948</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">0</span> <span style="color:#099">2768</span>  <span style="color:#099">651</span> <span style="color:#099">17</span>  <span style="color:#099">0</span> <span style="color:#099">83</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>    
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@qm ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic">#  iostat</span>
+</span></span><span style="display:flex;"><span>Linux 2.6.32-358.el6.x86_64 <span style="color:#000;font-weight:bold">(</span>qm.web10<span style="color:#000;font-weight:bold">)</span>     2016年04月26日     _x86_64_    <span style="color:#000;font-weight:bold">(</span><span style="color:#099">12</span> CPU<span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+</span></span><span style="display:flex;"><span>           0.91    0.00    0.03    0.06    0.00   99.00
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Device:            tps   Blk_read/s   Blk_wrtn/s   Blk_read   Blk_wrtn
+</span></span><span style="display:flex;"><span>sda               2.51       122.19        72.73 <span style="color:#099">7081933849</span> <span style="color:#099">4215403284</span>
+</span></span><span style="display:flex;"><span>dm-0              0.58         1.76         4.39  <span style="color:#099">101952970</span>  <span style="color:#099">254331472</span>
+</span></span><span style="display:flex;"><span>dm-1              7.14       120.27        68.10 <span style="color:#099">6970687410</span> <span style="color:#099">3946930248</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>可以用iostat/iotop查看具体的io状况
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
         </div>
@@ -762,6 +766,14 @@ dm-1              7.14       120.27        68.10 <span style="color:#099">697068
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
     </li>
     
@@ -793,14 +805,6 @@ dm-1              7.14       120.27        68.10 <span style="color:#099">697068
         <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理">mysql大表的数据清理</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-17-nmap/" title="nmap参数详解">nmap参数详解</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -821,6 +825,8 @@ dm-1              7.14       120.27        68.10 <span style="color:#099">697068
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
     
@@ -884,7 +890,7 @@ dm-1              7.14       120.27        68.10 <span style="color:#099">697068
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (23)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
     
@@ -902,7 +908,7 @@ dm-1              7.14       120.27        68.10 <span style="color:#099">697068
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (18)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
     
@@ -953,6 +959,8 @@ dm-1              7.14       120.27        68.10 <span style="color:#099">697068
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
     

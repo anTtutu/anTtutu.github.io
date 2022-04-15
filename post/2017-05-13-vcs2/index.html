@@ -163,8 +163,8 @@
         var postToc = $(".post-toc");
         if (postToc.length) {
             var leftPos = $("#main").offset().left;
-            if(leftPos<220){
-                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
             }
 
             var t = postToc.offset().top - 20,
@@ -182,6 +182,10 @@
                 var e = $(window).scrollTop();
                 e < t ? postToc.css(a.start) : postToc.css(a.process)
             })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
         }
     })
 </script>
@@ -222,696 +226,696 @@
 <h2 id="环境和安装目录">环境和安装目录</h2>
 <p>VCS的安装和命令都在下列目录下：sbin, /usr/sbin, /opt/VRTS/bin,和/opt/VRTSvcs/bin<br>
 如果没有设置VCS的环境变量，请在/etc/profile文件中增加如下信息</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#008080">PATH</span><span style="color:#000;font-weight:bold">=</span>/opt/VRTSvcs/bin:/sbin:/usr/sbin:/usr/local/sbin:<span style="color:#008080">$PATH</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#008080">PATH</span><span style="color:#000;font-weight:bold">=</span>/opt/VRTSvcs/bin:/sbin:/usr/sbin:/usr/local/sbin:<span style="color:#008080">$PATH</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>修改完毕后需执行</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0086b3">source</span> /etc/profile
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0086b3">source</span> /etc/profile
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>或者重新登陆。</p>
 <h2 id="1基本命令">1、基本命令</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">使用/etc/rc.d/llt <span style="color:#000;font-weight:bold">{</span>start|stop|restart|condrestart|status<span style="color:#000;font-weight:bold">}</span>命令可以启动、停止、重启llt及查看llt状态；  
-  
-使用/etc/rc.d/gab<span style="color:#000;font-weight:bold">{</span>start|stop|restart|condrestart|status<span style="color:#000;font-weight:bold">}</span>命令可以启动、停止、重启gab及查看gab状态；  
-  
-使用/etc/rc.d/vcs <span style="color:#000;font-weight:bold">{</span>start|stop|restart|condrestart|status<span style="color:#000;font-weight:bold">}</span>命令可以启动、停止、重启VCS及查看VCS状态；也可使用hastart <span style="color:#000;font-weight:bold">[</span>-stale|-force<span style="color:#000;font-weight:bold">]</span>来启动VCS；  
-  
-使用下列命令来查看集群状态：hastatus或者hastat -sum  
-  
-启动单节点集群：hastart –onenode  
-  
-以时间共享方式启动VCS：hastart –ts  
-  
-关闭整个集群服务：hastop -all <span style="color:#000;font-weight:bold">[</span>-force<span style="color:#000;font-weight:bold">]</span>  
-  
-关闭集群中一台主机上的集群服务：hastop -local  
-  
-只关闭VCS相关进程，而不停止VCS所保护的服务进程：hastop -sys system <span style="color:#000;font-weight:bold">[</span>-force | -evacuate<span style="color:#000;font-weight:bold">]</span>  
-  
-使配置文件可读写：haconf –makerw  
-  
-使配置文件只读：haconf -dump –makero  
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>使用/etc/rc.d/llt <span style="color:#000;font-weight:bold">{</span>start|stop|restart|condrestart|status<span style="color:#000;font-weight:bold">}</span>命令可以启动、停止、重启llt及查看llt状态；  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>使用/etc/rc.d/gab<span style="color:#000;font-weight:bold">{</span>start|stop|restart|condrestart|status<span style="color:#000;font-weight:bold">}</span>命令可以启动、停止、重启gab及查看gab状态；  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>使用/etc/rc.d/vcs <span style="color:#000;font-weight:bold">{</span>start|stop|restart|condrestart|status<span style="color:#000;font-weight:bold">}</span>命令可以启动、停止、重启VCS及查看VCS状态；也可使用hastart <span style="color:#000;font-weight:bold">[</span>-stale|-force<span style="color:#000;font-weight:bold">]</span>来启动VCS；  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>使用下列命令来查看集群状态：hastatus或者hastat -sum  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>启动单节点集群：hastart –onenode  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>以时间共享方式启动VCS：hastart –ts  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>关闭整个集群服务：hastop -all <span style="color:#000;font-weight:bold">[</span>-force<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>关闭集群中一台主机上的集群服务：hastop -local  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>只关闭VCS相关进程，而不停止VCS所保护的服务进程：hastop -sys system <span style="color:#000;font-weight:bold">[</span>-force | -evacuate<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>使配置文件可读写：haconf –makerw  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>使配置文件只读：haconf -dump –makero  
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="2vcs的用户管理">2、VCS的用户管理：</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">增加用户，用户默认有观察员身份：hauser -add user  
-  
-将用户提升为集群管理员：haclus -modify Administrators -add user  
-  
-将用户提升为集群操作员：haclus -modify Operators -add user；  
-  
-将用户提升为服务组管理员：hagrp  -modify service_group Adminstrators -add user  
-  
-将用户提升为服务组操作员：hagrp  -modify service_group Operators -add user  
-  
-删除用户：hauser -delete user  
-  
-显示所有用户：hauser -display  
-  
-查询集群日志：  
-  
-hamsg -list  
-  
-hamsg -info <span style="color:#000;font-weight:bold">[</span>-path path_name<span style="color:#000;font-weight:bold">]</span> LDF  
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>增加用户，用户默认有观察员身份：hauser -add user  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>将用户提升为集群管理员：haclus -modify Administrators -add user  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>将用户提升为集群操作员：haclus -modify Operators -add user；  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>将用户提升为服务组管理员：hagrp  -modify service_group Adminstrators -add user  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>将用户提升为服务组操作员：hagrp  -modify service_group Operators -add user  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>删除用户：hauser -delete user  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>显示所有用户：hauser -display  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>查询集群日志：  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hamsg -list  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hamsg -info <span style="color:#000;font-weight:bold">[</span>-path path_name<span style="color:#000;font-weight:bold">]</span> LDF  
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="3对服务组的基本管理操作">3、对服务组的基本管理操作：</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">查询service_group状态：hagrp  -state <span style="color:#000;font-weight:bold">[</span>service_group<span style="color:#000;font-weight:bold">]</span> -sys <span style="color:#000;font-weight:bold">[</span>system<span style="color:#000;font-weight:bold">]</span>；  
-  
-查询节点之间依赖关系：hagrp -dep <span style="color:#000;font-weight:bold">[</span>service_group<span style="color:#000;font-weight:bold">]</span>  
-  
-查询资源表：  
-  
-hagrp  -resources <span style="color:#000;font-weight:bold">[</span>service_group<span style="color:#000;font-weight:bold">]</span> ；  
-  
-hagrp -display <span style="color:#000;font-weight:bold">[</span>service_group<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-attribute attribute<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-sys system<span style="color:#000;font-weight:bold">]</span>  
-  
-hares -display <span style="color:#000;font-weight:bold">[</span>resource<span style="color:#000;font-weight:bold">]</span>  
-  
-hares -display -attribute <span style="color:#000;font-weight:bold">[</span>attribute<span style="color:#000;font-weight:bold">]</span>  
-  
-hares -display -group <span style="color:#000;font-weight:bold">[</span>service_group<span style="color:#000;font-weight:bold">]</span>  
-  
-hares -display -type <span style="color:#000;font-weight:bold">[</span>resource_type<span style="color:#000;font-weight:bold">]</span>  
-  
-hares -display -sys <span style="color:#000;font-weight:bold">[</span>system<span style="color:#000;font-weight:bold">]</span>  
-  
-启动服务组及使服务联机：hagrp  –online service_group –sys system  
-  
-关闭服务组及使服务脱机：hagrp  –offline service_group –sys system  
-  
-将服务组切换到另一个系统上：（只对failover组有效，且当服务组中服务部分或全部联机时）：  
-  
-hagrp  -switch service_group -to system  
-  
-冻结服务组（disable onlining, offlining, and failover<span style="color:#000;font-weight:bold">)</span>，option -persistent 是使cluster重启时freeze：  
-  
-hagrp  -freeze service_group <span style="color:#000;font-weight:bold">[</span>-persistent<span style="color:#000;font-weight:bold">]</span>  
-  
-解冻被冻结的服务组 <span style="color:#000;font-weight:bold">(</span>reenable onlining, offlining, and failover<span style="color:#000;font-weight:bold">)</span>  
-  
-hagrp  -unfreeze service_group <span style="color:#000;font-weight:bold">[</span>-persistent<span style="color:#000;font-weight:bold">]</span>  
-  
-激活服务组：（服务组激活后才能进行联机操作）hagrp  -enable service_group <span style="color:#000;font-weight:bold">[</span>-sys system<span style="color:#000;font-weight:bold">]</span>  
-  
-禁用服务组：（服务组禁用后不能进行联机或切换操作<span style="color:#000;font-weight:bold">)</span>hagrp  -disable service_group <span style="color:#000;font-weight:bold">[</span>-sys system<span style="color:#000;font-weight:bold">]</span>  
-  
-激活服务组中资源：hagrp  -enableresources service_group  
-  
-禁用服务组中资源：（如资源为disable时agents不监控资源组）hagrp  -disableresources service_group  
-  
-清除故障状态：hagrp  -clear <span style="color:#000;font-weight:bold">[</span>service_group<span style="color:#000;font-weight:bold">]</span> -sys <span style="color:#000;font-weight:bold">[</span>system<span style="color:#000;font-weight:bold">]</span>  
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>查询service_group状态：hagrp  -state <span style="color:#000;font-weight:bold">[</span>service_group<span style="color:#000;font-weight:bold">]</span> -sys <span style="color:#000;font-weight:bold">[</span>system<span style="color:#000;font-weight:bold">]</span>；  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>查询节点之间依赖关系：hagrp -dep <span style="color:#000;font-weight:bold">[</span>service_group<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>查询资源表：  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hagrp  -resources <span style="color:#000;font-weight:bold">[</span>service_group<span style="color:#000;font-weight:bold">]</span> ；  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hagrp -display <span style="color:#000;font-weight:bold">[</span>service_group<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-attribute attribute<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-sys system<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hares -display <span style="color:#000;font-weight:bold">[</span>resource<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hares -display -attribute <span style="color:#000;font-weight:bold">[</span>attribute<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hares -display -group <span style="color:#000;font-weight:bold">[</span>service_group<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hares -display -type <span style="color:#000;font-weight:bold">[</span>resource_type<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hares -display -sys <span style="color:#000;font-weight:bold">[</span>system<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>启动服务组及使服务联机：hagrp  –online service_group –sys system  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>关闭服务组及使服务脱机：hagrp  –offline service_group –sys system  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>将服务组切换到另一个系统上：（只对failover组有效，且当服务组中服务部分或全部联机时）：  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hagrp  -switch service_group -to system  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>冻结服务组（disable onlining, offlining, and failover<span style="color:#000;font-weight:bold">)</span>，option -persistent 是使cluster重启时freeze：  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hagrp  -freeze service_group <span style="color:#000;font-weight:bold">[</span>-persistent<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>解冻被冻结的服务组 <span style="color:#000;font-weight:bold">(</span>reenable onlining, offlining, and failover<span style="color:#000;font-weight:bold">)</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hagrp  -unfreeze service_group <span style="color:#000;font-weight:bold">[</span>-persistent<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>激活服务组：（服务组激活后才能进行联机操作）hagrp  -enable service_group <span style="color:#000;font-weight:bold">[</span>-sys system<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>禁用服务组：（服务组禁用后不能进行联机或切换操作<span style="color:#000;font-weight:bold">)</span>hagrp  -disable service_group <span style="color:#000;font-weight:bold">[</span>-sys system<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>激活服务组中资源：hagrp  -enableresources service_group  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>禁用服务组中资源：（如资源为disable时agents不监控资源组）hagrp  -disableresources service_group  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>清除故障状态：hagrp  -clear <span style="color:#000;font-weight:bold">[</span>service_group<span style="color:#000;font-weight:bold">]</span> -sys <span style="color:#000;font-weight:bold">[</span>system<span style="color:#000;font-weight:bold">]</span>  
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="4管理资源操作">4、管理资源操作：</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">查询资源代理列表：  
-  
-hatype -list  
-  
-hatype -resources resource_type  
-  
-hatype -display <span style="color:#000;font-weight:bold">[</span>resource_type<span style="color:#000;font-weight:bold">]</span>  
-  
-haagent -display <span style="color:#000;font-weight:bold">[</span>agent<span style="color:#000;font-weight:bold">]</span>  
-  
-使资源联机：hares -online resource -sys system  
-  
-使资源脱机：hares -offline resource -sys system  
-  
-使资源脱机并将命令传播给子节点：hares -offprop resource -sys system  
-  
-提示资源代理（agent）监控指定系统上的资源：（命令可能立即返回，但监控的进程可能还没结束）hares -probe resource -sys system  
-  
-清洗资源，使状态从RESOURCE_FAULTED 转为RESOURCE_OFFLINE:  
-  
-hares -clear resource <span style="color:#000;font-weight:bold">[</span>-sys system<span style="color:#000;font-weight:bold">]</span>  
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>查询资源代理列表：  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hatype -list  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hatype -resources resource_type  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hatype -display <span style="color:#000;font-weight:bold">[</span>resource_type<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>haagent -display <span style="color:#000;font-weight:bold">[</span>agent<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>使资源联机：hares -online resource -sys system  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>使资源脱机：hares -offline resource -sys system  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>使资源脱机并将命令传播给子节点：hares -offprop resource -sys system  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>提示资源代理（agent）监控指定系统上的资源：（命令可能立即返回，但监控的进程可能还没结束）hares -probe resource -sys system  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>清洗资源，使状态从RESOURCE_FAULTED 转为RESOURCE_OFFLINE:  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hares -clear resource <span style="color:#000;font-weight:bold">[</span>-sys system<span style="color:#000;font-weight:bold">]</span>  
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="5管理主机">5、管理主机：</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">查询主机列表：  
-  
-hasys -list  
-  
-hasys -display <span style="color:#000;font-weight:bold">[</span>system<span style="color:#000;font-weight:bold">]</span>  
-  
-haclus -value attribute  
-  
-haclus –display  
-  
-在ADMIN_WAIT状态下强制主机加载集群，此命令会覆盖正在使用的集群配置，使用前请确认准备使用的主机的集群配置文件是否有效：  
-  
-hacf –verify /etc/VRTSvcs/conf/concig  
-  
-hasys -force system  
-  
-修改主机的属性，一些属性是VCS的内部属性，不能修改：  
-  
-hasys -modify modify_options  
-  
-查询主机ID，主机ID定义在文件/etc/llttab中：hasys –nodeid node_ID  
-  
-冻结主机 <span style="color:#000;font-weight:bold">(</span>防止主机进行联机或切换操作<span style="color:#000;font-weight:bold">)</span>：hasys -freeze <span style="color:#000;font-weight:bold">[</span>-persistent<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-evacuate<span style="color:#000;font-weight:bold">]</span> system  
-  
-解冻被冻结的主机 <span style="color:#000;font-weight:bold">(</span>使主机可以进行联机或切换操作<span style="color:#000;font-weight:bold">)</span>：hasys -unfreeze <span style="color:#000;font-weight:bold">[</span>-persistent<span style="color:#000;font-weight:bold">]</span> system  
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>查询主机列表：  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hasys -list  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hasys -display <span style="color:#000;font-weight:bold">[</span>system<span style="color:#000;font-weight:bold">]</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>haclus -value attribute  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>haclus –display  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>在ADMIN_WAIT状态下强制主机加载集群，此命令会覆盖正在使用的集群配置，使用前请确认准备使用的主机的集群配置文件是否有效：  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hacf –verify /etc/VRTSvcs/conf/concig  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hasys -force system  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>修改主机的属性，一些属性是VCS的内部属性，不能修改：  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>hasys -modify modify_options  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>查询主机ID，主机ID定义在文件/etc/llttab中：hasys –nodeid node_ID  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>冻结主机 <span style="color:#000;font-weight:bold">(</span>防止主机进行联机或切换操作<span style="color:#000;font-weight:bold">)</span>：hasys -freeze <span style="color:#000;font-weight:bold">[</span>-persistent<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>-evacuate<span style="color:#000;font-weight:bold">]</span> system  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>解冻被冻结的主机 <span style="color:#000;font-weight:bold">(</span>使主机可以进行联机或切换操作<span style="color:#000;font-weight:bold">)</span>：hasys -unfreeze <span style="color:#000;font-weight:bold">[</span>-persistent<span style="color:#000;font-weight:bold">]</span> system  
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="6vcs的license的管理操作">6、VCS的license的管理操作：</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">安装VCS的License<span style="color:#000;font-weight:bold">(</span>root用户下执行<span style="color:#000;font-weight:bold">)</span>：halic &lt;key&gt;或者vxlicinst –k  &lt;key&gt;  
-  
-查询license：vxlicrep  
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>安装VCS的License<span style="color:#000;font-weight:bold">(</span>root用户下执行<span style="color:#000;font-weight:bold">)</span>：halic &lt;key&gt;或者vxlicinst –k  &lt;key&gt;  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>查询license：vxlicrep  
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="7双机日常管理类">7、双机日常管理类：</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">129
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">130
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">131
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">132
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">133
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">134
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">135
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">136
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">137
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">138
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">139
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">140
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">141
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">142
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">143
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">144
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">145
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">146
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">147
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">148
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">149
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">150
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">151
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">152
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">153
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">154
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">155
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">156
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">157
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">158
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">159
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">160
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">161
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">162
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">163
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">164
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">165
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">166
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">167
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">168
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">169
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">170
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">171
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">172
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">173
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">174
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">175
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">176
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">177
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">178
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">129
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">130
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">131
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">132
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">133
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">134
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">135
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">136
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">137
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">138
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">139
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">140
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">141
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">142
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">143
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">144
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">145
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">146
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">147
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">148
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">149
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">150
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">151
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">152
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">153
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">154
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">155
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">156
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">157
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">158
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">159
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">160
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">161
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">162
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">163
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">164
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">165
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">166
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">167
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">168
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">169
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">170
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">171
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">172
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">173
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">174
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">175
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">176
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">177
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">178
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic">#安装license，可以先用演示license-3个月 商用license-永久 测试license-长期和短期都有，但是veritas不提供维保服务  </span>
-vxlicense -c  
-  
-<span style="color:#998;font-style:italic">#查询license  </span>
-vxlicrep  
-  
-Symantec License Manager vxlicrep utility version 3.02.5010    
-Copyright <span style="color:#000;font-weight:bold">(</span>C<span style="color:#000;font-weight:bold">)</span> 1996-2010 Symantec Corporation. All rights reserved.    
-Creating a report on all VERITAS products installed on this system    
- -----------------***********************-----------------    
-   License <span style="color:#008080">Key</span>                         <span style="color:#000;font-weight:bold">=</span> XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-X    
-   Product <span style="color:#008080">Name</span>                        <span style="color:#000;font-weight:bold">=</span> VERITAS Cluster Server    
-   Serial <span style="color:#008080">Number</span>                       <span style="color:#000;font-weight:bold">=</span> XXXX    
-   License <span style="color:#008080">Type</span>                        <span style="color:#000;font-weight:bold">=</span> PERMANENT    
-   OEM <span style="color:#008080">ID</span>                              <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">2006</span>    
-   Site <span style="color:#008080">License</span>                        <span style="color:#000;font-weight:bold">=</span> YES    
-   Editions <span style="color:#008080">Product</span>                    <span style="color:#000;font-weight:bold">=</span> YES    
- Features :<span style="color:#000;font-weight:bold">=</span>     
-   <span style="color:#008080">Platform</span>                            <span style="color:#000;font-weight:bold">=</span> Unused                                 
-  <span style="color:#008080">Version</span>                             <span style="color:#000;font-weight:bold">=</span> 5.1                                    
-   <span style="color:#008080">Tier</span>                                <span style="color:#000;font-weight:bold">=</span> Unused                                 
-   <span style="color:#008080">Reserved</span>                            <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>     
-   <span style="color:#008080">Mode</span>                                <span style="color:#000;font-weight:bold">=</span> VCS                                    
-   <span style="color:#008080">CPU_TIER</span>                            <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">2</span>    
-   <span style="color:#008080">VXKEYLESS</span>                           <span style="color:#000;font-weight:bold">=</span> Enabled    
-  
-<span style="color:#998;font-style:italic"># 添加VCS控制台用户  </span>
-haconf -makerw  
-hauser -add 用户名 -priv Administrator  
-haconf -dump -makero  
-  
-<span style="color:#998;font-style:italic">#启动VCS, 主备机都执行  </span>
-hastart  
-  
-<span style="color:#998;font-style:italic">#停止VCS  </span>
-hastop -all   应用会offline，需要等待一定时间才能完全停止  
-  
-<span style="color:#998;font-style:italic"># 强制停止VCS  </span>
-hastop -all -force  应用不会offline，仅仅是把vcs进程停止  
-  
-<span style="color:#998;font-style:italic">#查看资源组状态  </span>
-hagrp -state  
-  
-<span style="color:#998;font-style:italic">#查看资源状态  </span>
-hares -state  
-  
-<span style="color:#998;font-style:italic">#查看双机状态  </span>
-hastatus -sum  
-  
--- SYSTEM STATE    
--- System               State                Frozen                  
-    
-A  NodeA              RUNNING              <span style="color:#099">0</span>                        
-A  NodeB              RUNNING              <span style="color:#099">0</span>                        
-    
--- GROUP STATE    
--- Group           System               Probed     AutoDisabled    State              
-    
-B  RCS_DB_SG       NodeA                 Y          N               ONLINE             
-B  RCS_DB_SG       NodeB                 Y          N               OFFLINE  
-  
-<span style="color:#998;font-style:italic">#查看动态的双机状态  </span>
-hastatus   一般集群刚启动时用得比较多，监控资源启动运行情况，稳定后使用上一个命令较多  
-  
-<span style="color:#998;font-style:italic">#某一节点应用上线  </span>
-hagrp -online 资源组名 -sys 节点名  
-  
-<span style="color:#998;font-style:italic">#某一节点应用下线  </span>
-hagrp -offline 资源组名 -sys 节点名  
-  
-<span style="color:#998;font-style:italic">#冻结资源组  </span>
-hagrp -freeze 资源组名 -persistent  就是冻结资源组，暂时不委托给vcs集群管理软件管理  
-  
--- SYSTEM STATE    
--- System               State                Frozen                  
-    
-A  NodeA                RUNNING              <span style="color:#099">0</span>                        
-A  NodeB                RUNNING              <span style="color:#099">0</span>                        
-    
--- GROUP STATE    
--- Group           System               Probed     AutoDisabled    State              
-    
-B  RCS_DB_SG       NodeA                Y          N               ONLINE             
-B  RCS_DB_SG       NodeB                Y          N               OFFLINE            
-    
--- GROUPS FROZEN    
--- Group              
-    
-C  RCS_DB_SG          
-    
--- RESOURCES DISABLED    
--- Group           Type            Resource                
-    
-H  RCS_DB_SG       Application     ora_raw           oracle11gR1的方案，用了raw，从oracle11gR2开始用grid管理      
-H  RCS_DB_SG       Application     ora_vg                  
-H  RCS_DB_SG       IP              ora_ip                  
-H  RCS_DB_SG       NIC             ora_nic                 
-H  RCS_DB_SG       Netlsnr         ora_listener            
-H  RCS_DB_SG       Oracle          ora_ora11g   
-  
-<span style="color:#998;font-style:italic">#解冻资源组  </span>
-hagrp -unfreeze 资源组名   
-  
-<span style="color:#998;font-style:italic">#切换双机资源组至另外一节点  </span>
-hagrp -switch 资源组名 -to 节点名  
-  
-<span style="color:#998;font-style:italic">#VCS默认安装目录  </span>
-/opt/VRTSvcs/bin  
-  
-<span style="color:#998;font-style:italic"># VCS配置文件名  </span>
-/etc/VRTSvcs/conf/config/main.cf  
-  
-<span style="color:#998;font-style:italic">#检查配置文件是否正确  </span>
-hacf -verify config  
-  
-<span style="color:#998;font-style:italic"># 启动VCS控制台  </span>
-hagui &amp;  
-  
-<span style="color:#998;font-style:italic">#修改vcs控制台(gui)管理员密码  </span>
-vcsencrypt -vcs   <span style="color:#000;font-weight:bold">(</span>然后输入2次密码，并将生成的加密后的密码粘到main.cf中,重启vcs生效<span style="color:#000;font-weight:bold">)</span>  
-  
-<span style="color:#998;font-style:italic">#修改vcs监控资源密码，如db2或Oracle的登陆密码  </span>
-vcsencrypt -agent  <span style="color:#000;font-weight:bold">(</span>然后输入2次密码，并将生成的加密后的密码粘到main.cf中,重启vcs生效<span style="color:#000;font-weight:bold">)</span>  
-  
-2、故障检查类  
-<span style="color:#998;font-style:italic">#如果有系统出现ADMIN_WAIT  </span>
-<span style="color:#0086b3">cd</span> /etc/VRTSvcs/conf/config  
-rm .stale  
-  
-<span style="color:#998;font-style:italic">#vcs日志  </span>
-/var/VRTSvcs/log/engine_A.log  
-  
-<span style="color:#998;font-style:italic">#检查llt心跳网卡  </span>
-lltstat -l     
-  
-LLT link information:    
-link <span style="color:#099">0</span>  eth10 on ether hipri    
-        mtu 1500, sap 0xcafe, broadcast FF:FF:FF:FF:FF:FF, addrlen <span style="color:#099">6</span>    
-        txpkts <span style="color:#099">67688788</span>  txbytes <span style="color:#099">1843243673</span>    
-        rxpkts <span style="color:#099">76679165</span>  rxbytes <span style="color:#099">1360585331</span>    
-        latehb <span style="color:#099">0</span>  badcksum <span style="color:#099">0</span>  errors <span style="color:#099">0</span>    
-link <span style="color:#099">1</span>  eth9 on ether hipri    
-        mtu 1500, sap 0xcafe, broadcast FF:FF:FF:FF:FF:FF, addrlen <span style="color:#099">6</span>    
-        txpkts <span style="color:#099">67689522</span>  txbytes <span style="color:#099">1843879628</span>    
-        rxpkts <span style="color:#099">276962155</span>  rxbytes <span style="color:#099">1467872503</span>    
-        latehb <span style="color:#099">0</span>  badcksum <span style="color:#099">0</span>  errors <span style="color:#099">0</span>    
-link <span style="color:#099">2</span>  eth8 on ether lowpri    
-        mtu 1500, sap 0xcafe, broadcast FF:FF:FF:FF:FF:FF, addrlen <span style="color:#099">6</span>    
-        txpkts <span style="color:#099">21897078</span>  txbytes <span style="color:#099">1072847300</span>    
-        rxpkts <span style="color:#099">222319811</span>  rxbytes <span style="color:#099">1191109452</span>    
-        latehb <span style="color:#099">0</span>  badcksum <span style="color:#099">0</span>  errors <span style="color:#099">0</span>    
-          
-<span style="color:#998;font-style:italic">#检查集群编号  </span>
-cat /etc/llttab  
-  
-set-node NodeA    
-set-cluster <span style="color:#099">9521</span>    
-link eth10 eth-80:fb:06:35:b8:9f - ether - -    
-link eth9 eth-80:fb:06:35:b8:a1 - ether - -    
-link-lowpri eth8 eth-80:fb:06:35:b8:a0 - ether - -           
-  
-<span style="color:#998;font-style:italic">#检查心跳网卡工作状态  </span>
-lltstat -n  
-    
-LLT node information:    
-    Node                 State    Links    
-   * <span style="color:#099">0</span> NodeA            OPEN        <span style="color:#099">3</span>       *表示执行的节点，3表示llt和gab心跳链路工作均正常  
-     <span style="color:#099">1</span> NodeB            OPEN        <span style="color:#099">3</span>   
-  
-<span style="color:#998;font-style:italic"># 检查双机心跳网卡状态。  </span>
-lltstat -nvv       
-  
-<span style="color:#998;font-style:italic">#心跳通迅模块重启  </span>
-/etc/init.d/gab stop  
-/etc/init.d/llt stop  
-  
-/etc/init.d/llt start  
-/etc/init.d/gab start
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic">#安装license，可以先用演示license-3个月 商用license-永久 测试license-长期和短期都有，但是veritas不提供维保服务  </span>
+</span></span><span style="display:flex;"><span>vxlicense -c  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#查询license  </span>
+</span></span><span style="display:flex;"><span>vxlicrep  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>Symantec License Manager vxlicrep utility version 3.02.5010    
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#000;font-weight:bold">(</span>C<span style="color:#000;font-weight:bold">)</span> 1996-2010 Symantec Corporation. All rights reserved.    
+</span></span><span style="display:flex;"><span>Creating a report on all VERITAS products installed on this system    
+</span></span><span style="display:flex;"><span> -----------------***********************-----------------    
+</span></span><span style="display:flex;"><span>   License <span style="color:#008080">Key</span>                         <span style="color:#000;font-weight:bold">=</span> XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-X    
+</span></span><span style="display:flex;"><span>   Product <span style="color:#008080">Name</span>                        <span style="color:#000;font-weight:bold">=</span> VERITAS Cluster Server    
+</span></span><span style="display:flex;"><span>   Serial <span style="color:#008080">Number</span>                       <span style="color:#000;font-weight:bold">=</span> XXXX    
+</span></span><span style="display:flex;"><span>   License <span style="color:#008080">Type</span>                        <span style="color:#000;font-weight:bold">=</span> PERMANENT    
+</span></span><span style="display:flex;"><span>   OEM <span style="color:#008080">ID</span>                              <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">2006</span>    
+</span></span><span style="display:flex;"><span>   Site <span style="color:#008080">License</span>                        <span style="color:#000;font-weight:bold">=</span> YES    
+</span></span><span style="display:flex;"><span>   Editions <span style="color:#008080">Product</span>                    <span style="color:#000;font-weight:bold">=</span> YES    
+</span></span><span style="display:flex;"><span> Features :<span style="color:#000;font-weight:bold">=</span>     
+</span></span><span style="display:flex;"><span>   <span style="color:#008080">Platform</span>                            <span style="color:#000;font-weight:bold">=</span> Unused                                 
+</span></span><span style="display:flex;"><span>  <span style="color:#008080">Version</span>                             <span style="color:#000;font-weight:bold">=</span> 5.1                                    
+</span></span><span style="display:flex;"><span>   <span style="color:#008080">Tier</span>                                <span style="color:#000;font-weight:bold">=</span> Unused                                 
+</span></span><span style="display:flex;"><span>   <span style="color:#008080">Reserved</span>                            <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>     
+</span></span><span style="display:flex;"><span>   <span style="color:#008080">Mode</span>                                <span style="color:#000;font-weight:bold">=</span> VCS                                    
+</span></span><span style="display:flex;"><span>   <span style="color:#008080">CPU_TIER</span>                            <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">2</span>    
+</span></span><span style="display:flex;"><span>   <span style="color:#008080">VXKEYLESS</span>                           <span style="color:#000;font-weight:bold">=</span> Enabled    
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 添加VCS控制台用户  </span>
+</span></span><span style="display:flex;"><span>haconf -makerw  
+</span></span><span style="display:flex;"><span>hauser -add 用户名 -priv Administrator  
+</span></span><span style="display:flex;"><span>haconf -dump -makero  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#启动VCS, 主备机都执行  </span>
+</span></span><span style="display:flex;"><span>hastart  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#停止VCS  </span>
+</span></span><span style="display:flex;"><span>hastop -all   应用会offline，需要等待一定时间才能完全停止  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 强制停止VCS  </span>
+</span></span><span style="display:flex;"><span>hastop -all -force  应用不会offline，仅仅是把vcs进程停止  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#查看资源组状态  </span>
+</span></span><span style="display:flex;"><span>hagrp -state  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#查看资源状态  </span>
+</span></span><span style="display:flex;"><span>hares -state  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#查看双机状态  </span>
+</span></span><span style="display:flex;"><span>hastatus -sum  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-- SYSTEM STATE    
+</span></span><span style="display:flex;"><span>-- System               State                Frozen                  
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>A  NodeA              RUNNING              <span style="color:#099">0</span>                        
+</span></span><span style="display:flex;"><span>A  NodeB              RUNNING              <span style="color:#099">0</span>                        
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>-- GROUP STATE    
+</span></span><span style="display:flex;"><span>-- Group           System               Probed     AutoDisabled    State              
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>B  RCS_DB_SG       NodeA                 Y          N               ONLINE             
+</span></span><span style="display:flex;"><span>B  RCS_DB_SG       NodeB                 Y          N               OFFLINE  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#查看动态的双机状态  </span>
+</span></span><span style="display:flex;"><span>hastatus   一般集群刚启动时用得比较多，监控资源启动运行情况，稳定后使用上一个命令较多  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#某一节点应用上线  </span>
+</span></span><span style="display:flex;"><span>hagrp -online 资源组名 -sys 节点名  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#某一节点应用下线  </span>
+</span></span><span style="display:flex;"><span>hagrp -offline 资源组名 -sys 节点名  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#冻结资源组  </span>
+</span></span><span style="display:flex;"><span>hagrp -freeze 资源组名 -persistent  就是冻结资源组，暂时不委托给vcs集群管理软件管理  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>-- SYSTEM STATE    
+</span></span><span style="display:flex;"><span>-- System               State                Frozen                  
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>A  NodeA                RUNNING              <span style="color:#099">0</span>                        
+</span></span><span style="display:flex;"><span>A  NodeB                RUNNING              <span style="color:#099">0</span>                        
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>-- GROUP STATE    
+</span></span><span style="display:flex;"><span>-- Group           System               Probed     AutoDisabled    State              
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>B  RCS_DB_SG       NodeA                Y          N               ONLINE             
+</span></span><span style="display:flex;"><span>B  RCS_DB_SG       NodeB                Y          N               OFFLINE            
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>-- GROUPS FROZEN    
+</span></span><span style="display:flex;"><span>-- Group              
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>C  RCS_DB_SG          
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>-- RESOURCES DISABLED    
+</span></span><span style="display:flex;"><span>-- Group           Type            Resource                
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>H  RCS_DB_SG       Application     ora_raw           oracle11gR1的方案，用了raw，从oracle11gR2开始用grid管理      
+</span></span><span style="display:flex;"><span>H  RCS_DB_SG       Application     ora_vg                  
+</span></span><span style="display:flex;"><span>H  RCS_DB_SG       IP              ora_ip                  
+</span></span><span style="display:flex;"><span>H  RCS_DB_SG       NIC             ora_nic                 
+</span></span><span style="display:flex;"><span>H  RCS_DB_SG       Netlsnr         ora_listener            
+</span></span><span style="display:flex;"><span>H  RCS_DB_SG       Oracle          ora_ora11g   
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#解冻资源组  </span>
+</span></span><span style="display:flex;"><span>hagrp -unfreeze 资源组名   
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#切换双机资源组至另外一节点  </span>
+</span></span><span style="display:flex;"><span>hagrp -switch 资源组名 -to 节点名  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#VCS默认安装目录  </span>
+</span></span><span style="display:flex;"><span>/opt/VRTSvcs/bin  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># VCS配置文件名  </span>
+</span></span><span style="display:flex;"><span>/etc/VRTSvcs/conf/config/main.cf  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#检查配置文件是否正确  </span>
+</span></span><span style="display:flex;"><span>hacf -verify config  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 启动VCS控制台  </span>
+</span></span><span style="display:flex;"><span>hagui &amp;  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#修改vcs控制台(gui)管理员密码  </span>
+</span></span><span style="display:flex;"><span>vcsencrypt -vcs   <span style="color:#000;font-weight:bold">(</span>然后输入2次密码，并将生成的加密后的密码粘到main.cf中,重启vcs生效<span style="color:#000;font-weight:bold">)</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#修改vcs监控资源密码，如db2或Oracle的登陆密码  </span>
+</span></span><span style="display:flex;"><span>vcsencrypt -agent  <span style="color:#000;font-weight:bold">(</span>然后输入2次密码，并将生成的加密后的密码粘到main.cf中,重启vcs生效<span style="color:#000;font-weight:bold">)</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>2、故障检查类  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#如果有系统出现ADMIN_WAIT  </span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">cd</span> /etc/VRTSvcs/conf/config  
+</span></span><span style="display:flex;"><span>rm .stale  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#vcs日志  </span>
+</span></span><span style="display:flex;"><span>/var/VRTSvcs/log/engine_A.log  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#检查llt心跳网卡  </span>
+</span></span><span style="display:flex;"><span>lltstat -l     
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>LLT link information:    
+</span></span><span style="display:flex;"><span>link <span style="color:#099">0</span>  eth10 on ether hipri    
+</span></span><span style="display:flex;"><span>        mtu 1500, sap 0xcafe, broadcast FF:FF:FF:FF:FF:FF, addrlen <span style="color:#099">6</span>    
+</span></span><span style="display:flex;"><span>        txpkts <span style="color:#099">67688788</span>  txbytes <span style="color:#099">1843243673</span>    
+</span></span><span style="display:flex;"><span>        rxpkts <span style="color:#099">76679165</span>  rxbytes <span style="color:#099">1360585331</span>    
+</span></span><span style="display:flex;"><span>        latehb <span style="color:#099">0</span>  badcksum <span style="color:#099">0</span>  errors <span style="color:#099">0</span>    
+</span></span><span style="display:flex;"><span>link <span style="color:#099">1</span>  eth9 on ether hipri    
+</span></span><span style="display:flex;"><span>        mtu 1500, sap 0xcafe, broadcast FF:FF:FF:FF:FF:FF, addrlen <span style="color:#099">6</span>    
+</span></span><span style="display:flex;"><span>        txpkts <span style="color:#099">67689522</span>  txbytes <span style="color:#099">1843879628</span>    
+</span></span><span style="display:flex;"><span>        rxpkts <span style="color:#099">276962155</span>  rxbytes <span style="color:#099">1467872503</span>    
+</span></span><span style="display:flex;"><span>        latehb <span style="color:#099">0</span>  badcksum <span style="color:#099">0</span>  errors <span style="color:#099">0</span>    
+</span></span><span style="display:flex;"><span>link <span style="color:#099">2</span>  eth8 on ether lowpri    
+</span></span><span style="display:flex;"><span>        mtu 1500, sap 0xcafe, broadcast FF:FF:FF:FF:FF:FF, addrlen <span style="color:#099">6</span>    
+</span></span><span style="display:flex;"><span>        txpkts <span style="color:#099">21897078</span>  txbytes <span style="color:#099">1072847300</span>    
+</span></span><span style="display:flex;"><span>        rxpkts <span style="color:#099">222319811</span>  rxbytes <span style="color:#099">1191109452</span>    
+</span></span><span style="display:flex;"><span>        latehb <span style="color:#099">0</span>  badcksum <span style="color:#099">0</span>  errors <span style="color:#099">0</span>    
+</span></span><span style="display:flex;"><span>          
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#检查集群编号  </span>
+</span></span><span style="display:flex;"><span>cat /etc/llttab  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>set-node NodeA    
+</span></span><span style="display:flex;"><span>set-cluster <span style="color:#099">9521</span>    
+</span></span><span style="display:flex;"><span>link eth10 eth-80:fb:06:35:b8:9f - ether - -    
+</span></span><span style="display:flex;"><span>link eth9 eth-80:fb:06:35:b8:a1 - ether - -    
+</span></span><span style="display:flex;"><span>link-lowpri eth8 eth-80:fb:06:35:b8:a0 - ether - -           
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#检查心跳网卡工作状态  </span>
+</span></span><span style="display:flex;"><span>lltstat -n  
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>LLT node information:    
+</span></span><span style="display:flex;"><span>    Node                 State    Links    
+</span></span><span style="display:flex;"><span>   * <span style="color:#099">0</span> NodeA            OPEN        <span style="color:#099">3</span>       *表示执行的节点，3表示llt和gab心跳链路工作均正常  
+</span></span><span style="display:flex;"><span>     <span style="color:#099">1</span> NodeB            OPEN        <span style="color:#099">3</span>   
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 检查双机心跳网卡状态。  </span>
+</span></span><span style="display:flex;"><span>lltstat -nvv       
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#心跳通迅模块重启  </span>
+</span></span><span style="display:flex;"><span>/etc/init.d/gab stop  
+</span></span><span style="display:flex;"><span>/etc/init.d/llt stop  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>/etc/init.d/llt start  
+</span></span><span style="display:flex;"><span>/etc/init.d/gab start
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
         </div>
@@ -1037,6 +1041,14 @@ lltstat -nvv
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
     </li>
     
@@ -1068,14 +1080,6 @@ lltstat -nvv
         <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理">mysql大表的数据清理</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-17-nmap/" title="nmap参数详解">nmap参数详解</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -1096,6 +1100,8 @@ lltstat -nvv
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
     
@@ -1159,7 +1165,7 @@ lltstat -nvv
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (23)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
     
@@ -1177,7 +1183,7 @@ lltstat -nvv
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (18)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
     
@@ -1228,6 +1234,8 @@ lltstat -nvv
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
     

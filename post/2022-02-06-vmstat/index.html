@@ -155,8 +155,8 @@
         var postToc = $(".post-toc");
         if (postToc.length) {
             var leftPos = $("#main").offset().left;
-            if(leftPos<220){
-                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
             }
 
             var t = postToc.offset().top - 20,
@@ -174,6 +174,10 @@
                 var e = $(window).scrollTop();
                 e < t ? postToc.css(a.start) : postToc.css(a.process)
             })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
         }
     })
 </script>
@@ -210,33 +214,33 @@
 <p>vmstat是virtual memory statistics 的缩写，它是Linux下一个非常有用的监控工具，除了内存之外，还提供 块 IO、CPU 时间 等额外的信息</p>
 <h2 id="1语法">1、语法</h2>
 <p>vmstat 命令的执行不需要特殊的权限，普通用户就可以执行，其语法形式如下</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vmstat <span style="color:#000;font-weight:bold">[</span>options<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>delay <span style="color:#000;font-weight:bold">[</span>count<span style="color:#000;font-weight:bold">]]</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vmstat <span style="color:#000;font-weight:bold">[</span>options<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">[</span>delay <span style="color:#000;font-weight:bold">[</span>count<span style="color:#000;font-weight:bold">]]</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>delay 表示数据更新间隔，单位是秒，如果没有指定此值，表示系统启动以来的平均时间，而且此时只输出一次结果<br>
 count 表示输出次数，如果没有指定该值，但是指定了 delay 的值，则表示无限次</p>
 <h2 id="2字段说明">2、字段说明</h2>
 <p>在命令行输入 vmstat 并回车， 会输出一次结果</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@cghost22 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># vmstat</span>
-procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
- r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
- <span style="color:#099">3</span>  <span style="color:#099">0</span>      <span style="color:#099">0</span> <span style="color:#099">991324</span>    <span style="color:#099">932</span> <span style="color:#099">537336</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">3</span>    <span style="color:#099">4</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span> <span style="color:#099">100</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
-<span style="color:#000;font-weight:bold">[</span>root@cghost22 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic">#</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@cghost22 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># vmstat</span>
+</span></span><span style="display:flex;"><span>procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+</span></span><span style="display:flex;"><span> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+</span></span><span style="display:flex;"><span> <span style="color:#099">3</span>  <span style="color:#099">0</span>      <span style="color:#099">0</span> <span style="color:#099">991324</span>    <span style="color:#099">932</span> <span style="color:#099">537336</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">3</span>    <span style="color:#099">4</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span> <span style="color:#099">100</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@cghost22 ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic">#</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><table>
 <thead>
@@ -370,37 +374,37 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 <h2 id="4常见用法">4、常见用法</h2>
 <p>vmstat 命令主要用于识别系统的瓶颈，统计数据的时候，它不会包含自身进程<br>
 按照指定时间间隔和次数输出</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@cghost22 ~<span style="color:#000;font-weight:bold">]</span>$ vmstat <span style="color:#099">2</span> <span style="color:#099">10</span>
-procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
- r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
- <span style="color:#099">2</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148356</span> <span style="color:#099">234324</span> <span style="color:#099">3382956</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">1</span>    <span style="color:#099">21</span>    <span style="color:#099">4</span>    <span style="color:#099">4</span>  <span style="color:#099">2</span>  <span style="color:#099">2</span> <span style="color:#099">97</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
- <span style="color:#099">1</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148264</span> <span style="color:#099">234324</span> <span style="color:#099">3382980</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">0</span> <span style="color:#099">14974</span> <span style="color:#099">27478</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">96</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
- <span style="color:#099">1</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148232</span> <span style="color:#099">234324</span> <span style="color:#099">3382984</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">14</span> <span style="color:#099">14384</span> <span style="color:#099">27181</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">96</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
- <span style="color:#099">0</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148376</span> <span style="color:#099">234332</span> <span style="color:#099">3383052</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>   <span style="color:#099">204</span> <span style="color:#099">14197</span> <span style="color:#099">26812</span>  <span style="color:#099">4</span>  <span style="color:#099">2</span> <span style="color:#099">94</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
- <span style="color:#099">0</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148512</span> <span style="color:#099">234332</span> <span style="color:#099">3383088</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">4</span> <span style="color:#099">14398</span> <span style="color:#099">27155</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">95</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
- <span style="color:#099">0</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">147892</span> <span style="color:#099">234332</span> <span style="color:#099">3383128</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>   <span style="color:#099">210</span> <span style="color:#099">15515</span> <span style="color:#099">28802</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">95</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
- <span style="color:#099">1</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148388</span> <span style="color:#099">234332</span> <span style="color:#099">3383156</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">0</span> <span style="color:#099">15147</span> <span style="color:#099">28042</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">95</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
- <span style="color:#099">0</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148264</span> <span style="color:#099">234332</span> <span style="color:#099">3383168</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">4</span> <span style="color:#099">14380</span> <span style="color:#099">27395</span>  <span style="color:#099">3</span>  <span style="color:#099">1</span> <span style="color:#099">96</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
- <span style="color:#099">0</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148264</span> <span style="color:#099">234336</span> <span style="color:#099">3383216</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>   <span style="color:#099">198</span> <span style="color:#099">14430</span> <span style="color:#099">27008</span>  <span style="color:#099">3</span>  <span style="color:#099">1</span> <span style="color:#099">95</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
- <span style="color:#099">2</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148140</span> <span style="color:#099">234336</span> <span style="color:#099">3383252</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">6</span> <span style="color:#099">14233</span> <span style="color:#099">27161</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">95</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@cghost22 ~<span style="color:#000;font-weight:bold">]</span>$ vmstat <span style="color:#099">2</span> <span style="color:#099">10</span>
+</span></span><span style="display:flex;"><span>procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+</span></span><span style="display:flex;"><span> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+</span></span><span style="display:flex;"><span> <span style="color:#099">2</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148356</span> <span style="color:#099">234324</span> <span style="color:#099">3382956</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">1</span>    <span style="color:#099">21</span>    <span style="color:#099">4</span>    <span style="color:#099">4</span>  <span style="color:#099">2</span>  <span style="color:#099">2</span> <span style="color:#099">97</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">1</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148264</span> <span style="color:#099">234324</span> <span style="color:#099">3382980</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">0</span> <span style="color:#099">14974</span> <span style="color:#099">27478</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">96</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">1</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148232</span> <span style="color:#099">234324</span> <span style="color:#099">3382984</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>    <span style="color:#099">14</span> <span style="color:#099">14384</span> <span style="color:#099">27181</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">96</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">0</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148376</span> <span style="color:#099">234332</span> <span style="color:#099">3383052</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>   <span style="color:#099">204</span> <span style="color:#099">14197</span> <span style="color:#099">26812</span>  <span style="color:#099">4</span>  <span style="color:#099">2</span> <span style="color:#099">94</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">0</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148512</span> <span style="color:#099">234332</span> <span style="color:#099">3383088</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">4</span> <span style="color:#099">14398</span> <span style="color:#099">27155</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">95</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">0</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">147892</span> <span style="color:#099">234332</span> <span style="color:#099">3383128</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>   <span style="color:#099">210</span> <span style="color:#099">15515</span> <span style="color:#099">28802</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">95</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">1</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148388</span> <span style="color:#099">234332</span> <span style="color:#099">3383156</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">0</span> <span style="color:#099">15147</span> <span style="color:#099">28042</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">95</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">0</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148264</span> <span style="color:#099">234332</span> <span style="color:#099">3383168</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">4</span> <span style="color:#099">14380</span> <span style="color:#099">27395</span>  <span style="color:#099">3</span>  <span style="color:#099">1</span> <span style="color:#099">96</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">0</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148264</span> <span style="color:#099">234336</span> <span style="color:#099">3383216</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>   <span style="color:#099">198</span> <span style="color:#099">14430</span> <span style="color:#099">27008</span>  <span style="color:#099">3</span>  <span style="color:#099">1</span> <span style="color:#099">95</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span> <span style="color:#099">2</span>  <span style="color:#099">0</span>  <span style="color:#099">12552</span> <span style="color:#099">148140</span> <span style="color:#099">234336</span> <span style="color:#099">3383252</span>    <span style="color:#099">0</span>    <span style="color:#099">0</span>     <span style="color:#099">0</span>     <span style="color:#099">6</span> <span style="color:#099">14233</span> <span style="color:#099">27161</span>  <span style="color:#099">3</span>  <span style="color:#099">2</span> <span style="color:#099">95</span>  <span style="color:#099">0</span>  <span style="color:#099">0</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>2 表示每隔 2 秒输出一次结果<br>
 10 表示总共输出 10 次，10 次之后程序自动结束</p>
@@ -520,6 +524,14 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
     </li>
     
@@ -551,14 +563,6 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
         <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理">mysql大表的数据清理</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-17-nmap/" title="nmap参数详解">nmap参数详解</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -579,6 +583,8 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
     
@@ -642,7 +648,7 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (23)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
     
@@ -660,7 +666,7 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (18)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
     
@@ -711,6 +717,8 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
     

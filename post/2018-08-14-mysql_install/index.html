@@ -164,8 +164,8 @@
         var postToc = $(".post-toc");
         if (postToc.length) {
             var leftPos = $("#main").offset().left;
-            if(leftPos<220){
-                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
             }
 
             var t = postToc.offset().top - 20,
@@ -183,6 +183,10 @@
                 var e = $(window).scrollTop();
                 e < t ? postToc.css(a.start) : postToc.css(a.process)
             })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
         }
     })
 </script>
@@ -221,199 +225,199 @@
 <p>如果不使用最新版本的mysql，但是低版本的mysql官方不提供编译好的安装包，只能自己编译安装了。以下步骤和参数针对5.6、5.7生效，新版本有变动请阅读官方文档介绍。</p>
 <h2 id="1环境检测">1、环境检测</h2>
 <p>使用下面的命令检查是否安装有MySQL Server</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">rpm -qa | grep mysql
-有的话通过下面的命令来卸载掉
-rpm -e mysql   //普通删除模式
-rpm -e --nodeps mysql    // 强力删除模式，如果使用上面命令删除时，提示有依赖的其它文件，则用该命令可以对其进行强力删除
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rpm -qa | grep mysql
+</span></span><span style="display:flex;"><span>有的话通过下面的命令来卸载掉
+</span></span><span style="display:flex;"><span>rpm -e mysql   //普通删除模式
+</span></span><span style="display:flex;"><span>rpm -e --nodeps mysql    // 强力删除模式，如果使用上面命令删除时，提示有依赖的其它文件，则用该命令可以对其进行强力删除
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="2下载源码">2、下载源码</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget http://cdn.mysql.com/Downloads/MySQL-5.6/mysql-5.6.32.tar.gz
-tar xvf mysql-5.6.32.tar.gz
-<span style="color:#0086b3">cd</span> mysql-5.6.32
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget http://cdn.mysql.com/Downloads/MySQL-5.6/mysql-5.6.32.tar.gz
+</span></span><span style="display:flex;"><span>tar xvf mysql-5.6.32.tar.gz
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">cd</span> mysql-5.6.32
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>或者web下载<br>
 历史各版本下载：<a href="https://downloads.mysql.com/archives/community/">https://downloads.mysql.com/archives/community/</a><br>
 Source Code -&gt; Generic Linux 通用tar包</p>
 <h2 id="3安装编译环境">3、安装编译环境</h2>
 <p>安装编译代码需要的包</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum -y install make gcc-c++ cmake bison-devel ncurses-devel
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>yum -y install make gcc-c++ cmake bison-devel ncurses-devel
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="4开始编译">4、开始编译</h2>
 <p>编译安装，取决服务器性能，时间会比较久，请耐心等待</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cmake <span style="color:#d14">\
-</span><span style="color:#d14"></span>-DCMAKE_INSTALL_PREFIX<span style="color:#000;font-weight:bold">=</span>/data/mysql <span style="color:#d14">\
-</span><span style="color:#d14"></span>-DMYSQL_DATADIR<span style="color:#000;font-weight:bold">=</span>/data/mysql/data <span style="color:#d14">\
-</span><span style="color:#d14"></span>-DSYSCONFDIR<span style="color:#000;font-weight:bold">=</span>/data/mysql <span style="color:#d14">\
-</span><span style="color:#d14"></span>-DWITH_MYISAM_STORAGE_ENGINE<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span> <span style="color:#d14">\
-</span><span style="color:#d14"></span>-DWITH_INNOBASE_STORAGE_ENGINE<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span> <span style="color:#d14">\
-</span><span style="color:#d14"></span>-DWITH_MEMORY_STORAGE_ENGINE<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span> <span style="color:#d14">\
-</span><span style="color:#d14"></span>-DWITH_READLINE<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span> <span style="color:#d14">\
-</span><span style="color:#d14"></span>-DMYSQL_UNIX_ADDR<span style="color:#000;font-weight:bold">=</span>/data/mysql/mysql.sock <span style="color:#d14">\
-</span><span style="color:#d14"></span>-DMYSQL_TCP_PORT<span style="color:#000;font-weight:bold">=</span><span style="color:#099">3306</span> <span style="color:#d14">\
-</span><span style="color:#d14"></span>-DENABLED_LOCAL_INFILE<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span> <span style="color:#d14">\
-</span><span style="color:#d14"></span>-DWITH_PARTITION_STORAGE_ENGINE<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span> <span style="color:#d14">\
-</span><span style="color:#d14"></span>-DEXTRA_CHARSETS<span style="color:#000;font-weight:bold">=</span>all <span style="color:#d14">\
-</span><span style="color:#d14"></span>-DDEFAULT_CHARSET<span style="color:#000;font-weight:bold">=</span>utf8 <span style="color:#d14">\
-</span><span style="color:#d14"></span>-DDEFAULT_COLLATION<span style="color:#000;font-weight:bold">=</span>utf8_general_ci
- 
-make <span style="color:#000;font-weight:bold">&amp;&amp;</span> make install
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cmake <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-DCMAKE_INSTALL_PREFIX<span style="color:#000;font-weight:bold">=</span>/data/mysql <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-DMYSQL_DATADIR<span style="color:#000;font-weight:bold">=</span>/data/mysql/data <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-DSYSCONFDIR<span style="color:#000;font-weight:bold">=</span>/data/mysql <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-DWITH_MYISAM_STORAGE_ENGINE<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span> <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-DWITH_INNOBASE_STORAGE_ENGINE<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span> <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-DWITH_MEMORY_STORAGE_ENGINE<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span> <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-DWITH_READLINE<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span> <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-DMYSQL_UNIX_ADDR<span style="color:#000;font-weight:bold">=</span>/data/mysql/mysql.sock <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-DMYSQL_TCP_PORT<span style="color:#000;font-weight:bold">=</span><span style="color:#099">3306</span> <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-DENABLED_LOCAL_INFILE<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span> <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-DWITH_PARTITION_STORAGE_ENGINE<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span> <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-DEXTRA_CHARSETS<span style="color:#000;font-weight:bold">=</span>all <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-DDEFAULT_CHARSET<span style="color:#000;font-weight:bold">=</span>utf8 <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-DDEFAULT_COLLATION<span style="color:#000;font-weight:bold">=</span>utf8_general_ci
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>make <span style="color:#000;font-weight:bold">&amp;&amp;</span> make install
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="5创建用户">5、创建用户</h2>
 <p>设置权限
 使用下面的命令查看是否有mysql用户及用户组</p>
-<pre><code>cat /etc/passwd 查看用户列表
+<pre tabindex="0"><code>cat /etc/passwd 查看用户列表
 cat /etc/group  查看用户组列表
 </code></pre><p>如果没有就创建</p>
-<pre><code>groupadd mysql
+<pre tabindex="0"><code>groupadd mysql
 useradd -g mysql mysql
 </code></pre><p>修改/usr/local/mysql权限</p>
-<pre><code>chown -R mysql:mysql /data/mysql/
+<pre tabindex="0"><code>chown -R mysql:mysql /data/mysql/
 </code></pre><h2 id="6初始化配置">6、初始化配置</h2>
 <p>进入安装路径</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0086b3">cd</span> /data/mysql/
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0086b3">cd</span> /data/mysql/
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>进入安装路径，执行初始化配置脚本，创建系统自带的数据库和表</p>
-<pre><code>scripts/mysql_install_db --basedir=/data/mysql --datadir=/data/mysql/data --user=mysql
+<pre tabindex="0"><code>scripts/mysql_install_db --basedir=/data/mysql --datadir=/data/mysql/data --user=mysql
 </code></pre><h3 id="61-配置mycnf">6.1 配置my.cnf</h3>
 <p>打开my.cnf后，在文件内的[mysqld]下增加如下两行设置:</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#008080">character_set_server</span><span style="color:#000;font-weight:bold">=</span>utf8mb4
-<span style="color:#008080">init_connect</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;SET NAMES utf8mb4&#39;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#008080">character_set_server</span><span style="color:#000;font-weight:bold">=</span>utf8mb4
+</span></span><span style="display:flex;"><span><span style="color:#008080">init_connect</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;SET NAMES utf8mb4&#39;</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div><p>注：在启动MySQL服务时，会按照一定次序搜索my.cnf，先在/etc目录下找，找不到则会搜索&quot;$basedir/my.cnf&rdquo;，在本例中就是 /usr/local/mysql/my.cnf，这是新版MySQL的配置文件的默认位置</p>
+</div><p>注：在启动MySQL服务时，会按照一定次序搜索my.cnf，先在/etc目录下找，找不到则会搜索&quot;$basedir/my.cnf&quot;，在本例中就是 /usr/local/mysql/my.cnf，这是新版MySQL的配置文件的默认位置</p>
 <h3 id="62-启动mysql">6.2 启动MySQL</h3>
 <p>添加服务，拷贝服务脚本到init.d目录，并设置开机启动</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp support-files/mysql.server /etc/init.d/mysql
-chkconfig mysql on
-service mysql start  --启动MySQL
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp support-files/mysql.server /etc/init.d/mysql
+</span></span><span style="display:flex;"><span>chkconfig mysql on
+</span></span><span style="display:flex;"><span>service mysql start  --启动MySQL
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="63-配置环境变量">6.3 配置环境变量</h3>
 <p>MySQL启动成功后，root默认没有密码，我们需要设置root密码。<br>
 设置之前，我们需要先设置PATH，要不不能直接调用mysql<br>
 修改/etc/profile文件，在文件末尾添加</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#008080">PATH</span><span style="color:#000;font-weight:bold">=</span>/data/mysql/bin:<span style="color:#008080">$PATH</span>
-<span style="color:#0086b3">export</span> PATH
-关闭文件，运行下面的命令，让配置立即生效
-<span style="color:#0086b3">source</span> /etc/profile
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#008080">PATH</span><span style="color:#000;font-weight:bold">=</span>/data/mysql/bin:<span style="color:#008080">$PATH</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">export</span> PATH
+</span></span><span style="display:flex;"><span>关闭文件，运行下面的命令，让配置立即生效
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">source</span> /etc/profile
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>现在，我们可以在终端内直接输入mysql进入，mysql的环境了<br>
 执行下面的命令修改root密码</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mysql -uroot 
-mysql&gt; SET <span style="color:#008080">PASSWORD</span> <span style="color:#000;font-weight:bold">=</span> PASSWORD<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#39;**********&#39;</span><span style="color:#000;font-weight:bold">)</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mysql -uroot 
+</span></span><span style="display:flex;"><span>mysql&gt; SET <span style="color:#008080">PASSWORD</span> <span style="color:#000;font-weight:bold">=</span> PASSWORD<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#39;**********&#39;</span><span style="color:#000;font-weight:bold">)</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>若要设置root用户可以远程访问，执行</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mysql&gt; GRANT ALL PRIVILEGES ON *.* TO <span style="color:#d14">&#39;root&#39;</span>@<span style="color:#d14">&#39;%&#39;</span> IDENTIFIED BY <span style="color:#d14">&#39;**********&#39;</span> WITH GRANT OPTION;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mysql&gt; GRANT ALL PRIVILEGES ON *.* TO <span style="color:#d14">&#39;root&#39;</span>@<span style="color:#d14">&#39;%&#39;</span> IDENTIFIED BY <span style="color:#d14">&#39;**********&#39;</span> WITH GRANT OPTION;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>红色的password为远程访问时，root用户的密码，可以和本地不同。</p>
 <h3 id="64-配置防火墙">6.4 配置防火墙</h3>
 <p>防火墙的3306端口默认没有开启，若要远程访问，需要开启这个端口</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">打开/etc/sysconfig/iptables
-在最后一行添加：
--A INPUT -m state --state NEW -m tcp -p -dport <span style="color:#099">3306</span> -j ACCEPT
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>打开/etc/sysconfig/iptables
+</span></span><span style="display:flex;"><span>在最后一行添加：
+</span></span><span style="display:flex;"><span>-A INPUT -m state --state NEW -m tcp -p -dport <span style="color:#099">3306</span> -j ACCEPT
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后保存，并关闭该文件，在终端内运行下面的命令，刷新防火墙配置：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">service iptables restart
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>service iptables restart
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>OK，一切配置完毕，你可以访问你的MySQL了~</p>
 
@@ -538,6 +542,14 @@ mysql&gt; SET <span style="color:#008080">PASSWORD</span> <span style="color:#00
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
     </li>
     
@@ -569,14 +581,6 @@ mysql&gt; SET <span style="color:#008080">PASSWORD</span> <span style="color:#00
         <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理">mysql大表的数据清理</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-17-nmap/" title="nmap参数详解">nmap参数详解</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -597,6 +601,8 @@ mysql&gt; SET <span style="color:#008080">PASSWORD</span> <span style="color:#00
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
     
@@ -660,7 +666,7 @@ mysql&gt; SET <span style="color:#008080">PASSWORD</span> <span style="color:#00
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (23)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
     
@@ -678,7 +684,7 @@ mysql&gt; SET <span style="color:#008080">PASSWORD</span> <span style="color:#00
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (18)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
     
@@ -729,6 +735,8 @@ mysql&gt; SET <span style="color:#008080">PASSWORD</span> <span style="color:#00
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
     

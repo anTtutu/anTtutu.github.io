@@ -169,8 +169,8 @@
         var postToc = $(".post-toc");
         if (postToc.length) {
             var leftPos = $("#main").offset().left;
-            if(leftPos<220){
-                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
             }
 
             var t = postToc.offset().top - 20,
@@ -188,6 +188,10 @@
                 var e = $(window).scrollTop();
                 e < t ? postToc.css(a.start) : postToc.css(a.process)
             })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
         }
     })
 </script>
@@ -225,313 +229,313 @@
             <h2 id="1用maven引用没进中央仓库的包">1、用maven引用没进中央仓库的包</h2>
 <p>在使用maven的时候，如果我们要依赖一个本地的jar包的时候，通常都会使用&lt;scope&gt;system&lt;/scope&gt;和&lt;systemPath&gt;&lt;/systemPath&gt;来处理。<br>
 例如：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#998;font-style:italic">&lt;!--引用本地jar包--&gt;</span>
-<span style="color:#000080">&lt;dependency&gt;</span>
-    <span style="color:#000080">&lt;groupId&gt;</span>com.mytest<span style="color:#000080">&lt;/groupId&gt;</span>
-    <span style="color:#000080">&lt;artifactId&gt;</span>test<span style="color:#000080">&lt;/artifactId&gt;</span>
-    <span style="color:#000080">&lt;version&gt;</span>1.0<span style="color:#000080">&lt;/version&gt;</span>
-    <span style="color:#000080">&lt;scope&gt;</span>system<span style="color:#000080">&lt;/scope&gt;</span>
-    <span style="color:#000080">&lt;systemPath&gt;</span>${pom.basedir}/lib/test-1.0.jar<span style="color:#000080">&lt;/systemPath&gt;</span>
-<span style="color:#000080">&lt;/dependency&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#998;font-style:italic">&lt;!--引用本地jar包--&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;groupId&gt;</span>com.mytest<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;artifactId&gt;</span>test<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;version&gt;</span>1.0<span style="color:#000080">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;scope&gt;</span>system<span style="color:#000080">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;systemPath&gt;</span>${pom.basedir}/lib/test-1.0.jar<span style="color:#000080">&lt;/systemPath&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>如果你仅仅是这么做了，在你使用SpringBoot打包插件生成jar包的时候，你会发现这个jar包不会被打进去，进而出现错误。<br>
 这个就需要在maven插接中配置一个includeSystemScope属性：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#000080">&lt;plugin&gt;</span>
-    <span style="color:#000080">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#000080">&lt;/groupId&gt;</span>
-    <span style="color:#000080">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span style="color:#000080">&lt;/artifactId&gt;</span>
-    <span style="color:#000080">&lt;configuration&gt;</span>
-    	<span style="color:#998;font-style:italic">&lt;!--设置为true，以便把本地的system的jar也包括进来--&gt;</span>
-        <span style="color:#000080">&lt;includeSystemScope&gt;</span>true<span style="color:#000080">&lt;/includeSystemScope&gt;</span>
-    <span style="color:#000080">&lt;/configuration&gt;</span>
-<span style="color:#000080">&lt;/plugin&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;configuration&gt;</span>
+</span></span><span style="display:flex;"><span>    	<span style="color:#998;font-style:italic">&lt;!--设置为true，以便把本地的system的jar也包括进来--&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;includeSystemScope&gt;</span>true<span style="color:#000080">&lt;/includeSystemScope&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;/configuration&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/plugin&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="2用maven打包可执行main函数的jar包">2、用maven打包可执行main函数的jar包</h2>
 <p>使用maven打可执行main的jar包怎么搞？</p>
 <h3 id="21-pom中添加配置信息">2.1 pom中添加配置信息</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">    <span style="color:#000080">&lt;groupId&gt;</span>com.anttu.test<span style="color:#000080">&lt;/groupId&gt;</span>
-    <span style="color:#000080">&lt;artifactId&gt;</span>test<span style="color:#000080">&lt;/artifactId&gt;</span>
-    <span style="color:#000080">&lt;version&gt;</span>1.0-SNAPSHOT<span style="color:#000080">&lt;/version&gt;</span>
-
-    <span style="color:#000080">&lt;properties&gt;</span>
-        <span style="color:#000080">&lt;maven.compiler.source&gt;</span>8<span style="color:#000080">&lt;/maven.compiler.source&gt;</span>
-        <span style="color:#000080">&lt;maven.compiler.target&gt;</span>8<span style="color:#000080">&lt;/maven.compiler.target&gt;</span>
-        <span style="color:#000080">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span style="color:#000080">&lt;/project.build.sourceEncoding&gt;</span>
-    <span style="color:#000080">&lt;/properties&gt;</span>
- 
-    <span style="color:#000080">&lt;build&gt;</span>
-        <span style="color:#000080">&lt;plugins&gt;</span>
-            <span style="color:#000080">&lt;plugin&gt;</span>
-                <span style="color:#000080">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#000080">&lt;/groupId&gt;</span>
-                <span style="color:#000080">&lt;artifactId&gt;</span>maven-assembly-plugin<span style="color:#000080">&lt;/artifactId&gt;</span>
-                <span style="color:#000080">&lt;configuration&gt;</span>
-                    <span style="color:#000080">&lt;appendAssemblyId&gt;</span>false<span style="color:#000080">&lt;/appendAssemblyId&gt;</span>
-                    <span style="color:#000080">&lt;descriptorRefs&gt;</span>
-                        <span style="color:#000080">&lt;descriptorRef&gt;</span>jar-with-dependencies<span style="color:#000080">&lt;/descriptorRef&gt;</span>
-                    <span style="color:#000080">&lt;/descriptorRefs&gt;</span>
-                    <span style="color:#000080">&lt;archive&gt;</span>
-                        <span style="color:#000080">&lt;manifest&gt;</span>
-                            <span style="color:#000080">&lt;mainClass&gt;</span>com.anttu.test.TestMain<span style="color:#000080">&lt;/mainClass&gt;</span>
-                        <span style="color:#000080">&lt;/manifest&gt;</span>
-                    <span style="color:#000080">&lt;/archive&gt;</span>
-                <span style="color:#000080">&lt;/configuration&gt;</span>
-                <span style="color:#000080">&lt;executions&gt;</span>
-                    <span style="color:#000080">&lt;execution&gt;</span>
-                        <span style="color:#000080">&lt;id&gt;</span>make-assembly<span style="color:#000080">&lt;/id&gt;</span>
-                        <span style="color:#000080">&lt;phase&gt;</span>package<span style="color:#000080">&lt;/phase&gt;</span>
-                        <span style="color:#000080">&lt;goals&gt;</span>
-                            <span style="color:#000080">&lt;goal&gt;</span>single<span style="color:#000080">&lt;/goal&gt;</span>
-                        <span style="color:#000080">&lt;/goals&gt;</span>
-                    <span style="color:#000080">&lt;/execution&gt;</span>
-                <span style="color:#000080">&lt;/executions&gt;</span>
-            <span style="color:#000080">&lt;/plugin&gt;</span>
-        <span style="color:#000080">&lt;/plugins&gt;</span>
-    <span style="color:#000080">&lt;/build&gt;</span>
-
- <span style="color:#998;font-style:italic">&lt;!--
-</span><span style="color:#998;font-style:italic"> 其中&lt;mainClass&gt;com.main.TestMain&lt;/mainClass&gt;填写&#34;包名.含有Main的class名&#34;
-</span><span style="color:#998;font-style:italic"> --&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>    <span style="color:#000080">&lt;groupId&gt;</span>com.anttu.test<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;artifactId&gt;</span>test<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;version&gt;</span>1.0-SNAPSHOT<span style="color:#000080">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;properties&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;maven.compiler.source&gt;</span>8<span style="color:#000080">&lt;/maven.compiler.source&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;maven.compiler.target&gt;</span>8<span style="color:#000080">&lt;/maven.compiler.target&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span style="color:#000080">&lt;/project.build.sourceEncoding&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;/properties&gt;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;build&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;plugins&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000080">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000080">&lt;artifactId&gt;</span>maven-assembly-plugin<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000080">&lt;configuration&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#000080">&lt;appendAssemblyId&gt;</span>false<span style="color:#000080">&lt;/appendAssemblyId&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#000080">&lt;descriptorRefs&gt;</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#000080">&lt;descriptorRef&gt;</span>jar-with-dependencies<span style="color:#000080">&lt;/descriptorRef&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#000080">&lt;/descriptorRefs&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#000080">&lt;archive&gt;</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#000080">&lt;manifest&gt;</span>
+</span></span><span style="display:flex;"><span>                            <span style="color:#000080">&lt;mainClass&gt;</span>com.anttu.test.TestMain<span style="color:#000080">&lt;/mainClass&gt;</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#000080">&lt;/manifest&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#000080">&lt;/archive&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000080">&lt;/configuration&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000080">&lt;executions&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#000080">&lt;execution&gt;</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#000080">&lt;id&gt;</span>make-assembly<span style="color:#000080">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#000080">&lt;phase&gt;</span>package<span style="color:#000080">&lt;/phase&gt;</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#000080">&lt;goals&gt;</span>
+</span></span><span style="display:flex;"><span>                            <span style="color:#000080">&lt;goal&gt;</span>single<span style="color:#000080">&lt;/goal&gt;</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#000080">&lt;/goals&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#000080">&lt;/execution&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000080">&lt;/executions&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;/plugins&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;/build&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#998;font-style:italic">&lt;!--
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"> 其中&lt;mainClass&gt;com.main.TestMain&lt;/mainClass&gt;填写&#34;包名.含有Main的class名&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"> --&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="22-可以直接编译">2.2 可以直接编译</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mvn assembly:assembly
-<span style="color:#998;font-style:italic">#跳过测试 </span>
-mvn -Dmaven.test.skip<span style="color:#000;font-weight:bold">=</span><span style="color:#0086b3">true</span>  assembly:assembly
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mvn assembly:assembly
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#跳过测试 </span>
+</span></span><span style="display:flex;"><span>mvn -Dmaven.test.skip<span style="color:#000;font-weight:bold">=</span><span style="color:#0086b3">true</span>  assembly:assembly
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="23-执行命令编译和打包">2.3 执行命令编译和打包</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mvn clean package
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mvn clean package
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="24-运行">2.4 运行</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">java -jar test-1.0-SNAPSHOT.jar
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>java -jar test-1.0-SNAPSHOT.jar
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="3maven的scope有哪些">3、maven的scope有哪些</h2>
 <p>maven的scope一共包括：
 compile、runtime、test、system、provided、import</p>
 <h3 id="31-compile">3.1 compile</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#000080">&lt;dependency&gt;</span>
- 	<span style="color:#000080">&lt;groupId&gt;</span>org.apache.httpcomponents<span style="color:#000080">&lt;/groupId&gt;</span>
- 	<span style="color:#000080">&lt;artifactId&gt;</span>httpclient<span style="color:#000080">&lt;/artifactId&gt;</span>
- 	<span style="color:#000080">&lt;version&gt;</span>4.4.1<span style="color:#000080">&lt;/version&gt;</span>
- 	<span style="color:#000080">&lt;scope&gt;</span>compile<span style="color:#000080">&lt;/scope&gt;</span>
-<span style="color:#000080">&lt;/dependency&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span> 	<span style="color:#000080">&lt;groupId&gt;</span>org.apache.httpcomponents<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span> 	<span style="color:#000080">&lt;artifactId&gt;</span>httpclient<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span> 	<span style="color:#000080">&lt;version&gt;</span>4.4.1<span style="color:#000080">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span> 	<span style="color:#000080">&lt;scope&gt;</span>compile<span style="color:#000080">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>compile是默认值，当我们引入依赖时，如果标签没有指定，那么默认就是complie。<br>
 compile表示被依赖项目需要参与当前项目的编译，包括后续的测试，运行周期也参与其中，同时打包的时候也会包含进去。是最常用的，所以也是默认的。</p>
 <h3 id="32-runtime">3.2 runtime</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#000080">&lt;dependency&gt;</span>
-   <span style="color:#000080">&lt;groupId&gt;</span>mysql<span style="color:#000080">&lt;/groupId&gt;</span>
-   <span style="color:#000080">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#000080">&lt;/artifactId&gt;</span>
-   <span style="color:#000080">&lt;version&gt;</span>5.1.46<span style="color:#000080">&lt;/version&gt;</span>
-   <span style="color:#000080">&lt;scope&gt;</span>runtime<span style="color:#000080">&lt;/scope&gt;</span>
- <span style="color:#000080">&lt;/dependency&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#000080">&lt;groupId&gt;</span>mysql<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#000080">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#000080">&lt;version&gt;</span>5.1.46<span style="color:#000080">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#000080">&lt;scope&gt;</span>runtime<span style="color:#000080">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span> <span style="color:#000080">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>runtime表示被依赖项目无需参与项目的编译，不过后期的测试和运行周期需要其参与。与compile相比，跳过编译而已。<br>
 数据库的驱动包一般都是runtime，因为在我们在编码时只会使用JDK提供的jdbc接口，而具体的实现是有对应的厂商提供的驱动(如mysql驱动)，实在运行时生效的，所以这类jar包无需参与项目的编译。</p>
 <h3 id="33-test">3.3 test</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#000080">&lt;dependency&gt;</span>
-   <span style="color:#000080">&lt;groupId&gt;</span>junit<span style="color:#000080">&lt;/groupId&gt;</span>
-   <span style="color:#000080">&lt;artifactId&gt;</span>junit<span style="color:#000080">&lt;/artifactId&gt;</span>
-   <span style="color:#000080">&lt;version&gt;</span>4.12<span style="color:#000080">&lt;/version&gt;</span>
-   <span style="color:#000080">&lt;scope&gt;</span>test<span style="color:#000080">&lt;/scope&gt;</span>
-<span style="color:#000080">&lt;/dependency&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#000080">&lt;groupId&gt;</span>junit<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#000080">&lt;artifactId&gt;</span>junit<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#000080">&lt;version&gt;</span>4.12<span style="color:#000080">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#000080">&lt;scope&gt;</span>test<span style="color:#000080">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>test表示只会在测试阶段使用，在src/main/java里面的代码是无法使用这些api的，并且项目打包时，也不会将&quot;test&quot;标记的打入&quot;jar&quot;包或者&quot;war&quot;包。</p>
 <h3 id="34-system">3.4 system</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#000080">&lt;dependency&gt;</span>
-    <span style="color:#000080">&lt;groupId&gt;</span>com.mytest<span style="color:#000080">&lt;/groupId&gt;</span>
-    <span style="color:#000080">&lt;artifactId&gt;</span>test<span style="color:#000080">&lt;/artifactId&gt;</span>
-    <span style="color:#000080">&lt;version&gt;</span>1.0<span style="color:#000080">&lt;/version&gt;</span>
-    <span style="color:#000080">&lt;scope&gt;</span>system<span style="color:#000080">&lt;/scope&gt;</span>
-    <span style="color:#000080">&lt;systemPath&gt;</span>${basedir}/lib/test-1.0.jar<span style="color:#000080">&lt;/systemPath&gt;</span>
-<span style="color:#000080">&lt;/dependency&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;groupId&gt;</span>com.mytest<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;artifactId&gt;</span>test<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;version&gt;</span>1.0<span style="color:#000080">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;scope&gt;</span>system<span style="color:#000080">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;systemPath&gt;</span>${basedir}/lib/test-1.0.jar<span style="color:#000080">&lt;/systemPath&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>system依赖不是由maven仓库，而是本地的jar包，因此必须配合systemPath标签来指定本地的jar包所在全路径。<br>
 这类jar包默认会参与编译、测试、运行，但是不会被参与打包阶段。<br>
 如果也想打包进去的话，需要在插件里做配置&lt;includeSystemScope&gt;true&lt;/includeSystemScope&gt;，也就是我们本篇开题提到的问题。</p>
 <h3 id="35-provided">3.5 provided</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#000080">&lt;dependency&gt;</span>
-   <span style="color:#000080">&lt;groupId&gt;</span>javax.servlet<span style="color:#000080">&lt;/groupId&gt;</span>
-   <span style="color:#000080">&lt;artifactId&gt;</span>javax.servlet-api<span style="color:#000080">&lt;/artifactId&gt;</span>
-   <span style="color:#000080">&lt;version&gt;</span>4.0.1<span style="color:#000080">&lt;/version&gt;</span>
-   <span style="color:#000080">&lt;scope&gt;</span>provided<span style="color:#000080">&lt;/scope&gt;</span>
-<span style="color:#000080">&lt;/dependency&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#000080">&lt;groupId&gt;</span>javax.servlet<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#000080">&lt;artifactId&gt;</span>javax.servlet-api<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#000080">&lt;version&gt;</span>4.0.1<span style="color:#000080">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#000080">&lt;scope&gt;</span>provided<span style="color:#000080">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>provided表示的是在编译和测试的时候有效，在执行（mvn package）进行打包成war、jar包的时候不会加入，比如：servlet-api，因为servlet-api，tomcat等web服务器中已经存在，如果在打包进去，那么包之间就会冲突</p>
 <h3 id="36-import">3.6 import</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#000080">&lt;dependencyManagement&gt;</span>
-  <span style="color:#000080">&lt;dependencies&gt;</span>
-	<span style="color:#000080">&lt;dependency&gt;</span>
-	    <span style="color:#000080">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#000080">&lt;/groupId&gt;</span>
-	    <span style="color:#000080">&lt;artifactId&gt;</span>spring-boot-dependencies<span style="color:#000080">&lt;/artifactId&gt;</span>
-	    <span style="color:#000080">&lt;version&gt;</span>2.1.1.RELEASE<span style="color:#000080">&lt;/version&gt;</span>
-	    <span style="color:#000080">&lt;type&gt;</span>pom<span style="color:#000080">&lt;/type&gt;</span>
-	    <span style="color:#000080">&lt;scope&gt;</span>import<span style="color:#000080">&lt;/scope&gt;</span>
-	<span style="color:#000080">&lt;/dependency&gt;</span>
- <span style="color:#000080">&lt;/dependencies&gt;</span>
-<span style="color:#000080">&lt;/dependencyManagement&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;dependencyManagement&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000080">&lt;dependencies&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000080">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>	    <span style="color:#000080">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>	    <span style="color:#000080">&lt;artifactId&gt;</span>spring-boot-dependencies<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>	    <span style="color:#000080">&lt;version&gt;</span>2.1.1.RELEASE<span style="color:#000080">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>	    <span style="color:#000080">&lt;type&gt;</span>pom<span style="color:#000080">&lt;/type&gt;</span>
+</span></span><span style="display:flex;"><span>	    <span style="color:#000080">&lt;scope&gt;</span>import<span style="color:#000080">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000080">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span> <span style="color:#000080">&lt;/dependencies&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/dependencyManagement&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>import比较特殊，他的作用是将其他模块定义好的 dependencyManagement 导入当前 Maven 项目 pom 的 dependencyManagement 中，都是配合&lt;type&gt;pom&lt;/type&gt;来进行的。所以import作用的是pom类型，不是jar包。</p>
 
@@ -555,7 +559,7 @@ compile表示被依赖项目需要参与当前项目的编译，包括后续的�
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/2021-06-05-python_faker/">python工具-测试数据生成器</a></li>
+        <li><a href="/post/2021-06-05-python_faker/">python工具-faker测试数据生成器</a></li>
         
         <li><a href="/post/2021-05-01-system_port/">系统端口速查</a></li>
         
@@ -650,6 +654,14 @@ compile表示被依赖项目需要参与当前项目的编译，包括后续的�
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
     </li>
     
@@ -681,14 +693,6 @@ compile表示被依赖项目需要参与当前项目的编译，包括后续的�
         <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理">mysql大表的数据清理</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-17-nmap/" title="nmap参数详解">nmap参数详解</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -709,6 +713,8 @@ compile表示被依赖项目需要参与当前项目的编译，包括后续的�
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
     
@@ -772,7 +778,7 @@ compile表示被依赖项目需要参与当前项目的编译，包括后续的�
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (23)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
     
@@ -790,7 +796,7 @@ compile表示被依赖项目需要参与当前项目的编译，包括后续的�
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (18)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
     
@@ -841,6 +847,8 @@ compile表示被依赖项目需要参与当前项目的编译，包括后续的�
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
     

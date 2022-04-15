@@ -164,9 +164,9 @@
     <li><a href="#20额外用法">20、额外用法</a>
       <ul>
         <li><a href="#getterlazytrue">@Getter(lazy=true)</a></li>
-        <li><a href="#tostringexcludecolumn">@ToString(exclude=&quot;column&rdquo;)</a></li>
+        <li><a href="#tostringexcludecolumn">@ToString(exclude=&ldquo;column&rdquo;)</a></li>
         <li><a href="#tostringexcludecolumn1column2">@ToString(exclude={&ldquo;column1&rdquo;,&ldquo;column2&rdquo;})</a></li>
-        <li><a href="#tostringofcolumn">@ToString(of=&quot;column&rdquo;)</a></li>
+        <li><a href="#tostringofcolumn">@ToString(of=&ldquo;column&rdquo;)</a></li>
         <li><a href="#tostringofcolumn1column2">@ToString(of={&ldquo;column1&rdquo;,&ldquo;column2&rdquo;})</a></li>
         <li><a href="#tostringcallsupertrue-includefieldnamestrue">@ToString(callSuper=true, includeFieldNames=true)</a></li>
         <li><a href="#requiredargscontructorstaticname--of">@RequiredArgsContructor(staticName = &ldquo;of&rdquo;)</a></li>
@@ -182,8 +182,8 @@
         var postToc = $(".post-toc");
         if (postToc.length) {
             var leftPos = $("#main").offset().left;
-            if(leftPos<220){
-                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
             }
 
             var t = postToc.offset().top - 20,
@@ -201,6 +201,10 @@
                 var e = $(window).scrollTop();
                 e < t ? postToc.css(a.start) : postToc.css(a.process)
             })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
         }
     })
 </script>
@@ -275,45 +279,45 @@
 <p>自动管理资源，用在局部变量之前，在当前变量范围内即将执行完毕退出之前会自动清理资源，自动生成try-finally这样的代码来关闭流</p>
 <h2 id="19log">19、@Log</h2>
 <p>根据不同的注解生成不同类型的log对象，但是实例名称都是log，有六种可选实现类</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#3c5d5d;font-weight:bold">@CommonsLog</span> 
-Creates log <span style="color:#000;font-weight:bold">=</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">commons</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">logging</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">LogFactory</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLog</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>
-<span style="color:#3c5d5d;font-weight:bold">@Log</span> 
-Creates log <span style="color:#000;font-weight:bold">=</span> java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">util</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">logging</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Logger</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLogger</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getName</span><span style="color:#000;font-weight:bold">());</span>
-<span style="color:#3c5d5d;font-weight:bold">@Log4j</span> 
-Creates log <span style="color:#000;font-weight:bold">=</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">log4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Logger</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLogger</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>
-<span style="color:#3c5d5d;font-weight:bold">@Log4j2</span> 
-Creates log <span style="color:#000;font-weight:bold">=</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">logging</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">log4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">LogManager</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLogger</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>
-<span style="color:#3c5d5d;font-weight:bold">@Slf4j</span> 
-Creates log <span style="color:#000;font-weight:bold">=</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">slf4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">LoggerFactory</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLogger</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>
-<span style="color:#3c5d5d;font-weight:bold">@XSlf4j</span> 
-Creates log <span style="color:#000;font-weight:bold">=</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">slf4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ext</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">XLoggerFactory</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getXLogger</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@CommonsLog</span> 
+</span></span><span style="display:flex;"><span>Creates log <span style="color:#000;font-weight:bold">=</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">commons</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">logging</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">LogFactory</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLog</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@Log</span> 
+</span></span><span style="display:flex;"><span>Creates log <span style="color:#000;font-weight:bold">=</span> java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">util</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">logging</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Logger</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLogger</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getName</span><span style="color:#000;font-weight:bold">());</span>
+</span></span><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@Log4j</span> 
+</span></span><span style="display:flex;"><span>Creates log <span style="color:#000;font-weight:bold">=</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">log4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Logger</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLogger</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@Log4j2</span> 
+</span></span><span style="display:flex;"><span>Creates log <span style="color:#000;font-weight:bold">=</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">logging</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">log4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">LogManager</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLogger</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@Slf4j</span> 
+</span></span><span style="display:flex;"><span>Creates log <span style="color:#000;font-weight:bold">=</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">slf4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">LoggerFactory</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLogger</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@XSlf4j</span> 
+</span></span><span style="display:flex;"><span>Creates log <span style="color:#000;font-weight:bold">=</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">slf4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ext</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">XLoggerFactory</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getXLogger</span><span style="color:#000;font-weight:bold">(</span>LogExample<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="20额外用法">20、额外用法</h2>
 <p>在使用以上注解需要处理参数时，处理方法如下（以@ToString注解为例，其他注解同@ToString注解）：</p>
 <h3 id="getterlazytrue">@Getter(lazy=true)</h3>
 <p>可以替代经典的Double Check Lock样板代码</p>
-<h3 id="tostringexcludecolumn">@ToString(exclude=&quot;column&rdquo;)</h3>
+<h3 id="tostringexcludecolumn">@ToString(exclude=&ldquo;column&rdquo;)</h3>
 <p>意义：排除column列所对应的元素，即在生成toString方法时不包含column参数；</p>
 <h3 id="tostringexcludecolumn1column2">@ToString(exclude={&ldquo;column1&rdquo;,&ldquo;column2&rdquo;})</h3>
 <p>意义：排除多个column列所对应的元素，其中间用英文状态下的逗号进行分割，即在生成toString方法时不包含多个column参数；</p>
-<h3 id="tostringofcolumn">@ToString(of=&quot;column&rdquo;)</h3>
+<h3 id="tostringofcolumn">@ToString(of=&ldquo;column&rdquo;)</h3>
 <p>意义：只生成包含column列所对应的元素的参数的toString方法，即在生成toString方法时只包含column参数；</p>
 <h3 id="tostringofcolumn1column2">@ToString(of={&ldquo;column1&rdquo;,&ldquo;column2&rdquo;})</h3>
 <p>意义：只生成包含多个column列所对应的元素的参数的toString方法，其中间用英文状态下的逗号进行分割，即在生成toString方法时只包含多个column参数；</p>
@@ -440,6 +444,14 @@ lombok2： <a href="https://www.cnblogs.com/mayhh/p/10113169.html">https://www.c
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
     </li>
     
@@ -471,14 +483,6 @@ lombok2： <a href="https://www.cnblogs.com/mayhh/p/10113169.html">https://www.c
         <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理">mysql大表的数据清理</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-17-nmap/" title="nmap参数详解">nmap参数详解</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -499,6 +503,8 @@ lombok2： <a href="https://www.cnblogs.com/mayhh/p/10113169.html">https://www.c
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
     
@@ -562,7 +568,7 @@ lombok2： <a href="https://www.cnblogs.com/mayhh/p/10113169.html">https://www.c
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (23)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
     
@@ -580,7 +586,7 @@ lombok2： <a href="https://www.cnblogs.com/mayhh/p/10113169.html">https://www.c
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (18)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
     
@@ -631,6 +637,8 @@ lombok2： <a href="https://www.cnblogs.com/mayhh/p/10113169.html">https://www.c
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
     
