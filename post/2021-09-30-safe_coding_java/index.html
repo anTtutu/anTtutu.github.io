@@ -226,8 +226,8 @@
         var postToc = $(".post-toc");
         if (postToc.length) {
             var leftPos = $("#main").offset().left;
-            if(leftPos<220){
-                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
             }
 
             var t = postToc.offset().top - 20,
@@ -245,6 +245,10 @@
                 var e = $(window).scrollTop();
                 e < t ? postToc.css(a.start) : postToc.css(a.process)
             })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
         }
     })
 </script>
@@ -285,102 +289,100 @@
 <p>Web后台系统应默认使用预编译绑定变量的形式创建sql语句，保持查询语句和数据相分离。以从本质上避免SQL注入风险。</p>
 <p>如使用Mybatis作为持久层框架，应通过#{}语法进行参数绑定，MyBatis 会创建 <code>PreparedStatement</code> 参数占位符，并通过占位符安全地设置参数。</p>
 <p>示例：JDBC</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String custname <span style="color:#000;font-weight:bold">=</span> request<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getParameter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;name&#34;</span><span style="color:#000;font-weight:bold">);</span> 
-String query <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;SELECT * FROM user_data WHERE user_name = ? &#34;</span><span style="color:#000;font-weight:bold">;</span>
-PreparedStatement pstmt <span style="color:#000;font-weight:bold">=</span> connection<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">prepareStatement</span><span style="color:#000;font-weight:bold">(</span> query <span style="color:#000;font-weight:bold">);</span>
-pstmt<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setString</span><span style="color:#000;font-weight:bold">(</span> 1<span style="color:#000;font-weight:bold">,</span> custname<span style="color:#000;font-weight:bold">);</span> 
-ResultSet results <span style="color:#000;font-weight:bold">=</span> pstmt<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">executeQuery</span><span style="color:#000;font-weight:bold">(</span> <span style="color:#000;font-weight:bold">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>String custname <span style="color:#000;font-weight:bold">=</span> request<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getParameter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;name&#34;</span><span style="color:#000;font-weight:bold">);</span> 
+</span></span><span style="display:flex;"><span>String query <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;SELECT * FROM user_data WHERE user_name = ? &#34;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>PreparedStatement pstmt <span style="color:#000;font-weight:bold">=</span> connection<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">prepareStatement</span><span style="color:#000;font-weight:bold">(</span> query <span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>pstmt<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setString</span><span style="color:#000;font-weight:bold">(</span> 1<span style="color:#000;font-weight:bold">,</span> custname<span style="color:#000;font-weight:bold">);</span> 
+</span></span><span style="display:flex;"><span>ResultSet results <span style="color:#000;font-weight:bold">=</span> pstmt<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">executeQuery</span><span style="color:#000;font-weight:bold">(</span> <span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Mybatis</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">&lt;</span>select id<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;queryRuleIdByApplicationId&#34;</span> parameterType<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;java.lang.String&#34;</span> resultType<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;java.lang.String&#34;</span><span style="color:#000;font-weight:bold">&gt;</span>    
-      select rule_id from scan_rule_sqlmap_tab where application_id<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">#</span><span style="color:#000;font-weight:bold">{</span>applicationId<span style="color:#000;font-weight:bold">}</span> 
-<span style="color:#000;font-weight:bold">&lt;/</span>select<span style="color:#000;font-weight:bold">&gt;</span>
-
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">&lt;</span>select id<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;queryRuleIdByApplicationId&#34;</span> parameterType<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;java.lang.String&#34;</span> resultType<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;java.lang.String&#34;</span><span style="color:#000;font-weight:bold">&gt;</span>    
+</span></span><span style="display:flex;"><span>      select rule_id from scan_rule_sqlmap_tab where application_id<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">#</span><span style="color:#000;font-weight:bold">{</span>applicationId<span style="color:#000;font-weight:bold">}</span> 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">&lt;/</span>select<span style="color:#000;font-weight:bold">&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>应避免外部输入未经过滤直接拼接到SQL语句中，或者通过Mybatis中的${}传入SQL语句（即使使用PreparedStatement，SQL语句直接拼接外部输入也同样有风险。</p>
 <p>例如Mybatis中部分参数通过${}传入SQL语句后实际执行时调用的是PreparedStatement.execute()，同样存在注入风险）。</p>
 <h3 id="112必须白名单过滤">1.1.2【必须】白名单过滤</h3>
 <p>对于表名、列名等无法进行预编译的场景，比如外部数据拼接到order by, group by语句中，需通过白名单的形式对数据进行校验，例如判断传入列名是否存在、升降序仅允许输入“ASC”和“DESC”、表名列名仅允许输入字符、数字、下划线等。参考示例：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">someMethod</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">boolean</span> sortOrder<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
- String SQLquery <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;some SQL ... order by Salary &#34;</span> <span style="color:#000;font-weight:bold">+</span> <span style="color:#000;font-weight:bold">(</span>sortOrder <span style="color:#000;font-weight:bold">?</span> <span style="color:#d14">&#34;ASC&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#d14">&#34;DESC&#34;</span><span style="color:#000;font-weight:bold">);</span><span style="color:#a61717;background-color:#e3d2d2">`</span>
- <span style="color:#000;font-weight:bold">...</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">someMethod</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">boolean</span> sortOrder<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span> String SQLquery <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;some SQL ... order by Salary &#34;</span> <span style="color:#000;font-weight:bold">+</span> <span style="color:#000;font-weight:bold">(</span>sortOrder <span style="color:#000;font-weight:bold">?</span> <span style="color:#d14">&#34;ASC&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#d14">&#34;DESC&#34;</span><span style="color:#000;font-weight:bold">);</span><span style="color:#a61717;background-color:#e3d2d2">`</span>
+</span></span><span style="display:flex;"><span> <span style="color:#000;font-weight:bold">...</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><a id="2.1.2"></a></p>
 <h2 id="12-文件操作">1.2 文件操作</h2>
 <h3 id="121必须文件类型限制">1.2.1【必须】文件类型限制</h3>
 <p>须在服务器端采用白名单方式对上传或下载的文件类型、大小进行严格的限制。仅允许业务所需文件类型上传，避免上传.jsp、.jspx、.class、.java等可执行文件。参考示例：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">       String file_name <span style="color:#000;font-weight:bold">=</span> file<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getOriginalFilename</span><span style="color:#000;font-weight:bold">();</span>
-        String<span style="color:#000;font-weight:bold">[]</span> parts <span style="color:#000;font-weight:bold">=</span> file_name<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">split</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;\\.&#34;</span><span style="color:#000;font-weight:bold">);</span>
-        String suffix <span style="color:#000;font-weight:bold">=</span> parts<span style="color:#000;font-weight:bold">[</span>parts<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span> <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">];</span>
-        <span style="color:#000;font-weight:bold">switch</span> <span style="color:#000;font-weight:bold">(</span>suffix<span style="color:#000;font-weight:bold">){</span>
-            <span style="color:#000;font-weight:bold">case</span> <span style="color:#d14">&#34;jpeg&#34;</span><span style="color:#000;font-weight:bold">:</span>
-                suffix <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;.jpeg&#34;</span><span style="color:#000;font-weight:bold">;</span>
-                <span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>
-            <span style="color:#000;font-weight:bold">case</span> <span style="color:#d14">&#34;jpg&#34;</span><span style="color:#000;font-weight:bold">:</span>
-                suffix <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;.jpg&#34;</span><span style="color:#000;font-weight:bold">;</span>
-                <span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>
-            <span style="color:#000;font-weight:bold">case</span> <span style="color:#d14">&#34;bmp&#34;</span><span style="color:#000;font-weight:bold">:</span>
-                suffix <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;.bmp&#34;</span><span style="color:#000;font-weight:bold">;</span>
-                <span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>
-            <span style="color:#000;font-weight:bold">case</span> <span style="color:#d14">&#34;png&#34;</span><span style="color:#000;font-weight:bold">:</span>
-                suffix <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;.png&#34;</span><span style="color:#000;font-weight:bold">;</span>
-                <span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>
-            <span style="color:#000;font-weight:bold">default</span><span style="color:#000;font-weight:bold">:</span>
-                <span style="color:#998;font-style:italic">//handle error
-</span><span style="color:#998;font-style:italic"></span>                <span style="color:#000;font-weight:bold">return</span> <span style="color:#d14">&#34;error&#34;</span><span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#000;font-weight:bold">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>       String file_name <span style="color:#000;font-weight:bold">=</span> file<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getOriginalFilename</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>        String<span style="color:#000;font-weight:bold">[]</span> parts <span style="color:#000;font-weight:bold">=</span> file_name<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">split</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;\\.&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>        String suffix <span style="color:#000;font-weight:bold">=</span> parts<span style="color:#000;font-weight:bold">[</span>parts<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span> <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">];</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">switch</span> <span style="color:#000;font-weight:bold">(</span>suffix<span style="color:#000;font-weight:bold">){</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">case</span> <span style="color:#d14">&#34;jpeg&#34;</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>                suffix <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;.jpeg&#34;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">case</span> <span style="color:#d14">&#34;jpg&#34;</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>                suffix <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;.jpg&#34;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">case</span> <span style="color:#d14">&#34;bmp&#34;</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>                suffix <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;.bmp&#34;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">case</span> <span style="color:#d14">&#34;png&#34;</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>                suffix <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;.png&#34;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">default</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#998;font-style:italic">//handle error
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span>                <span style="color:#000;font-weight:bold">return</span> <span style="color:#d14">&#34;error&#34;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="122必须禁止外部文件存储于可执行目录">1.2.2【必须】禁止外部文件存储于可执行目录</h3>
 <p>禁止外部文件存储于WEB容器的可执行目录（appBase）。建议保存在专门的文件服务器中。</p>
@@ -392,7 +394,7 @@ ResultSet results <span style="color:#000;font-weight:bold">=</span> pstmt<span 
 <h2 id="13-网络访问">1.3 网络访问</h2>
 <h3 id="131必须避免直接访问不可信地址">1.3.1【必须】避免直接访问不可信地址</h3>
 <p>服务器访问不可信地址时，禁止访问私有地址段及内网域名。</p>
-<pre><code>// 以RFC定义的专有网络为例，如有自定义私有网段亦应加入禁止访问列表。
+<pre tabindex="0"><code>// 以RFC定义的专有网络为例，如有自定义私有网段亦应加入禁止访问列表。
 10.0.0.0/8
 172.16.0.0/12
 192.168.0.0/16
@@ -400,17 +402,17 @@ ResultSet results <span style="color:#000;font-weight:bold">=</span> pstmt<span 
 </code></pre><p>建议通过URL解析函数进行解析，获取host或者domain后通过DNS获取其IP，然后和内网地址进行比较。</p>
 <p>对已校验通过地址进行访问时，应关闭跟进跳转功能。</p>
 <p>参考示例：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">     httpConnection <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span>HttpURLConnection<span style="color:#000;font-weight:bold">)</span> Url<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openConnection</span><span style="color:#000;font-weight:bold">();</span>
-
-     httpConnection<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFollowRedirects</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>     httpConnection <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span>HttpURLConnection<span style="color:#000;font-weight:bold">)</span> Url<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openConnection</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     httpConnection<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFollowRedirects</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><a id="2.1.4"></a></p>
 <h2 id="14-xml读写">1.4 XML读写</h2>
@@ -418,78 +420,78 @@ ResultSet results <span style="color:#000;font-weight:bold">=</span> pstmt<span 
 <p>读取外部传入XML文件时，XML解析器初始化过程中设置关闭DTD解析。</p>
 <p>参考示例：</p>
 <p>javax.xml.parsers.DocumentBuilderFactory</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">DocumentBuilderFactory dbf <span style="color:#000;font-weight:bold">=</span> DocumentBuilderFactory<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">newInstance</span><span style="color:#000;font-weight:bold">();</span>
-<span style="color:#000;font-weight:bold">try</span> <span style="color:#000;font-weight:bold">{</span>
-    dbf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://apache.org/xml/features/disallow-doctype-decl&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">);</span>
-    dbf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-general-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
-    dbf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-parameter-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
-    dbf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://apache.org/xml/features/nonvalidating/load-external-dtd&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
-    dbf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setXIncludeAware</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
-    dbf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setExpandEntityReferences</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
-    <span style="color:#a61717;background-color:#e3d2d2">……</span>
-<span style="color:#000;font-weight:bold">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>DocumentBuilderFactory dbf <span style="color:#000;font-weight:bold">=</span> DocumentBuilderFactory<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">newInstance</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">try</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    dbf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://apache.org/xml/features/disallow-doctype-decl&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    dbf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-general-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    dbf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-parameter-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    dbf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://apache.org/xml/features/nonvalidating/load-external-dtd&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    dbf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setXIncludeAware</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    dbf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setExpandEntityReferences</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a61717;background-color:#e3d2d2">……</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>org.dom4j.io.SAXReader</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">saxReader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://apache.org/xml/features/disallow-doctype-decl&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">);</span>
-saxReader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-general-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
-saxReader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-parameter-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>saxReader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://apache.org/xml/features/disallow-doctype-decl&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>saxReader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-general-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>saxReader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-parameter-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>org.jdom2.input.SAXBuilder</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">SAXBuilder builder <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> SAXBuilder<span style="color:#000;font-weight:bold">();</span>
-builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://apache.org/xml/features/disallow-doctype-decl&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">);</span>
-builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-general-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
-builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-parameter-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
-Document doc <span style="color:#000;font-weight:bold">=</span> builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">build</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">new</span> File<span style="color:#000;font-weight:bold">(</span>fileName<span style="color:#000;font-weight:bold">));</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>SAXBuilder builder <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> SAXBuilder<span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://apache.org/xml/features/disallow-doctype-decl&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-general-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-parameter-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>Document doc <span style="color:#000;font-weight:bold">=</span> builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">build</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">new</span> File<span style="color:#000;font-weight:bold">(</span>fileName<span style="color:#000;font-weight:bold">));</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>org.xml.sax.XMLReader</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">XMLReader reader <span style="color:#000;font-weight:bold">=</span> XMLReaderFactory<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">createXMLReader</span><span style="color:#000;font-weight:bold">();</span>
-reader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://apache.org/xml/features/disallow-doctype-decl&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">);</span>
-reader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://apache.org/xml/features/nonvalidating/load-external-dtd&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
-reader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-general-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
-reader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-parameter-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>XMLReader reader <span style="color:#000;font-weight:bold">=</span> XMLReaderFactory<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">createXMLReader</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>reader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://apache.org/xml/features/disallow-doctype-decl&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>reader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://apache.org/xml/features/nonvalidating/load-external-dtd&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>reader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-general-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>reader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setFeature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;http://xml.org/sax/features/external-parameter-entities&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><a id="2.1.5"></a></p>
 <h2 id="15-响应输出">1.5 响应输出</h2>
@@ -515,23 +517,23 @@ reader<span style="color:#000;font-weight:bold">.</span><span style="color:#0080
 <li>
 <p>Access-Control-Allow-Origin</p>
 <p>当需要配置CORS跨域时，应对请求头的Origin值做严格过滤。</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">...</span>
-String currentOrigin <span style="color:#000;font-weight:bold">=</span> request<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getHeader</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Origin&#34;</span><span style="color:#000;font-weight:bold">);</span>
-<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>currentOrigin<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">equals</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;https://domain.qq.com&#34;</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
-       response<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setHeader</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Access-Control-Allow-Origin&#34;</span><span style="color:#000;font-weight:bold">,</span> currentOrigin<span style="color:#000;font-weight:bold">);</span>
-           <span style="color:#000;font-weight:bold">}</span>
- <span style="color:#000;font-weight:bold">...</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">...</span>
+</span></span><span style="display:flex;"><span>String currentOrigin <span style="color:#000;font-weight:bold">=</span> request<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getHeader</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Origin&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>currentOrigin<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">equals</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;https://domain.qq.com&#34;</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>       response<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setHeader</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Access-Control-Allow-Origin&#34;</span><span style="color:#000;font-weight:bold">,</span> currentOrigin<span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span> <span style="color:#000;font-weight:bold">...</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
@@ -568,21 +570,21 @@ String currentOrigin <span style="color:#000;font-weight:bold">=</span> request<
 </tbody>
 </table>
 <p>以上编码规则相对较为繁琐，可参考或直接使用业界已有成熟第三方库如ESAPI.其提供以下函数对象上表中的编码规则:</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">ESAPI<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encoder</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">encodeForHTML</span><span style="color:#000;font-weight:bold">();</span>
-ESAPI<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encoder</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">encodeForHTMLAttribute</span><span style="color:#000;font-weight:bold">();</span>
-ESAPI<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encoder</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">encodeForJavaScript</span><span style="color:#000;font-weight:bold">();</span>
-ESAPI<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encoder</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">encodeForCSS</span><span style="color:#000;font-weight:bold">();</span>
-ESAPI<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encoder</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">encodeForURL</span><span style="color:#000;font-weight:bold">();</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>ESAPI<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encoder</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">encodeForHTML</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>ESAPI<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encoder</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">encodeForHTMLAttribute</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>ESAPI<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encoder</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">encodeForJavaScript</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>ESAPI<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encoder</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">encodeForCSS</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>ESAPI<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encoder</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">encodeForURL</span><span style="color:#000;font-weight:bold">();</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="154必须外部输入拼接到http响应头中需进行过滤">1.5.4【必须】外部输入拼接到HTTP响应头中需进行过滤</h3>
 <p>应尽量避免外部可控参数拼接到HTTP响应头中，如业务需要则需要过滤掉“\r”、&quot;\n&quot;等换行符，或者拒绝携带换行符号的外部输入。</p>
@@ -591,35 +593,35 @@ ESAPI<span style="color:#000;font-weight:bold">.</span><span style="color:#00808
 <p>为避免校验被绕过，应避免直接对URL进行字符串匹配。应通过通过URL解析函数进行解析，获取host或者domain后和白名单进行比较。</p>
 <p>需要注意的是，由于浏览器的容错机制，域名<code>https://www.qq.com\www.bbb.com</code>中的<code>\</code>会被替换成<code>/</code>，最终跳转到<code>www.qq.com</code>。而Java的域名解析函数则无此特性。为避免解析不一致导致绕过，建议对host中的<code>/</code>和<code>#</code>进行替换。</p>
 <p>参考代码：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String host<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;&#34;</span><span style="color:#000;font-weight:bold">;</span>
-		<span style="color:#000;font-weight:bold">try</span> <span style="color:#000;font-weight:bold">{</span>
-		    url <span style="color:#000;font-weight:bold">=</span> url<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">replaceAll</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;[\\\\#]&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#d14">&#34;/&#34;</span><span style="color:#000;font-weight:bold">);</span> <span style="color:#998;font-style:italic">//替换掉反斜线和井号
-</span><span style="color:#998;font-style:italic"></span>		    host <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> URL<span style="color:#000;font-weight:bold">(</span>url<span style="color:#000;font-weight:bold">).</span><span style="color:#008080">getHost</span><span style="color:#000;font-weight:bold">();</span>  
-		<span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">catch</span> <span style="color:#000;font-weight:bold">(</span>MalformedURLException e<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-		    e<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">printStackTrace</span><span style="color:#000;font-weight:bold">();</span>
-		<span style="color:#000;font-weight:bold">}</span>
-		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>host<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">endsWith</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;.qq.com&#34;</span><span style="color:#000;font-weight:bold">)){</span>
-			<span style="color:#998;font-style:italic">//跳转操作
-</span><span style="color:#998;font-style:italic"></span>		<span style="color:#000;font-weight:bold">}</span><span style="color:#000;font-weight:bold">else</span><span style="color:#000;font-weight:bold">{</span>
-			<span style="color:#000;font-weight:bold">return</span><span style="color:#000;font-weight:bold">;</span>
-		<span style="color:#000;font-weight:bold">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>String host<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;&#34;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">try</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		    url <span style="color:#000;font-weight:bold">=</span> url<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">replaceAll</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;[\\\\#]&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#d14">&#34;/&#34;</span><span style="color:#000;font-weight:bold">);</span> <span style="color:#998;font-style:italic">//替换掉反斜线和井号
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span>		    host <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> URL<span style="color:#000;font-weight:bold">(</span>url<span style="color:#000;font-weight:bold">).</span><span style="color:#008080">getHost</span><span style="color:#000;font-weight:bold">();</span>  
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">catch</span> <span style="color:#000;font-weight:bold">(</span>MalformedURLException e<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		    e<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">printStackTrace</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>host<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">endsWith</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;.qq.com&#34;</span><span style="color:#000;font-weight:bold">)){</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#998;font-style:italic">//跳转操作
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span>		<span style="color:#000;font-weight:bold">}</span><span style="color:#000;font-weight:bold">else</span><span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000;font-weight:bold">return</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="156必须避免通过jsonp传输非公开敏感信息">1.5.6【必须】避免通过Jsonp传输非公开敏感信息</h3>
 <p>jsonp请求再被CSRF攻击时，其响应包可被攻击方劫持导致信息泄露。应避免通过jsonp传输非公开的敏感信息，例如用户隐私信息、身份凭证等。</p>
@@ -630,32 +632,32 @@ ESAPI<span style="color:#000;font-weight:bold">.</span><span style="color:#00808
 <h3 id="159必须模板表达式">1.5.9【必须】模板&amp;表达式</h3>
 <p>web view层通常通过模板技术或者表达式引擎来实现界面与业务数据分离，比如jsp中的EL表达式。这些引擎通常可执行敏感操作，如果外部不可信数据未经过滤拼接到表达式中进行解析。则可能造成严重漏洞。</p>
 <p>下列是基于EL表达式注入漏洞的演示demo：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">	<span style="color:#3c5d5d;font-weight:bold">@RequestMapping</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;/ELdemo&#34;</span><span style="color:#000;font-weight:bold">)</span>
-	<span style="color:#3c5d5d;font-weight:bold">@ResponseBody</span>
-	<span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">ELdemo</span><span style="color:#000;font-weight:bold">(</span>RepeatDTO repeat<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-		ExpressionFactory expressionFactory <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> ExpressionFactoryImpl<span style="color:#000;font-weight:bold">();</span>
-        SimpleContext simpleContext <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> SimpleContext<span style="color:#000;font-weight:bold">();</span>
-        String exp <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;${&#34;</span><span style="color:#000;font-weight:bold">+</span>repeat<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getel</span><span style="color:#000;font-weight:bold">()+</span><span style="color:#d14">&#34;}&#34;</span><span style="color:#000;font-weight:bold">;</span>
-        ValueExpression valueExpression <span style="color:#000;font-weight:bold">=</span>       expressionFactory<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">createValueExpression</span><span style="color:#000;font-weight:bold">(</span>simpleContext<span style="color:#000;font-weight:bold">,</span> exp<span style="color:#000;font-weight:bold">,</span> String<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>		
-		<span style="color:#000;font-weight:bold">return</span> valueExpression<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getValue</span><span style="color:#000;font-weight:bold">(</span>simpleContext<span style="color:#000;font-weight:bold">).</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>
-	<span style="color:#000;font-weight:bold">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>	<span style="color:#3c5d5d;font-weight:bold">@RequestMapping</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;/ELdemo&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#3c5d5d;font-weight:bold">@ResponseBody</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">ELdemo</span><span style="color:#000;font-weight:bold">(</span>RepeatDTO repeat<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		ExpressionFactory expressionFactory <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> ExpressionFactoryImpl<span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>        SimpleContext simpleContext <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> SimpleContext<span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>        String exp <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;${&#34;</span><span style="color:#000;font-weight:bold">+</span>repeat<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getel</span><span style="color:#000;font-weight:bold">()+</span><span style="color:#d14">&#34;}&#34;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>        ValueExpression valueExpression <span style="color:#000;font-weight:bold">=</span>       expressionFactory<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">createValueExpression</span><span style="color:#000;font-weight:bold">(</span>simpleContext<span style="color:#000;font-weight:bold">,</span> exp<span style="color:#000;font-weight:bold">,</span> String<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">);</span>		
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">return</span> valueExpression<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getValue</span><span style="color:#000;font-weight:bold">(</span>simpleContext<span style="color:#000;font-weight:bold">).</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>外部可通过el参数，将不可信输入拼接到EL表达式中并解析。</p>
-<p>此时外部访问：x.x.x.x/ELdemo?el=”''.getClass().forName(&lsquo;java.lang.Runtime&rsquo;).getMethod(&lsquo;exec&rsquo;,''.getClass()).invoke(''.getClass().forName(&lsquo;java.lang.Runtime&rsquo;).getMethod(&lsquo;getRuntime&rsquo;).invoke(null),&lsquo;open /Applications/Calculator.app&rsquo;)“ 可执行操作系统命令调出计算器。</p>
+<p>此时外部访问：x.x.x.x/ELdemo?el=”&rsquo;&rsquo;.getClass().forName(&lsquo;java.lang.Runtime&rsquo;).getMethod(&rsquo;exec&rsquo;,&rsquo;&rsquo;.getClass()).invoke(&rsquo;&rsquo;.getClass().forName(&lsquo;java.lang.Runtime&rsquo;).getMethod(&lsquo;getRuntime&rsquo;).invoke(null),&lsquo;open /Applications/Calculator.app&rsquo;)“ 可执行操作系统命令调出计算器。</p>
 <p>基于以上风险：</p>
 <ul>
 <li>应避免外部输入的内容拼接到EL表达式或其他表达式引起、模板引擎进行解析。</li>
@@ -672,24 +674,24 @@ ESAPI<span style="color:#000;font-weight:bold">.</span><span style="color:#00808
 <p>禁止外部数据直接直接作为操作系统命令执行。</p>
 </li>
 <li>
-<p>避免通过&quot;cmd&rdquo;、“bash”、“sh”等命令创建shell后拼接外部数据来执行操作系统命令。</p>
+<p>避免通过&quot;cmd&quot;、“bash”、“sh”等命令创建shell后拼接外部数据来执行操作系统命令。</p>
 </li>
 <li>
 <p>对外部传入数据进行过滤。可通过白名单限制字符类型，仅允许字符、数字、下划线；或过滤转义以下符号：|;&amp;$&gt;&lt;`（反引号）!</p>
 <p>白名单示例：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#000;font-weight:bold">final</span> Pattern FILTER_PATTERN <span style="color:#000;font-weight:bold">=</span> Pattern<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">compile</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;[0-9A-Za-z_]+&#34;</span><span style="color:#000;font-weight:bold">);</span>
-<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(!</span>FILTER_PATTERN<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">matcher</span><span style="color:#000;font-weight:bold">(</span>input<span style="color:#000;font-weight:bold">).</span><span style="color:#008080">matches</span><span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
-  <span style="color:#998;font-style:italic">// 终止当前请求的处理
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#000;font-weight:bold">final</span> Pattern FILTER_PATTERN <span style="color:#000;font-weight:bold">=</span> Pattern<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">compile</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;[0-9A-Za-z_]+&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(!</span>FILTER_PATTERN<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">matcher</span><span style="color:#000;font-weight:bold">(</span>input<span style="color:#000;font-weight:bold">).</span><span style="color:#008080">matches</span><span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#998;font-style:italic">// 终止当前请求的处理
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
@@ -745,48 +747,48 @@ ESAPI<span style="color:#000;font-weight:bold">.</span><span style="color:#00808
 <ol>
 <li>
 <p>登录成功后颁发Token，并同时存储在服务端Session中</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String uuidToken <span style="color:#000;font-weight:bold">=</span> UUID<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">randomUUID</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>
-map<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">put</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;token&#34;</span><span style="color:#000;font-weight:bold">,</span> uuidToken<span style="color:#000;font-weight:bold">);</span>
-request<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getSession</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">setAttribute</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;token&#34;</span><span style="color:#000;font-weight:bold">,</span>uuidToken <span style="color:#000;font-weight:bold">);</span>
-<span style="color:#000;font-weight:bold">return</span> map<span style="color:#000;font-weight:bold">;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>String uuidToken <span style="color:#000;font-weight:bold">=</span> UUID<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">randomUUID</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>map<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">put</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;token&#34;</span><span style="color:#000;font-weight:bold">,</span> uuidToken<span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>request<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getSession</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">setAttribute</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;token&#34;</span><span style="color:#000;font-weight:bold">,</span>uuidToken <span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">return</span> map<span style="color:#000;font-weight:bold">;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>
 <p>创建Filter</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">CsrfFilter</span> <span style="color:#000;font-weight:bold">implements</span> Filter <span style="color:#000;font-weight:bold">{</span>  
-  <span style="color:#000;font-weight:bold">...</span>
-   HttpSession session <span style="color:#000;font-weight:bold">=</span> req<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getSession</span><span style="color:#000;font-weight:bold">();</span>
-   Object token <span style="color:#000;font-weight:bold">=</span> session<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getAttribute</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;token&#34;</span><span style="color:#000;font-weight:bold">);</span>
-   String requestToken <span style="color:#000;font-weight:bold">=</span> req<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getParameter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;token&#34;</span><span style="color:#000;font-weight:bold">);</span>
-   <span style="color:#000;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span>StringUtils<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">isBlank</span><span style="color:#000;font-weight:bold">(</span>requestToken<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">||</span> <span style="color:#000;font-weight:bold">!</span>requestToken<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">equals</span><span style="color:#000;font-weight:bold">(</span>token<span style="color:#000;font-weight:bold">)){</span>
-         AjaxResponseWriter<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">write</span><span style="color:#000;font-weight:bold">(</span>req<span style="color:#000;font-weight:bold">,</span> resp<span style="color:#000;font-weight:bold">,</span> ServiceStatusEnum<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ILLEGAL_TOKEN</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#d14">&#34;非法的token&#34;</span><span style="color:#000;font-weight:bold">);</span>
-            <span style="color:#000;font-weight:bold">return</span><span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#000;font-weight:bold">}</span>
-   <span style="color:#000;font-weight:bold">...</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">CsrfFilter</span> <span style="color:#000;font-weight:bold">implements</span> Filter <span style="color:#000;font-weight:bold">{</span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">...</span>
+</span></span><span style="display:flex;"><span>   HttpSession session <span style="color:#000;font-weight:bold">=</span> req<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getSession</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>   Object token <span style="color:#000;font-weight:bold">=</span> session<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getAttribute</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;token&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>   String requestToken <span style="color:#000;font-weight:bold">=</span> req<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getParameter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;token&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#000;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span>StringUtils<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">isBlank</span><span style="color:#000;font-weight:bold">(</span>requestToken<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">||</span> <span style="color:#000;font-weight:bold">!</span>requestToken<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">equals</span><span style="color:#000;font-weight:bold">(</span>token<span style="color:#000;font-weight:bold">)){</span>
+</span></span><span style="display:flex;"><span>         AjaxResponseWriter<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">write</span><span style="color:#000;font-weight:bold">(</span>req<span style="color:#000;font-weight:bold">,</span> resp<span style="color:#000;font-weight:bold">,</span> ServiceStatusEnum<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ILLEGAL_TOKEN</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#d14">&#34;非法的token&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">return</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#000;font-weight:bold">...</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 </ol>
@@ -840,7 +842,7 @@ request<span style="color:#000;font-weight:bold">.</span><span style="color:#008
         
         <li><a href="/post/2021-07-15-maven_scope/">maven的scope参数</a></li>
         
-        <li><a href="/post/2021-06-05-python_faker/">python工具-测试数据生成器</a></li>
+        <li><a href="/post/2021-06-05-python_faker/">python工具-faker测试数据生成器</a></li>
         
         <li><a href="/post/2021-05-01-system_port/">系统端口速查</a></li>
         
@@ -929,6 +931,14 @@ request<span style="color:#000;font-weight:bold">.</span><span style="color:#008
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
     </li>
     
@@ -960,14 +970,6 @@ request<span style="color:#000;font-weight:bold">.</span><span style="color:#008
         <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理">mysql大表的数据清理</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-17-nmap/" title="nmap参数详解">nmap参数详解</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -988,6 +990,8 @@ request<span style="color:#000;font-weight:bold">.</span><span style="color:#008
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
     
@@ -1051,7 +1055,7 @@ request<span style="color:#000;font-weight:bold">.</span><span style="color:#008
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (23)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
     
@@ -1069,7 +1073,7 @@ request<span style="color:#000;font-weight:bold">.</span><span style="color:#008
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (18)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
     
@@ -1120,6 +1124,8 @@ request<span style="color:#000;font-weight:bold">.</span><span style="color:#008
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
     

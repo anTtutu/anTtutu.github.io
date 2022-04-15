@@ -200,8 +200,8 @@
         var postToc = $(".post-toc");
         if (postToc.length) {
             var leftPos = $("#main").offset().left;
-            if(leftPos<220){
-                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
             }
 
             var t = postToc.offset().top - 20,
@@ -219,6 +219,10 @@
                 var e = $(window).scrollTop();
                 e < t ? postToc.css(a.start) : postToc.css(a.process)
             })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
         }
     })
 </script>
@@ -254,183 +258,183 @@
             <h2 id="前言">前言</h2>
 <p>mongodb安装成功后的初始化操作，安装步骤比较简单略过不讲</p>
 <h2 id="1启动">1、启动</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./mongobd -f /etc/mongodb.conf
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./mongobd -f /etc/mongodb.conf
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="2进入命令行">2、进入命令行</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./mongo 
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./mongo 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="3创建超级管理账号">3、创建超级管理账号</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">use admin
-
-db.createUser<span style="color:#000;font-weight:bold">({</span>user:<span style="color:#d14">&#34;adminuser&#34;</span>,pwd:<span style="color:#d14">&#34;12345678&#34;</span>,roles:<span style="color:#000;font-weight:bold">[</span><span style="color:#d14">&#34;userAdminAnyDatabase&#34;</span><span style="color:#000;font-weight:bold">]})</span>
-
-<span style="color:#998;font-style:italic">## 4、用超级管理账号创建业务账号</span>
-db.auth<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#39;adminuser&#39;</span>, <span style="color:#d14">&#39;12345678&#39;</span><span style="color:#000;font-weight:bold">)</span>
-
-use testdb
-
-db.createUser<span style="color:#000;font-weight:bold">({</span>user:<span style="color:#d14">&#34;testuser&#34;</span>,pwd:<span style="color:#d14">&#34;12345678&#34;</span>,roles: <span style="color:#000;font-weight:bold">[{</span>role:<span style="color:#d14">&#34;readWrite&#34;</span>, db:<span style="color:#d14">&#34;testdb&#34;</span><span style="color:#000;font-weight:bold">}]})</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>use admin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>db.createUser<span style="color:#000;font-weight:bold">({</span>user:<span style="color:#d14">&#34;adminuser&#34;</span>,pwd:<span style="color:#d14">&#34;12345678&#34;</span>,roles:<span style="color:#000;font-weight:bold">[</span><span style="color:#d14">&#34;userAdminAnyDatabase&#34;</span><span style="color:#000;font-weight:bold">]})</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">## 4、用超级管理账号创建业务账号</span>
+</span></span><span style="display:flex;"><span>db.auth<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#39;adminuser&#39;</span>, <span style="color:#d14">&#39;12345678&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>use testdb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>db.createUser<span style="color:#000;font-weight:bold">({</span>user:<span style="color:#d14">&#34;testuser&#34;</span>,pwd:<span style="color:#d14">&#34;12345678&#34;</span>,roles: <span style="color:#000;font-weight:bold">[{</span>role:<span style="color:#d14">&#34;readWrite&#34;</span>, db:<span style="color:#d14">&#34;testdb&#34;</span><span style="color:#000;font-weight:bold">}]})</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="5conf文件demoyaml格式注意空格">5、conf文件demo，yaml格式，注意空格</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#000080">systemLog</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">destination</span>:<span style="color:#bbb"> </span>file<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">logAppend</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">path</span>:<span style="color:#bbb"> </span>/usr/local/mongodb/logs/mongodb.log<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#000080">storage</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">dbPath</span>:<span style="color:#bbb"> </span>/usr/local/mongodb/data/db<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">journal</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">        </span><span style="color:#000080">enabled</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#000080">processManagement</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">fork</span>:<span style="color:#bbb">        
-</span><span style="color:#bbb">    </span><span style="color:#000080">pidFilePath</span>:<span style="color:#bbb"> </span>/var/run/mongodb/mongod.pid<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">timeZoneInfo</span>:<span style="color:#bbb"> </span>/usr/share/zoneinfo<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#000080">net</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">port</span>:<span style="color:#bbb"> </span><span style="color:#099">27017</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">bindIp</span>:<span style="color:#bbb"> </span><span style="color:#099">0.0.0.0</span><span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#000080">security</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">authorization</span>:<span style="color:#bbb"> </span>enabled<span style="color:#bbb">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#000080">systemLog</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">destination</span>:<span style="color:#bbb"> </span>file<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">logAppend</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">path</span>:<span style="color:#bbb"> </span>/usr/local/mongodb/logs/mongodb.log<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">storage</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">dbPath</span>:<span style="color:#bbb"> </span>/usr/local/mongodb/data/db<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">journal</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#000080">enabled</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">processManagement</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">fork</span>:<span style="color:#bbb">        
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">pidFilePath</span>:<span style="color:#bbb"> </span>/var/run/mongodb/mongod.pid<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">timeZoneInfo</span>:<span style="color:#bbb"> </span>/usr/share/zoneinfo<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">net</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">port</span>:<span style="color:#bbb"> </span><span style="color:#099">27017</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">bindIp</span>:<span style="color:#bbb"> </span><span style="color:#099">0.0.0.0</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">security</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">authorization</span>:<span style="color:#bbb"> </span>enabled<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="6参数解读">6、参数解读：</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#000080">systemLog</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">destination</span>:<span style="color:#bbb"> </span>file//指定是一个文件<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">path</span>:<span style="color:#bbb"> </span>/data/logs/mongod.log//日志存放位置<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">logAppend</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//产生日志内容追加到文件<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">#  quiet: true//在quite模式下会限制输出信息</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">#  timeStampFormat: iso8601-utc //默认是iso8601-local，日志信息中还有其他时间戳格式：ctime,iso8601-utc,iso8601-local</span><span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#000080">processManagement</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">fork</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//以守护进程的方式运行MongoDB，创建服务器进程<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">pidFilePath</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;/data/mongo-data/mongod.pid&#34;</span>//pid文件路径<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#000080">net</span>:<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#998;font-style:italic"># bindIp: 192.168.33.131//绑定ip地址访问mongodb，多个ip逗号分隔</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">port</span>:<span style="color:#bbb"> </span><span style="color:#099">27017</span>//端口<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>maxIncomingConnections：10000//默认65535，mongodb实例接受的最多连接数，如果高于操作系统接受的最大线程数，设置无效。<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">#  http:</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">#    enabled: true//http端口最好关闭</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">#RESTInterfaceEnabled: false//即使http接口选项关闭，如果这个选项打开后会有更多的不安全因素</span><span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#000080">storage</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">dbPath</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;/data/mongo-data&#34;</span>//数据文件存放路径<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">engine</span>:<span style="color:#bbb"> </span>wiredTiger//数据引擎<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">wiredTiger</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>engineConfig://wt引擎配置<span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#000080">cacheSizeGB</span>:<span style="color:#bbb"> </span><span style="color:#099">1</span>//看服务器情况来进行设置<span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#000080">directoryForIndexes</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//索引是否按数据库名进行单独存储<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">collectionConfig</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#000080">blockCompressor</span>:<span style="color:#bbb"> </span>zlib//压缩配置<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">indexConfig</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#000080">prefixCompression</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//索引配置<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">journal</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">enabled</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//记录操作日志，防止数据丢失。<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">directoryPerDB</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//指定存储每个数据库文件到单独的数据目录。如果在一个已存在的系统使用该选项，需要事先把存在的数据文件移动到目录。<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#000080">operationProfiling</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">slowOpThresholdMs</span>:<span style="color:#bbb"> </span><span style="color:#099">100</span><span style="color:#bbb"> </span>//指定慢查询时间，单位毫秒，如果打开功能，则向system.profile集合写入数据<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">mode</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;slowOp&#34;</span>//off、slowOp、all，分别对应关闭，仅打开慢查询，记录所有操作。<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#000080">security</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">keyFile</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;/data/mongodb-keyfile&#34;</span>//指定分片集或副本集成员之间身份验证的key文件存储位置<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">clusterAuthMode</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;keyFile&#34;</span>//集群认证模式，默认是keyFile<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">authorization</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;disabled&#34;</span>//访问数据库和进行操作的用户角色认证<span style="color:#bbb">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#000080">systemLog</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">destination</span>:<span style="color:#bbb"> </span>file//指定是一个文件<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">path</span>:<span style="color:#bbb"> </span>/data/logs/mongod.log//日志存放位置<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">logAppend</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//产生日志内容追加到文件<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">#  quiet: true//在quite模式下会限制输出信息</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">#  timeStampFormat: iso8601-utc //默认是iso8601-local，日志信息中还有其他时间戳格式：ctime,iso8601-utc,iso8601-local</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">processManagement</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">fork</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//以守护进程的方式运行MongoDB，创建服务器进程<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">pidFilePath</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;/data/mongo-data/mongod.pid&#34;</span>//pid文件路径<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">net</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#998;font-style:italic"># bindIp: 192.168.33.131//绑定ip地址访问mongodb，多个ip逗号分隔</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">port</span>:<span style="color:#bbb"> </span><span style="color:#099">27017</span>//端口<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span>maxIncomingConnections：10000//默认65535，mongodb实例接受的最多连接数，如果高于操作系统接受的最大线程数，设置无效。<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">#  http:</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">#    enabled: true//http端口最好关闭</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">#RESTInterfaceEnabled: false//即使http接口选项关闭，如果这个选项打开后会有更多的不安全因素</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">storage</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">dbPath</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;/data/mongo-data&#34;</span>//数据文件存放路径<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">engine</span>:<span style="color:#bbb"> </span>wiredTiger//数据引擎<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">wiredTiger</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>engineConfig://wt引擎配置<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#000080">cacheSizeGB</span>:<span style="color:#bbb"> </span><span style="color:#099">1</span>//看服务器情况来进行设置<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#000080">directoryForIndexes</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//索引是否按数据库名进行单独存储<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">collectionConfig</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#000080">blockCompressor</span>:<span style="color:#bbb"> </span>zlib//压缩配置<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">indexConfig</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">      </span><span style="color:#000080">prefixCompression</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//索引配置<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">journal</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">enabled</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//记录操作日志，防止数据丢失。<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">directoryPerDB</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span>//指定存储每个数据库文件到单独的数据目录。如果在一个已存在的系统使用该选项，需要事先把存在的数据文件移动到目录。<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">operationProfiling</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">slowOpThresholdMs</span>:<span style="color:#bbb"> </span><span style="color:#099">100</span><span style="color:#bbb"> </span>//指定慢查询时间，单位毫秒，如果打开功能，则向system.profile集合写入数据<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">mode</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;slowOp&#34;</span>//off、slowOp、all，分别对应关闭，仅打开慢查询，记录所有操作。<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080">security</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">keyFile</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;/data/mongodb-keyfile&#34;</span>//指定分片集或副本集成员之间身份验证的key文件存储位置<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">clusterAuthMode</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;keyFile&#34;</span>//集群认证模式，默认是keyFile<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">authorization</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;disabled&#34;</span>//访问数据库和进行操作的用户角色认证<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="7常见操作">7、常见操作</h2>
 <table>
@@ -465,368 +469,368 @@ db.createUser<span style="color:#000;font-weight:bold">({</span>user:<span style
 </table>
 <h2 id="8聚集集合操作">8、聚集集合操作</h2>
 <h3 id="81查询所有记录">8.1、查询所有记录</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">()</span>;
-相当于：select* from userInfo;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">()</span>;
+</span></span><span style="display:flex;"><span>相当于：select* from userInfo;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="82查询去掉后的当前聚集集合中的某列的重复数据">8.2、查询去掉后的当前聚集集合中的某列的重复数据</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.distinct<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;name&#34;</span><span style="color:#000;font-weight:bold">)</span>;
-会过滤掉name中的相同数据
-相当于：select distinct name from userInfo;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.distinct<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;name&#34;</span><span style="color:#000;font-weight:bold">)</span>;
+</span></span><span style="display:flex;"><span>会过滤掉name中的相同数据
+</span></span><span style="display:flex;"><span>相当于：select distinct name from userInfo;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="83查询age--22的记录">8.3、查询age = 22的记录</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">({</span><span style="color:#d14">&#34;age&#34;</span>: 22<span style="color:#000;font-weight:bold">})</span>;
-相当于： <span style="color:#000;font-weight:bold">select</span> * from userInfo where <span style="color:#008080">age</span> <span style="color:#000;font-weight:bold">=</span> 22;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span><span style="color:#d14">&#34;age&#34;</span>: 22<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>相当于： <span style="color:#000;font-weight:bold">select</span> * from userInfo where <span style="color:#008080">age</span> <span style="color:#000;font-weight:bold">=</span> 22;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="84查询age--22的记录">8.4、查询age &gt; 22的记录</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gt</span>: 22<span style="color:#000;font-weight:bold">}})</span>;
-相当于：select * from userInfo where age &gt;22;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gt</span>: 22<span style="color:#000;font-weight:bold">}})</span>;
+</span></span><span style="display:flex;"><span>相当于：select * from userInfo where age &gt;22;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="85查询age--22的记录">8.5、查询age &lt; 22的记录</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$lt</span>: 22<span style="color:#000;font-weight:bold">}})</span>;
-相当于：select * from userInfo where age &lt;22;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$lt</span>: 22<span style="color:#000;font-weight:bold">}})</span>;
+</span></span><span style="display:flex;"><span>相当于：select * from userInfo where age &lt;22;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="86查询age--25的记录">8.6、查询age &gt;= 25的记录</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gte</span>: 25<span style="color:#000;font-weight:bold">}})</span>;
-相当于：select * from userInfo where age &gt;<span style="color:#000;font-weight:bold">=</span> 25;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gte</span>: 25<span style="color:#000;font-weight:bold">}})</span>;
+</span></span><span style="display:flex;"><span>相当于：select * from userInfo where age &gt;<span style="color:#000;font-weight:bold">=</span> 25;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="87查询age--25的记录">8.7、查询age &lt;= 25的记录</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$lte</span>: 25<span style="color:#000;font-weight:bold">}})</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$lte</span>: 25<span style="color:#000;font-weight:bold">}})</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="88查询age--23-并且-age--26">8.8、查询age &gt;= 23 并且 age &lt;= 26</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gte</span>: 23, <span style="color:#008080">$lte</span>: 26<span style="color:#000;font-weight:bold">}})</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gte</span>: 23, <span style="color:#008080">$lte</span>: 26<span style="color:#000;font-weight:bold">}})</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="89查询name中包含-mongo的数据">8.9、查询name中包含 mongo的数据</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">({</span>name: /mongo/<span style="color:#000;font-weight:bold">})</span>;
-//相当于%%
-<span style="color:#000;font-weight:bold">select</span> * from userInfo where name like ‘%mongo%<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>name: /mongo/<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>//相当于%%
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">select</span> * from userInfo where name like ‘%mongo%<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="810查询name中以mongo开头的">8.10、查询name中以mongo开头的</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">({</span>name: /^mongo/<span style="color:#000;font-weight:bold">})</span>;
-<span style="color:#000;font-weight:bold">select</span> * from userInfo where name like ‘mongo%<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>name: /^mongo/<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">select</span> * from userInfo where name like ‘mongo%<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="811查询指定列nameage数据">8.11、查询指定列name、age数据</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">({}</span>, <span style="color:#000;font-weight:bold">{</span>name: 1, age: 1<span style="color:#000;font-weight:bold">})</span>;
-相当于：select name, age from userInfo;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({}</span>, <span style="color:#000;font-weight:bold">{</span>name: 1, age: 1<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>相当于：select name, age from userInfo;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>当然name也可以用true或false,当用true的情况下河name:1效果一样，如果用false就是排除name，显示name以外的列信息。</p>
 <h3 id="812查询指定列nameage数据-age--25">8.12、查询指定列name、age数据, age &gt; 25</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gt</span>: 25<span style="color:#000;font-weight:bold">}}</span>, <span style="color:#000;font-weight:bold">{</span>name: 1, age: 1<span style="color:#000;font-weight:bold">})</span>;
-相当于：select name, age from userInfo where age &gt;25;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gt</span>: 25<span style="color:#000;font-weight:bold">}}</span>, <span style="color:#000;font-weight:bold">{</span>name: 1, age: 1<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>相当于：select name, age from userInfo where age &gt;25;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="813按照年龄排序">8.13、按照年龄排序</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">升序：db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.sort<span style="color:#000;font-weight:bold">({</span>age: 1<span style="color:#000;font-weight:bold">})</span>;
-降序：db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.sort<span style="color:#000;font-weight:bold">({</span>age: -1<span style="color:#000;font-weight:bold">})</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>升序：db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.sort<span style="color:#000;font-weight:bold">({</span>age: 1<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>降序：db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.sort<span style="color:#000;font-weight:bold">({</span>age: -1<span style="color:#000;font-weight:bold">})</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="814查询name--zhangsan-age--22的数据">8.14、查询name = zhangsan, age = 22的数据</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">({</span>name: <span style="color:#d14">&#39;zhangsan&#39;</span>, age: 22<span style="color:#000;font-weight:bold">})</span>;
-相当于：select * from userInfo where <span style="color:#008080">name</span> <span style="color:#000;font-weight:bold">=</span> ‘zhangsan<span style="color:#d14">&#39; and age = ‘22&#39;</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>name: <span style="color:#d14">&#39;zhangsan&#39;</span>, age: 22<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>相当于：select * from userInfo where <span style="color:#008080">name</span> <span style="color:#000;font-weight:bold">=</span> ‘zhangsan<span style="color:#d14">&#39; and age = ‘22&#39;</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="815查询前5条数据">8.15、查询前5条数据</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.limit<span style="color:#000;font-weight:bold">(</span>5<span style="color:#000;font-weight:bold">)</span>;
-相当于：select top <span style="color:#099">5</span> * from userInfo;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.limit<span style="color:#000;font-weight:bold">(</span>5<span style="color:#000;font-weight:bold">)</span>;
+</span></span><span style="display:flex;"><span>相当于：select top <span style="color:#099">5</span> * from userInfo;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="816查询10条以后的数据">8.16、查询10条以后的数据</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.skip<span style="color:#000;font-weight:bold">(</span>10<span style="color:#000;font-weight:bold">)</span>;
-相当于：select * from userInfo where id not in <span style="color:#000;font-weight:bold">(</span>
-<span style="color:#000;font-weight:bold">select</span> top <span style="color:#099">10</span> * from userInfo
-<span style="color:#000;font-weight:bold">)</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.skip<span style="color:#000;font-weight:bold">(</span>10<span style="color:#000;font-weight:bold">)</span>;
+</span></span><span style="display:flex;"><span>相当于：select * from userInfo where id not in <span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">select</span> top <span style="color:#099">10</span> * from userInfo
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="817查询在5-10之间的数据">8.17、查询在5-10之间的数据</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.limit<span style="color:#000;font-weight:bold">(</span>10<span style="color:#000;font-weight:bold">)</span>.skip<span style="color:#000;font-weight:bold">(</span>5<span style="color:#000;font-weight:bold">)</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.limit<span style="color:#000;font-weight:bold">(</span>10<span style="color:#000;font-weight:bold">)</span>.skip<span style="color:#000;font-weight:bold">(</span>5<span style="color:#000;font-weight:bold">)</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>可用于分页，limit是pageSize，skip是第几页*pageSize</p>
 <h3 id="818or与-查询">8.18、or与 查询</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">({</span><span style="color:#008080">$or</span>: <span style="color:#000;font-weight:bold">[{</span>age: 22<span style="color:#000;font-weight:bold">}</span>, <span style="color:#000;font-weight:bold">{</span>age: 25<span style="color:#000;font-weight:bold">}]})</span>;
-相当于：select * from userInfo where <span style="color:#008080">age</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">22</span> or <span style="color:#008080">age</span> <span style="color:#000;font-weight:bold">=</span> 25;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span><span style="color:#008080">$or</span>: <span style="color:#000;font-weight:bold">[{</span>age: 22<span style="color:#000;font-weight:bold">}</span>, <span style="color:#000;font-weight:bold">{</span>age: 25<span style="color:#000;font-weight:bold">}]})</span>;
+</span></span><span style="display:flex;"><span>相当于：select * from userInfo where <span style="color:#008080">age</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">22</span> or <span style="color:#008080">age</span> <span style="color:#000;font-weight:bold">=</span> 25;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="819查询第一条数据">8.19、查询第一条数据</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.findOne<span style="color:#000;font-weight:bold">()</span>;
-相当于：select top <span style="color:#099">1</span> * from userInfo;
-db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.limit<span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.findOne<span style="color:#000;font-weight:bold">()</span>;
+</span></span><span style="display:flex;"><span>相当于：select top <span style="color:#099">1</span> * from userInfo;
+</span></span><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">()</span>.limit<span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">)</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="820查询某个结果集的记录条数">8.20、查询某个结果集的记录条数</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gte</span>: 25<span style="color:#000;font-weight:bold">}})</span>.count<span style="color:#000;font-weight:bold">()</span>;
-相当于：select count<span style="color:#000;font-weight:bold">(</span>*<span style="color:#000;font-weight:bold">)</span> from userInfo where age &gt;<span style="color:#000;font-weight:bold">=</span> 20;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gte</span>: 25<span style="color:#000;font-weight:bold">}})</span>.count<span style="color:#000;font-weight:bold">()</span>;
+</span></span><span style="display:flex;"><span>相当于：select count<span style="color:#000;font-weight:bold">(</span>*<span style="color:#000;font-weight:bold">)</span> from userInfo where age &gt;<span style="color:#000;font-weight:bold">=</span> 20;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="821按照某列进行排序">8.21、按照某列进行排序</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.find<span style="color:#000;font-weight:bold">({</span>sex: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$exists</span>: true<span style="color:#000;font-weight:bold">}})</span>.count<span style="color:#000;font-weight:bold">()</span>;
-相当于：select count<span style="color:#000;font-weight:bold">(</span>sex<span style="color:#000;font-weight:bold">)</span> from userInfo;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.find<span style="color:#000;font-weight:bold">({</span>sex: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$exists</span>: true<span style="color:#000;font-weight:bold">}})</span>.count<span style="color:#000;font-weight:bold">()</span>;
+</span></span><span style="display:flex;"><span>相当于：select count<span style="color:#000;font-weight:bold">(</span>sex<span style="color:#000;font-weight:bold">)</span> from userInfo;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="9索引">9、索引</h2>
 <h3 id="91创建索引">9.1、创建索引</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.ensureIndex<span style="color:#000;font-weight:bold">({</span>name: 1<span style="color:#000;font-weight:bold">})</span>;
-db.userInfo.ensureIndex<span style="color:#000;font-weight:bold">({</span>name: 1, ts: -1<span style="color:#000;font-weight:bold">})</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.ensureIndex<span style="color:#000;font-weight:bold">({</span>name: 1<span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>db.userInfo.ensureIndex<span style="color:#000;font-weight:bold">({</span>name: 1, ts: -1<span style="color:#000;font-weight:bold">})</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="92查询当前聚集集合所有索引">9.2、查询当前聚集集合所有索引</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.getIndexes<span style="color:#000;font-weight:bold">()</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.getIndexes<span style="color:#000;font-weight:bold">()</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="93查看总索引记录大小">9.3、查看总索引记录大小</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.userInfo.totalIndexSize<span style="color:#000;font-weight:bold">()</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.userInfo.totalIndexSize<span style="color:#000;font-weight:bold">()</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="94读取当前集合的所有index信息">9.4、读取当前集合的所有index信息</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.users.reIndex<span style="color:#000;font-weight:bold">()</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.users.reIndex<span style="color:#000;font-weight:bold">()</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="95删除指定索引">9.5、删除指定索引</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.users.dropIndex<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;name_1&#34;</span><span style="color:#000;font-weight:bold">)</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.users.dropIndex<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;name_1&#34;</span><span style="color:#000;font-weight:bold">)</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="96删除所有索引索引">9.6、删除所有索引索引</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.users.dropIndexes<span style="color:#000;font-weight:bold">()</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.users.dropIndexes<span style="color:#000;font-weight:bold">()</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="10crud">10、CRUD</h2>
 <h3 id="101添加">10.1、添加</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.users.save<span style="color:#000;font-weight:bold">({</span>name: ‘zhangsan<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>, age: 25, sex: true<span style="color:#000;font-weight:bold">})</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.users.save<span style="color:#000;font-weight:bold">({</span>name: ‘zhangsan<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>, age: 25, sex: true<span style="color:#000;font-weight:bold">})</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>添加的数据的数据列，没有固定，根据添加的数据为准</p>
 <h3 id="102修改">10.2、修改</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.users.update<span style="color:#000;font-weight:bold">({</span>age: 25<span style="color:#000;font-weight:bold">}</span>, <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$set</span>: <span style="color:#000;font-weight:bold">{</span>name: <span style="color:#d14">&#39;changeName&#39;</span><span style="color:#000;font-weight:bold">}}</span>, false, <span style="color:#0086b3">true</span><span style="color:#000;font-weight:bold">)</span>;
-相当于：update users <span style="color:#0086b3">set</span> <span style="color:#008080">name</span> <span style="color:#000;font-weight:bold">=</span> ‘changeName<span style="color:#d14">&#39; where age = 25;
-</span><span style="color:#d14">db.users.update({name: &#39;</span>Lisi<span style="color:#d14">&#39;}, {$inc: {age: 50}}, false, true);
-</span><span style="color:#d14">相当于：update users set age = age + 50 where name = ‘Lisi&#39;</span>;
-db.users.update<span style="color:#000;font-weight:bold">({</span>name: <span style="color:#d14">&#39;Lisi&#39;</span><span style="color:#000;font-weight:bold">}</span>, <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$inc</span>: <span style="color:#000;font-weight:bold">{</span>age: 50<span style="color:#000;font-weight:bold">}</span>, <span style="color:#008080">$set</span>: <span style="color:#000;font-weight:bold">{</span>name: <span style="color:#d14">&#39;hoho&#39;</span><span style="color:#000;font-weight:bold">}}</span>, false, <span style="color:#0086b3">true</span><span style="color:#000;font-weight:bold">)</span>;
-相当于：update users <span style="color:#0086b3">set</span> <span style="color:#008080">age</span> <span style="color:#000;font-weight:bold">=</span> age + 50, <span style="color:#008080">name</span> <span style="color:#000;font-weight:bold">=</span> ‘hoho<span style="color:#d14">&#39; where name = ‘Lisi&#39;</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.users.update<span style="color:#000;font-weight:bold">({</span>age: 25<span style="color:#000;font-weight:bold">}</span>, <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$set</span>: <span style="color:#000;font-weight:bold">{</span>name: <span style="color:#d14">&#39;changeName&#39;</span><span style="color:#000;font-weight:bold">}}</span>, false, <span style="color:#0086b3">true</span><span style="color:#000;font-weight:bold">)</span>;
+</span></span><span style="display:flex;"><span>相当于：update users <span style="color:#0086b3">set</span> <span style="color:#008080">name</span> <span style="color:#000;font-weight:bold">=</span> ‘changeName<span style="color:#d14">&#39; where age = 25;
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">db.users.update({name: &#39;</span>Lisi<span style="color:#d14">&#39;}, {$inc: {age: 50}}, false, true);
+</span></span></span><span style="display:flex;"><span><span style="color:#d14">相当于：update users set age = age + 50 where name = ‘Lisi&#39;</span>;
+</span></span><span style="display:flex;"><span>db.users.update<span style="color:#000;font-weight:bold">({</span>name: <span style="color:#d14">&#39;Lisi&#39;</span><span style="color:#000;font-weight:bold">}</span>, <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$inc</span>: <span style="color:#000;font-weight:bold">{</span>age: 50<span style="color:#000;font-weight:bold">}</span>, <span style="color:#008080">$set</span>: <span style="color:#000;font-weight:bold">{</span>name: <span style="color:#d14">&#39;hoho&#39;</span><span style="color:#000;font-weight:bold">}}</span>, false, <span style="color:#0086b3">true</span><span style="color:#000;font-weight:bold">)</span>;
+</span></span><span style="display:flex;"><span>相当于：update users <span style="color:#0086b3">set</span> <span style="color:#008080">age</span> <span style="color:#000;font-weight:bold">=</span> age + 50, <span style="color:#008080">name</span> <span style="color:#000;font-weight:bold">=</span> ‘hoho<span style="color:#d14">&#39; where name = ‘Lisi&#39;</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="103删除">10.3、删除</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.users.remove<span style="color:#000;font-weight:bold">({</span>age: 132<span style="color:#000;font-weight:bold">})</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.users.remove<span style="color:#000;font-weight:bold">({</span>age: 132<span style="color:#000;font-weight:bold">})</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="104查询修改删除">10.4、查询修改删除</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">db.users.findAndModify<span style="color:#000;font-weight:bold">({</span>
-    query: <span style="color:#000;font-weight:bold">{</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gte</span>: 25<span style="color:#000;font-weight:bold">}}</span>,
-    sort: <span style="color:#000;font-weight:bold">{</span>age: -1<span style="color:#000;font-weight:bold">}</span>,
-    update: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$set</span>: <span style="color:#000;font-weight:bold">{</span>name: <span style="color:#d14">&#39;a2&#39;</span><span style="color:#000;font-weight:bold">}</span>, <span style="color:#008080">$inc</span>: <span style="color:#000;font-weight:bold">{</span>age: 2<span style="color:#000;font-weight:bold">}}</span>,
-    remove: <span style="color:#0086b3">true</span>
-<span style="color:#000;font-weight:bold">})</span>;
-db.runCommand<span style="color:#000;font-weight:bold">({</span> findandmodify : <span style="color:#d14">&#34;users&#34;</span>,
-    query: <span style="color:#000;font-weight:bold">{</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gte</span>: 25<span style="color:#000;font-weight:bold">}}</span>,
-    sort: <span style="color:#000;font-weight:bold">{</span>age: -1<span style="color:#000;font-weight:bold">}</span>,
-    update: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$set</span>: <span style="color:#000;font-weight:bold">{</span>name: <span style="color:#d14">&#39;a2&#39;</span><span style="color:#000;font-weight:bold">}</span>, <span style="color:#008080">$inc</span>: <span style="color:#000;font-weight:bold">{</span>age: 2<span style="color:#000;font-weight:bold">}}</span>,
-    remove: <span style="color:#0086b3">true</span>
-<span style="color:#000;font-weight:bold">})</span>;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>db.users.findAndModify<span style="color:#000;font-weight:bold">({</span>
+</span></span><span style="display:flex;"><span>    query: <span style="color:#000;font-weight:bold">{</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gte</span>: 25<span style="color:#000;font-weight:bold">}}</span>,
+</span></span><span style="display:flex;"><span>    sort: <span style="color:#000;font-weight:bold">{</span>age: -1<span style="color:#000;font-weight:bold">}</span>,
+</span></span><span style="display:flex;"><span>    update: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$set</span>: <span style="color:#000;font-weight:bold">{</span>name: <span style="color:#d14">&#39;a2&#39;</span><span style="color:#000;font-weight:bold">}</span>, <span style="color:#008080">$inc</span>: <span style="color:#000;font-weight:bold">{</span>age: 2<span style="color:#000;font-weight:bold">}}</span>,
+</span></span><span style="display:flex;"><span>    remove: <span style="color:#0086b3">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">})</span>;
+</span></span><span style="display:flex;"><span>db.runCommand<span style="color:#000;font-weight:bold">({</span> findandmodify : <span style="color:#d14">&#34;users&#34;</span>,
+</span></span><span style="display:flex;"><span>    query: <span style="color:#000;font-weight:bold">{</span>age: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$gte</span>: 25<span style="color:#000;font-weight:bold">}}</span>,
+</span></span><span style="display:flex;"><span>    sort: <span style="color:#000;font-weight:bold">{</span>age: -1<span style="color:#000;font-weight:bold">}</span>,
+</span></span><span style="display:flex;"><span>    update: <span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$set</span>: <span style="color:#000;font-weight:bold">{</span>name: <span style="color:#d14">&#39;a2&#39;</span><span style="color:#000;font-weight:bold">}</span>, <span style="color:#008080">$inc</span>: <span style="color:#000;font-weight:bold">{</span>age: 2<span style="color:#000;font-weight:bold">}}</span>,
+</span></span><span style="display:flex;"><span>    remove: <span style="color:#0086b3">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">})</span>;
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
         </div>
@@ -948,6 +952,14 @@ db.runCommand<span style="color:#000;font-weight:bold">({</span> findandmodify :
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
     </li>
     
@@ -979,14 +991,6 @@ db.runCommand<span style="color:#000;font-weight:bold">({</span> findandmodify :
         <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理">mysql大表的数据清理</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-17-nmap/" title="nmap参数详解">nmap参数详解</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -1007,6 +1011,8 @@ db.runCommand<span style="color:#000;font-weight:bold">({</span> findandmodify :
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
     
@@ -1070,7 +1076,7 @@ db.runCommand<span style="color:#000;font-weight:bold">({</span> findandmodify :
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (23)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
     
@@ -1088,7 +1094,7 @@ db.runCommand<span style="color:#000;font-weight:bold">({</span> findandmodify :
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (18)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
     
@@ -1139,6 +1145,8 @@ db.runCommand<span style="color:#000;font-weight:bold">({</span> findandmodify :
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
     

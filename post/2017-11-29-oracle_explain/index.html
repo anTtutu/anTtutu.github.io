@@ -167,8 +167,8 @@
         var postToc = $(".post-toc");
         if (postToc.length) {
             var leftPos = $("#main").offset().left;
-            if(leftPos<220){
-                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
             }
 
             var t = postToc.offset().top - 20,
@@ -186,6 +186,10 @@
                 var e = $(window).scrollTop();
                 e < t ? postToc.css(a.start) : postToc.css(a.process)
             })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
         }
     })
 </script>
@@ -224,100 +228,100 @@
 <p>分析某条SQL的性能问题，通常我们要先看SQL的执行计划，看看SQL的每一步执行是否存在问题。常用的两种方法查看SQL执行计划。</p>
 <h2 id="1autotrace生成执行计划">1、autotrace生成执行计划</h2>
 <p>这种方式执行方便，但是当遇到执行时间长的SQL就变得不太现实，它是先产生结果再生成执行计划的。关于Autotrace几个常用选项的说明：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SET</span>  AUTOTRACE  <span style="color:#000;font-weight:bold">OFF</span> <span style="color:#998;font-style:italic">---------------- 不生成AUTOTRACE 报告，这是缺省模式
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">SET</span>  AUTOTRACE  <span style="color:#000;font-weight:bold">ON</span>  <span style="color:#000;font-weight:bold">EXPLAIN</span> <span style="color:#998;font-style:italic">--------- AUTOTRACE只显示优化器执行路径报告
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">SET</span>  AUTOTRACE  <span style="color:#000;font-weight:bold">ON</span>  <span style="color:#000;font-weight:bold">STATISTICS</span> <span style="color:#998;font-style:italic">------ 只显示执行统计信息
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">SET</span>  AUTOTRACE  <span style="color:#000;font-weight:bold">ON</span> <span style="color:#998;font-style:italic">----------------- 包含执行计划和统计信息
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">SET</span>  AUTOTRACE  TRACEONLY <span style="color:#998;font-style:italic">-----------同set autotrace on，但是不显示查询输出
-</span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">SET</span><span style="color:#bbb">  </span>AUTOTRACE<span style="color:#bbb">  </span><span style="color:#000;font-weight:bold">OFF</span><span style="color:#bbb"> </span><span style="color:#998;font-style:italic">---------------- 不生成AUTOTRACE 报告，这是缺省模式
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">SET</span><span style="color:#bbb">  </span>AUTOTRACE<span style="color:#bbb">  </span><span style="color:#000;font-weight:bold">ON</span><span style="color:#bbb">  </span><span style="color:#000;font-weight:bold">EXPLAIN</span><span style="color:#bbb"> </span><span style="color:#998;font-style:italic">--------- AUTOTRACE只显示优化器执行路径报告
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">SET</span><span style="color:#bbb">  </span>AUTOTRACE<span style="color:#bbb">  </span><span style="color:#000;font-weight:bold">ON</span><span style="color:#bbb">  </span><span style="color:#000;font-weight:bold">STATISTICS</span><span style="color:#bbb"> </span><span style="color:#998;font-style:italic">------ 只显示执行统计信息
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">SET</span><span style="color:#bbb">  </span>AUTOTRACE<span style="color:#bbb">  </span><span style="color:#000;font-weight:bold">ON</span><span style="color:#bbb"> </span><span style="color:#998;font-style:italic">----------------- 包含执行计划和统计信息
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">SET</span><span style="color:#bbb">  </span>AUTOTRACE<span style="color:#bbb">  </span>TRACEONLY<span style="color:#bbb"> </span><span style="color:#998;font-style:italic">-----------同set autotrace on，但是不显示查询输出
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="步骤1-sqlplus登录数据库">步骤1 sqlplus登录数据库</h3>
 <h3 id="步骤2-打开autotrace">步骤2 打开autotrace</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">set</span> autotrace <span style="color:#000;font-weight:bold">on</span> <span style="color:#000;font-weight:bold">explain</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">set</span><span style="color:#bbb"> </span>autotrace<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">on</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">explain</span><span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="步骤3-输入要查看的sql">步骤3 输入要查看的SQL</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">select</span> po.charge, po.new_charge, po.avg_charge
-         <span style="color:#000;font-weight:bold">from</span> lbi_ls_basic.t_l_acct_sum_po_sum_d  po,
-             lbi_dim_basic.t_d_dyn_pkgname     pkg,
-             lbi_dim_basic.t_d_dyn_tenant_def     def
- <span style="color:#000;font-weight:bold">where</span> po.subcosid <span style="color:#000;font-weight:bold">=</span> pkg.productkey(<span style="color:#000;font-weight:bold">+</span>)
-         <span style="color:#000;font-weight:bold">and</span> po.tenantid <span style="color:#000;font-weight:bold">=</span> def.tenantid(<span style="color:#000;font-weight:bold">+</span>); 
-<span style="color:#a61717;background-color:#e3d2d2">返回执行计划结果</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">select</span><span style="color:#bbb"> </span>po.charge,<span style="color:#bbb"> </span>po.new_charge,<span style="color:#bbb"> </span>po.avg_charge<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">         </span><span style="color:#000;font-weight:bold">from</span><span style="color:#bbb"> </span>lbi_ls_basic.t_l_acct_sum_po_sum_d<span style="color:#bbb">  </span>po,<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">             </span>lbi_dim_basic.t_d_dyn_pkgname<span style="color:#bbb">     </span>pkg,<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">             </span>lbi_dim_basic.t_d_dyn_tenant_def<span style="color:#bbb">     </span>def<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">where</span><span style="color:#bbb"> </span>po.subcosid<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">=</span><span style="color:#bbb"> </span>pkg.productkey(<span style="color:#000;font-weight:bold">+</span>)<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">         </span><span style="color:#000;font-weight:bold">and</span><span style="color:#bbb"> </span>po.tenantid<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">=</span><span style="color:#bbb"> </span>def.tenantid(<span style="color:#000;font-weight:bold">+</span>);<span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#a61717;background-color:#e3d2d2">返回执行计划结果</span><span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="步骤4-关闭autotrace">步骤4 关闭autotrace</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">set</span> autotrace <span style="color:#000;font-weight:bold">off</span>
-<span style="color:#998;font-style:italic">----结束
-</span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">set</span><span style="color:#bbb"> </span>autotrace<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">off</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">----结束
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="2explain-plan-for-生成执行计划">2、explain plan for 生成执行计划</h2>
 <p>这种方式是直接产生执行计划，不会产生SQL结果。</p>
 <h3 id="步骤1-sqlplus登录数据库-1">步骤1 sqlplus登录数据库</h3>
 <h3 id="步骤2-执行explain-plan-for语句">步骤2 执行explain plan for语句</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">explain</span> plan <span style="color:#000;font-weight:bold">for</span> 
-<span style="color:#000;font-weight:bold">select</span> po.charge, po.new_charge,po.avg_charge
-           <span style="color:#000;font-weight:bold">from</span> lbi_ls_basic.t_l_acct_sum_po_sum_d   po,
-                lbi_dim_basic.t_d_dyn_pkgname       pkg,
-                lbi_dim_basic.t_d_dyn_tenant_def     def
-       <span style="color:#000;font-weight:bold">where</span> po.subcosid <span style="color:#000;font-weight:bold">=</span> pkg.productkey(<span style="color:#000;font-weight:bold">+</span>) <span style="color:#000;font-weight:bold">and</span> po.tenantid <span style="color:#000;font-weight:bold">=</span> def.tenantid(<span style="color:#000;font-weight:bold">+</span>)
-       ;
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">explain</span><span style="color:#bbb"> </span>plan<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">for</span><span style="color:#bbb"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">select</span><span style="color:#bbb"> </span>po.charge,<span style="color:#bbb"> </span>po.new_charge,po.avg_charge<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">           </span><span style="color:#000;font-weight:bold">from</span><span style="color:#bbb"> </span>lbi_ls_basic.t_l_acct_sum_po_sum_d<span style="color:#bbb">   </span>po,<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">                </span>lbi_dim_basic.t_d_dyn_pkgname<span style="color:#bbb">       </span>pkg,<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">                </span>lbi_dim_basic.t_d_dyn_tenant_def<span style="color:#bbb">     </span>def<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">       </span><span style="color:#000;font-weight:bold">where</span><span style="color:#bbb"> </span>po.subcosid<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">=</span><span style="color:#bbb"> </span>pkg.productkey(<span style="color:#000;font-weight:bold">+</span>)<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">and</span><span style="color:#bbb"> </span>po.tenantid<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">=</span><span style="color:#bbb"> </span>def.tenantid(<span style="color:#000;font-weight:bold">+</span>)<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">       </span>;<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="步骤3-查询执行计划">步骤3 查询执行计划</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">select</span> <span style="color:#000;font-weight:bold">*</span> <span style="color:#000;font-weight:bold">from</span> <span style="color:#000;font-weight:bold">table</span>(dbms_xplan.display);
-<span style="color:#a61717;background-color:#e3d2d2">返回结果：略</span>
-<span style="color:#998;font-style:italic">----结束
-</span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">SQL</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">select</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">*</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">from</span><span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">table</span>(dbms_xplan.display);<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#a61717;background-color:#e3d2d2">返回结果：略</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#998;font-style:italic">----结束
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="3小结">3、小结</h2>
 <p>以上都是不借助图形化的工具，借助图形化的工具后方便很多，比如:PL/SQL Developer强大的不行，或者Toad也行。</p>
@@ -443,6 +447,14 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="SpringCloud GateWay的一些细节注意">SpringCloud GateWay的一些细节注意</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理">linux后台执行可用方式整理</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议">redis日常使用的一些建议</a>
     </li>
     
@@ -474,14 +486,6 @@
         <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用">sdkman的使用</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理">mysql大表的数据清理</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2021-12-17-nmap/" title="nmap参数详解">nmap参数详解</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -502,6 +506,8 @@
     <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
     
@@ -565,7 +571,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (23)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
     
@@ -583,7 +589,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (18)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">linux (19)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
     
@@ -634,6 +640,8 @@
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
     
