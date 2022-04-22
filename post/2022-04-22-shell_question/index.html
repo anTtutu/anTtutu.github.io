@@ -9,20 +9,20 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     
 
-    <title>改用最快的静态blog-hugo | Anttu&#39;s Blog</title>
-    <meta property="og:title" content="改用最快的静态blog-hugo - Anttu&#39;s Blog">
+    <title>shell 13问 | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="shell 13问 - Anttu&#39;s Blog">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2020-02-13T00:29:47&#43;08:00'>
+    <meta property="article:published_time" content='2022-04-22T00:29:47&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2020-02-13T00:29:47&#43;08:00'>
+    <meta property="article:modified_time" content='2022-04-22T00:29:47&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
-    <meta name="description" content="改用最快的静态blog-hugo">
+    <meta name="description" content="shell 13问">
         
     <meta name="author" content="Anttu">
-    <meta property="og:url" content="https://anTtutu.github.io/post/2020-02-13-hugo_blog/">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2022-04-22-shell_question/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -141,24 +141,26 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#1下载hugo">1、下载hugo</a></li>
-    <li><a href="#2选择主题">2、选择主题</a></li>
-    <li><a href="#3创建第一篇blog文章并把jekyll下的markdown记录都复制过来">3、创建第一篇blog文章，并把jekyll下的markdown记录都复制过来</a></li>
-    <li><a href="#4配置configtoml可以参考主题examplesite下的示例configtoml">4、配置config.toml，可以参考主题exampleSite下的示例config.toml</a></li>
-    <li><a href="#5新增本地查询归档关于">5、新增本地查询、归档、关于</a></li>
-    <li><a href="#6启动server">6、启动server</a></li>
-    <li><a href="#7启动后不表示全部配置完成还有需要增加留言">7、启动后不表示全部配置完成，还有需要增加留言</a>
+    <li><a href="#1为何叫做-shell">1、为何叫做 Shell？</a></li>
+    <li><a href="#2shell-promptps1与-carriage-returncr的关系">2、Shell prompt（PS1）与 Carriage Return（CR）的关系？</a></li>
+    <li><a href="#3别人echo你也echo试问-echo-知多少">3、别人echo，你也echo，试问 echo 知多少?</a></li>
+    <li><a href="#4双引号与单引号有什么区别">4、双引号&quot;&ldquo;与单引号&rsquo;&lsquo;有什么区别?</a></li>
+    <li><a href="#5varvalue-export-前后差在哪">5、var=value? export 前后差在哪？</a></li>
+    <li><a href="#6exec-跟-source-差在哪">6、exec 跟 source 差在哪？</a></li>
+    <li><a href="#7--与---差在哪">7、( ) 与 { } 差在哪？</a></li>
+    <li><a href="#8-与--还有--差在哪">8、$(()) 与 $() 还有 ${} 差在哪？</a></li>
+    <li><a href="#9-与--区别在哪">9、$@ 与 $* 区别在哪？</a></li>
+    <li><a href="#10-与--差在哪">10、&amp;&amp; 与 || 差在哪？</a>
       <ul>
-        <li><a href="#首先选择一个仓库作为issue提交的落地点">首先选择一个仓库作为issue提交的落地点</a></li>
-        <li><a href="#在github安装utterances插件app">在github安装utterances插件app</a></li>
+        <li><a href="#101test命令有两种形式">10.1、test命令有两种形式</a></li>
+        <li><a href="#102bash的test目前支持三种测试对象">10.2、bash的test目前支持三种测试对象</a></li>
+        <li><a href="#103当-expression-为真是返回-0true-否则返回-非0false">10.3、当 expression 为真是返回 0（true） ，否则返回 非0（false）</a></li>
+        <li><a href="#104先替换变量再比较">10.4、先替换变量再比较</a></li>
       </ul>
     </li>
-    <li><a href="#8大功告成可以体验hugo-blog了">8、大功告成，可以体验hugo blog了</a></li>
-    <li><a href="#9补充">9、补充</a></li>
+    <li><a href="#11-与--差在哪">11、&gt; 与 &lt; 差在哪？</a></li>
+    <li><a href="#12你要if还是case呢">12、你要if还是case呢？</a></li>
+    <li><a href="#13for-what-while与until差在哪">13、for what? while与until差在哪？</a></li>
   </ul>
 </nav>
     </div>
@@ -196,20 +198,18 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title">改用最快的静态blog-hugo</h1>
+            <h1 class="post-title">shell 13问</h1>
         </header>
         <date class="post-meta meta-date">
-            2020年2月13日
+            2022年4月22日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/blog'>blog</a></span>
+            <span class="meta-category"><a href='/categories/linux'>linux</a></span>
             
-            <span class="meta-category"><a href='/categories/hugo'>hugo</a></span>
-            
-            <span class="meta-category"><a href='/categories/go'>go</a></span>
+            <span class="meta-category"><a href='/categories/shell'>shell</a></span>
             
         </div>
         
@@ -227,57 +227,70 @@
         </div>
         
         <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>之前用的jekyll搭建的git pages静态blog，今年因为疫情，在家学习go，在bilibili看golang的学习视频，其中发现<a href="https://www.liwenzhou.com">李文周</a>讲解的golang学习视频不错，从头学习了基础，发现之前直接拿着数据类型和流程控制看语法有很多不足，一些基础的东西忽略了</p>
-<p>发现李文周的blog是hugo的，速度好快，尝试了解，本地搭建开发环境，测试使用后，效果真的不错，想都不想，决定迁移hugo作为静态blog</p>
-<h1 id="一准备本地开发环境">一、准备本地开发环境</h1>
-<h2 id="1下载hugo">1、下载hugo</h2>
-<p>我个人使用的Mac，因此决定用homebrew安装，查了下hugo的官方资料也是建议用brew命令安装，结果坑爹。。。网速也马马虎虎不是特别快也不慢，完全下载不下来啊。。。</p>
-<p>改用git clone，稍微好一点，但是发现依赖几十个工程，下载老是失败，只好进hugo的官方github下载二进制文件放到$GOPATH/bin<br>
-下载地址：<a href="https://github.com/gohugoio/hugo/releases">https://github.com/gohugoio/hugo/releases</a></p>
-<p>因为我的是Mac所以选择当前的最新版本0.64.1 MacOS 64位版本，windows同理，选择对应的操作系统位数版本，放到$GOPATH/bin环境变量下即可</p>
-<p>验证下是否配置成功，以本人的Mac为例，出现版本号表示配置成功</p>
+            <h2 id="1为何叫做-shell">1、为何叫做 Shell？</h2>
+<p>我们知道计算机的运作离不开硬件，但却无法直接操作硬件，硬件的驱动只能通过一种称之为“操作系统（OS，Opertating System）的软件来管控。Linux 严格来说是一个操作系统（OS）。</p>
+<p>使用者没有办法直接操作 Kernel，而是通过 Kernel 的“外壳”程序，也就是所谓的 Shell 来与 Kernel 沟通。Shell 是一个使用者与系统的交互界面（Interface），只能通过命令行（Command line）来使用系统来完成工作。因此 Shell 最简单的定义就是：命令解译器（Command Interpreter）</p>
+<ul>
+<li>将使用者的命令翻译给内核处理；</li>
+<li>同时，将内核处理结果翻译给使用者。</li>
+</ul>
+<p>不同的 OS 使用不同的 Kernel；同一个 kernel 之上，也可以使用不同的 Shell，常见的 Shell 有sh、bash、csh、ksh 等</p>
+<h2 id="2shell-promptps1与-carriage-returncr的关系">2、Shell prompt（PS1）与 Carriage Return（CR）的关系？</h2>
+<p>成功登录一个 Shell 终端后，光标左边部分称之为提示符 Prompt，通常一般用户使用$，管理员用户使用#</p>
+<ul>
+<li>Shell Prompt：可以输入命令了，键入命令后，直到读进 CR（Carriage Return）字符为止</li>
+<li>Carriage Return：可以执行命令了</li>
+</ul>
+<blockquote>
+<p>若从技术的细节来看，Shell 会依据 IFS（Internal Field Seperator）将 Command line 所输入的文字拆解为”字段”（word/field）。然后再针对特殊字符（meta）先作处理，最后重组整行command line。</p>
+</blockquote>
+<h2 id="3别人echo你也echo试问-echo-知多少">3、别人echo，你也echo，试问 echo 知多少?</h2>
+<p>echo 将 argument送到标准输出（stdout），通常显示在屏幕</p>
+<ul>
+<li>stdin 标准输入</li>
+<li>stdout 标准输出</li>
+<li>stderr 标准错误输出</li>
+</ul>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt;hugo version
-</span></span><span style="display:flex;"><span>Hugo Static Site Generator v0.64.1-C327E75D darwin/amd64 BuildDate: 2020-02-09T20:46:36Z
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0086b3">echo</span> -n  <span style="color:#998;font-style:italic"># 取消换行符</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">echo</span> -e  <span style="color:#998;font-style:italic"># 启用反斜杠转译</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="2选择主题">2、选择主题</h2>
-<p>因为有hexo和jekyll的静态blog经验，知道主题很重要，进了hugo英文官网和查找huguo漂亮简洁的主题，找到了maupassant主题，但是查找发现git上很久没更新了，再找资料发现<a href="https://www.flysnow.org/2018/07/29/from-hexo-to-hugo.html">飞雪无情</a>针对该主题进行了优化，对比后觉得优化的点我也需要，就下载优化版的主题。</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt;hugo new site hugo_blog
-</span></span><span style="display:flex;"><span>&gt;cd hugo_blog
-</span></span><span style="display:flex;"><span>&gt;git clone https://github.com/flysnow-org/maupassant-hugo /theme/maupassant
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="3创建第一篇blog文章并把jekyll下的markdown记录都复制过来">3、创建第一篇blog文章，并把jekyll下的markdown记录都复制过来</h2>
+</div><h2 id="4双引号与单引号有什么区别">4、双引号&quot;&ldquo;与单引号&rsquo;&lsquo;有什么区别?</h2>
+<ul>
+<li>hard quote：&rsquo;&rsquo;（单引号），关闭所有引用</li>
+<li>soft quote：&quot;&quot;（双引号），保留$引用</li>
+</ul>
+<h2 id="5varvalue-export-前后差在哪">5、var=value? export 前后差在哪？</h2>
+<ul>
+<li>变量定义：name=value，等号左右两边不能使用分隔符。</li>
+<li>变量替换：echo ${name}</li>
+<li>export变量：export name=value，使变量成为环境变量</li>
+</ul>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt;hugo new post/first.md
-</span></span><span style="display:flex;"><span>&gt;rm -rf /***/hugo_blog/content/post/first.md
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>&gt;cp *.md /***/hugo_blog/content/post
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 本地变量</span>
+</span></span><span style="display:flex;"><span><span style="color:#008080">A</span><span style="color:#000;font-weight:bold">=</span>B
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 取消变量</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">unset</span> A
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 环境变量export A=B</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>调整下导入的markdown记录的头部参数，以前不支持的语法去掉，新增的语法添加
-类似：</p>
+</div><h2 id="6exec-跟-source-差在哪">6、exec 跟 source 差在哪？</h2>
+<p>环境变量只能从父进程到子进程单向传递。换句话说：在子进程中环境如何变更，均不会影响父进程的环境。</p>
+<p>当我们执行一个shell script时，其实是先产生一个sub-shell的子进程， 然后sub-shell再去产生命令行的子进程。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -286,22 +299,22 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>---
-</span></span><span style="display:flex;"><span>title: <span style="color:#d14">&#34;改用最快的静态blog-hugo&#34;</span>
-</span></span><span style="display:flex;"><span>date: 2020-02-13T00:29:47+08:00
-</span></span><span style="display:flex;"><span>tags: <span style="color:#000;font-weight:bold">[</span> <span style="color:#d14">&#34;blog&#34;</span>, <span style="color:#d14">&#34;hugo&#34;</span> <span style="color:#000;font-weight:bold">]</span>
-</span></span><span style="display:flex;"><span>categories: <span style="color:#000;font-weight:bold">[</span> <span style="color:#d14">&#34;blog&#34;</span>, <span style="color:#d14">&#34;hugo&#34;</span> <span style="color:#000;font-weight:bold">]</span>
-</span></span><span style="display:flex;"><span>keywords: <span style="color:#000;font-weight:bold">[</span> <span style="color:#d14">&#34;blog&#34;</span>, <span style="color:#d14">&#34;hugo&#34;</span> <span style="color:#000;font-weight:bold">]</span>
-</span></span><span style="display:flex;"><span>toc: <span style="color:#0086b3">true</span>
-</span></span><span style="display:flex;"><span>---
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 创建子shell执行脚本</span>
+</span></span><span style="display:flex;"><span>./1.sh
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 当前shell执行</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">source</span> 1.sh
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 当前shell执行后退出</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">exec</span> 1.sh
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="4配置configtoml可以参考主题examplesite下的示例configtoml">4、配置config.toml，可以参考主题exampleSite下的示例config.toml</h2>
-<p>经过阅读官方hugo和飞雪无情的模板说明文档，给config.toml新增需要的配置参数</p>
+</div><h2 id="7--与---差在哪">7、( ) 与 { } 差在哪？</h2>
+<ul>
+<li>( )将 command group 置于 sub-shell 执行</li>
+<li>{ }则是在同一个shell内完成</li>
+</ul>
+<h2 id="8-与--还有--差在哪">8、$(()) 与 $() 还有 ${} 差在哪？</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -366,150 +379,138 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">81
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">82
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">83
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">84
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">85
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">86
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">87
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">88
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">89
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">90
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">91
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">92
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">93
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">94
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">95
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">96
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">97
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">98
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">99
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#008080">baseURL</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;https://anTtutu.github.io/&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">languageCode</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;zh-CN&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">defaultContentLanguage</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;zh-cn&#34;</span>                          <span style="color:#998;font-style:italic"># en / zh-cn / ... (This field determines which i18n file to use)</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">title</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;Anttu&#39;s Blog&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">theme</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;maupassant&#34;</span>                                      <span style="color:#998;font-style:italic"># 主题</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">summaryLength</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">140</span>                                        <span style="color:#998;font-style:italic"># 默认是70，显示文章摘要的长度</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">preserveTaxonomyNames</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>                                                      <span style="color:#998;font-style:italic"># 若为 false，`Getting Started` 这样的英文标签将会被转换为 `getting-started`</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">enableRobotsTXT</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">enableEmoji</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">enableGitInfo</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">false</span>     <span style="color:#998;font-style:italic"># use git commit log to generate lastmod record # 可根据 Git 中的提交生成最近更新记录。</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">disablePathToLower</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>                                 <span style="color:#998;font-style:italic"># 禁止将路径全部改为小写</span>
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># GA统计分析</span>
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#googleAnalytics = &#34;GA ID&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">hasCJKLanguage</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>     <span style="color:#998;font-style:italic"># has chinese/japanese/korean   # 自动检测是否包含 中文\日文\韩文</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">paginate</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">10</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">copyright</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;&#34;</span>            <span style="color:#998;font-style:italic"># default: author.name ↓        # 默认为下面配置的author.name</span>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 假设我们定义了一个变量为：</span>
+</span></span><span style="display:flex;"><span><span style="color:#008080">file</span><span style="color:#000;font-weight:bold">=</span>/dir1/dir2/dir3/my.file.txt
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 我们可以用 ${ } 分别替换获得不同的值：</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 一些全局开关，你也可以在每一篇内容的 front matter 中针对单篇内容关闭或开启某些功能，在 archetypes/default.md 查看更多信息。</span>
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># Some global options, you can also close or open something in front matter for a single post, see more information from `archetypes/default.md`.</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">toc</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>                                                                            <span style="color:#998;font-style:italic"># 是否开启目录</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">autoCollapseToc</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>    <span style="color:#998;font-style:italic"># Auto expand and collapse toc                              # 目录自动展开/折叠</span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">fancybox</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>           <span style="color:#998;font-style:italic"># see https://github.com/fancyapps/fancybox                 # 是否启用fancybox（图片可点击）</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 1. shell字符串的非贪婪(最小匹配)左删除</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>#*/<span style="color:#d14">}</span> <span style="color:#998;font-style:italic"># 拿掉第一条 / 及其左边的字符串：dir1/dir2/dir3/my.file.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 2. shell字符串的贪婪(最大匹配)左删除</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>##*/<span style="color:#d14">}</span> <span style="color:#998;font-style:italic"># 拿掉最后一条 / 及其左边的字符串：my.file.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>##*.<span style="color:#d14">}</span> <span style="color:#998;font-style:italic"># 拿掉最后一个 . 及其左边的字符串：txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 3. shell字符串的非贪婪(最小匹配)右删除：</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>%/*<span style="color:#d14">}</span> <span style="color:#998;font-style:italic"># 拿掉最后条 / 及其右边的字符串：/dir1/dir2/dir3</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>%.*<span style="color:#d14">}</span> <span style="color:#998;font-style:italic"># 拿掉最后一个 . 及其右边的字符串：/dir1/dir2/dir3/my.file</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 4. shell字符串的贪婪(最大匹配)右删除：</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>%%/*<span style="color:#d14">}</span> <span style="color:#998;font-style:italic"># 拿掉第一条 / 及其右边的字符串：(空值)</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>%%.*<span style="color:#d14">}</span> <span style="color:#998;font-style:italic"># 拿掉第一个 . 及其右边的字符串：/dir1/dir2/dir3/my</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>author<span style="color:#000;font-weight:bold">]</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">name</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;Anttu&#34;</span>
+</span></span><span style="display:flex;"><span>记忆的方法为：
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 是去掉左边(在键盘上 # 在 $ 之左边)</span>
+</span></span><span style="display:flex;"><span>% 是去掉右边<span style="color:#000;font-weight:bold">(</span>在键盘上 % 在 $ 之右边<span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>单一符号是最小匹配﹔两个符号是最大匹配。
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 5. shell字符串取子串：</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>:<span style="color:#008080">0</span>:<span style="color:#008080">5</span><span style="color:#d14">}</span>：提取最左边的 <span style="color:#099">5</span> 个字节：/dir1
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>:<span style="color:#008080">5</span>:<span style="color:#008080">5</span><span style="color:#d14">}</span>：提取第 <span style="color:#099">5</span> 个字节右边的连续 <span style="color:#099">5</span> 个字节：/dir2
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>sitemap<span style="color:#000;font-weight:bold">]</span>                 <span style="color:#998;font-style:italic"># essential                     # 必需</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">changefreq</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;weekly&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">priority</span> <span style="color:#000;font-weight:bold">=</span> 0.5
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">filename</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;sitemap.xml&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 6. shell字符串变量值的替换：</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>/dir/path<span style="color:#d14">}</span>：将第一个 dir 提换为 path：/path1/dir2/dir3/my.file.txt
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>//dir/path<span style="color:#d14">}</span>：将全部 dir 提换为 path：/path1/path2/path3/my.file.txt
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>params<span style="color:#000;font-weight:bold">]</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">author</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;Anttu&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">subtitle</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;一位Java开发者，喜欢研究技术，同时也在学习Golang和Python中，对服务器、Linux使用比较熟悉。欢迎添加技术交流QQ群：655158296&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">keywords</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">description</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;专注于IT互联网，包括但不限于Java、Go语言(golang)、Python、Bash等&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 7. ${}还可针对变量的不同状态(没设定、空值、非空值)进行赋值：</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>-my.file.txt<span style="color:#d14">}</span> ：假如 <span style="color:#008080">$file</span> 没有设定，则使用 my.file.txt 作传回值。<span style="color:#000;font-weight:bold">(</span>空值及非空值时不作处理<span style="color:#000;font-weight:bold">)</span> 
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span><span style="color:#000;font-weight:bold">:-</span><span style="color:#008080">my</span>.file.txt<span style="color:#d14">}</span> ：假如 <span style="color:#008080">$file</span> 没有设定或为空值，则使用 my.file.txt 作传回值。<span style="color:#000;font-weight:bold">(</span>非空值时不作处理<span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>+my.file.txt<span style="color:#d14">}</span> ：假如 <span style="color:#008080">$file</span> 设为空值或非空值，均使用 my.file.txt 作传回值。<span style="color:#000;font-weight:bold">(</span>没设定时不作处理<span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>:+my.file.txt<span style="color:#d14">}</span> ：若 <span style="color:#008080">$file</span> 为非空值，则使用 my.file.txt 作传回值。<span style="color:#000;font-weight:bold">(</span>没设定及空值时不作处理<span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>=my.file.txt<span style="color:#d14">}</span> ：若 <span style="color:#008080">$file</span> 没设定，则使用 my.file.txt 作传回值，同时将 <span style="color:#008080">$file</span> 赋值为 my.file.txt 。<span style="color:#000;font-weight:bold">(</span>空值及非空值时不作处理<span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>:=my.file.txt<span style="color:#d14">}</span> ：若 <span style="color:#008080">$file</span> 没设定或为空值，则使用 my.file.txt 作传回值，同时将 <span style="color:#008080">$file</span> 赋值为 my.file.txt 。<span style="color:#000;font-weight:bold">(</span>非空值时不作处理<span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>?my.file.txt<span style="color:#d14">}</span> ：若 <span style="color:#008080">$file</span> 没设定，则将 my.file.txt 输出至 STDERR。<span style="color:#000;font-weight:bold">(</span>空值及非空值时不作处理<span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">file</span>:?my.file.txt<span style="color:#d14">}</span> ：若 <span style="color:#008080">$file</span> 没设定或为空值，则将 my.file.txt 输出至 STDERR。<span style="color:#000;font-weight:bold">(</span>非空值时不作处理<span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#  googleAd = &#34;&#34;                                           # google广告</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">localSearch</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>                                      <span style="color:#998;font-style:italic"># 是否开启本地搜索</span>
+</span></span><span style="display:flex;"><span>tips:
+</span></span><span style="display:flex;"><span>以上的理解在于, 你一定要分清楚 <span style="color:#0086b3">unset</span> 与 null 及 non-null 这三种赋值状态.
+</span></span><span style="display:flex;"><span>一般而言, : 与 null 有关, 若不带 : 的话, null 不受影响, 若带 : 则连 null 也受影响.
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 8. 计算shell字符串变量的长度：${#var}</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${#</span><span style="color:#008080">var</span><span style="color:#d14">}</span> 可计算出变量值的长度：
+</span></span><span style="display:flex;"><span><span style="color:#d14">${#</span><span style="color:#008080">file</span><span style="color:#d14">}</span> 可得到 <span style="color:#099">27</span> ，因为 /dir1/dir2/dir3/my.file.txt 刚好是 <span style="color:#099">27</span> 个字节...
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#998;font-style:italic"># paginate of archives, tags and categories             # 归档、标签、分类每页显示的文章数目，建议修改为一个较大的值</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">archivePaginate</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">50</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 9. bash数组(array)的处理方法</span>
+</span></span><span style="display:flex;"><span>数组:
+</span></span><span style="display:flex;"><span><span style="color:#008080">A</span><span style="color:#000;font-weight:bold">=(</span>a b c d<span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>引用数组:
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">A</span>[@]<span style="color:#d14">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">A</span>[*]<span style="color:#d14">}</span>
+</span></span><span style="display:flex;"><span>访问数组成员
+</span></span><span style="display:flex;"><span><span style="color:#d14">${</span><span style="color:#008080">A</span>[0]<span style="color:#d14">}</span>
+</span></span><span style="display:flex;"><span>计算数组长度
+</span></span><span style="display:flex;"><span><span style="color:#d14">${#</span><span style="color:#008080">A</span>[@]<span style="color:#d14">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">${#</span><span style="color:#008080">A</span>[*]<span style="color:#d14">}</span>
+</span></span><span style="display:flex;"><span>数组重新赋值
+</span></span><span style="display:flex;"><span>A<span style="color:#000;font-weight:bold">[</span>2<span style="color:#000;font-weight:bold">]=</span>xyz
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#998;font-style:italic"># show &#39;xx Posts In Total&#39; in archive page ?            # 是否在归档页显示文章的总数</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">showArchiveCount</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span> <span style="color:#998;font-style:italic"># 代码高亮</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>markup<span style="color:#000;font-weight:bold">]</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">[</span>markup.highlight<span style="color:#000;font-weight:bold">]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#008080">style</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;github&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 分类</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>menu<span style="color:#000;font-weight:bold">]</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">[[</span>menu.main<span style="color:#000;font-weight:bold">]]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#008080">identifier</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;archives&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#008080">name</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;归档&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#008080">url</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;/archives/&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#008080">weight</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">[[</span>menu.main<span style="color:#000;font-weight:bold">]]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#008080">identifier</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;tags&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#008080">name</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;分类&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#008080">url</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;/tags/&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#008080">weight</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">3</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">[[</span>menu.main<span style="color:#000;font-weight:bold">]]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#008080">identifier</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;about&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#008080">name</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;关于&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#008080">url</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;/about/&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#008080">weight</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">4</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># Github Issue的utteranc评论系统</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>params.utteranc<span style="color:#000;font-weight:bold">]</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#0086b3">enable</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">repo</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;anTtutu/anTtutu.github.io&#34;</span>     <span style="color:#998;font-style:italic"># 存储评论的Repo，格式为 owner/repo</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">issueTerm</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;pathname&#34;</span>                 <span style="color:#998;font-style:italic"># 表示你选择以那种方式让github issue的评论和你的文章关联。</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">theme</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;github-light&#34;</span>                 <span style="color:#998;font-style:italic"># 样式主题，有github-light和github-dark两种</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 不算子页面统计</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>params.busuanzi<span style="color:#000;font-weight:bold">]</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#0086b3">enable</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">siteUV</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">sitePV</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">pagePV</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">true</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 版权信息</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>params.cc<span style="color:#000;font-weight:bold">]</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">name</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">link</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 流程图</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>params.flowchartDiagrams<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># see https://blog.olowolo.com/example-site/post/js-flowchart-diagrams/</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#0086b3">enable</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">false</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">options</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 序列图</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>params.sequenceDiagrams<span style="color:#000;font-weight:bold">]</span> <span style="color:#998;font-style:italic"># see https://blog.olowolo.com/example-site/post/js-sequence-diagrams/</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#0086b3">enable</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">false</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#008080">options</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;&#34;</span>                          <span style="color:#998;font-style:italic"># default: &#34;{theme: &#39;simple&#39;}&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 10.$(( ))是用来做整数运算的 </span>
+</span></span><span style="display:flex;"><span><span style="color:#008080">a</span><span style="color:#000;font-weight:bold">=</span>5;<span style="color:#008080">b</span><span style="color:#000;font-weight:bold">=</span>7;<span style="color:#008080">c</span><span style="color:#000;font-weight:bold">=</span>2;
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">echo</span> <span style="color:#000;font-weight:bold">$((</span> a <span style="color:#000;font-weight:bold">+</span> b <span style="color:#000;font-weight:bold">*</span> c<span style="color:#000;font-weight:bold">))</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="5新增本地查询归档关于">5、新增本地查询、归档、关于</h2>
-<p>本地查询参考下面创建目录的index文件并修改成只保留如下参数<br>
-归档参考下面创建目录的index文件并修改成并只保留如下参数<br>
-关于是个人介绍，自由发挥</p>
+</div><h2 id="9-与--区别在哪">9、$@ 与 $* 区别在哪？</h2>
+<ul>
+<li>&ldquo;$@&ldquo;则可得到 “p1” “p2 p3” “p4” 这三个不同的词段</li>
+<li>&ldquo;$*&ldquo;则可得到 “p1 p2 p3 p4” 这一整串单一的词段</li>
+</ul>
+<h2 id="10-与--差在哪">10、&amp;&amp; 与 || 差在哪？</h2>
+<h3 id="101test命令有两种形式">10.1、test命令有两种形式</h3>
+<ul>
+<li>test expression</li>
+<li>[ expression ]</li>
+</ul>
+<h3 id="102bash的test目前支持三种测试对象">10.2、bash的test目前支持三种测试对象</h3>
+<ul>
+<li>string：字符串</li>
+<li>integer：整数</li>
+<li>file：文件</li>
+</ul>
+<h3 id="103当-expression-为真是返回-0true-否则返回-非0false">10.3、当 expression 为真是返回 0（true） ，否则返回 非0（false）</h3>
+<ul>
+<li>command1 &amp;&amp; command2  command2 只有在 command1 的RV为0（True）的条件下执行。</li>
+<li>command1 || command2  command2只有在command1的RV为非0(False)的条件下执行。</li>
+</ul>
+<h3 id="104先替换变量再比较">10.4、先替换变量再比较</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#008080">A</span><span style="color:#000;font-weight:bold">=</span>123<span style="color:#000;font-weight:bold">[</span> -n <span style="color:#d14">&#34;</span><span style="color:#008080">$A</span><span style="color:#d14">&#34;</span> <span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">&amp;&amp;</span> <span style="color:#000;font-weight:bold">([</span> <span style="color:#d14">&#34;</span><span style="color:#008080">$A</span><span style="color:#d14">&#34;</span> -lt <span style="color:#099">100</span> <span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">||</span> <span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;too big&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#0086b3">unset</span> A
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="11-与--差在哪">11、&gt; 与 &lt; 差在哪？</h2>
+<ul>
+<li>0: Standard Input（STDIN）</li>
+<li>1: Standard Output （STDOUT）</li>
+<li>2: Standard Error Output（STDERR）</li>
+</ul>
+<p>我们可用 &lt; 来改变读进的数据信道（stdin），使之从指定的档案读进。</p>
+<p>我们可用 &gt; 来改变送出的数据信道（stdout, stderr），使之输出到指定的档案。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls my.file no.such.file 1&gt; file.out 2&gt;file.err
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 2&gt;&amp;1 就是将stderr并进stdout做输出</span>
+</span></span><span style="display:flex;"><span>ls my.file no.such.file 1&gt; file.out 2&gt;&amp;<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># /dev/null 空</span>
+</span></span><span style="display:flex;"><span>ls my.file no.such.file &gt;/dev/null 2&gt;&amp;<span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat &lt; file &gt; file
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 在 IO Redirection 中，stdout 与 stderr 的管道会先准备好，才会从 stdin 读进资料。</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 也就是说，在上例中，&gt; file 会先将 file 清空，然后才读进 &lt; file ， </span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 但这时候档案已经被清空了，因此就变成读不进任何数据了</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="12你要if还是case呢">12、你要if还是case呢？</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -530,74 +531,80 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt;hugo new search/index.md
-</span></span><span style="display:flex;"><span>&gt;hugo new archives/index.md
-</span></span><span style="display:flex;"><span>&gt;hugo new about/index.md
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># if</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">echo</span> -n <span style="color:#d14">&#34;Do you want to continue?(Yes/No):&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">read</span> YN
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">[</span> <span style="color:#d14">&#34;</span><span style="color:#008080">$YN</span><span style="color:#d14">&#34;</span><span style="color:#000;font-weight:bold">=</span>Y -o <span style="color:#d14">&#34;</span><span style="color:#008080">$YN</span><span style="color:#d14">&#34;</span><span style="color:#000;font-weight:bold">=</span>y -o <span style="color:#d14">&#34;</span><span style="color:#008080">$YN</span><span style="color:#d14">&#34;</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;Yes&#34;</span> -o <span style="color:#d14">&#34;</span><span style="color:#008080">$YN</span><span style="color:#d14">&#34;</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;yes&#34;</span> -o <span style="color:#d14">&#34;</span><span style="color:#008080">$YN</span><span style="color:#d14">&#34;</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;YES&#34;</span><span style="color:#000;font-weight:bold">]</span>;<span style="color:#000;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;continue&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">exit</span> <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">fi</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>&gt;vi /***/hugo_blog/content/search/index.md
-</span></span><span style="display:flex;"><span>---
-</span></span><span style="display:flex;"><span>title: <span style="color:#d14">&#34;搜索&#34;</span>
-</span></span><span style="display:flex;"><span>description: <span style="color:#d14">&#34;搜索页面&#34;</span>
-</span></span><span style="display:flex;"><span>type: <span style="color:#d14">&#34;search&#34;</span>
-</span></span><span style="display:flex;"><span>---
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>&gt;vi /***/huguo_blog/content/archives/index.md
-</span></span><span style="display:flex;"><span>---
-</span></span><span style="display:flex;"><span>title: <span style="color:#d14">&#34;归档&#34;</span>
-</span></span><span style="display:flex;"><span>description: <span style="color:#d14">&#34;归档页面&#34;</span>
-</span></span><span style="display:flex;"><span>type: archives
-</span></span><span style="display:flex;"><span>---
-</span></span><span style="display:flex;"><span>content/archives/index.md
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># case</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">echo</span> -n <span style="color:#d14">&#34;Do you want to continue?(Yes/No):&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">read</span> YN
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">case</span> <span style="color:#d14">&#34;</span><span style="color:#008080">$YN</span><span style="color:#d14">&#34;</span> in
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>Yy<span style="color:#000;font-weight:bold">]</span>|<span style="color:#000;font-weight:bold">[</span>Yy<span style="color:#000;font-weight:bold">][</span>Ee<span style="color:#000;font-weight:bold">][</span>Ss<span style="color:#000;font-weight:bold">])</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;continue&#34;</span>
+</span></span><span style="display:flex;"><span>;;
+</span></span><span style="display:flex;"><span>*<span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">exit</span> <span style="color:#099">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">esac</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="6启动server">6、启动server</h2>
-<p>启动server并测试，测试地址: <a href="http://127.0.0.1:1313">http://127.0.0.1:1313</a></p>
+</div><h2 id="13for-what-while与until差在哪">13、for what? while与until差在哪？</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo server --theme<span style="color:#000;font-weight:bold">=</span>maupassant --buildDrafts
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># for</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">((</span><span style="color:#008080">i</span><span style="color:#000;font-weight:bold">=</span>1;i&lt;<span style="color:#000;font-weight:bold">=</span>10;i++<span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;num is </span><span style="color:#008080">$i</span><span style="color:#d14">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># while</span>
+</span></span><span style="display:flex;"><span><span style="color:#008080">num</span><span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">[</span> <span style="color:#d14">&#34;</span><span style="color:#008080">$num</span><span style="color:#d14">&#34;</span> -le <span style="color:#099">10</span> <span style="color:#000;font-weight:bold">]</span>; <span style="color:#000;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;num is </span><span style="color:#008080">$num</span><span style="color:#d14">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#008080">num</span><span style="color:#000;font-weight:bold">=</span><span style="color:#000;font-weight:bold">$((</span><span style="color:#008080">$num</span> <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">1</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># until</span>
+</span></span><span style="display:flex;"><span><span style="color:#008080">num</span><span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">until</span> <span style="color:#000;font-weight:bold">[</span> <span style="color:#d14">&#34;</span><span style="color:#008080">$num</span><span style="color:#d14">&#34;</span> -gt <span style="color:#099">10</span> <span style="color:#000;font-weight:bold">]</span>; <span style="color:#000;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;num is </span><span style="color:#008080">$num</span><span style="color:#d14">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#008080">num</span><span style="color:#000;font-weight:bold">=</span><span style="color:#000;font-weight:bold">$((</span><span style="color:#008080">$nu</span> <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">1</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">done</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="7启动后不表示全部配置完成还有需要增加留言">7、启动后不表示全部配置完成，还有需要增加留言</h2>
-<p>这里本人采用github issue的模板utterances作为评论系统(gitment、gitalk、utterances都可以，目前已知采用后2者多一点也简单)</p>
-<h3 id="首先选择一个仓库作为issue提交的落地点">首先选择一个仓库作为issue提交的落地点</h3>
-<p>因为我之前已经有jekyll + gitpages和gitment做过留言，所以不需要新创建仓库了。 仓库命名就是git pages所在的仓库anTtutu.github.io</p>
-<p>如果是首次搭建gitpages和issue采用留言系统，就首先在github上创建一个空仓库，如：anTtutu.github.io，并且初始化设置，仓库必须是Public，而不是私有的，这样我们的读者才可以查看以及发表评论</p>
-<h3 id="在github安装utterances插件app">在github安装utterances插件app</h3>
-<p>访问<a href="https://github.com/apps/utterances">utterances</a>应用程序 然后点击 Install 按钮进行安装。</p>
-<p>在这里可以选择可以关联的存储库，可以选择前一步确定的仓库，可以跟git pages一起也可以选全部，也可以独立，个人建议跟git pages一起比较好，关联比较强。gitpages作为blog也不会有人提issue。</p>
-<h2 id="8大功告成可以体验hugo-blog了">8、大功告成，可以体验hugo blog了</h2>
-<h2 id="9补充">9、补充</h2>
-<table>
-<thead>
-<tr>
-<th>日期</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2021-01-30</td>
-<td>发现hugo一个有趣的地方，如果新创建一个明天的日记，没法创建成功<br>如果手工复制修改日期是未来时间的，不会生成静态文件并且不展示</td>
-</tr>
-<tr>
-<td>2021-01-30</td>
-<td>表格&rsquo;-|-&lsquo;前一行不能放直接挨着表头介绍<br>比如说：A表&rsquo;-|-&rsquo;,就会挤在一堆，但是markdown预览模式正常，需要空一行才会表格展示正确</td>
-</tr>
-</tbody>
-</table>
-<p>表格换行展示
-
-        <img class="mx-auto" alt="" src="/posts/hugo/table.png" />   
-    
-表格不换行展示
-
-        <img class="mx-auto" alt="" src="/posts/hugo/table_err.png" />   
-    </p>
+</div><ul>
+<li>break 是结束 loop</li>
+<li>return 是结束 function</li>
+<li>exit 是结束 script/shell</li>
+</ul>
 
         </div>
 
@@ -605,7 +612,7 @@
 <div class="post-archive">
     <ul class="post-copyright">
         <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
-        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2020-02-13-hugo_blog/">https://anTtutu.github.io/post/2020-02-13-hugo_blog/</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2022-04-22-shell_question/">https://anTtutu.github.io/post/2022-04-22-shell_question/</a></li>
         <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
     </ul>
 </div>
@@ -619,15 +626,15 @@
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/2020-02-11-golang_study_01/">Golang学习笔记01 - 关键字和基础数据类型介绍</a></li>
+        <li><a href="/post/2022-04-02-spring_cloud_gateway/">SpringCloud GateWay的一些细节注意</a></li>
         
-        <li><a href="/post/2017-08-06-gitment/">给你的静态博客增加留言系统</a></li>
+        <li><a href="/post/2022-03-23-linux_backend_execute/">linux后台执行可用方式整理</a></li>
         
-        <li><a href="/post/2017-06-02-jekyll_ruby_blog/">jekyll搭建自己的静态blog</a></li>
+        <li><a href="/post/2022-03-05-redis_safe/">redis日常使用的一些建议</a></li>
         
-        <li><a href="/post/2020-01-07-redis_batch_import/">30W数据批量导入redis集群</a></li>
+        <li><a href="/post/2022-02-13-logrotate/">logrotate日志切割</a></li>
         
-        <li><a href="/post/2019-12-21-mysql_expansion/">mysql集群在线无损扩容</a></li>
+        <li><a href="/post/2022-02-07-spring_cli/">spring boot cli&amp;spring cloud cli简单介绍</a></li>
         
     </ul>
 </div>
@@ -635,15 +642,7 @@
 
         <div class="post-meta meta-tags">
             
-            <ul class="clearfix">
-                
-                <li><a href='/tags/blog'>blog</a></li>
-                
-                <li><a href='/tags/hugo'>hugo</a></li>
-                
-                <li><a href='/tags/go'>go</a></li>
-                
-            </ul>
+            没有标签
             
         </div>
     </article>
