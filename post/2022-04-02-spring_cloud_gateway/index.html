@@ -142,6 +142,17 @@
         <nav id="TableOfContents">
   <ul>
     <li><a href="#前言">前言</a></li>
+    <li><a href="#1理解-gateway-与-zuul-比较">1、理解 gateway 与 zuul 比较</a></li>
+    <li><a href="#2差异点">2、差异点</a>
+      <ul>
+        <li><a href="#21-filter过滤器">2.1 Filter（过滤器）</a></li>
+        <li><a href="#22-route路由">2.2 Route（路由）</a></li>
+        <li><a href="#23-predicate断言">2.3 Predicate（断言）</a></li>
+      </ul>
+    </li>
+    <li><a href="#3缺少一个-bean-的自动装配">3、缺少一个 bean 的自动装配</a></li>
+    <li><a href="#4引入-redission">4、引入 redission</a></li>
+    <li><a href="#5参考">5、参考</a></li>
   </ul>
 </nav>
     </div>
@@ -209,6 +220,131 @@
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
+<p>spring cloud 2.* 的路由用的是 gateway 方案，不再是 1.* 时代的 zuul 了，不过也带来了新问题，这里整理下近期优化 gateway 的鉴权带来的爬坑记录</p>
+<h2 id="1理解-gateway-与-zuul-比较">1、理解 gateway 与 zuul 比较</h2>
+<p>SpringCloud Gateway 是 Spring Cloud 的一个全新项目，该项目是基于 Spring 5.0，Spring Boot 2.0 和 Project Reactor 等技术开发的网关，它旨在为微服务架构提供一种简单有效的统一的 API 路由管理方式。</p>
+<p>SpringCloud Gateway 作为 Spring Cloud 生态系统中的网关，目标是替代 Zuul，在Spring Cloud 2.0以上版本中，没有对新版本的Zuul 2.0以上最新高性能版本进行集成，仍然还是使用的Zuul 2.0之前的非Reactor模式的老版本。而为了提升网关的性能，SpringCloud Gateway是基于WebFlux框架实现的，而WebFlux框架底层则使用了高性能的Reactor模式通信框架Netty。</p>
+<p>Spring Cloud Gateway 的目标，不仅提供统一的路由方式，并且基于 Filter 链的方式提供了网关基本的功能，例如：安全，监控/指标，和限流。</p>
+<h2 id="2差异点">2、差异点</h2>
+<p>SpringCloud官方，对SpringCloud Gateway 特征介绍如下：</p>
+<ul>
+<li>（1）基于 Spring Framework 5，Project Reactor 和 Spring Boot 2.0</li>
+<li>（2）集成 Hystrix 断路器</li>
+<li>（3）集成 Spring Cloud DiscoveryClient</li>
+<li>（4）Predicates 和 Filters 作用于特定路由，易于编写的 Predicates 和 Filters</li>
+<li>（5）具备一些网关的高级功能：动态路由、限流、路径重写</li>
+</ul>
+<p>从以上的特征来说，和Zuul的特征差别不大。SpringCloud Gateway和Zuul主要的区别，还是在底层的通信框架上。</p>
+<p>简单说明一下上文中的三个术语：</p>
+<h3 id="21-filter过滤器">2.1 Filter（过滤器）</h3>
+<p>和Zuul的过滤器在概念上类似，可以使用它拦截和修改请求，并且对上游的响应，进行二次处理。过滤器为org.springframework.cloud.gateway.filter.GatewayFilter类的实例。</p>
+<h3 id="22-route路由">2.2 Route（路由）</h3>
+<p>网关配置的基本组成模块，和Zuul的路由配置模块类似。一个Route模块由一个 ID，一个目标 URI，一组断言和一组过滤器定义。如果断言为真，则路由匹配，目标URI会被访问。</p>
+<h3 id="23-predicate断言">2.3 Predicate（断言）</h3>
+<p>这是一个 Java 8 的 Predicate，可以使用它来匹配来自 HTTP 请求的任何内容，例如 headers 或参数。断言的输入类型是一个 ServerWebExchange。</p>
+<h2 id="3缺少一个-bean-的自动装配">3、缺少一个 bean 的自动装配</h2>
+<p>gateway 里面采用采用了Feign组件调用接口进行JWT权限认证，报出如下错误</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>feign<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">codec</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">DecodeException</span><span style="color:#000;font-weight:bold">:</span> No qualifying bean of type 
+</span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span>org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">springframework</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">boot</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">autoconfigure</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">http</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">HttpMessageConverters</span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span>
+</span></span><span style="display:flex;"><span> available<span style="color:#000;font-weight:bold">:</span> expected at least 1 bean which qualifies as autowire candidate<span style="color:#000;font-weight:bold">.</span> Dependency annotations<span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">{</span><span style="color:#3c5d5d;font-weight:bold">@org.springframework.beans.factory.annotation.Autowired</span><span style="color:#000;font-weight:bold">(</span>required<span style="color:#000;font-weight:bold">=</span><span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">)}</span>
+</span></span><span style="display:flex;"><span>	at feign<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">AsyncResponseHandler</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">decode</span><span style="color:#000;font-weight:bold">(</span>AsyncResponseHandler<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>119<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">~[</span>feign<span style="color:#000;font-weight:bold">-</span>core<span style="color:#000;font-weight:bold">-</span>10<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">10</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">1</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">jar</span><span style="color:#000;font-weight:bold">:</span>na<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>	Suppressed<span style="color:#000;font-weight:bold">:</span> reactor<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">core</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">publisher</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">FluxOnAssembly$OnAssemblyException</span><span style="color:#000;font-weight:bold">:</span> 
+</span></span><span style="display:flex;"><span>Error has been observed at the following <span style="color:#900;font-weight:bold">site</span><span style="color:#000;font-weight:bold">(</span>s<span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">|</span>_ checkpoint <span style="color:#a61717;background-color:#e3d2d2">⇢</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">springframework</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">cloud</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">gateway</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">filter</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">WeightCalculatorWebFilter</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">[</span>DefaultWebFilterChain<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">|</span>_ checkpoint <span style="color:#a61717;background-color:#e3d2d2">⇢</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">springframework</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">boot</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">actuate</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">metrics</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">web</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">reactive</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">server</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">MetricsWebFilter</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">[</span>DefaultWebFilterChain<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">|</span>_ checkpoint <span style="color:#a61717;background-color:#e3d2d2">⇢</span> HTTP GET <span style="color:#d14">&#34;/***/***&#34;</span> <span style="color:#000;font-weight:bold">[</span>ExceptionHandlingWebHandler<span style="color:#000;font-weight:bold">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从报错信息来看，找不到装配的bean，尝试手动注入，代码如下：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@Bean</span>
+</span></span><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@ConditionalOnMissingBean</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">public</span> HttpMessageConverters <span style="color:#900;font-weight:bold">messageConverters</span><span style="color:#000;font-weight:bold">(</span>ObjectProvider<span style="color:#000;font-weight:bold">&lt;</span>HttpMessageConverter<span style="color:#000;font-weight:bold">&lt;?&gt;&gt;</span> converters<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">new</span> HttpMessageConverters<span style="color:#000;font-weight:bold">(</span>converters<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">orderedStream</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">collect</span><span style="color:#000;font-weight:bold">(</span>Collectors<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toList</span><span style="color:#000;font-weight:bold">()));</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4引入-redission">4、引入 redission</h2>
+<p>和常规引入Redisson非常相似，需要根据自己的spring-boot版本引入对应的Redisson版本，但是不一样的是，如果是spring cloud getway，使用webflux的话，那么需要排除Redisson包内部的spring-boot-start-web</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;groupId&gt;</span>org.redisson<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;artifactId&gt;</span>redisson-spring-boot-starter<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;version&gt;</span>3.14.0<span style="color:#000080">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;exclusions&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;exclusion&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;artifactId&gt;</span>spring-boot-starter-web<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;/exclusion&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;exclusion&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;groupId&gt;</span>org.redisson<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;artifactId&gt;</span>redisson-spring-data-23<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;/exclusion&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;/exclusions&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;groupId&gt;</span>org.redisson<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;artifactId&gt;</span>redisson-spring-data-22<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;version&gt;</span>3.14.0<span style="color:#000080">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="5参考">5、参考</h2>
+<p>gateway: <a href="https://www.cnblogs.com/crazymakercircle/p/11704077.html">https://www.cnblogs.com/crazymakercircle/p/11704077.html</a><br>
+Feign: <a href="https://blog.csdn.net/CharlesZKQ/article/details/112213110">https://blog.csdn.net/CharlesZKQ/article/details/112213110</a><br>
+Redisson: <a href="https://blog.csdn.net/u013658328/article/details/112789307">https://blog.csdn.net/u013658328/article/details/112789307</a></p>
 
         </div>
 
