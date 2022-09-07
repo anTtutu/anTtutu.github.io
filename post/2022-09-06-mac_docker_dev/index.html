@@ -150,30 +150,32 @@
       </ul>
     </li>
     <li><a href="#4docker的镜像存储位置">4、docker的镜像存储位置</a></li>
-    <li><a href="#5准备">5、准备</a></li>
-    <li><a href="#5查询mysql镜像的所有tags">5、查询mysql镜像的所有tags</a></li>
-    <li><a href="#6安装mysql需要的tags">6、安装mysql需要的tags</a></li>
-    <li><a href="#7启动mysql容器">7、启动mysql容器</a></li>
-    <li><a href="#8停止mysql容器">8、停止mysql容器</a></li>
-    <li><a href="#9启动mysql容器">9、启动mysql容器</a></li>
-    <li><a href="#10进入mysql容器内部">10、进入mysql容器内部</a></li>
-    <li><a href="#11查询redis镜像的所有tags">11、查询redis镜像的所有tags</a></li>
-    <li><a href="#12安装redis需要的tags">12、安装redis需要的tags</a></li>
-    <li><a href="#13配置redisconf">13、配置redis.conf</a></li>
-    <li><a href="#14启动redis容器">14、启动redis容器</a>
+    <li><a href="#5准备工作">5、准备工作</a></li>
+    <li><a href="#6准备脚本">6、准备脚本</a></li>
+    <li><a href="#7查询mysql镜像的所有tags">7、查询mysql镜像的所有tags</a></li>
+    <li><a href="#8安装mysql需要的tags">8、安装mysql需要的tags</a></li>
+    <li><a href="#9配置mycnf">9、配置my.cnf</a></li>
+    <li><a href="#10启动mysql容器">10、启动mysql容器</a></li>
+    <li><a href="#11停止mysql容器">11、停止mysql容器</a></li>
+    <li><a href="#12启动mysql容器">12、启动mysql容器</a></li>
+    <li><a href="#13进入mysql容器内部">13、进入mysql容器内部</a></li>
+    <li><a href="#14查询redis镜像的所有tags">14、查询redis镜像的所有tags</a></li>
+    <li><a href="#15安装redis需要的tags">15、安装redis需要的tags</a></li>
+    <li><a href="#16配置redisconf">16、配置redis.conf</a></li>
+    <li><a href="#17启动redis容器">17、启动redis容器</a>
       <ul>
         <li></li>
       </ul>
     </li>
-    <li><a href="#15起停redis容器">15、起停redis容器</a></li>
-    <li><a href="#16进入redis容器内部">16、进入redis容器内部</a></li>
-    <li><a href="#17查询mongo镜像的所有tags">17、查询mongo镜像的所有tags</a></li>
-    <li><a href="#18安装mongo需要的tags">18、安装mongo需要的tags</a></li>
-    <li><a href="#19配置mongodconf">19、配置mongod.conf</a></li>
-    <li><a href="#20启动mongo容器">20、启动mongo容器</a></li>
-    <li><a href="#21起停mongo容器">21、起停mongo容器</a></li>
-    <li><a href="#22进入mongo容器内部">22、进入mongo容器内部</a></li>
-    <li><a href="#23结语">23、结语</a></li>
+    <li><a href="#18起停redis容器">18、起停redis容器</a></li>
+    <li><a href="#19进入redis容器内部">19、进入redis容器内部</a></li>
+    <li><a href="#20查询mongo镜像的所有tags">20、查询mongo镜像的所有tags</a></li>
+    <li><a href="#21安装mongo需要的tags">21、安装mongo需要的tags</a></li>
+    <li><a href="#22配置mongodconf">22、配置mongod.conf</a></li>
+    <li><a href="#23启动mongo容器">23、启动mongo容器</a></li>
+    <li><a href="#24起停mongo容器">24、起停mongo容器</a></li>
+    <li><a href="#25进入mongo容器内部">25、进入mongo容器内部</a></li>
+    <li><a href="#26结语">26、结语</a></li>
   </ul>
 </nav>
     </div>
@@ -361,7 +363,63 @@
 </span></span><span style="display:flex;"><span>/Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Library/Containers/com.docker.docker/Data/vms/0/data/Docker.raw
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="5准备">5、准备</h2>
+</div><h2 id="5准备工作">5、准备工作</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># docker script</span>
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/shell
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># mysql</span>
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql/config
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql/data
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql/log
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># redis</span>
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/redis
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/redis/config
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/redis/data
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/redis/log
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># mongo</span>
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/config
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/data
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/log
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 复制时区文件，解决mysql镜像容器运行时区是0问题</span>
+</span></span><span style="display:flex;"><span>cp /etc/localtime /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 1、my.cnf直接参考步骤9创建并写入关键参数配置</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 2、下载redis.7版本包，提取redis.conf，然后参考步骤16修改配置</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 3、mongod.conf直接参考步骤22创建并写入关键参数配置</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="6准备脚本">6、准备脚本</h2>
+<p>docker-show-repo-tag.sh</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -388,31 +446,31 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># docker script</span>
-</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/shell
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># mysql</span>
-</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql
-</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql/config
-</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql/data
-</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql/log
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># redis</span>
-</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/redis
-</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/redis/config
-</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/redis/data
-</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/redis/log
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># mongo</span>
-</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo
-</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/config
-</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/data
-</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/log
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 用 v2接口进行解析，需要安装bash的json库</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 安装支持bash的json库-jq</span>
+</span></span><span style="display:flex;"><span>brew install jq
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 复制时区文件</span>
-</span></span><span style="display:flex;"><span>cp /etc/localtime /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql/
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 脚本内容如下：</span>
+</span></span><span style="display:flex;"><span><span style="color:#008080">repo_url</span><span style="color:#000;font-weight:bold">=</span>https://registry.hub.docker.com/v2/repositories/library
+</span></span><span style="display:flex;"><span><span style="color:#008080">image_name</span><span style="color:#000;font-weight:bold">=</span><span style="color:#008080">$1</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 下载redis.conf</span>
+</span></span><span style="display:flex;"><span>curl -L -s <span style="color:#d14">${</span><span style="color:#008080">repo_url</span><span style="color:#d14">}</span>/<span style="color:#d14">${</span><span style="color:#008080">image_name</span><span style="color:#d14">}</span>/tags?page_size<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1024</span> | jq <span style="color:#d14">&#39;.results[][&#34;name&#34;]&#39;</span> | sed <span style="color:#d14">&#39;s/\&#34;//g&#39;</span> | sort -u
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 下面步骤中提到的脚本也可以搜集整理在这里，其他脚本</span>
+</span></span><span style="display:flex;"><span>ls -lar
+</span></span><span style="display:flex;"><span>total <span style="color:#099">32</span>
+</span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">314</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 16:27 docker-show-repo-tag.sh
+</span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">406</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 20:35 docker-redis-7.0-run.sh
+</span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">572</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 19:36 docker-mysql-8.0-run.sh
+</span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">469</span>  <span style="color:#099">9</span>  <span style="color:#099">7</span> 00:58 docker-mongo-6.0-run.sh
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#099">7</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">224</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 20:00 ..
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#099">6</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">192</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 21:12 .
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 给700权限</span>
+</span></span><span style="display:flex;"><span>chmod <span style="color:#099">700</span> *.sh
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="5查询mysql镜像的所有tags">5、查询mysql镜像的所有tags</h2>
+</div><h2 id="7查询mysql镜像的所有tags">7、查询mysql镜像的所有tags</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
@@ -623,7 +681,7 @@
 </span></span><span style="display:flex;"><span>oracle
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="6安装mysql需要的tags">6、安装mysql需要的tags</h2>
+</div><h2 id="8安装mysql需要的tags">8、安装mysql需要的tags</h2>
 <p>以mysql 8.0举例</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -633,7 +691,26 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker pull mysql:8.0
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="7启动mysql容器">7、启动mysql容器</h2>
+</div><h2 id="9配置mycnf">9、配置my.cnf</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>client<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>default-character-set<span style="color:#000;font-weight:bold">=</span>utf8mb4
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>mysqld<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#008080">user</span><span style="color:#000;font-weight:bold">=</span>mysql
+</span></span><span style="display:flex;"><span>character-set-server<span style="color:#000;font-weight:bold">=</span>utf8mb4
+</span></span><span style="display:flex;"><span><span style="color:#008080">default_authentication_plugin</span><span style="color:#000;font-weight:bold">=</span>mysql_native_password
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="10启动mysql容器">10、启动mysql容器</h2>
 <p>提前准备一些参数</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -734,7 +811,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="8停止mysql容器">8、停止mysql容器</h2>
+<h2 id="11停止mysql容器">11、停止mysql容器</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -755,7 +832,7 @@
 </span></span><span style="display:flex;"><span>b055811ce23c
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="9启动mysql容器">9、启动mysql容器</h2>
+</div><h2 id="12启动mysql容器">12、启动mysql容器</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -776,7 +853,7 @@
 </span></span><span style="display:flex;"><span>b055811ce23c
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="10进入mysql容器内部">10、进入mysql容器内部</h2>
+</div><h2 id="13进入mysql容器内部">13、进入mysql容器内部</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -853,7 +930,7 @@
 </span></span><span style="display:flex;"><span>mysql&gt;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="11查询redis镜像的所有tags">11、查询redis镜像的所有tags</h2>
+</div><h2 id="14查询redis镜像的所有tags">14、查询redis镜像的所有tags</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
@@ -1064,7 +1141,7 @@
 </span></span><span style="display:flex;"><span>latest
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="12安装redis需要的tags">12、安装redis需要的tags</h2>
+</div><h2 id="15安装redis需要的tags">15、安装redis需要的tags</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -1073,7 +1150,7 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker pull redis:7.0
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="13配置redisconf">13、配置redis.conf</h2>
+</div><h2 id="16配置redisconf">16、配置redis.conf</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -1090,7 +1167,7 @@
 </span></span><span style="display:flex;"><span>appendonly yes              <span style="color:#998;font-style:italic">#redis持久化,默认是no</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="14启动redis容器">14、启动redis容器</h2>
+</div><h2 id="17启动redis容器">17、启动redis容器</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -1202,7 +1279,7 @@
 </span></span><span style="display:flex;"><span>See <span style="color:#d14">&#39;docker run --help&#39;</span>.
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="15起停redis容器">15、起停redis容器</h2>
+</div><h2 id="18起停redis容器">18、起停redis容器</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -1231,7 +1308,7 @@
 </span></span><span style="display:flex;"><span>e7bbf340c66c
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="16进入redis容器内部">16、进入redis容器内部</h2>
+</div><h2 id="19进入redis容器内部">19、进入redis容器内部</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -1254,7 +1331,7 @@
 </span></span><span style="display:flex;"><span>127.0.0.1:6379&gt;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="17查询mongo镜像的所有tags">17、查询mongo镜像的所有tags</h2>
+</div><h2 id="20查询mongo镜像的所有tags">20、查询mongo镜像的所有tags</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
@@ -1463,7 +1540,7 @@
 </span></span><span style="display:flex;"><span>windowsservercore-ltsc2022
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="18安装mongo需要的tags">18、安装mongo需要的tags</h2>
+</div><h2 id="21安装mongo需要的tags">21、安装mongo需要的tags</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -1472,7 +1549,7 @@
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker pull mongo:6.0
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="19配置mongodconf">19、配置mongod.conf</h2>
+</div><h2 id="22配置mongodconf">22、配置mongod.conf</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -1519,7 +1596,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080">authorization</span>:<span style="color:#bbb"> </span>enabled<span style="color:#bbb">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="20启动mongo容器">20、启动mongo容器</h2>
+</div><h2 id="23启动mongo容器">23、启动mongo容器</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -1623,7 +1700,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="21起停mongo容器">21、起停mongo容器</h2>
+<h2 id="24起停mongo容器">24、起停mongo容器</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -1654,7 +1731,7 @@
 </span></span><span style="display:flex;"><span>9d71df7b26d0
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="22进入mongo容器内部">22、进入mongo容器内部</h2>
+</div><h2 id="25进入mongo容器内部">25、进入mongo容器内部</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -1729,7 +1806,7 @@
 </span></span><span style="display:flex;"><span>admin&gt;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="23结语">23、结语</h2>
+</div><h2 id="26结语">26、结语</h2>
 <p>最后环境准备好了，运行信息如下：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
