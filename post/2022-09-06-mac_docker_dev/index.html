@@ -150,6 +150,7 @@
       </ul>
     </li>
     <li><a href="#4docker的镜像存储位置">4、docker的镜像存储位置</a></li>
+    <li><a href="#5准备">5、准备</a></li>
     <li><a href="#5查询mysql镜像的所有tags">5、查询mysql镜像的所有tags</a></li>
     <li><a href="#6安装mysql需要的tags">6、安装mysql需要的tags</a></li>
     <li><a href="#7启动mysql容器">7、启动mysql容器</a></li>
@@ -172,6 +173,7 @@
     <li><a href="#20启动mongo容器">20、启动mongo容器</a></li>
     <li><a href="#21起停mongo容器">21、起停mongo容器</a></li>
     <li><a href="#22进入mongo容器内部">22、进入mongo容器内部</a></li>
+    <li><a href="#23结语">23、结语</a></li>
   </ul>
 </nav>
     </div>
@@ -239,7 +241,7 @@
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>2020年整了一套android下的termux开发环境，今天继续配置一套docker环境的开发环境。</p>
+<p>2020年整了一套android下的termux开发环境，今天继续配置一套docker下的开发环境。</p>
 <p>开发电脑环境准备如下：</p>
 <table>
 <thead>
@@ -315,7 +317,30 @@
 </div>
 </div><h4 id="ps">PS:</h4>
 <blockquote>
-<p>目前通过 open /Applications/Docker.app 可以启动，通过 launchctl start com.docker.docker.xxx 方式不能启动了。测试环境：mac ：10.15.6，docker：19.03.8 ，测试时间：2021-09-06</p>
+<p>目前通过 open /Applications/Docker.app 可以启动，通过 launchctl start com.docker.docker.xxx 方式不能启动了。</p>
+<p>测试环境信息如下:</p>
+<table>
+<thead>
+<tr>
+<th>系统</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MacOS</td>
+<td>10.14.6</td>
+</tr>
+<tr>
+<td>docker</td>
+<td>20.10.12</td>
+</tr>
+<tr>
+<td>测试时间: 2022-09-06</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 </blockquote>
 <h2 id="4docker的镜像存储位置">4、docker的镜像存储位置</h2>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -334,6 +359,57 @@
 </span></span><span style="display:flex;"><span>可以到上面的目录中，查看文件大小, du -sh *
 </span></span><span style="display:flex;"><span>本机存放位置如下
 </span></span><span style="display:flex;"><span>/Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Library/Containers/com.docker.docker/Data/vms/0/data/Docker.raw
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="5准备">5、准备</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># docker script</span>
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/shell
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># mysql</span>
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql/config
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql/data
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql/log
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># redis</span>
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/redis
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/redis/config
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/redis/data
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/redis/log
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># mongo</span>
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/config
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/data
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/log
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 复制时区文件</span>
+</span></span><span style="display:flex;"><span>cp /etc/localtime /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 下载redis.conf</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="5查询mysql镜像的所有tags">5、查询mysql镜像的所有tags</h2>
@@ -548,7 +624,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="6安装mysql需要的tags">6、安装mysql需要的tags</h2>
-<p>以mysql举例</p>
+<p>以mysql 8.0举例</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -1653,7 +1729,46 @@
 </span></span><span style="display:flex;"><span>admin&gt;
 </span></span></code></pre></td></tr></table>
 </div>
+</div><h2 id="23结语">23、结语</h2>
+<p>最后环境准备好了，运行信息如下：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 容器信息如下：</span>
+</span></span><span style="display:flex;"><span>docker ps -a
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                    COMMAND                  CREATED        STATUS        PORTS                               NAMES
+</span></span><span style="display:flex;"><span>9d71df7b26d0   mongo:6.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">9</span> hours ago    Up <span style="color:#099">9</span> hours    0.0.0.0:27017-&gt;27017/tcp            mongo6
+</span></span><span style="display:flex;"><span>e7bbf340c66c   redis:7.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">13</span> hours ago   Up <span style="color:#099">13</span> hours   0.0.0.0:6379-&gt;6379/tcp              redis7
+</span></span><span style="display:flex;"><span>b055811ce23c   mysql:8.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">17</span> hours ago   Up <span style="color:#099">17</span> hours   0.0.0.0:3306-&gt;3306/tcp, 33060/tcp   mysql8
+</span></span><span style="display:flex;"><span>d439c916d2e4   docker/getting-started   <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">23</span> hours ago   Up <span style="color:#099">23</span> hours   0.0.0.0:80-&gt;80/tcp                  crazy_chatterjee
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 镜像信息如下：</span>
+</span></span><span style="display:flex;"><span>docker images
+</span></span><span style="display:flex;"><span>REPOSITORY               TAG       IMAGE ID       CREATED        SIZE
+</span></span><span style="display:flex;"><span>mongo                    6.0       d34d21a9eb5b   <span style="color:#099">4</span> days ago     693MB
+</span></span><span style="display:flex;"><span>mysql                    8.0       ff3b5098b416   <span style="color:#099">7</span> days ago     447MB
+</span></span><span style="display:flex;"><span>redis                    7.0       dc7b40a0b05d   <span style="color:#099">2</span> weeks ago    117MB
+</span></span><span style="display:flex;"><span>docker/getting-started   latest    cb90f98fd791   <span style="color:#099">4</span> months ago   28.8MB
+</span></span></code></pre></td></tr></table>
 </div>
+</div><p>后续有其他工具补充再继续完善。。。</p>
+
         </div>
 
         
