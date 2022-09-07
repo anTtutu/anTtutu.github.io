@@ -442,6 +442,7 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 用镜像v2接口进行解析，需要安装bash的json库</span>
@@ -461,7 +462,8 @@
 </span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">406</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 20:35 docker-redis-7.0-run.sh
 </span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">572</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 19:36 docker-mysql-8.0-run.sh
 </span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">469</span>  <span style="color:#099">9</span>  <span style="color:#099">7</span> 00:58 docker-mongo-6.0-run.sh
-</span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">214</span>  <span style="color:#099">9</span>  <span style="color:#099">7</span> 11:07 docker-stop.sh
+</span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">351</span>  <span style="color:#099">9</span>  <span style="color:#099">7</span> 11:32 docker-stop-container.sh
+</span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">357</span>  <span style="color:#099">9</span>  <span style="color:#099">7</span> 11:36 docker-start-container.sh
 </span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#099">7</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">224</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 20:00 ..
 </span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#099">6</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">192</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 21:12 .
 </span></span><span style="display:flex;"><span>
@@ -1850,22 +1852,30 @@
 停止脚本如下：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#008080">container_name</span><span style="color:#000;font-weight:bold">=</span><span style="color:#008080">$1</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#008080">container_id</span><span style="color:#000;font-weight:bold">=</span><span style="color:#000;font-weight:bold">$(</span>docker ps -a | grep <span style="color:#d14">${</span><span style="color:#008080">container_name</span><span style="color:#d14">}</span> | awk -F<span style="color:#d14">&#34;</span><span style="color:#d14">${</span><span style="color:#008080">container_name</span><span style="color:#d14">}</span><span style="color:#d14">&#34;</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#d14">&#39;print $1&#39;</span><span style="color:#000;font-weight:bold">}</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#008080">container_id</span><span style="color:#000;font-weight:bold">=</span><span style="color:#000;font-weight:bold">$(</span>docker ps -a | grep <span style="color:#d14">${</span><span style="color:#008080">container_name</span><span style="color:#d14">}</span> | grep <span style="color:#d14">&#34;Up&#34;</span> | awk -F<span style="color:#d14">&#34;</span><span style="color:#d14">${</span><span style="color:#008080">container_name</span><span style="color:#d14">}</span><span style="color:#d14">&#34;</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#d14">&#39;print $1&#39;</span><span style="color:#000;font-weight:bold">}</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>docker stop <span style="color:#d14">${</span><span style="color:#008080">container_id</span><span style="color:#d14">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">[</span> ! -z <span style="color:#d14">${</span><span style="color:#008080">container_id</span><span style="color:#d14">}</span> <span style="color:#000;font-weight:bold">]</span>; <span style="color:#000;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    docker stop <span style="color:#d14">${</span><span style="color:#008080">container_id</span><span style="color:#d14">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;stop successful, container name[</span><span style="color:#d14">${</span><span style="color:#008080">container_name</span><span style="color:#d14">}</span><span style="color:#d14">]&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;stop successful, container name[</span><span style="color:#d14">${</span><span style="color:#008080">container_name</span><span style="color:#d14">}</span><span style="color:#d14">]&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;container name[</span><span style="color:#d14">${</span><span style="color:#008080">container_name</span><span style="color:#d14">}</span><span style="color:#d14">] is not exist or stopped.&#34;</span>    
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">fi</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>不需要环境了，可以执行停止脚本暂时停止容器，如下：</p>
@@ -1917,6 +1927,78 @@
 </span></span><span style="display:flex;"><span>e7bbf340c66c   redis:7.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">15</span> hours ago   Exited <span style="color:#000;font-weight:bold">(</span>0<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">32</span> seconds ago             redis7
 </span></span><span style="display:flex;"><span>b055811ce23c   mysql:8.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">18</span> hours ago   Exited <span style="color:#000;font-weight:bold">(</span>0<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">39</span> seconds ago             mysql8
 </span></span><span style="display:flex;"><span>d439c916d2e4   docker/getting-started   <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">24</span> hours ago   Exited <span style="color:#000;font-weight:bold">(</span>0<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">5</span> seconds ago              crazy_chatterjee
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>启动脚本如下：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#008080">container_name</span><span style="color:#000;font-weight:bold">=</span><span style="color:#008080">$1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#008080">container_id</span><span style="color:#000;font-weight:bold">=</span><span style="color:#000;font-weight:bold">$(</span>docker ps -a | grep <span style="color:#d14">${</span><span style="color:#008080">container_name</span><span style="color:#d14">}</span> | grep <span style="color:#d14">&#34;Exited&#34;</span> | awk -F<span style="color:#d14">&#34;</span><span style="color:#d14">${</span><span style="color:#008080">container_name</span><span style="color:#d14">}</span><span style="color:#d14">&#34;</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#d14">&#39;print $1&#39;</span><span style="color:#000;font-weight:bold">}</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">[</span> ! -z <span style="color:#d14">${</span><span style="color:#008080">container_id</span><span style="color:#d14">}</span> <span style="color:#000;font-weight:bold">]</span>; <span style="color:#000;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    docker start <span style="color:#d14">${</span><span style="color:#008080">container_id</span><span style="color:#d14">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;start successful, container name[</span><span style="color:#d14">${</span><span style="color:#008080">container_name</span><span style="color:#d14">}</span><span style="color:#d14">]&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;container name[</span><span style="color:#d14">${</span><span style="color:#008080">container_name</span><span style="color:#d14">}</span><span style="color:#d14">] is not exist or started.&#34;</span>    
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">fi</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要环境了，可以执行启动脚本再次启动容器，如下：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./docker-start-container.sh mongo
+</span></span><span style="display:flex;"><span>9d71df7b26d0
+</span></span><span style="display:flex;"><span>start successful, container name<span style="color:#000;font-weight:bold">[</span>mongo<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>./docker-start-container.sh redis
+</span></span><span style="display:flex;"><span>e7bbf340c66c
+</span></span><span style="display:flex;"><span>start successful, container name<span style="color:#000;font-weight:bold">[</span>redis<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>./docker-start-container.sh mysql
+</span></span><span style="display:flex;"><span>b055811ce23c
+</span></span><span style="display:flex;"><span>start successful, container name<span style="color:#000;font-weight:bold">[</span>mysql<span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker ps -a
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                    COMMAND                  CREATED        STATUS                         PORTS                               NAMES
+</span></span><span style="display:flex;"><span>9d71df7b26d0   mongo:6.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">11</span> hours ago   Up <span style="color:#099">8</span> seconds                   0.0.0.0:27017-&gt;27017/tcp            mongo6
+</span></span><span style="display:flex;"><span>e7bbf340c66c   redis:7.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">15</span> hours ago   Up <span style="color:#099">6</span> seconds                   0.0.0.0:6379-&gt;6379/tcp              redis7
+</span></span><span style="display:flex;"><span>b055811ce23c   mysql:8.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">19</span> hours ago   Up <span style="color:#099">2</span> seconds                   0.0.0.0:3306-&gt;3306/tcp, 33060/tcp   mysql8
+</span></span><span style="display:flex;"><span>d439c916d2e4   docker/getting-started   <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">24</span> hours ago   Up <span style="color:#099">5</span> minutes                   0.0.0.0:80-&gt;80/tcp                  crazy_chatterjee
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>后续有其他工具补充再继续完善。。。</p>
