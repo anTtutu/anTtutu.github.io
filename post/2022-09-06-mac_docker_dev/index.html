@@ -453,8 +453,8 @@
 <a href="#jump17">步骤17</a><br>
 3、mongod.conf直接参考步骤22创建并写入关键参数配置<br>
 <a href="#jump23">步骤23</a>
-4、nginx.conf直接参考步骤**创建并写入关键参数配置
-<a href="#jump**">步骤**</a></p>
+4、nginx.conf直接参考步骤27创建并写入关键参数配置
+<a href="#jump27">步骤27</a></p>
 <h2 id="7准备脚本">7、准备脚本</h2>
 <p>docker-show-repo-tag.sh</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -2079,6 +2079,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="29配置conf">29、配置conf</h2>
+<p><span id="jump29">nginx.conf</span></p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
@@ -2350,11 +2351,11 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--network bridge <span style="color:#d14">\
 </span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--restart<span style="color:#000;font-weight:bold">=</span>always <span style="color:#d14">\
 </span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--privileged<span style="color:#000;font-weight:bold">=</span><span style="color:#0086b3">true</span> <span style="color:#d14">\
-</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/tuchenguang/Downloads/Docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf <span style="color:#d14">\
-</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/tuchenguang/Downloads/Docker/nginx/conf.d:/etc/nginx/conf.d <span style="color:#d14">\
-</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/tuchenguang/Downloads/Docker/nginx/cert:/etc/nginx/certs <span style="color:#d14">\
-</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/tuchenguang/Downloads/Docker/nginx/html:/etc/nginx/html <span style="color:#d14">\
-</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/tuchenguang/Downloads/Docker/nginx/log:/var/log/nginx <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/<span style="color:#d14">${</span><span style="color:#008080">whoami</span><span style="color:#d14">}</span>/Downloads/Docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/<span style="color:#d14">${</span><span style="color:#008080">whoami</span><span style="color:#d14">}</span>/Downloads/Docker/nginx/conf.d:/etc/nginx/conf.d <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/<span style="color:#d14">${</span><span style="color:#008080">whoami</span><span style="color:#d14">}</span>/Downloads/Docker/nginx/cert:/etc/nginx/certs <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/<span style="color:#d14">${</span><span style="color:#008080">whoami</span><span style="color:#d14">}</span>/Downloads/Docker/nginx/html:/etc/nginx/html <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/<span style="color:#d14">${</span><span style="color:#008080">whoami</span><span style="color:#d14">}</span>/Downloads/Docker/nginx/log:/var/log/nginx <span style="color:#d14">\
 </span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-e <span style="color:#008080">LANG</span><span style="color:#000;font-weight:bold">=</span>C.UTF-8 <span style="color:#d14">\
 </span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-e <span style="color:#008080">LC_ALL</span><span style="color:#000;font-weight:bold">=</span>C.UTF-8 <span style="color:#d14">\
 </span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>nginx:1.22.0
@@ -2394,23 +2395,23 @@
 <td>提升容器内权限（false可能会因权限导致无法启动）</td>
 </tr>
 <tr>
-<td>-v /Users/tuchenguang/Downloads/Docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf</td>
+<td>-v /Users/${whoami}/Downloads/Docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf</td>
 <td>nginx的主配置文件</td>
 </tr>
 <tr>
-<td>-v /Users/tuchenguang/Downloads/Docker/nginx/conf.d:/etc/nginx/conf.d</td>
+<td>-v /Users/${whoami}/Downloads/Docker/nginx/conf.d:/etc/nginx/conf.d</td>
 <td>nginx的自定义配置文件目录，该目录下所有的*.conf会生效</td>
 </tr>
 <tr>
-<td>-v /Users/tuchenguang/Downloads/Docker/nginx/cert:/etc/nginx/certs</td>
+<td>-v /Users/${whoami}/Downloads/Docker/nginx/cert:/etc/nginx/certs</td>
 <td>nginx的ssl证书</td>
 </tr>
 <tr>
-<td>-v /Users/tuchenguang/Downloads/Docker/nginx/html:/etc/nginx/html</td>
+<td>-v /Users/${whoami}/Downloads/Docker/nginx/html:/etc/nginx/html</td>
 <td>nginx的静态文件</td>
 </tr>
 <tr>
-<td>-v /Users/tuchenguang/Downloads/Docker/nginx/log:/var/log/nginx</td>
+<td>-v /Users/${whoami}/Downloads/Docker/nginx/log:/var/log/nginx</td>
 <td>nginx的日志目录</td>
 </tr>
 <tr>
