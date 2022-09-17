@@ -176,7 +176,13 @@
     <li><a href="#24启动mongo容器">24、启动mongo容器</a></li>
     <li><a href="#25起停mongo容器">25、起停mongo容器</a></li>
     <li><a href="#26进入mongo容器内部">26、进入mongo容器内部</a></li>
-    <li><a href="#27结语">27、结语</a></li>
+    <li><a href="#27查询nginx镜像的所有tags">27、查询nginx镜像的所有tags</a></li>
+    <li><a href="#28安装nginx需要的tags">28、安装nginx需要的tags</a></li>
+    <li><a href="#29配置conf">29、配置conf</a></li>
+    <li><a href="#30启动nginx容器">30、启动nginx容器</a></li>
+    <li><a href="#31起停nginx容器">31、起停nginx容器</a></li>
+    <li><a href="#32进入nginx容器内部">32、进入nginx容器内部</a></li>
+    <li><a href="#33结语">33、结语</a></li>
   </ul>
 </nav>
     </div>
@@ -402,6 +408,13 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># docker script</span>
@@ -421,6 +434,13 @@
 </span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/config
 </span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/data
 </span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/log
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># nginx</span>
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/nginx
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/nginx/conf
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/nginx/conf.d
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/log
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/html
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/cert
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 复制时区文件，解决mysql镜像容器运行时区是0问题</span>
 </span></span><span style="display:flex;"><span>cp /etc/localtime /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql/
@@ -432,7 +452,9 @@
 2、下载redis.7版本包，提取redis.conf，然后参考步骤16修改配置<br>
 <a href="#jump17">步骤17</a><br>
 3、mongod.conf直接参考步骤22创建并写入关键参数配置<br>
-<a href="#jump23">步骤23</a></p>
+<a href="#jump23">步骤23</a>
+4、nginx.conf直接参考步骤**创建并写入关键参数配置
+<a href="#jump**">步骤**</a></p>
 <h2 id="7准备脚本">7、准备脚本</h2>
 <p>docker-show-repo-tag.sh</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -461,6 +483,11 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 用镜像v2接口进行解析，需要安装bash的json库</span>
@@ -482,6 +509,11 @@
 </span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">469</span>  <span style="color:#099">9</span>  <span style="color:#099">7</span> 00:58 docker-mongo-6.0-run.sh
 </span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">351</span>  <span style="color:#099">9</span>  <span style="color:#099">7</span> 11:32 docker-stop-container.sh
 </span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">357</span>  <span style="color:#099">9</span>  <span style="color:#099">7</span> 11:36 docker-start-container.sh
+</span></span><span style="display:flex;"><span>-rwx------  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">149</span>  <span style="color:#099">9</span>  <span style="color:#099">8</span> 18:02 docker-python-demo-v1.0-run.sh
+</span></span><span style="display:flex;"><span>-rwx------  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">147</span>  <span style="color:#099">9</span>  <span style="color:#099">8</span> 18:04 docker-nodejs-demo-v1.0-run.sh
+</span></span><span style="display:flex;"><span>-rwx------  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">145</span>  <span style="color:#099">9</span>  <span style="color:#099">8</span> 18:08 docker-java-demo-v1.0-run.sh
+</span></span><span style="display:flex;"><span>-rwx------  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">146</span>  <span style="color:#099">9</span>  <span style="color:#099">9</span> 14:29 docker-go-demo-v1.0-run.sh
+</span></span><span style="display:flex;"><span>-rwx------  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">545</span>  <span style="color:#099">9</span> <span style="color:#099">16</span> 10:05 docker-nginx-1.22.0-run.sh
 </span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#099">7</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">224</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 20:00 ..
 </span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#099">6</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">192</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 21:12 .
 </span></span><span style="display:flex;"><span>
@@ -1828,7 +1860,872 @@
 </span></span><span style="display:flex;"><span>admin&gt;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="27结语">27、结语</h2>
+</div><h2 id="27查询nginx镜像的所有tags">27、查询nginx镜像的所有tags</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./docker-show-repo-tag.sh nginx
+</span></span><span style="display:flex;"><span><span style="color:#099">1</span>
+</span></span><span style="display:flex;"><span>1-alpine
+</span></span><span style="display:flex;"><span>1-alpine-perl
+</span></span><span style="display:flex;"><span>1-perl
+</span></span><span style="display:flex;"><span>1.18
+</span></span><span style="display:flex;"><span>1.18-alpine
+</span></span><span style="display:flex;"><span>1.18-alpine-perl
+</span></span><span style="display:flex;"><span>1.18-perl
+</span></span><span style="display:flex;"><span>1.18.0
+</span></span><span style="display:flex;"><span>1.18.0-alpine
+</span></span><span style="display:flex;"><span>1.18.0-alpine-perl
+</span></span><span style="display:flex;"><span>1.18.0-perl
+</span></span><span style="display:flex;"><span>1.19
+</span></span><span style="display:flex;"><span>1.19-alpine
+</span></span><span style="display:flex;"><span>1.19-alpine-perl
+</span></span><span style="display:flex;"><span>1.19-perl
+</span></span><span style="display:flex;"><span>1.19.10
+</span></span><span style="display:flex;"><span>1.19.10-alpine
+</span></span><span style="display:flex;"><span>1.19.10-alpine-perl
+</span></span><span style="display:flex;"><span>1.19.10-perl
+</span></span><span style="display:flex;"><span>1.19.9
+</span></span><span style="display:flex;"><span>1.19.9-alpine
+</span></span><span style="display:flex;"><span>1.19.9-alpine-perl
+</span></span><span style="display:flex;"><span>1.19.9-perl
+</span></span><span style="display:flex;"><span>1.20
+</span></span><span style="display:flex;"><span>1.20-alpine
+</span></span><span style="display:flex;"><span>1.20-alpine-perl
+</span></span><span style="display:flex;"><span>1.20-perl
+</span></span><span style="display:flex;"><span>1.20.0
+</span></span><span style="display:flex;"><span>1.20.0-alpine
+</span></span><span style="display:flex;"><span>1.20.0-alpine-perl
+</span></span><span style="display:flex;"><span>1.20.0-perl
+</span></span><span style="display:flex;"><span>1.20.1
+</span></span><span style="display:flex;"><span>1.20.1-alpine
+</span></span><span style="display:flex;"><span>1.20.1-alpine-perl
+</span></span><span style="display:flex;"><span>1.20.1-perl
+</span></span><span style="display:flex;"><span>1.20.2
+</span></span><span style="display:flex;"><span>1.20.2-alpine
+</span></span><span style="display:flex;"><span>1.20.2-alpine-perl
+</span></span><span style="display:flex;"><span>1.20.2-perl
+</span></span><span style="display:flex;"><span>1.21
+</span></span><span style="display:flex;"><span>1.21-alpine
+</span></span><span style="display:flex;"><span>1.21-alpine-perl
+</span></span><span style="display:flex;"><span>1.21-perl
+</span></span><span style="display:flex;"><span>1.21.0
+</span></span><span style="display:flex;"><span>1.21.0-alpine
+</span></span><span style="display:flex;"><span>1.21.0-alpine-perl
+</span></span><span style="display:flex;"><span>1.21.0-perl
+</span></span><span style="display:flex;"><span>1.21.1
+</span></span><span style="display:flex;"><span>1.21.1-alpine
+</span></span><span style="display:flex;"><span>1.21.1-alpine-perl
+</span></span><span style="display:flex;"><span>1.21.1-perl
+</span></span><span style="display:flex;"><span>1.21.3
+</span></span><span style="display:flex;"><span>1.21.3-alpine
+</span></span><span style="display:flex;"><span>1.21.3-alpine-perl
+</span></span><span style="display:flex;"><span>1.21.3-perl
+</span></span><span style="display:flex;"><span>1.21.4
+</span></span><span style="display:flex;"><span>1.21.4-alpine
+</span></span><span style="display:flex;"><span>1.21.4-alpine-perl
+</span></span><span style="display:flex;"><span>1.21.4-perl
+</span></span><span style="display:flex;"><span>1.21.5
+</span></span><span style="display:flex;"><span>1.21.5-alpine
+</span></span><span style="display:flex;"><span>1.21.5-alpine-perl
+</span></span><span style="display:flex;"><span>1.21.5-perl
+</span></span><span style="display:flex;"><span>1.21.6
+</span></span><span style="display:flex;"><span>1.21.6-alpine
+</span></span><span style="display:flex;"><span>1.21.6-alpine-perl
+</span></span><span style="display:flex;"><span>1.21.6-perl
+</span></span><span style="display:flex;"><span>1.22
+</span></span><span style="display:flex;"><span>1.22-alpine
+</span></span><span style="display:flex;"><span>1.22-alpine-perl
+</span></span><span style="display:flex;"><span>1.22-perl
+</span></span><span style="display:flex;"><span>1.22.0
+</span></span><span style="display:flex;"><span>1.22.0-alpine
+</span></span><span style="display:flex;"><span>1.22.0-alpine-perl
+</span></span><span style="display:flex;"><span>1.22.0-perl
+</span></span><span style="display:flex;"><span>1.23
+</span></span><span style="display:flex;"><span>1.23-alpine
+</span></span><span style="display:flex;"><span>1.23-alpine-perl
+</span></span><span style="display:flex;"><span>1.23-perl
+</span></span><span style="display:flex;"><span>1.23.0
+</span></span><span style="display:flex;"><span>1.23.0-alpine
+</span></span><span style="display:flex;"><span>1.23.0-alpine-perl
+</span></span><span style="display:flex;"><span>1.23.0-perl
+</span></span><span style="display:flex;"><span>1.23.1
+</span></span><span style="display:flex;"><span>1.23.1-alpine
+</span></span><span style="display:flex;"><span>1.23.1-alpine-perl
+</span></span><span style="display:flex;"><span>1.23.1-perl
+</span></span><span style="display:flex;"><span>alpine
+</span></span><span style="display:flex;"><span>alpine-perl
+</span></span><span style="display:flex;"><span>latest
+</span></span><span style="display:flex;"><span>mainline
+</span></span><span style="display:flex;"><span>mainline-alpine
+</span></span><span style="display:flex;"><span>mainline-alpine-perl
+</span></span><span style="display:flex;"><span>mainline-perl
+</span></span><span style="display:flex;"><span>perl
+</span></span><span style="display:flex;"><span>stable
+</span></span><span style="display:flex;"><span>stable-alpine
+</span></span><span style="display:flex;"><span>stable-alpine-perl
+</span></span><span style="display:flex;"><span>stable-perl
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="28安装nginx需要的tags">28、安装nginx需要的tags</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker pull nginx:1.22.0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="29配置conf">29、配置conf</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic">#user  nobody;</span>
+</span></span><span style="display:flex;"><span>worker_processes  1;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#error_log  logs/error.log;</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#error_log  logs/error.log  notice;</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#error_log  logs/error.log  info;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#pid        logs/nginx.pid;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>events <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    worker_connections  1024;
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>http <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    include       mime.types;
+</span></span><span style="display:flex;"><span>    default_type  application/octet-stream;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#log_format  main  &#39;$remote_addr - $remote_user [$time_local] &#34;$request&#34; &#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#                  &#39;$status $body_bytes_sent &#34;$http_referer&#34; &#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#                  &#39;&#34;$http_user_agent&#34; &#34;$http_x_forwarded_for&#34;&#39;;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#access_log  logs/access.log  main;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    sendfile        on;
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#tcp_nopush     on;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#keepalive_timeout  0;</span>
+</span></span><span style="display:flex;"><span>    keepalive_timeout  65;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#gzip  on;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    server <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        listen       80;
+</span></span><span style="display:flex;"><span>        server_name  localhost;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        charset utf-8;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#access_log  logs/host.access.log  main;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        location / <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            root   html;
+</span></span><span style="display:flex;"><span>            index  index.html index.htm;
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        error_page  <span style="color:#099">404</span>              /404.html;
+</span></span><span style="display:flex;"><span>        error_page  <span style="color:#099">500</span>              /500.html;
+</span></span><span style="display:flex;"><span>        error_page  <span style="color:#099">502</span> <span style="color:#099">503</span> <span style="color:#099">504</span>      /error.html;
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic"># redirect server error pages to the static page /50x.html</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#error_page   500 502 503 504  /50x.html;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#008080">location</span> <span style="color:#000;font-weight:bold">=</span> /50x.html <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            root   html;
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic"># proxy the PHP scripts to Apache listening on 127.0.0.1:80</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#location ~ \.php$ {</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#    proxy_pass   http://127.0.0.1;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#location ~ \.php$ {</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#    root           html;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#    fastcgi_pass   127.0.0.1:9000;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#    fastcgi_index  index.php;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#    include        fastcgi_params;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic"># deny access to .htaccess files, if Apache&#39;s document root</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic"># concurs with nginx&#39;s one</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#location ~ /\.ht {</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#    deny  all;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic"># another virtual host using mix of IP-, name-, and port-based configuration</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#server {</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    listen       8000;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    listen       somename:8080;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    server_name  somename  alias  another.alias;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    location / {</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#        root   html;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#        index  index.html index.htm;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    }</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic"># HTTPS server</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#server {</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    listen       443 ssl;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    server_name  localhost;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    ssl_certificate      cert.pem;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    ssl_certificate_key  cert.key;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    ssl_session_cache    shared:SSL:1m;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    ssl_session_timeout  5m;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    ssl_ciphers  HIGH:!aNULL:!MD5;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    ssl_prefer_server_ciphers  on;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    location / {</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#        root   html;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#        index  index.html index.htm;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    }</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    include conf.d/*.conf;
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="30启动nginx容器">30、启动nginx容器</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-d <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-p 80:80 <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-p 443:443 <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--name nginx1.22.0 <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--network bridge <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--restart<span style="color:#000;font-weight:bold">=</span>always <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--privileged<span style="color:#000;font-weight:bold">=</span><span style="color:#0086b3">true</span> <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/tuchenguang/Downloads/Docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/tuchenguang/Downloads/Docker/nginx/conf.d:/etc/nginx/conf.d <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/tuchenguang/Downloads/Docker/nginx/cert:/etc/nginx/certs <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/tuchenguang/Downloads/Docker/nginx/html:/etc/nginx/html <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/tuchenguang/Downloads/Docker/nginx/log:/var/log/nginx <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-e <span style="color:#008080">LANG</span><span style="color:#000;font-weight:bold">=</span>C.UTF-8 <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-e <span style="color:#008080">LC_ALL</span><span style="color:#000;font-weight:bold">=</span>C.UTF-8 <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>nginx:1.22.0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-d</td>
+<td>后台运行容器</td>
+</tr>
+<tr>
+<td>-p 80:80<br>-p 443:443</td>
+<td>把容器内的80端口、443端口分别映射到宿主机80端口、443端口</td>
+</tr>
+<tr>
+<td>&ndash;name</td>
+<td>nginx容器名称</td>
+</tr>
+<tr>
+<td>&ndash;network</td>
+<td>网络</td>
+</tr>
+<tr>
+<td>–-restart always</td>
+<td>开机启动</td>
+</tr>
+<tr>
+<td>–-privileged=true</td>
+<td>提升容器内权限（false可能会因权限导致无法启动）</td>
+</tr>
+<tr>
+<td>-v /Users/tuchenguang/Downloads/Docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf</td>
+<td>nginx的主配置文件</td>
+</tr>
+<tr>
+<td>-v /Users/tuchenguang/Downloads/Docker/nginx/conf.d:/etc/nginx/conf.d</td>
+<td>nginx的自定义配置文件目录，该目录下所有的*.conf会生效</td>
+</tr>
+<tr>
+<td>-v /Users/tuchenguang/Downloads/Docker/nginx/cert:/etc/nginx/certs</td>
+<td>nginx的ssl证书</td>
+</tr>
+<tr>
+<td>-v /Users/tuchenguang/Downloads/Docker/nginx/html:/etc/nginx/html</td>
+<td>nginx的静态文件</td>
+</tr>
+<tr>
+<td>-v /Users/tuchenguang/Downloads/Docker/nginx/log:/var/log/nginx</td>
+<td>nginx的日志目录</td>
+</tr>
+<tr>
+<td>-e LANG=C.UTF-8</td>
+<td>解决nginx中文乱码</td>
+</tr>
+<tr>
+<td>-e LC_ALL=C.UTF-8</td>
+<td>解决nginx中文乱码</td>
+</tr>
+<tr>
+<td>nginx:1.22.0</td>
+<td>nginx(repository) : 1.22.0(tag)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="31起停nginx容器">31、起停nginx容器</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker ps -a
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                    COMMAND                  CREATED       STATUS                     PORTS                                      NAMES
+</span></span><span style="display:flex;"><span>46b779b40bb5   nginx:1.22.0             <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">3</span> days ago    Up <span style="color:#099">19</span> seconds              0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   nginx1.22.0
+</span></span><span style="display:flex;"><span>83c107ac3c1b   docker-gs-ping:v1.0      <span style="color:#d14">&#34;/docker-gs-ping&#34;</span>        <span style="color:#099">8</span> days ago    Up <span style="color:#099">19</span> seconds              0.0.0.0:8081-&gt;8081/tcp                     go-docker-v1
+</span></span><span style="display:flex;"><span>170ce646f5cd   java-docker:v1.0         <span style="color:#d14">&#34;./mvnw spring-boot:…&#34;</span>   <span style="color:#099">9</span> days ago    Up <span style="color:#099">19</span> seconds              0.0.0.0:8080-&gt;8080/tcp                     java-docker-v1
+</span></span><span style="display:flex;"><span>439741b1c983   node-docker:v1.0         <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">9</span> days ago    Up <span style="color:#099">18</span> seconds              0.0.0.0:8000-&gt;8000/tcp                     nodejs-docker-v1
+</span></span><span style="display:flex;"><span>77c73cd73550   python-docker:v1.0       <span style="color:#d14">&#34;python3 -m flask ru…&#34;</span>   <span style="color:#099">9</span> days ago    Up <span style="color:#099">19</span> seconds              0.0.0.0:5000-&gt;5000/tcp                     python-docker-v1
+</span></span><span style="display:flex;"><span>5d3e522b6295   mongo:6.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">10</span> days ago   Up <span style="color:#099">18</span> seconds              0.0.0.0:27017-&gt;27017/tcp                   mongo6
+</span></span><span style="display:flex;"><span>e7bbf340c66c   redis:7.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">10</span> days ago   Up <span style="color:#099">19</span> seconds              0.0.0.0:6379-&gt;6379/tcp                     redis7
+</span></span><span style="display:flex;"><span>b055811ce23c   mysql:8.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">11</span> days ago   Up <span style="color:#099">18</span> seconds              0.0.0.0:3306-&gt;3306/tcp, 33060/tcp          mysql8
+</span></span><span style="display:flex;"><span>d439c916d2e4   docker/getting-started   <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">11</span> days ago   Exited <span style="color:#000;font-weight:bold">(</span>255<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">10</span> days ago   0.0.0.0:80-&gt;80/tcp                         crazy_chatterjee
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker stop 46b779b40bb5
+</span></span><span style="display:flex;"><span>46b779b40bb5
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker start s46b779b40bb5
+</span></span><span style="display:flex;"><span>46b779b40bb5
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="32进入nginx容器内部">32、进入nginx容器内部</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker <span style="color:#0086b3">exec</span> -it 46b779b40bb5 /bin/bash
+</span></span><span style="display:flex;"><span>root@46b779b40bb5:/# ps -ef | grep nginx
+</span></span><span style="display:flex;"><span>root@46b779b40bb5:/# ls /etc/nginx/nginx.conf
+</span></span><span style="display:flex;"><span>/etc/nginx/nginx.conf
+</span></span><span style="display:flex;"><span>root@46b779b40bb5:/# cat /etc/nginx/nginx.conf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#user  nobody;</span>
+</span></span><span style="display:flex;"><span>worker_processes  1;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#error_log  logs/error.log;</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#error_log  logs/error.log  notice;</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#error_log  logs/error.log  info;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#pid        logs/nginx.pid;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>events <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    worker_connections  1024;
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>http <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    include       mime.types;
+</span></span><span style="display:flex;"><span>    default_type  application/octet-stream;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#log_format  main  &#39;$remote_addr - $remote_user [$time_local] &#34;$request&#34; &#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#                  &#39;$status $body_bytes_sent &#34;$http_referer&#34; &#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#                  &#39;&#34;$http_user_agent&#34; &#34;$http_x_forwarded_for&#34;&#39;;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#access_log  logs/access.log  main;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    sendfile        on;
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#tcp_nopush     on;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#keepalive_timeout  0;</span>
+</span></span><span style="display:flex;"><span>    keepalive_timeout  65;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#gzip  on;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    server <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        listen       80;
+</span></span><span style="display:flex;"><span>        server_name  localhost;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        charset utf-8;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#access_log  logs/host.access.log  main;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        location / <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            root   html;
+</span></span><span style="display:flex;"><span>            index  index.html index.htm;
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        error_page  <span style="color:#099">404</span>              /404.html;
+</span></span><span style="display:flex;"><span>        error_page  <span style="color:#099">500</span>              /500.html;
+</span></span><span style="display:flex;"><span>        error_page  <span style="color:#099">502</span> <span style="color:#099">503</span> <span style="color:#099">504</span>      /error.html;
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic"># redirect server error pages to the static page /50x.html</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#error_page   500 502 503 504  /50x.html;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#008080">location</span> <span style="color:#000;font-weight:bold">=</span> /50x.html <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            root   html;
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic"># proxy the PHP scripts to Apache listening on 127.0.0.1:80</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#location ~ \.php$ {</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#    proxy_pass   http://127.0.0.1;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#location ~ \.php$ {</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#    root           html;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#    fastcgi_pass   127.0.0.1:9000;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#    fastcgi_index  index.php;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#    include        fastcgi_params;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic"># deny access to .htaccess files, if Apache&#39;s document root</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic"># concurs with nginx&#39;s one</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#location ~ /\.ht {</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#    deny  all;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">#}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic"># another virtual host using mix of IP-, name-, and port-based configuration</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#server {</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    listen       8000;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    listen       somename:8080;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    server_name  somename  alias  another.alias;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    location / {</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#        root   html;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#        index  index.html index.htm;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    }</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic"># HTTPS server</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#server {</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    listen       443 ssl;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    server_name  localhost;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    ssl_certificate      cert.pem;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    ssl_certificate_key  cert.key;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    ssl_session_cache    shared:SSL:1m;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    ssl_session_timeout  5m;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    ssl_ciphers  HIGH:!aNULL:!MD5;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    ssl_prefer_server_ciphers  on;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    location / {</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#        root   html;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#        index  index.html index.htm;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#    }</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">#}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    include conf.d/*.conf;
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>root@46b779b40bb5:/#
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="33结语">33、结语</h2>
 <p>1、最后环境准备好了，运行信息如下：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1847,11 +2744,14 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 容器信息如下：</span>
 </span></span><span style="display:flex;"><span>docker ps -a
 </span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                    COMMAND                  CREATED        STATUS        PORTS                               NAMES
+</span></span><span style="display:flex;"><span>46b779b40bb5   nginx:1.22.0             <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">3</span> days ago    Up <span style="color:#099">48</span> minutes              0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   nginx1.22.0
 </span></span><span style="display:flex;"><span>5d3e522b6295   mongo:6.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">9</span> hours ago    Up <span style="color:#099">9</span> hours    0.0.0.0:27017-&gt;27017/tcp            mongo6
 </span></span><span style="display:flex;"><span>e7bbf340c66c   redis:7.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">13</span> hours ago   Up <span style="color:#099">13</span> hours   0.0.0.0:6379-&gt;6379/tcp              redis7
 </span></span><span style="display:flex;"><span>b055811ce23c   mysql:8.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">17</span> hours ago   Up <span style="color:#099">17</span> hours   0.0.0.0:3306-&gt;3306/tcp, 33060/tcp   mysql8
@@ -1860,6 +2760,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 镜像信息如下：</span>
 </span></span><span style="display:flex;"><span>docker images
 </span></span><span style="display:flex;"><span>REPOSITORY               TAG       IMAGE ID       CREATED        SIZE
+</span></span><span style="display:flex;"><span>nginx                    1.22.0    2467b41f2ddd   <span style="color:#099">4</span> days ago     142MB
 </span></span><span style="display:flex;"><span>mongo                    6.0       d34d21a9eb5b   <span style="color:#099">4</span> days ago     693MB
 </span></span><span style="display:flex;"><span>mysql                    8.0       ff3b5098b416   <span style="color:#099">7</span> days ago     447MB
 </span></span><span style="display:flex;"><span>redis                    7.0       dc7b40a0b05d   <span style="color:#099">2</span> weeks ago    117MB
@@ -1921,6 +2822,7 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./docker-stop.sh mysql
@@ -1941,6 +2843,7 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>docker ps -a
 </span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                    COMMAND                  CREATED        STATUS                      PORTS     NAMES
+</span></span><span style="display:flex;"><span>46b779b40bb5   nginx:1.22.0             <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">3</span> days ago    Exited <span style="color:#000;font-weight:bold">(</span>0<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">20</span> seconds ago              0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   nginx1.22.0
 </span></span><span style="display:flex;"><span>5d3e522b6295   mongo:6.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">10</span> hours ago   Exited <span style="color:#000;font-weight:bold">(</span>0<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">22</span> seconds ago             mongo6
 </span></span><span style="display:flex;"><span>e7bbf340c66c   redis:7.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">15</span> hours ago   Exited <span style="color:#000;font-weight:bold">(</span>0<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">32</span> seconds ago             redis7
 </span></span><span style="display:flex;"><span>b055811ce23c   mysql:8.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">18</span> hours ago   Exited <span style="color:#000;font-weight:bold">(</span>0<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">39</span> seconds ago             mysql8
@@ -1997,6 +2900,7 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./docker-start-container.sh mongo
@@ -2013,6 +2917,7 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>docker ps -a
 </span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                    COMMAND                  CREATED        STATUS                         PORTS                               NAMES
+</span></span><span style="display:flex;"><span>46b779b40bb5   nginx:1.22.0             <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">3</span> days ago    Up <span style="color:#099">48</span> minutes              0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   nginx1.22.0
 </span></span><span style="display:flex;"><span>5d3e522b6295   mongo:6.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">11</span> hours ago   Up <span style="color:#099">8</span> seconds                   0.0.0.0:27017-&gt;27017/tcp            mongo6
 </span></span><span style="display:flex;"><span>e7bbf340c66c   redis:7.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">15</span> hours ago   Up <span style="color:#099">6</span> seconds                   0.0.0.0:6379-&gt;6379/tcp              redis7
 </span></span><span style="display:flex;"><span>b055811ce23c   mysql:8.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">19</span> hours ago   Up <span style="color:#099">2</span> seconds                   0.0.0.0:3306-&gt;3306/tcp, 33060/tcp   mysql8
