@@ -194,11 +194,25 @@
         <li><a href="#116-进入nginx容器内部">11.6 进入nginx容器内部</a></li>
       </ul>
     </li>
-    <li><a href="#12结语">12、结语</a>
+    <li><a href="#12minio">12、minio</a>
       <ul>
-        <li><a href="#121-最后环境准备好了运行信息如下">12.1 最后环境准备好了，运行信息如下</a></li>
-        <li><a href="#122-停止容器">12.2 停止容器</a></li>
-        <li><a href="#123-启动脚本如下">12.3 启动脚本如下</a></li>
+        <li><a href="#121-安装minio需要的tags">12.1 安装minio需要的tags</a></li>
+        <li><a href="#122-启动minio容器">12.2 启动minio容器</a></li>
+        <li><a href="#123-启停minio容器">12.3 启停minio容器</a></li>
+      </ul>
+    </li>
+    <li><a href="#13etcd">13、etcd</a>
+      <ul>
+        <li><a href="#131-安装etcd需要的tags">13.1 安装etcd需要的tags</a></li>
+        <li><a href="#132-启动etcd容器">13.2 启动etcd容器</a></li>
+        <li><a href="#133-启停etcd容器">13.3 启停etcd容器</a></li>
+      </ul>
+    </li>
+    <li><a href="#14结语">14、结语</a>
+      <ul>
+        <li><a href="#141-最后环境准备好了运行信息如下">14.1 最后环境准备好了，运行信息如下</a></li>
+        <li><a href="#142-停止容器">14.2 停止容器</a></li>
+        <li><a href="#143-启动脚本如下">14.3 启动脚本如下</a></li>
       </ul>
     </li>
   </ul>
@@ -312,6 +326,18 @@
 <tr>
 <td>mysql</td>
 <td>8.0</td>
+</tr>
+<tr>
+<td>nginx</td>
+<td>1.22.0</td>
+</tr>
+<tr>
+<td>etcd</td>
+<td>latest</td>
+</tr>
+<tr>
+<td>minio</td>
+<td>latest</td>
 </tr>
 </tbody>
 </table>
@@ -437,6 +463,14 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># docker script</span>
@@ -463,6 +497,14 @@
 </span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/log
 </span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/html
 </span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mongo/cert
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># minio</span>
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/minio
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/minio/config
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/minio/data
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># etcd</span>
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/etcd
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/etcd/conf
+</span></span><span style="display:flex;"><span>mkdir -p /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/etcd/data
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 复制时区文件，解决mysql镜像容器运行时区是0问题</span>
 </span></span><span style="display:flex;"><span>cp /etc/localtime /Users/<span style="color:#000;font-weight:bold">{</span>whoami<span style="color:#000;font-weight:bold">}</span>/Downloads/Docker/mysql/
@@ -510,6 +552,10 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 用镜像v2接口进行解析，需要安装bash的json库</span>
@@ -524,20 +570,24 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 下面步骤中提到的脚本也可以搜集整理在这里，其他脚本</span>
 </span></span><span style="display:flex;"><span>ls -lar
-</span></span><span style="display:flex;"><span>total <span style="color:#099">32</span>
-</span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">314</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 16:27 docker-show-repo-tag.sh
-</span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">406</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 20:35 docker-redis-7.0-run.sh
-</span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">572</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 19:36 docker-mysql-8.0-run.sh
-</span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">469</span>  <span style="color:#099">9</span>  <span style="color:#099">7</span> 00:58 docker-mongo-6.0-run.sh
-</span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">351</span>  <span style="color:#099">9</span>  <span style="color:#099">7</span> 11:32 docker-stop-container.sh
-</span></span><span style="display:flex;"><span>-rwx------@ <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">357</span>  <span style="color:#099">9</span>  <span style="color:#099">7</span> 11:36 docker-start-container.sh
-</span></span><span style="display:flex;"><span>-rwx------  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">149</span>  <span style="color:#099">9</span>  <span style="color:#099">8</span> 18:02 docker-python-demo-v1.0-run.sh
-</span></span><span style="display:flex;"><span>-rwx------  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">147</span>  <span style="color:#099">9</span>  <span style="color:#099">8</span> 18:04 docker-nodejs-demo-v1.0-run.sh
-</span></span><span style="display:flex;"><span>-rwx------  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">145</span>  <span style="color:#099">9</span>  <span style="color:#099">8</span> 18:08 docker-java-demo-v1.0-run.sh
-</span></span><span style="display:flex;"><span>-rwx------  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">146</span>  <span style="color:#099">9</span>  <span style="color:#099">9</span> 14:29 docker-go-demo-v1.0-run.sh
-</span></span><span style="display:flex;"><span>-rwx------  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">545</span>  <span style="color:#099">9</span> <span style="color:#099">16</span> 10:05 docker-nginx-1.22.0-run.sh
-</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#099">7</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">224</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 20:00 ..
-</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#099">6</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">192</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 21:12 .
+</span></span><span style="display:flex;"><span>total <span style="color:#099">120</span>
+</span></span><span style="display:flex;"><span>-rwx------@  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">314</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 16:27 docker-show-repo-tag.sh
+</span></span><span style="display:flex;"><span>-rwx------@  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">406</span>  <span style="color:#099">9</span>  <span style="color:#099">6</span> 20:35 docker-redis-7.0-run.sh
+</span></span><span style="display:flex;"><span>-rwx------@  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">469</span>  <span style="color:#099">9</span>  <span style="color:#099">7</span> 00:58 docker-mongo-6.0-run.sh
+</span></span><span style="display:flex;"><span>-rwx------@  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">357</span>  <span style="color:#099">9</span>  <span style="color:#099">7</span> 11:39 docker-start-container.sh
+</span></span><span style="display:flex;"><span>-rwx------   <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">149</span>  <span style="color:#099">9</span>  <span style="color:#099">8</span> 18:02 docker-python-demo-v1.0-run.sh
+</span></span><span style="display:flex;"><span>-rwx------   <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">147</span>  <span style="color:#099">9</span>  <span style="color:#099">8</span> 18:04 docker-nodejs-demo-v1.0-run.sh
+</span></span><span style="display:flex;"><span>-rwx------   <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">145</span>  <span style="color:#099">9</span>  <span style="color:#099">8</span> 18:08 docker-java-demo-v1.0-run.sh
+</span></span><span style="display:flex;"><span>-rwx------   <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">146</span>  <span style="color:#099">9</span>  <span style="color:#099">9</span> 14:29 docker-go-demo-v1.0-run.sh
+</span></span><span style="display:flex;"><span>-rwx------   <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">180</span>  <span style="color:#099">9</span> <span style="color:#099">20</span> 14:55 docker-getting-started-laster-run.sh
+</span></span><span style="display:flex;"><span>-rwx------   <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">557</span>  <span style="color:#099">9</span> <span style="color:#099">27</span> 21:48 demo.sh
+</span></span><span style="display:flex;"><span>-rwx------   <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">548</span>  <span style="color:#099">9</span> <span style="color:#099">28</span> 11:29 docker-nginx-1.22.0-run.sh
+</span></span><span style="display:flex;"><span>-rwx------@  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">590</span>  <span style="color:#099">9</span> <span style="color:#099">29</span> 19:26 docker-mysql-8.0-run.sh
+</span></span><span style="display:flex;"><span>-rwx------@  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">356</span>  <span style="color:#099">9</span> <span style="color:#099">30</span> 17:02 docker-stop-container.sh
+</span></span><span style="display:flex;"><span>-rwx------   <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">347</span> <span style="color:#099">10</span>  <span style="color:#099">2</span> 18:02 docker-minio-latest-run.sh
+</span></span><span style="display:flex;"><span>-rwx------@  <span style="color:#099">1</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">550</span> <span style="color:#099">10</span>  <span style="color:#099">2</span> 19:09 docker-etcd-latest-run.sh
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#099">10</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">320</span> <span style="color:#099">10</span>  <span style="color:#099">2</span> 16:20 ..
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#099">17</span> <span style="color:#0086b3">test</span>  staff  <span style="color:#099">544</span> <span style="color:#099">10</span>  <span style="color:#099">2</span> 19:12 .
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 给700权限</span>
 </span></span><span style="display:flex;"><span>chmod <span style="color:#099">700</span> *.sh
@@ -2752,8 +2802,106 @@
 </span></span><span style="display:flex;"><span>root@46b779b40bb5:/#
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="12结语">12、结语</h2>
-<h3 id="121-最后环境准备好了运行信息如下">12.1 最后环境准备好了，运行信息如下</h3>
+</div><h2 id="12minio">12、minio</h2>
+<h3 id="121-安装minio需要的tags">12.1 安装minio需要的tags</h3>
+<p>直接安装最新版本</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker pull quay.io/minio/minio:latest
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="122-启动minio容器">12.2 启动minio容器</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-d <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--network bridge <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--restart<span style="color:#000;font-weight:bold">=</span>always <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--privileged<span style="color:#000;font-weight:bold">=</span><span style="color:#0086b3">true</span> <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-p 9000:9000 <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-p 9090:9090 <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--user <span style="color:#000;font-weight:bold">$(</span>id -u<span style="color:#000;font-weight:bold">)</span>:<span style="color:#000;font-weight:bold">$(</span>id -g<span style="color:#000;font-weight:bold">)</span> <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--name minio1 <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-e <span style="color:#d14">&#34;MINIO_ROOT_USER=admin&#34;</span> <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-e <span style="color:#d14">&#34;MINIO_ROOT_PASSWORD=admin123456&#34;</span> <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-v /Users/<span style="color:#d14">${</span><span style="color:#008080">whoami</span><span style="color:#d14">}</span>/Downloads/Docker/minio/data:/data <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>quay.io/minio/minio server /data --console-address <span style="color:#d14">&#34;:9090&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-d</td>
+<td>后台运行容器</td>
+</tr>
+<tr>
+<td>-p 9000:9000<br>-p 9090:9090</td>
+<td>把容器内的9000端口、9090端口分别映射到宿主机9000端口、9090端口</td>
+</tr>
+<tr>
+<td>&ndash;name</td>
+<td>minio容器名称</td>
+</tr>
+<tr>
+<td>&ndash;network</td>
+<td>网络</td>
+</tr>
+<tr>
+<td>–-restart always</td>
+<td>开机启动</td>
+</tr>
+<tr>
+<td>–-privileged=true</td>
+<td>提升容器内权限（false可能会因权限导致无法启动）</td>
+</tr>
+<tr>
+<td>&ndash;user</td>
+<td>设置属组权限</td>
+</tr>
+<tr>
+<td>-e &ldquo;MINIO_ROOT_USER=admin&rdquo;</td>
+<td>设置 root 账号</td>
+</tr>
+<tr>
+<td>-e &ldquo;MINIO_ROOT_PASSWORD=admin123456&rdquo;</td>
+<td>设置 root 密码</td>
+</tr>
+<tr>
+<td>-v /Users/${whoami}/Downloads/Docker/minio/data:/data</td>
+<td>绑定minio 的数据目录</td>
+</tr>
+<tr>
+<td>&ndash;console-address &ldquo;:9090&rdquo;</td>
+<td>启动参数，控制台端口9090</td>
+</tr>
+</tbody>
+</table>
+<h3 id="123-启停minio容器">12.3 启停minio容器</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -2773,28 +2921,264 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker ps -a
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                           COMMAND                  CREATED          STATUS          PORTS                                            NAMES
+</span></span><span style="display:flex;"><span>aa0b29848539   quay.io/coreos/etcd:latest      <span style="color:#d14">&#34;/usr/local/bin/etcd…&#34;</span>   <span style="color:#099">49</span> minutes ago   Up <span style="color:#099">49</span> minutes   0.0.0.0:2379-2380-&gt;2379-2380/tcp                 etcd
+</span></span><span style="display:flex;"><span>8cc751e02862   quay.io/minio/minio             <span style="color:#d14">&#34;/usr/bin/docker-ent…&#34;</span>   <span style="color:#099">2</span> hours ago      Up <span style="color:#099">2</span> hours      0.0.0.0:9000-&gt;9000/tcp, 0.0.0.0:9090-&gt;9090/tcp   minio1
+</span></span><span style="display:flex;"><span>1ee4158a624a   docker/getting-started:latest   <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">12</span> days ago      Up <span style="color:#099">34</span> minutes   0.0.0.0:3000-&gt;3000/tcp, 0.0.0.0:8001-&gt;80/tcp     getting-started-latest
+</span></span><span style="display:flex;"><span>46b779b40bb5   nginx:1.22.0                    <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">2</span> weeks ago      Up <span style="color:#099">35</span> minutes   0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp         nginx1.22.0
+</span></span><span style="display:flex;"><span>83c107ac3c1b   docker-gs-ping:v1.0             <span style="color:#d14">&#34;/docker-gs-ping&#34;</span>        <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">34</span> minutes   0.0.0.0:8081-&gt;8081/tcp                           go-docker-v1
+</span></span><span style="display:flex;"><span>170ce646f5cd   java-docker:v1.0                <span style="color:#d14">&#34;./mvnw spring-boot:…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">34</span> minutes   0.0.0.0:8080-&gt;8080/tcp                           java-docker-v1
+</span></span><span style="display:flex;"><span>439741b1c983   node-docker:v1.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">34</span> minutes   0.0.0.0:8000-&gt;8000/tcp                           nodejs-docker-v1
+</span></span><span style="display:flex;"><span>77c73cd73550   python-docker:v1.0              <span style="color:#d14">&#34;python3 -m flask ru…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">34</span> minutes   0.0.0.0:5000-&gt;5000/tcp                           python-docker-v1
+</span></span><span style="display:flex;"><span>5d3e522b6295   mongo:6.0                       <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">35</span> minutes   0.0.0.0:27017-&gt;27017/tcp                         mongo6
+</span></span><span style="display:flex;"><span>e7bbf340c66c   redis:7.0                       <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">35</span> minutes   0.0.0.0:6379-&gt;6379/tcp                           redis7
+</span></span><span style="display:flex;"><span>b055811ce23c   mysql:8.0                       <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">35</span> minutes   0.0.0.0:3306-&gt;3306/tcp, 33060/tcp                mysql8
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker stop 8cc751e02862
+</span></span><span style="display:flex;"><span>8cc751e02862
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker start 8cc751e02862
+</span></span><span style="display:flex;"><span>8cc751e02862 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="13etcd">13、etcd</h2>
+<h3 id="131-安装etcd需要的tags">13.1 安装etcd需要的tags</h3>
+<p>直接安装最新版本</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker pull quay.io/coreos/etcd:latest
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="132-启动etcd容器">13.2 启动etcd容器</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#008080">NODE1</span><span style="color:#000;font-weight:bold">=</span>0.0.0.0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#008080">REGISTRY</span><span style="color:#000;font-weight:bold">=</span>quay.io/coreos/etcd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker run <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-d <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-p 2379:2379 <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>-p 2380:2380 <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--name etcd <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--network bridge <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--restart<span style="color:#000;font-weight:bold">=</span>always <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--privileged<span style="color:#000;font-weight:bold">=</span><span style="color:#0086b3">true</span> <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--volume<span style="color:#000;font-weight:bold">=</span>/Users/<span style="color:#d14">${</span><span style="color:#008080">whoami</span><span style="color:#d14">}</span>/Downloads/Docker/etcd/data:/etcd/data <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span><span style="color:#d14">${</span><span style="color:#008080">REGISTRY</span><span style="color:#d14">}</span>:latest <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>/usr/local/bin/etcd <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--data-dir<span style="color:#000;font-weight:bold">=</span>/etcd/data --name node1 <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--initial-advertise-peer-urls http://<span style="color:#d14">${</span><span style="color:#008080">NODE1</span><span style="color:#d14">}</span>:2380 --listen-peer-urls http://0.0.0.0:2380 <span style="color:#d14">\
+</span></span></span><span style="display:flex;"><span><span style="color:#d14"></span>--advertise-client-urls http://<span style="color:#d14">${</span><span style="color:#008080">NODE1</span><span style="color:#d14">}</span>:2379 --listen-client-urls http://0.0.0.0:2379 <span style="color:#d14">\
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-d</td>
+<td>后台运行容器</td>
+</tr>
+<tr>
+<td>-p 2379:2379<br>-p 2380:2380</td>
+<td>把容器内的2379端口、2380端口分别映射到宿主机2379端口、2380端口</td>
+</tr>
+<tr>
+<td>&ndash;name</td>
+<td>etcd容器名称</td>
+</tr>
+<tr>
+<td>&ndash;network</td>
+<td>网络</td>
+</tr>
+<tr>
+<td>–-restart always</td>
+<td>开机启动</td>
+</tr>
+<tr>
+<td>–-privileged=true</td>
+<td>提升容器内权限（false可能会因权限导致无法启动）</td>
+</tr>
+<tr>
+<td>&ndash;volume=/Users/${whoami}/Downloads/Docker/etcd/data:/etcd/data</td>
+<td>绑定数据目录</td>
+</tr>
+<tr>
+<td>${REGISTRY}:latest</td>
+<td>etcd(repository) : latest(tag)</td>
+</tr>
+<tr>
+<td>&ndash;data-dir</td>
+<td>etcd 数据目录</td>
+</tr>
+<tr>
+<td>&ndash;name</td>
+<td>etcd 名称 node1</td>
+</tr>
+<tr>
+<td>&ndash;initial-advertise-peer-urls http://${NODE1}:2380</td>
+<td>该节点同伴监听地址，这个值会告诉集群中其他节点。</td>
+</tr>
+<tr>
+<td>&ndash;listen-peer-urls http://0.0.0.0:2380</td>
+<td>和同伴通信的地址，比如http://ip:2380，如果有多个，使用逗号分隔。需要所有节点都能够访问，所以不要使用 localhost！</td>
+</tr>
+<tr>
+<td>&ndash;advertise-client-urls http://${NODE1}:2379</td>
+<td>对外公告的该节点客户端监听地址，这个值会告诉集群中其他节点。</td>
+</tr>
+<tr>
+<td>&ndash;listen-client-urls http://0.0.0.0:2379</td>
+<td>对外提供服务的地址：比如http://ip:2379,http://127.0.0.1:2379，客户端会连接到这里和 etcd 交互。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="133-启停etcd容器">13.3 启停etcd容器</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker ps -a
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                           COMMAND                  CREATED          STATUS          PORTS                                            NAMES
+</span></span><span style="display:flex;"><span>aa0b29848539   quay.io/coreos/etcd:latest      <span style="color:#d14">&#34;/usr/local/bin/etcd…&#34;</span>   <span style="color:#099">49</span> minutes ago   Up <span style="color:#099">49</span> minutes   0.0.0.0:2379-2380-&gt;2379-2380/tcp                 etcd
+</span></span><span style="display:flex;"><span>8cc751e02862   quay.io/minio/minio             <span style="color:#d14">&#34;/usr/bin/docker-ent…&#34;</span>   <span style="color:#099">2</span> hours ago      Up <span style="color:#099">2</span> hours      0.0.0.0:9000-&gt;9000/tcp, 0.0.0.0:9090-&gt;9090/tcp   minio1
+</span></span><span style="display:flex;"><span>1ee4158a624a   docker/getting-started:latest   <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">12</span> days ago      Up <span style="color:#099">34</span> minutes   0.0.0.0:3000-&gt;3000/tcp, 0.0.0.0:8001-&gt;80/tcp     getting-started-latest
+</span></span><span style="display:flex;"><span>46b779b40bb5   nginx:1.22.0                    <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">2</span> weeks ago      Up <span style="color:#099">35</span> minutes   0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp         nginx1.22.0
+</span></span><span style="display:flex;"><span>83c107ac3c1b   docker-gs-ping:v1.0             <span style="color:#d14">&#34;/docker-gs-ping&#34;</span>        <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">34</span> minutes   0.0.0.0:8081-&gt;8081/tcp                           go-docker-v1
+</span></span><span style="display:flex;"><span>170ce646f5cd   java-docker:v1.0                <span style="color:#d14">&#34;./mvnw spring-boot:…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">34</span> minutes   0.0.0.0:8080-&gt;8080/tcp                           java-docker-v1
+</span></span><span style="display:flex;"><span>439741b1c983   node-docker:v1.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">34</span> minutes   0.0.0.0:8000-&gt;8000/tcp                           nodejs-docker-v1
+</span></span><span style="display:flex;"><span>77c73cd73550   python-docker:v1.0              <span style="color:#d14">&#34;python3 -m flask ru…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">34</span> minutes   0.0.0.0:5000-&gt;5000/tcp                           python-docker-v1
+</span></span><span style="display:flex;"><span>5d3e522b6295   mongo:6.0                       <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">35</span> minutes   0.0.0.0:27017-&gt;27017/tcp                         mongo6
+</span></span><span style="display:flex;"><span>e7bbf340c66c   redis:7.0                       <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">35</span> minutes   0.0.0.0:6379-&gt;6379/tcp                           redis7
+</span></span><span style="display:flex;"><span>b055811ce23c   mysql:8.0                       <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">35</span> minutes   0.0.0.0:3306-&gt;3306/tcp, 33060/tcp                mysql8
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker stop aa0b29848539
+</span></span><span style="display:flex;"><span>aa0b29848539
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker start aa0b29848539
+</span></span><span style="display:flex;"><span>aa0b29848539 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="14结语">14、结语</h2>
+<h3 id="141-最后环境准备好了运行信息如下">14.1 最后环境准备好了，运行信息如下</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 容器信息如下：</span>
 </span></span><span style="display:flex;"><span>docker ps -a
-</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                    COMMAND                  CREATED        STATUS        PORTS                               NAMES
-</span></span><span style="display:flex;"><span>46b779b40bb5   nginx:1.22.0             <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">3</span> days ago    Up <span style="color:#099">48</span> minutes              0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   nginx1.22.0
-</span></span><span style="display:flex;"><span>5d3e522b6295   mongo:6.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">9</span> hours ago    Up <span style="color:#099">9</span> hours    0.0.0.0:27017-&gt;27017/tcp            mongo6
-</span></span><span style="display:flex;"><span>e7bbf340c66c   redis:7.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">13</span> hours ago   Up <span style="color:#099">13</span> hours   0.0.0.0:6379-&gt;6379/tcp              redis7
-</span></span><span style="display:flex;"><span>b055811ce23c   mysql:8.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">17</span> hours ago   Up <span style="color:#099">17</span> hours   0.0.0.0:3306-&gt;3306/tcp, 33060/tcp   mysql8
-</span></span><span style="display:flex;"><span>d439c916d2e4   docker/getting-started   <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">23</span> hours ago   Up <span style="color:#099">23</span> hours   0.0.0.0:80-&gt;80/tcp                  crazy_chatterjee
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                           COMMAND                  CREATED          STATUS          PORTS                                            NAMES
+</span></span><span style="display:flex;"><span>aa0b29848539   quay.io/coreos/etcd:latest      <span style="color:#d14">&#34;/usr/local/bin/etcd…&#34;</span>   <span style="color:#099">49</span> minutes ago   Up <span style="color:#099">49</span> minutes   0.0.0.0:2379-2380-&gt;2379-2380/tcp                 etcd
+</span></span><span style="display:flex;"><span>8cc751e02862   quay.io/minio/minio             <span style="color:#d14">&#34;/usr/bin/docker-ent…&#34;</span>   <span style="color:#099">2</span> hours ago      Up <span style="color:#099">2</span> hours      0.0.0.0:9000-&gt;9000/tcp, 0.0.0.0:9090-&gt;9090/tcp   minio1
+</span></span><span style="display:flex;"><span>1ee4158a624a   docker/getting-started:latest   <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">12</span> days ago      Up <span style="color:#099">34</span> minutes   0.0.0.0:3000-&gt;3000/tcp, 0.0.0.0:8001-&gt;80/tcp     getting-started-latest
+</span></span><span style="display:flex;"><span>46b779b40bb5   nginx:1.22.0                    <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">2</span> weeks ago      Up <span style="color:#099">35</span> minutes   0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp         nginx1.22.0
+</span></span><span style="display:flex;"><span>83c107ac3c1b   docker-gs-ping:v1.0             <span style="color:#d14">&#34;/docker-gs-ping&#34;</span>        <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">34</span> minutes   0.0.0.0:8081-&gt;8081/tcp                           go-docker-v1
+</span></span><span style="display:flex;"><span>170ce646f5cd   java-docker:v1.0                <span style="color:#d14">&#34;./mvnw spring-boot:…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">34</span> minutes   0.0.0.0:8080-&gt;8080/tcp                           java-docker-v1
+</span></span><span style="display:flex;"><span>439741b1c983   node-docker:v1.0                <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">34</span> minutes   0.0.0.0:8000-&gt;8000/tcp                           nodejs-docker-v1
+</span></span><span style="display:flex;"><span>77c73cd73550   python-docker:v1.0              <span style="color:#d14">&#34;python3 -m flask ru…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">34</span> minutes   0.0.0.0:5000-&gt;5000/tcp                           python-docker-v1
+</span></span><span style="display:flex;"><span>5d3e522b6295   mongo:6.0                       <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">35</span> minutes   0.0.0.0:27017-&gt;27017/tcp                         mongo6
+</span></span><span style="display:flex;"><span>e7bbf340c66c   redis:7.0                       <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">35</span> minutes   0.0.0.0:6379-&gt;6379/tcp                           redis7
+</span></span><span style="display:flex;"><span>b055811ce23c   mysql:8.0                       <span style="color:#d14">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#099">3</span> weeks ago      Up <span style="color:#099">35</span> minutes   0.0.0.0:3306-&gt;3306/tcp, 33060/tcp                mysql8
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 镜像信息如下：</span>
 </span></span><span style="display:flex;"><span>docker images
 </span></span><span style="display:flex;"><span>REPOSITORY               TAG       IMAGE ID       CREATED        SIZE
-</span></span><span style="display:flex;"><span>nginx                    1.22.0    2467b41f2ddd   <span style="color:#099">4</span> days ago     142MB
-</span></span><span style="display:flex;"><span>mongo                    6.0       d34d21a9eb5b   <span style="color:#099">4</span> days ago     693MB
-</span></span><span style="display:flex;"><span>mysql                    8.0       ff3b5098b416   <span style="color:#099">7</span> days ago     447MB
-</span></span><span style="display:flex;"><span>redis                    7.0       dc7b40a0b05d   <span style="color:#099">2</span> weeks ago    117MB
-</span></span><span style="display:flex;"><span>docker/getting-started   latest    cb90f98fd791   <span style="color:#099">4</span> months ago   28.8MB
+</span></span><span style="display:flex;"><span>quay.io/minio/minio      latest    7857bafef273   <span style="color:#099">6</span> days ago     228MB
+</span></span><span style="display:flex;"><span>nginx                    1.22.0    2467b41f2ddd   <span style="color:#099">2</span> weeks ago    142MB
+</span></span><span style="display:flex;"><span>docker-gs-ping           v1.0      3b7b51a5f6d6   <span style="color:#099">3</span> weeks ago    541MB
+</span></span><span style="display:flex;"><span>node-docker              v1.0      2378b1604401   <span style="color:#099">3</span> weeks ago    944MB
+</span></span><span style="display:flex;"><span>java-docker              v1.0      04764e57adf2   <span style="color:#099">3</span> weeks ago    559MB
+</span></span><span style="display:flex;"><span>python-docker            v1.0      cbc159df0b06   <span style="color:#099">3</span> weeks ago    129MB
+</span></span><span style="display:flex;"><span>mongo                    6.0       d34d21a9eb5b   <span style="color:#099">4</span> weeks ago    693MB
+</span></span><span style="display:flex;"><span>mysql                    8.0       ff3b5098b416   <span style="color:#099">4</span> weeks ago    447MB
+</span></span><span style="display:flex;"><span>redis                    7.0       dc7b40a0b05d   <span style="color:#099">5</span> weeks ago    117MB
+</span></span><span style="display:flex;"><span>docker/getting-started   latest    cb90f98fd791   <span style="color:#099">5</span> months ago   28.8MB
+</span></span><span style="display:flex;"><span>quay.io/coreos/etcd      latest    61ad63875109   <span style="color:#099">4</span> years ago    39.5MB
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="122-停止容器">12.2 停止容器</h3>
+</div><h3 id="142-停止容器">14.2 停止容器</h3>
 <p>停止脚本如下：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -2877,7 +3261,7 @@
 </span></span><span style="display:flex;"><span>d439c916d2e4   docker/getting-started   <span style="color:#d14">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#099">24</span> hours ago   Exited <span style="color:#000;font-weight:bold">(</span>0<span style="color:#000;font-weight:bold">)</span> <span style="color:#099">5</span> seconds ago              crazy_chatterjee
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="123-启动脚本如下">12.3 启动脚本如下</h3>
+</div><h3 id="143-启动脚本如下">14.3 启动脚本如下</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
