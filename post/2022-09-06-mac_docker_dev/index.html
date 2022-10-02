@@ -199,6 +199,7 @@
         <li><a href="#121-安装minio需要的tags">12.1 安装minio需要的tags</a></li>
         <li><a href="#122-启动minio容器">12.2 启动minio容器</a></li>
         <li><a href="#123-启停minio容器">12.3 启停minio容器</a></li>
+        <li><a href="#124-进入minio控制台">12.4 进入minio控制台</a></li>
       </ul>
     </li>
     <li><a href="#13etcd">13、etcd</a>
@@ -206,6 +207,7 @@
         <li><a href="#131-安装etcd需要的tags">13.1 安装etcd需要的tags</a></li>
         <li><a href="#132-启动etcd容器">13.2 启动etcd容器</a></li>
         <li><a href="#133-启停etcd容器">13.3 启停etcd容器</a></li>
+        <li><a href="#134-进入etcd容器内部">13.4 进入etcd容器内部</a></li>
       </ul>
     </li>
     <li><a href="#14结语">14、结语</a>
@@ -332,11 +334,11 @@
 <td>1.22.0</td>
 </tr>
 <tr>
-<td>etcd</td>
+<td>minio</td>
 <td>latest</td>
 </tr>
 <tr>
-<td>minio</td>
+<td>etcd</td>
 <td>latest</td>
 </tr>
 </tbody>
@@ -2946,7 +2948,12 @@
 </span></span><span style="display:flex;"><span>8cc751e02862 
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="13etcd">13、etcd</h2>
+</div><h3 id="124-进入minio控制台">12.4 进入minio控制台</h3>
+<p>浏览器访问http://127.0.0.1:9090
+
+        <img class="mx-auto" alt="" src="/posts/docker/minio_console.png" />   
+    </p>
+<h2 id="13etcd">13、etcd</h2>
 <h3 id="131-安装etcd需要的tags">13.1 安装etcd需要的tags</h3>
 <p>直接安装最新版本</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -3110,6 +3117,27 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>docker start aa0b29848539
 </span></span><span style="display:flex;"><span>aa0b29848539 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="134-进入etcd容器内部">13.4 进入etcd容器内部</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker <span style="color:#0086b3">exec</span> -it etcd bin/sh
+</span></span><span style="display:flex;"><span>/ <span style="color:#998;font-style:italic"># etcdctl member list</span>
+</span></span><span style="display:flex;"><span>1c70f9bbb41018f: <span style="color:#008080">name</span><span style="color:#000;font-weight:bold">=</span>node1 <span style="color:#008080">peerURLs</span><span style="color:#000;font-weight:bold">=</span>http://0.0.0.0:2380 <span style="color:#008080">clientURLs</span><span style="color:#000;font-weight:bold">=</span>http://0.0.0.0:2379 <span style="color:#008080">isLeader</span><span style="color:#000;font-weight:bold">=</span><span style="color:#0086b3">true</span>
+</span></span><span style="display:flex;"><span>/ <span style="color:#998;font-style:italic"># etcdctl list</span>
+</span></span><span style="display:flex;"><span>No <span style="color:#0086b3">help</span> topic <span style="color:#000;font-weight:bold">for</span> <span style="color:#d14">&#39;list&#39;</span>
+</span></span><span style="display:flex;"><span>/ <span style="color:#998;font-style:italic"># etcdctl ls</span>
+</span></span><span style="display:flex;"><span>/ <span style="color:#998;font-style:italic">#</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="14结语">14、结语</h2>
