@@ -9,20 +9,20 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     
 
-    <title>JDK1.8.0.161版本bug定位 | Anttu&#39;s Blog</title>
-    <meta property="og:title" content="JDK1.8.0.161版本bug定位 - Anttu&#39;s Blog">
+    <title>docker修改运行的容器端口 | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="docker修改运行的容器端口 - Anttu&#39;s Blog">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2019-03-08T21:46:20&#43;08:00'>
+    <meta property="article:published_time" content='2022-11-14T00:29:47&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2019-03-08T21:46:20&#43;08:00'>
+    <meta property="article:modified_time" content='2022-11-14T00:29:47&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
-    <meta name="description" content="JDK的bug">
+    <meta name="description" content="docker修改运行的容器端口">
         
     <meta name="author" content="Anttu">
-    <meta property="og:url" content="https://anTtutu.github.io/post/2019-03-11-jdkbug/">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2022-11-14-docker_port/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -142,19 +142,24 @@
         <nav id="TableOfContents">
   <ul>
     <li><a href="#前言">前言</a></li>
-    <li><a href="#1错误日志">1、错误日志</a></li>
-    <li><a href="#2检查代码和修改记录">2、检查代码和修改记录</a></li>
-    <li><a href="#3继续啃问题">3、继续啃问题</a></li>
-    <li><a href="#4抛弃baidu用google">4、抛弃baidu用google</a></li>
-    <li><a href="#5垃圾百度google有用">5、垃圾百度，google有用</a></li>
-    <li><a href="#6下载新update版本jdk">6、下载新update版本jdk</a></li>
-    <li><a href="#7附上错误信息截图">7、附上错误信息截图</a>
+    <li><a href="#1linux">1、Linux</a>
       <ul>
-        <li><a href="#openjdk的版本错误信息描述">OpenJDK的版本错误信息描述：</a></li>
-        <li><a href="#openjdk的错误样例">OpenJDK的错误样例：</a></li>
-        <li><a href="#业务日志中的错误信息">业务日志中的错误信息：</a></li>
-        <li><a href="#业务所在服务器的jdk版本和安装时间">业务所在服务器的JDK版本和安装时间：</a></li>
-        <li><a href="#ps">PS：</a></li>
+        <li><a href="#11-先停止容器">1.1 先停止容器</a></li>
+        <li><a href="#12-然后查询完整的容器id">1.2 然后查询完整的容器id</a></li>
+        <li><a href="#13-打开hostconfigjson配置文件">1.3 打开hostconfig.json配置文件</a></li>
+        <li><a href="#14-还有不用完整的容器id也可以可选跟13相同">1.4 还有不用完整的容器id也可以(可选，跟1.3相同)</a></li>
+        <li><a href="#15-修改hostconfigjson配置文件">1.5 修改hostconfig.json配置文件</a></li>
+        <li><a href="#16-修改configv2json或configjson">1.6 修改config.v2.json或config.json</a></li>
+        <li><a href="#17-然后重启容器">1.7 然后重启容器</a></li>
+        <li><a href="#18-查询修改的端口">1.8 查询修改的端口</a></li>
+        <li><a href="#19-启动容器">1.9 启动容器</a></li>
+      </ul>
+    </li>
+    <li><a href="#2mac">2、Mac</a>
+      <ul>
+        <li><a href="#11-启动justincormacknsenter1">1.1 启动justincormack/nsenter1</a></li>
+        <li><a href="#22-进入容器">2.2 进入容器</a></li>
+        <li><a href="#23-修改configv2json和hostconfigjson">2.3 修改config.v2.json和hostconfig.json</a></li>
       </ul>
     </li>
   </ul>
@@ -194,21 +199,17 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title">JDK1.8.0.161版本bug定位</h1>
+            <h1 class="post-title">docker修改运行的容器端口</h1>
         </header>
         <date class="post-meta meta-date">
-            2019年3月8日
+            2022年11月14日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
             <span class="meta-category">
-                <a href='/categories/bug' target="_blank">bug</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/java' target="_blank">java</a>
+                <a href='/categories/docker' target="_blank">docker</a>
             </span>
             
         </div>
@@ -228,61 +229,257 @@
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>好好运行的系统，突然故障，无意间根据错误信息查找，竟然是jdk的bug，描述下曲折的定位过程。</p>
-<h2 id="1错误日志">1、错误日志</h2>
-<p>有个老系统有使用到soap接口，采用CXF结合接口文件wsdl自动生成的接口开发的，突然在3月2日（后续日志定位才发现真正故障的时间）无法正常工作，但是实际发现时间已经到了3月6日了，直接查看日志文件，报错“组装saop报文头异常:Entity References are not allowed in SOAP documents”</p>
-<p>想到看看是不是代码做了什么改动，进svn版本管理工具对比，没有改动，最近一次部署是在3月5日上午，3月2日周六突然就故障了，属于突发性异常，感觉可以排除自身的问题，然后去咨询服务端系统，对方说也没有任何改动，现在才接手，不可能进行新的开发。</p>
-<p>但是接口一直在日志中打印错误，对比svn提交记录，发现确实没人改动代码，难道是对方动了代码？</p>
-<p>抱着这种心态总觉得是服务端异常了。
-
-        <img class="mx-auto" alt="" src="/posts/jdkbug/error.jpg" />   
-    </p>
-<h2 id="2检查代码和修改记录">2、检查代码和修改记录</h2>
-<p>有了这个排除自己代码改动造成异常的前提后，始终觉得是服务端异常了，然后通过抓包对比正常接口、异常接口，SoapUI发送，重现错误返回值等一系列对比，3月6、7日没有任何结果，唯一发现就是报错的接口没有soap请求没有head信息，只有UTF-8的字符集和body，这种结构就有些奇怪了，难道是鉴权账号被锁？</p>
-<p>继续用soapUI测试这个账号，其他接口跑起来正常，修改了一条数据返回是success，更加郁闷了，怎么可能head平白无故丢失呢？</p>
-<h2 id="3继续啃问题">3、继续啃问题</h2>
-<p>继续啃这个问题，因为有数据堵住了，慢慢积压越来越多，这样下去迟早会造成更大的失误。</p>
-<p>问题还是要继续解决，只好重新打包个测试包，去测试环境对接soap服务端，下个订单，查看日志和抓包，查看接口推送的请求，测试环境验证正常，说明代码OK，抓包查看xml报文，head和body都在。</p>
-<p>6、7日的对比把报错的信息复制到百度看看有没查询到类似的案例，结果都是乱七八糟的一堆东西，没什么价值。</p>
-<h2 id="4抛弃baidu用google">4、抛弃baidu用google</h2>
-<p>6、7号1天半没找到问题，但是又不可以继续拖了，试试google呗，一下眼前一亮，第一条查询就是openJDK的bug库，一直没怀疑jdk的bug，始终认为它是正常的，赶快找到jdk bug库，把关键字放进去一查询，查到结果有个bug单，心里一喜，终于找到问题原因了。</p>
-<p>啃了2天半了，终于找到问题的原因了：<br>
-OpenJDK bug库: <a href="https://bugs.openjdk.java.net/browse/JDK-8196491">https://bugs.openjdk.java.net/browse/JDK-8196491</a><br>
-OracleJDK bug库: <a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8196491">https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8196491</a><br>
-stackoverflow bug讨论: <a href="https://stackoverflow.com/questions/48603942/latest-open-jdk-8-jaxb-library-fails-to-unmarshal-objects-with-properties-that-c">https://stackoverflow.com/questions/48603942/latest-open-jdk-8-jaxb-library-fails-to-unmarshal-objects-with-properties-that-c</a></p>
-<h2 id="5垃圾百度google有用">5、垃圾百度，google有用</h2>
-<p>这里吐槽下，垃圾百度，以前还可以筛选一些有用的信息，这次白白浪费2天的时间，没有价值的信息一堆，就放弃网上找案例了。</p>
-<p>google里面可以找到stackoverflow和openjdk的链接，已经确认jdk1.8.0版本的bug，2018年01月份暴露该bug，2018年04月份修复，修复版本是1.8.0.192。</p>
-<h2 id="6下载新update版本jdk">6、下载新update版本jdk</h2>
-<p>立马下载最新202 update版本，部署环境，重新，偶然没有出现相同的错了，然后一看时间，已经是3月8日21:30了，继续观察下，确认正常，问题得以修复。</p>
-<p>估算堵住的数据，预计还需要36小时才可以处理完，周末时间刚好。这下周末可以轻松下，不用跑来继续啃问题了。</p>
-<h2 id="7附上错误信息截图">7、附上错误信息截图</h2>
-<h3 id="openjdk的版本错误信息描述">OpenJDK的版本错误信息描述：</h3>
-<p>
-        <img class="mx-auto" alt="" src="/posts/jdkbug/jdkbug.jpg" />   
-    </p>
-<h3 id="openjdk的错误样例">OpenJDK的错误样例：</h3>
-<p>
-        <img class="mx-auto" alt="" src="/posts/jdkbug/bug2.jpg" />   
-    </p>
-<h3 id="业务日志中的错误信息">业务日志中的错误信息：</h3>
-<p>
-        <img class="mx-auto" alt="" src="/posts/jdkbug/buglog.jpg" />   
-    </p>
-<h3 id="业务所在服务器的jdk版本和安装时间">业务所在服务器的JDK版本和安装时间：</h3>
-<p>
-        <img class="mx-auto" alt="" src="/posts/jdkbug/log.jpg" />   
-    </p>
-<h3 id="ps">PS：</h3>
-<p>有一点是这个jdk跑了这个出bug的业务差不多1年了，为啥这1年不出问题呢？怀疑是header里的鉴权session字符串开始用完纯字母类型的，出现带特殊字符的了，从开始出现特殊字符就触发这个bug</p>
-
+<p>有时候docker容器已经运行了，发现端口占用或者冲突了，不方便删除重新运行容器，可以通过修改配置文件方式来调整端口</p>
+<h2 id="1linux">1、Linux</h2>
+<h3 id="11-先停止容器">1.1 先停止容器</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker stop <span style="color:#000;font-weight:bold">{</span>容器的名称或者id<span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="12-然后查询完整的容器id">1.2 然后查询完整的容器id</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker inspect <span style="color:#000;font-weight:bold">{</span>容器的名称或者id<span style="color:#000;font-weight:bold">}</span> | grep Id
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 比如如下示例</span>
+</span></span><span style="display:flex;"><span><span style="color:#d14">&#34;Id&#34;</span>: <span style="color:#d14">&#34;cbe26510c276fa9a4487a8c2af8cbb49410f2a5305149d2b26eb8ce37c777d00&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="13-打开hostconfigjson配置文件">1.3 打开hostconfig.json配置文件</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vi /var/lib/docker/containers/<span style="color:#000;font-weight:bold">{</span>hash_of_the_container<span style="color:#000;font-weight:bold">}</span>/hostconfig.json
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 比如示例的Id</span>
+</span></span><span style="display:flex;"><span>vi /var/lib/docker/containers/cbe26510c276fa9a4487a8c2af8cbb49410f2a5305149d2b26eb8ce37c777d00/hostconfig.json
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="14-还有不用完整的容器id也可以可选跟13相同">1.4 还有不用完整的容器id也可以(可选，跟1.3相同)</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0086b3">cd</span> /var/lib/docker/containers/<span style="color:#000;font-weight:bold">{</span>hash_of_the_container<span style="color:#000;font-weight:bold">}</span>*
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 比如示例的</span>
+</span></span><span style="display:flex;"><span><span style="color:#0086b3">cd</span> /var/lib/docker/containers/cbe26510c276*
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vi hostconfig.json
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="15-修改hostconfigjson配置文件">1.5 修改hostconfig.json配置文件</h3>
+<p>在 hostconfig.json 配置文件中，找到 &ldquo;PortBindings&rdquo;:{} 这个配置项，然后进行修改。
+HostPort 对应的端口代表 宿主机 的端口。</p>
+<p>PS:
+建议容器使用什么端口，宿主机就映射什么端口，方便以后管理。当然，具体情况，具体分析。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&#34;PortBindings&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&#34;8502/tcp&#34;</span>: [
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#000080">&#34;HostIp&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#000080">&#34;HostPort&#34;</span>: <span style="color:#d14">&#34;8502&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        ],
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&#34;8505/tcp&#34;</span>: [
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#000080">&#34;HostIp&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#000080">&#34;HostPort&#34;</span>: <span style="color:#d14">&#34;8505&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="16-修改configv2json或configjson">1.6 修改config.v2.json或config.json</h3>
+<p>如果 config.v2.json 配置文件或者 config.json 配置文件中也记录了端口，也需要进行修改，如果没有，就不需要改。</p>
+<p>只需要修改 &ldquo;ExposedPorts&rdquo;: {} 相关之处。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&#34;Args&#34;</span>: [],
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&#34;Config&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&#34;ExposedPorts&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&#34;8502/tcp&#34;</span>: {},
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&#34;8505/tcp&#34;</span>: {}
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&#34;Entrypoint&#34;</span>: [
+</span></span><span style="display:flex;"><span>            <span style="color:#d14">&#34;/bin/sh&#34;</span>
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="17-然后重启容器">1.7 然后重启容器</h3>
+<p>最后重启 docker</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 重启 docker</span>
+</span></span><span style="display:flex;"><span>service docker restart
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 或者</span>
+</span></span><span style="display:flex;"><span>systemctl restart docker
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="18-查询修改的端口">1.8 查询修改的端口</h3>
+<p>查看容器相关配置信息：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker inspect <span style="color:#000;font-weight:bold">{</span>容器的名称或者 id <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 比如示例</span>
+</span></span><span style="display:flex;"><span>docker inspect cbe26510c276
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="19-启动容器">1.9 启动容器</h3>
+<p>检查端口已经修改，可以启动容器了</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker start <span style="color:#000;font-weight:bold">{</span>容器的名称或者 id <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"># 比如：</span>
+</span></span><span style="display:flex;"><span>docker start cbe26510c276
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2mac">2、Mac</h2>
+<p>Mac要麻烦一些，因为在 Docker for MacOS 中，容器的宿主机并不是 MacOS 本身，而是在 MacOS 中运行的一个 VM 虚拟机
+。虚拟机的路径可以通过查看 Docker Desktop 的配置界面 Disk image location 配置获得。</p>
+<p>那么我们如何进入这个虚拟机呢？</p>
+<h3 id="11-启动justincormacknsenter1">1.1 启动justincormack/nsenter1</h3>
+<p>最简单的方式是采用 justincormack/nsenter1 进入，这个镜像只有 101KB，已经非常小了。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run -it --rm --privileged --pid<span style="color:#000;font-weight:bold">=</span>host justincormack/nsenter1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–rm</td>
+<td>表示在退出的时候就自动删除该容器；</td>
+</tr>
+<tr>
+<td>–privileged</td>
+<td>表示允许该容器访问宿主机（也就是我们想要登录的 VM ）中的各种设备；</td>
+</tr>
+<tr>
+<td>–pid=host</td>
+<td>表示允许容器共享宿主机的进程命名空间（namespace），或者通俗点儿解释就是允许容器看到宿主机中的各种进程；</td>
+</tr>
+<tr>
+<td>然后再进入 /var/lib/docker/containers 目录修改 config.v2.json 配置文件和 hostconfig.json 配置文件即可。整体来说，在 MacOS 上除了进入 /var/lib/docker/containers 目录时，进入方式有所不同以外，修改配置文件方式和上文一样。需要注意的是，修改的时候请使用 vi 编辑器，因为这个镜像没有安装 vim 编辑器的。</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="22-进入容器">2.2 进入容器</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker <span style="color:#0086b3">exec</span> -it <span style="color:#000;font-weight:bold">{</span>justincormack/nsenter1容器id<span style="color:#000;font-weight:bold">}</span> /bin/bash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="23-修改configv2json和hostconfigjson">2.3 修改config.v2.json和hostconfig.json</h3>
+<p>剩下的步骤跟linux一样</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vi /var/lib/docker/containers/a7377587b9f08cfe87af9a8ffa4da0f90bf07fb0a1cd6833a5ffcd9c37b842d0/config.v2.json
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vi /var/lib/docker/containers/a7377587b9f08cfe87af9a8ffa4da0f90bf07fb0a1cd6833a5ffcd9c37b842d0/hostconfig.json
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
         </div>
 
         
 <div class="post-archive">
     <ul class="post-copyright">
         <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
-        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2019-03-11-jdkbug/">https://anTtutu.github.io/post/2019-03-11-jdkbug/</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2022-11-14-docker_port/">https://anTtutu.github.io/post/2022-11-14-docker_port/</a></li>
         <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
     </ul>
 </div>
@@ -296,15 +493,15 @@ stackoverflow bug讨论: <a href="https://stackoverflow.com/questions/48603942/l
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/2018-05-08-oom/">java OOM的种类整理</a></li>
+        <li><a href="/post/2022-11-10-go_muilt_version/">go多版本管理工具</a></li>
         
-        <li><a href="/post/2018-03-19-springmvc/">springmvc的参数校验注解整理</a></li>
+        <li><a href="/post/2022-10-27-jenkins_reset/">jenkins的admin密码忘记了如何重置</a></li>
         
-        <li><a href="/post/2017-08-27-java_use_note/">java小日常记录-不定期更新</a></li>
+        <li><a href="/post/2022-09-27-docker_network/">docker网络模式</a></li>
         
-        <li><a href="/post/2017-08-23-xrebel/">web应用分析利器-xrebel</a></li>
+        <li><a href="/post/2022-09-13-dockerfile/">dockerfile</a></li>
         
-        <li><a href="/post/2017-06-05-jrebel/">eclipse之jrebel热部署插件</a></li>
+        <li><a href="/post/2022-09-06-mac_docker_dev/">Mac配置docker开发工具</a></li>
         
     </ul>
 </div>
@@ -312,13 +509,7 @@ stackoverflow bug讨论: <a href="https://stackoverflow.com/questions/48603942/l
 
         <div class="post-meta meta-tags">
             
-            <ul class="clearfix">
-                
-                <li><a href='/tags/bug' target="_blank">bug</a></li>
-                
-                <li><a href='/tags/java' target="_blank">java</a></li>
-                
-            </ul>
+            没有标签
             
         </div>
     </article>
