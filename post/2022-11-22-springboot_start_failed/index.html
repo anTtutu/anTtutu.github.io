@@ -9,20 +9,20 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     
 
-    <title>deepfacelab使用介绍 | Anttu&#39;s Blog</title>
-    <meta property="og:title" content="deepfacelab使用介绍 - Anttu&#39;s Blog">
+    <title>springboot常见兼容性错误 | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="springboot常见兼容性错误 - Anttu&#39;s Blog">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2021-03-29T00:29:47&#43;08:00'>
+    <meta property="article:published_time" content='2022-11-22T00:29:47&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2021-03-29T00:29:47&#43;08:00'>
+    <meta property="article:modified_time" content='2022-11-22T00:29:47&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
-    <meta name="description" content="deepfacelab使用介绍">
+    <meta name="description" content="springboot常见兼容性错误">
         
     <meta name="author" content="Anttu">
-    <meta property="og:url" content="https://anTtutu.github.io/post/2021-03-29-change_face/">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2022-11-22-springboot_start_failed/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -142,26 +142,28 @@
         <nav id="TableOfContents">
   <ul>
     <li><a href="#前言">前言</a></li>
-    <li><a href="#1deepfacelab核心库">1、deepfacelab核心库</a></li>
-    <li><a href="#2成熟的deepfacelab安装项目包">2、成熟的deepfacelab安装项目包</a></li>
-    <li><a href="#3安装前的准备">3、安装前的准备</a></li>
-    <li><a href="#4执行如下步骤">4、执行如下步骤</a>
+    <li><a href="#1mysql">1、mysql</a>
       <ul>
-        <li><a href="#41-在workspace目录下准备好2份视频分别命名data_dstmp4data_srcmp4">4.1 在workspace目录下准备好2份视频，分别命名data_dst.mp4、data_src.mp4</a></li>
-        <li><a href="#42-在workspace下检查工作目录没有就参考如下截图创建空目录">4.2 在workspace下检查工作目录，没有就参考如下截图创建空目录</a></li>
+        <li><a href="#11-received-fatal-alert-protocol_version">1.1 Received fatal alert: protocol_version</a></li>
+        <li><a href="#12-unknown-system-variable-query_cache_size">1.2 Unknown system variable &lsquo;query_cache_size&rsquo;</a></li>
       </ul>
     </li>
-    <li><a href="#5开始工作">5、开始工作</a>
+    <li><a href="#2maven">2、maven</a>
       <ul>
-        <li><a href="#51-把源视频拆分成图片">5.1 把源视频拆分成图片</a></li>
-        <li><a href="#52-把目标视频拆分成图片">5.2 把目标视频拆分成图片</a></li>
-        <li><a href="#53-从源图片中提取人脸也叫切脸">5.3 从源图片中提取人脸，也叫切脸</a></li>
-        <li><a href="#54-从目标图片中提取人脸">5.4 从目标图片中提取人脸</a></li>
-        <li><a href="#55-训练模型耗时不会自己结束">5.5 训练模型，耗时，不会自己结束</a></li>
-        <li><a href="#56-图片换脸">5.6 图片换脸</a></li>
-        <li><a href="#57-把图片合成视频">5.7 把图片合成视频</a></li>
+        <li><a href="#21-failed-to-execute-goal-orgapachemavenpluginsmaven-resources-plugin320">2.1 Failed to execute goal org.apache.maven.plugins:maven-resources-plugin:3.2.0</a></li>
       </ul>
     </li>
+    <li><a href="#3spring-cache">3、spring cache</a>
+      <ul>
+        <li><a href="#31">3.1</a></li>
+      </ul>
+    </li>
+    <li><a href="#4mybatis">4、mybatis</a>
+      <ul>
+        <li><a href="#41-orgapacheibatisbindingbindingexception-invalid-bound-statement-not-found">4.1 org.apache.ibatis.binding.BindingException: Invalid bound statement (not found)</a></li>
+      </ul>
+    </li>
+    <li><a href="#5官方文档">5、官方文档</a></li>
   </ul>
 </nav>
     </div>
@@ -199,21 +201,17 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title">deepfacelab使用介绍</h1>
+            <h1 class="post-title">springboot常见兼容性错误</h1>
         </header>
         <date class="post-meta meta-date">
-            2021年3月29日
+            2022年11月22日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
             <span class="meta-category">
-                <a href='/categories/python' target="_blank">python</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/deepfacelab' target="_blank">deepfacelab</a>
+                <a href='/categories/springboot' target="_blank">springboot</a>
             </span>
             
         </div>
@@ -233,29 +231,185 @@
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>应朋友要求，研究下deepfacelab的环境搭建和使用步骤，记录下中间的问题和过程。</p>
-<h2 id="1deepfacelab核心库">1、deepfacelab核心库</h2>
+<p>springboot日常使用中有一些兼容性的错误，有时候没遇见过会让人无法摸到头脑，这里记录一些问题，后续不定期补充</p>
+<h2 id="1mysql">1、mysql</h2>
+<h3 id="11-received-fatal-alert-protocol_version">1.1 Received fatal alert: protocol_version</h3>
+<p>因为更换了数据源才发现并记录，之前用的是mariadb8正常，换了docker mysql8就报错，不过为了减少无法定位的错建议采用完整的url连接串。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Caused by<span style="color:#000;font-weight:bold">:</span> com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">mysql</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">jdbc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">exceptions</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">jdbc4</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">CommunicationsException</span><span style="color:#000;font-weight:bold">:</span> Communications link failure
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The last packet successfully received from the server was 6 milliseconds ago<span style="color:#000;font-weight:bold">.</span>  The last packet sent successfully to the server was 5 milliseconds ago<span style="color:#000;font-weight:bold">.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Caused by<span style="color:#000;font-weight:bold">:</span> javax<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">net</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ssl</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">SSLException</span><span style="color:#000;font-weight:bold">:</span> Received fatal alert<span style="color:#000;font-weight:bold">:</span> protocol_version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>原因：<br>
+spring.database.url连接串需要增加useSSL=false</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone --depth<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span> https://github.com/iperov/DeepFaceLab
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>spring<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">datasource</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">url</span><span style="color:#000;font-weight:bold">=</span>jdbc<span style="color:#000;font-weight:bold">:</span>mysql<span style="color:#000;font-weight:bold">:</span><span style="color:#998;font-style:italic">//localhost:3306/test?useUnicode=true&amp;zeroDateTimeBehavior=convertToNull&amp;characterEncoding=UTF-8&amp;useSSL=false
+</span></span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="2成熟的deepfacelab安装项目包">2、成熟的deepfacelab安装项目包</h2>
-<p>win10环境，软件磁力连接（迅雷复制下载）：</p>
+</div><h3 id="12-unknown-system-variable-query_cache_size">1.2 Unknown system variable &lsquo;query_cache_size&rsquo;</h3>
+<p>因为更换了数据源才发现并记录，之前用的是mariadb8正常，换了docker mysql8就报错记录。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>magnet:?xt<span style="color:#000;font-weight:bold">=</span>urn:btih:3384316e126920d7e1cbd2acb16b9513a57b2645&amp;<span style="color:#008080">dn</span><span style="color:#000;font-weight:bold">=</span>DeepFaceLab&amp;<span style="color:#008080">tr</span><span style="color:#000;font-weight:bold">=</span>udp%3a%2f%2ftracker.coppersurfer.tk%3a6969%2fannounce
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Unknown system variable <span style="color:#a61717;background-color:#e3d2d2">&#39;</span>query_cache_size<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="3安装前的准备">3、安装前的准备</h2>
-<p>1、如果用的步骤3中的成熟项目包只需要依赖python3<br>
-2、如果用的步骤2中的核心库自行搭建的话，需要安装如下清单</p>
+</div><p>原因：<br>
+连接的数据库mysql是8.*版本, 但是mybatis用的是低于8.*的版本导致, 升级相同版本的包</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#998;font-style:italic">&lt;!-- mysql --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;groupId&gt;</span>mysql<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;version&gt;</span>8.0.28<span style="color:#000080">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2maven">2、maven</h2>
+<h3 id="21-failed-to-execute-goal-orgapachemavenpluginsmaven-resources-plugin320">2.1 Failed to execute goal org.apache.maven.plugins:maven-resources-plugin:3.2.0</h3>
+<p>maven打包编译的时候报这个错，暂没找到具体根因，暂调整版本号可以解决问题</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Failed to execute goal org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">maven</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">plugins</span><span style="color:#000;font-weight:bold">:</span>maven<span style="color:#000;font-weight:bold">-</span>resources<span style="color:#000;font-weight:bold">-</span>plugin<span style="color:#000;font-weight:bold">:</span>3<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">2</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>原因：
+maven的版本包冲突，具体详细原因暂时没查到，后续分析出了原理再更新</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;build&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;plugins&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">&lt;!--在这里修改版本--&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#000080">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;artifactId&gt;</span>maven-resources-plugin<span style="color:#000080">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;version&gt;</span>2.4.3<span style="color:#000080">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">&lt;!----&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;/plugins&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/build&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3spring-cache">3、spring cache</h2>
+<p>spring cache碰到的执行错误，不影响启动</p>
+<h3 id="31">3.1</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">lang</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">IllegalStateException</span><span style="color:#000;font-weight:bold">:</span> No cache could be resolved <span style="color:#000;font-weight:bold">for</span> <span style="color:#a61717;background-color:#e3d2d2">&#39;</span>Builder<span style="color:#000;font-weight:bold">[</span><span style="color:#000;font-weight:bold">public</span> com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">sxt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">entity</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Teacher</span> com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">sxt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">service</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">impl</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">TeacherServiceImpl</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">queryById</span><span style="color:#000;font-weight:bold">(</span>java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">lang</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Integer</span><span style="color:#000;font-weight:bold">)]</span> caches<span style="color:#000;font-weight:bold">=[]</span> <span style="color:#000;font-weight:bold">|</span> key<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span>member<span style="color:#000;font-weight:bold">:</span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span><span style="color:#000;font-weight:bold">+</span><span style="color:#a61717;background-color:#e3d2d2">#</span>id<span style="color:#a61717;background-color:#e3d2d2">&#39;</span> <span style="color:#000;font-weight:bold">|</span> keyGenerator<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span> <span style="color:#000;font-weight:bold">|</span> cacheManager<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span> <span style="color:#000;font-weight:bold">|</span> cacheResolver<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span> <span style="color:#000;font-weight:bold">|</span> condition<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span> <span style="color:#000;font-weight:bold">|</span> unless<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;#</span>result <span style="color:#000;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span> <span style="color:#000;font-weight:bold">|</span> sync<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span><span style="color:#000;font-weight:bold">false</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span> using resolver <span style="color:#a61717;background-color:#e3d2d2">&#39;</span>org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">springframework</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">cache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">interceptor</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">SimpleCacheResolver</span><span style="color:#3c5d5d;font-weight:bold">@4ae15abe</span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span><span style="color:#000;font-weight:bold">.</span> At least one cache should be provided per cache operation<span style="color:#000;font-weight:bold">.</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>原因：<br>
+@Cacheable缺少cacheNames参数</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#998;font-style:italic">// 第一种 在方法的@Cacheable增加cacheNames，如果还有其他方法没添加，需要挨个方法都增加，建议用第二种
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">TestQueryImpl</span> <span style="color:#000;font-weight:bold">implements</span> TestQuery <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#3c5d5d;font-weight:bold">@Cacheable</span><span style="color:#000;font-weight:bold">(</span>cacheNames <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#d14">&#34;user&#34;</span><span style="color:#000;font-weight:bold">},</span> key <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;#id&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> User <span style="color:#900;font-weight:bold">findById</span><span style="color:#000;font-weight:bold">(</span>BigInteger id<span style="color:#000;font-weight:bold">){</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">return</span> userMapper<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">selectByPrimaryKey</span><span style="color:#000;font-weight:bold">(</span>id<span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">// 第二种 在类名增加@CacheConfig(cacheNames = &#34;***&#34;)，其他方法就不用挨个添加了
+</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span><span style="color:#3c5d5d;font-weight:bold">@Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@Cacheable</span><span style="color:#000;font-weight:bold">(</span>cacheManager <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;redisCacheManager&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@CacheConfig</span><span style="color:#000;font-weight:bold">(</span>cacheNames <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;user&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">TestQueryImpl</span> <span style="color:#000;font-weight:bold">implements</span> TestQuery <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4mybatis">4、mybatis</h2>
+<h3 id="41-orgapacheibatisbindingbindingexception-invalid-bound-statement-not-found">4.1 org.apache.ibatis.binding.BindingException: Invalid bound statement (not found)</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ibatis</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">binding</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">BindingException</span><span style="color:#000;font-weight:bold">:</span> Invalid bound <span style="color:#900;font-weight:bold">statement</span> <span style="color:#000;font-weight:bold">(</span>not found<span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>原因：</p>
+<ul>
+<li>1、target\classes下没编译出来*Mapper.xml，用mvn compile下或build下项目即可</li>
+<li>2、xxxMapper.xml文件没有按照传统的maven架构进行放置，在pom增加resource, 参考下面示例</li>
+</ul>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -272,272 +426,66 @@
 </span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>numpy
-</span></span><span style="display:flex;"><span>h5py
-</span></span><span style="display:flex;"><span>Keras
-</span></span><span style="display:flex;"><span>opencv<span style="color:#000;font-weight:bold">-</span>python
-</span></span><span style="display:flex;"><span>tensorflow<span style="color:#000;font-weight:bold">-</span>gpu
-</span></span><span style="display:flex;"><span>plaidml
-</span></span><span style="display:flex;"><span>plaidml<span style="color:#000;font-weight:bold">-</span>keras
-</span></span><span style="display:flex;"><span>scikit<span style="color:#000;font-weight:bold">-</span>image
-</span></span><span style="display:flex;"><span>tqdm
-</span></span><span style="display:flex;"><span>ffmpeg<span style="color:#000;font-weight:bold">-</span>python
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>nvidia<span style="color:#000;font-weight:bold">-</span>CUDA
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="4执行如下步骤">4、执行如下步骤</h2>
-<p>本着快速应用的地步，优先选择步骤3的完整项目包
-
-        <img class="mx-auto" alt="" src="/posts/deepface/menu.png" />   
-    </p>
-<table>
-<thead>
-<tr>
-<th>目录名</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>_internal</td>
-<td>完整项目工程包自带的第三方工具</td>
-</tr>
-<tr>
-<td>worksapce</td>
-<td>工作区</td>
-</tr>
-<tr>
-<td>worksapce_iron</td>
-<td>测试的钢铁侠和马斯克视频换脸工作区</td>
-</tr>
-<tr>
-<td>*.bat</td>
-<td>运行脚本</td>
-</tr>
-<tr>
-<td>changelog.html</td>
-<td>修改说明</td>
-</tr>
-<tr>
-<td>步骤.txt</td>
-<td>运行脚本的顺序，自增给朋友说明的</td>
-</tr>
-</tbody>
-</table>
-<h3 id="41-在workspace目录下准备好2份视频分别命名data_dstmp4data_srcmp4">4.1 在workspace目录下准备好2份视频，分别命名data_dst.mp4、data_src.mp4</h3>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>data_dst.mp4</td>
-<td>需要被换脸的视频</td>
-</tr>
-<tr>
-<td>data_src.mp4</td>
-<td>可以提取脸的源视频</td>
-</tr>
-</tbody>
-</table>
-<h3 id="42-在workspace下检查工作目录没有就参考如下截图创建空目录">4.2 在workspace下检查工作目录，没有就参考如下截图创建空目录</h3>
-<p>workspace目录:
-
-        <img class="mx-auto" alt="" src="/posts/deepface/workspace.png" />   
-    
-data_dst目录:
-
-        <img class="mx-auto" alt="" src="/posts/deepface/dst.png" />   
-    
-data_src目录:
-
-        <img class="mx-auto" alt="" src="/posts/deepface/src.png" />   
-    </p>
-<h2 id="5开始工作">5、开始工作</h2>
-<p>脚本中间的具体参数很好理解，这个工程也有完整的中文版，实在不熟悉的可以网上找下翻译好的中文完整工具包下载，这里不做过多说明，只简单告诉步骤<br>
-注意bat脚本因为带有空格和序号等符号，双击执行即可，cmd下不好执行</p>
-<p>原理流程如下：</p>
-<pre tabindex="0"><code class="language-mermaid" data-lang="mermaid">graph LR;
-A(目标或源视频转成图片)--&gt;B(目标或源视频转成的图片提取脸部)--&gt;C(训练模型)--&gt;D(人脸替换)--&gt;E(合成视频)
-</code></pre><h3 id="51-把源视频拆分成图片">5.1 把源视频拆分成图片</h3>
-<p>执行脚本</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>2) extract images from video data_src.bat
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>参考结果：
-
-        <img class="mx-auto" alt="" src="/posts/deepface/srcpic.png" />   
-    </p>
-<h3 id="52-把目标视频拆分成图片">5.2 把目标视频拆分成图片</h3>
-<p>执行脚本</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>3) extract images from video data_dst FULL FPS.bat
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>参考结果：
-
-        <img class="mx-auto" alt="" src="/posts/deepface/dstpic.png" />   
-    </p>
-<h3 id="53-从源图片中提取人脸也叫切脸">5.3 从源图片中提取人脸，也叫切脸</h3>
-<p>执行脚本</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>4) data_src extract faces extract.bat
-</span></span></code></pre></td></tr></table>
-</div>
-</div><table>
-<thead>
-<tr>
-<th>参数</th>
-<th>说明</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>h</td>
-<td>half face</td>
-<td>新版本参数，本文介绍的下载版本不带这个参数</td>
-</tr>
-<tr>
-<td>mf</td>
-<td>mid-half-face</td>
-<td>新版本参数，本文介绍的下载版本不带这个参数</td>
-</tr>
-<tr>
-<td>f</td>
-<td>full-face</td>
-<td>全脸</td>
-</tr>
-<tr>
-<td>wf</td>
-<td>whole-face</td>
-<td>带额全脸</td>
-</tr>
-<tr>
-<td>head</td>
-<td>连头发一起换</td>
-<td>越大越消耗GPU运算</td>
-</tr>
-</tbody>
-</table>
-<p>示例图如下:
-
-        <img class="mx-auto" alt="" src="/posts/deepface/demo.png" />   
-    </p>
-<p>参考结果：
-
-        <img class="mx-auto" alt="" src="/posts/deepface/srcface.png" />   
-    </p>
-<h3 id="54-从目标图片中提取人脸">5.4 从目标图片中提取人脸</h3>
-<p>执行脚本</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>5) data_dst extract faces extract.bat
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>参考结果：
-
-        <img class="mx-auto" alt="" src="/posts/deepface/dstface.png" />   
-    </p>
-<h3 id="55-训练模型耗时不会自己结束">5.5 训练模型，耗时，不会自己结束</h3>
-<p>执行脚本</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>6) train Quick96.bat
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;build&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;resources&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;resource&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;directory&gt;</span>src/main/java<span style="color:#000080">&lt;/directory&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;includes&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000080">&lt;include&gt;</span>**/*.properties<span style="color:#000080">&lt;/include&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000080">&lt;include&gt;</span>**/*.xml<span style="color:#000080">&lt;/include&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;/includes&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;filtering&gt;</span>false<span style="color:#000080">&lt;/filtering&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;/resource&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;/resources&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/build&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
-<li>1、SAEHD模型做出来的视频质量更好，但是要求的配置更高。</li>
-<li>2、退出后再次点击train Quick96.bat 可以继续训练，进度不会丢失</li>
+<li>3、代码配置问题
+检查MapperScan</li>
 </ul>
-<p>如下是几个小时训练的进度，分别是低于1000，1000 ~ 2000，2000 ~ 3000 3个阶段的，建议更多时间训练高于万次或者自己满意为止</p>
-<table>
-<thead>
-<tr>
-<th>列序号</th>
-<th>介绍</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1、3列</td>
-<td>是分别提取src和dst视频的原图</td>
-</tr>
-<tr>
-<td>2、4列</td>
-<td>是根据切脸参数提取的模型数据</td>
-</tr>
-<tr>
-<td>5列</td>
-<td>是替换后的demo效果</td>
-</tr>
-</tbody>
-</table>
-<h4 id="900次训练">900次训练：</h4>
-<p>
-        <img class="mx-auto" alt="" src="/posts/deepface/900.png" />   
-    </p>
-<h4 id="1000次训练">1000次训练：</h4>
-<p>
-        <img class="mx-auto" alt="" src="/posts/deepface/1000.png" />   
-    </p>
-<h4 id="2000次训练">2000次训练：</h4>
-<p>
-        <img class="mx-auto" alt="" src="/posts/deepface/2000.png" />   
-    </p>
-<h4 id="3000次训练">3000次训练：</h4>
-<p>
-        <img class="mx-auto" alt="" src="/posts/deepface/3000.png" />   
-    </p>
-<p>最后生成自己训练的模型文件：如下图
-
-        <img class="mx-auto" alt="" src="/posts/deepface/model.png" />   
-    </p>
-<h3 id="56-图片换脸">5.6 图片换脸</h3>
-<p>执行脚本</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>7) merge Quick96.bat
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@MapperScan</span><span style="color:#000;font-weight:bold">({</span><span style="color:#d14">&#34;com.*.mapper&#34;</span><span style="color:#000;font-weight:bold">})</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="57-把图片合成视频">5.7 把图片合成视频</h3>
-<p>执行脚本</p>
+</div><p>检查namesapce, 一般通过点击跳转可以验证是否正确</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>8) merged to mp4.bat
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;mapper</span> <span style="color:#008080">namespace=</span><span style="color:#d14">&#34;com.**.user.mapper.UserMapper&#34;</span><span style="color:#000080">&gt;</span>
+</span></span><span style="display:flex;"><span>......
+</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/mapper&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h4 id="参考结果">参考结果：</h4>
-<p><video src="/posts/deepface/result.mp4" width="800px" height="250px" controls="controls"></video></p>
+</div><p>检查id，一般ide插件可以关联跳转</p>
+<pre tabindex="0"><code>&lt;select id=&#34;selectByPrimaryKey&#34; resultMap=&#34;BaseResultMap&#34; parameterType=&#34;java.lang.Long&#34;&gt;
+......
+&lt;/select&gt;
+</code></pre><p>检查mybatis的配置</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#000080">mybatis</span>:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">mapperLocations</span>:<span style="color:#bbb"> </span>classpath:**/mapper/**/*Mapper.xml<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">type-aliases-package</span>:<span style="color:#bbb"> </span>com.**.entity<span style="color:#bbb">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="5官方文档">5、官方文档</h2>
+<p>spring cache：<a href="https://docs.spring.io/spring/docs/5.1.9.RELEASE/spring-framework-reference/integration.html#cache">https://docs.spring.io/spring/docs/5.1.9.RELEASE/spring-framework-reference/integration.html#cache</a><br>
+spring：<a href="https://docs.spring.io/spring-framework/docs/5.1.9.RELEASE/spring-framework-reference/">https://docs.spring.io/spring-framework/docs/5.1.9.RELEASE/spring-framework-reference/</a><br>
+spring yml核心参数: <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#appendix.application-properties">https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#appendix.application-properties</a></p>
 
         </div>
 
@@ -545,7 +493,7 @@ A(目标或源视频转成图片)--&gt;B(目标或源视频转成的图片提取
 <div class="post-archive">
     <ul class="post-copyright">
         <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
-        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2021-03-29-change_face/">https://anTtutu.github.io/post/2021-03-29-change_face/</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2022-11-22-springboot_start_failed/">https://anTtutu.github.io/post/2022-11-22-springboot_start_failed/</a></li>
         <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
     </ul>
 </div>
@@ -559,15 +507,15 @@ A(目标或源视频转成图片)--&gt;B(目标或源视频转成的图片提取
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/2020-11-15-win10_kenlm_install/">Win10安装kenlm语言模型模块</a></li>
+        <li><a href="/post/2022-11-14-docker_port/">docker修改运行的容器端口</a></li>
         
-        <li><a href="/post/2019-07-10-python_bgremover/">python工具-移除照片或视频背景</a></li>
+        <li><a href="/post/2022-11-10-go_muilt_version/">go多版本管理工具</a></li>
         
-        <li><a href="/post/2017-07-16-sqlmap/">SQLMap初学使用和参数讲解</a></li>
+        <li><a href="/post/2022-10-27-jenkins_reset/">jenkins的admin密码忘记了如何重置</a></li>
         
-        <li><a href="/post/2021-03-10-android_termux_java/">android下的termux模拟器安装openJDK和运行springboot项目</a></li>
+        <li><a href="/post/2022-09-27-docker_network/">docker网络模式</a></li>
         
-        <li><a href="/post/2021-01-28-miner_virus_2/">挖矿病毒2-分析和排查思路</a></li>
+        <li><a href="/post/2022-09-13-dockerfile/">dockerfile</a></li>
         
     </ul>
 </div>
@@ -575,13 +523,7 @@ A(目标或源视频转成图片)--&gt;B(目标或源视频转成的图片提取
 
         <div class="post-meta meta-tags">
             
-            <ul class="clearfix">
-                
-                <li><a href='/tags/python' target="_blank">python</a></li>
-                
-                <li><a href='/tags/deepfacelab' target="_blank">deepfacelab</a></li>
-                
-            </ul>
+            没有标签
             
         </div>
     </article>
