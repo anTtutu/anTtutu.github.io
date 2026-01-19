@@ -9,20 +9,20 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     
 
-    <title>挖矿病毒3-分析和清理过程 | Anttu&#39;s Blog</title>
-    <meta property="og:title" content="挖矿病毒3-分析和清理过程 - Anttu&#39;s Blog">
+    <title>docker build的一些问题 | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="docker build的一些问题 - Anttu&#39;s Blog">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2022-01-24T00:29:47&#43;08:00'>
+    <meta property="article:published_time" content='2026-01-13T00:29:47&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2022-01-24T00:29:47&#43;08:00'>
+    <meta property="article:modified_time" content='2026-01-13T00:29:47&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
-    <meta name="description" content="挖矿病毒3-分析和清理过程">
+    <meta name="description" content="docker build的一些问题">
         
     <meta name="author" content="Anttu">
-    <meta property="og:url" content="https://anTtutu.github.io/post/2022-01-24-miner_virus_3/">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2026-01-13-docker-build/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -142,39 +142,11 @@
         <nav id="TableOfContents">
   <ul>
     <li><a href="#前言">前言</a></li>
-    <li><a href="#1分析">1、分析</a></li>
-    <li><a href="#2按步骤排查">2、按步骤排查</a>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
-    <li><a href="#3整理下一些共性问题">3、整理下一些共性问题</a>
-      <ul>
-        <li><a href="#31-crontab--l失效">3.1 crontab -l失效</a></li>
-        <li><a href="#32-喜欢隐藏在tmp或var这些临时目录">3.2 喜欢隐藏在/tmp或/var这些临时目录</a></li>
-        <li><a href="#33-清理系统日志">3.3 清理系统日志</a></li>
-        <li><a href="#34-前置脚本布置环境">3.4 前置脚本布置环境</a></li>
-        <li><a href="#35-挖矿本体程序都是二进制或加壳">3.5 挖矿本体程序都是二进制或加壳</a></li>
-        <li><a href="#36-部份挖矿病毒还会感染">3.6 部份挖矿病毒还会感染</a></li>
-        <li><a href="#37-部分挖矿病毒会伪装成系统进程">3.7 部分挖矿病毒会伪装成系统进程</a></li>
-        <li><a href="#39-部分挖矿病毒会篡改top-grep等系统命令">3.9 部分挖矿病毒会篡改top grep等系统命令</a></li>
-        <li><a href="#310-部分挖矿病毒感染途径是开源软件的漏洞">3.10 部分挖矿病毒感染途径是开源软件的漏洞</a></li>
-        <li><a href="#311-部分挖矿病毒比较克制不占满cpu">3.11 部分挖矿病毒比较克制，不占满cpu</a></li>
-        <li><a href="#312-部分挖矿病毒是针对容器化的">3.12 部分挖矿病毒是针对容器化的</a></li>
-      </ul>
-    </li>
-    <li><a href="#4防护建议">4、防护建议</a>
-      <ul>
-        <li><a href="#41-注意账号密码保管">4.1 注意账号密码保管</a></li>
-        <li><a href="#42-使用堡垒机">4.2 使用堡垒机</a></li>
-        <li><a href="#43-控制端口">4.3 控制端口</a></li>
-        <li><a href="#44-云服务器的云盾产品尽量安装">4.4 云服务器的云盾产品尽量安装</a></li>
-        <li><a href="#45-不要图方便直接开公网地址和端口">4.5 不要图方便直接开公网地址和端口</a></li>
-        <li><a href="#46-第三方开源工具需要关注定期升级">4.6 第三方开源工具需要关注，定期升级</a></li>
-        <li><a href="#47-做好网络规划隔离">4.7 做好网络规划隔离</a></li>
-      </ul>
-    </li>
-    <li><a href="#5挖矿病毒的参考">5、挖矿病毒的参考</a></li>
+    <li><a href="#1docker-hub无法访问问题">1、docker hub无法访问问题</a></li>
+    <li><a href="#2mac端编译其他平台格式">2、Mac端编译其他平台格式</a></li>
+    <li><a href="#3突发奇想试试异星工厂的服务端镜像竟然还真有网友整理的">3、突发奇想试试异星工厂的服务端镜像，竟然还真有网友整理的</a></li>
+    <li><a href="#4idc机房编译不行试试本地编译">4、IDC机房编译不行试试本地编译</a></li>
+    <li><a href="#5因github等需要设置2步验证或者本地不允许账号密码直连">5、因github等需要设置2步验证或者本地不允许账号密码直连</a></li>
   </ul>
 </nav>
     </div>
@@ -212,29 +184,25 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title">挖矿病毒3-分析和清理过程</h1>
+            <h1 class="post-title">docker build的一些问题</h1>
         </header>
         <date class="post-meta meta-date">
-            2022年1月24日
+            2026年1月13日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
             <span class="meta-category">
-                <a href='/categories/mine' target="_blank">mine</a>
+                <a href='/categories/docker' target="_blank">docker</a>
             </span>
             
             <span class="meta-category">
-                <a href='/categories/virus' target="_blank">virus</a>
+                <a href='/categories/images' target="_blank">images</a>
             </span>
             
             <span class="meta-category">
-                <a href='/categories/linux' target="_blank">linux</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/check' target="_blank">check</a>
+                <a href='/categories/build' target="_blank">build</a>
             </span>
             
         </div>
@@ -254,202 +222,37 @@
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>1月23日，公司邮箱收到说阿里云报了挖矿病毒的警告</p>
-<h2 id="1分析">1、分析</h2>
-<p>这次思路改进了些，起初有个只是定时任务没被清理，阿里云通过定时任务关键字&quot;pool.minexmr.com:4444&quot;报了蠕虫病毒，但是根据关键字查看，这像挖矿<br>
-然后 top 了半天没看到结果，怀疑是top被篡改了？？？然后进了/usr/bin/核对下 top 的时间，发现没差异呀，但是本着稳妥起见，还是下载 busybox</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://busybox.net/downloads/binaries/1.30.0-i686/busybox 
-</span></span><span style="display:flex;"><span>chmod +x busybox
-</span></span><span style="display:flex;"><span>cp busybox /usr/bin 
-</span></span><span style="display:flex;"><span>busybox  top
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="2按步骤排查">2、按步骤排查</h2>
-<p>剩余步骤跟<a href="/post/2021-01-28-miner_virus_2">挖矿病毒2-分析和排查思路</a>一样，只是所有的命令前面是 busybox command</p>
-<h4 id="查到的一些异常样例">查到的一些异常样例</h4>
-<h4 id="案例1">案例1：</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt; cat oracle 
-</span></span><span style="display:flex;"><span><span style="color:#099">2</span> * * * * /home/oracle/.dhpcd -o pool.minexmr.com:4444 -t8 --safe -B &gt;/dev/null 2&gt;/dev/null
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="案例2">案例2：</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt; cat admin 
-</span></span><span style="display:flex;"><span>*3 * * * * /var/tmp/.xri/monitor
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>&gt; ps -auxf | grep admin
-</span></span><span style="display:flex;"><span>root       <span style="color:#099">746</span>  0.0  0.0 <span style="color:#099">112712</span>   <span style="color:#099">960</span> pts/0    S+   15:56   0:00          <span style="color:#d14">\_</span> grep --color<span style="color:#000;font-weight:bold">=</span>auto admin
-</span></span><span style="display:flex;"><span>admin     <span style="color:#099">5846</span>  0.0  0.0 <span style="color:#099">113320</span>  <span style="color:#099">1520</span> ?        S     <span style="color:#099">2021</span>  10:28 /bin/bash /dev/shm/.x/scp
-</span></span><span style="display:flex;"><span>admin      <span style="color:#099">739</span>  0.0  0.0 <span style="color:#099">107956</span>   <span style="color:#099">356</span> ?        S    15:56   0:00  <span style="color:#d14">\_</span> sleep <span style="color:#099">10</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="案例3">案例3：</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt; busybox top
-</span></span><span style="display:flex;"><span>top - 10:20:08 up <span style="color:#099">144</span> days,  9:05,  <span style="color:#099">2</span> users,  load average: 12.07, 12.04, 12.00
-</span></span><span style="display:flex;"><span>Tasks: <span style="color:#099">295</span> total,   <span style="color:#099">1</span> running, <span style="color:#099">171</span> sleeping,   <span style="color:#099">1</span> stopped,   <span style="color:#099">0</span> zombie
-</span></span><span style="display:flex;"><span>%Cpu<span style="color:#000;font-weight:bold">(</span>s<span style="color:#000;font-weight:bold">)</span>: 50.2 us,  0.1 sy,  0.0 ni, 49.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
-</span></span><span style="display:flex;"><span>KiB Mem : <span style="color:#099">47886084</span> total, <span style="color:#099">35389780</span> free,  <span style="color:#099">4350740</span> used,  <span style="color:#099">8145564</span> buff/cache
-</span></span><span style="display:flex;"><span>KiB Swap:   <span style="color:#099">969964</span> total,   <span style="color:#099">969964</span> free,        <span style="color:#099">0</span> used. <span style="color:#099">42956764</span> avail Mem 
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                          
-</span></span><span style="display:flex;"><span> <span style="color:#099">1505</span> root      <span style="color:#099">15</span>  -5 <span style="color:#099">4970560</span> 1.156g  <span style="color:#099">10548</span> S  <span style="color:#099">1200</span>  2.5  40033,13 xmrig
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>&gt; ps -axuf | grep <span style="color:#099">1505</span>
-</span></span><span style="display:flex;"><span>root     <span style="color:#099">32603</span>  0.0  0.0  <span style="color:#099">14428</span>  <span style="color:#099">1008</span> pts/2    S+   10:21   0:00          <span style="color:#d14">\_</span> grep --color<span style="color:#000;font-weight:bold">=</span>auto <span style="color:#099">1505</span>
-</span></span><span style="display:flex;"><span>root      <span style="color:#099">1505</span> <span style="color:#099">1155</span>  2.5 <span style="color:#099">4970560</span> <span style="color:#099">1212316</span> pts/1 S&lt;l+  <span style="color:#099">2021</span> 2402005:53      <span style="color:#d14">\_</span> ./xmrig -o xmr-us-east1.nanopool.org:14444 -u *********48Vd2N2gGEUQfCRq4ooQuZGjknDtCdGRDiVEyoHNL5wSevPCmcewry41DtD4d********* -k --coin monero -a rx/0
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>****替换了钱包地址部分字母
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="案例4">案例4：</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/sbin/kerberods
-</span></span><span style="display:flex;"><span>恶意文件md5：eec085bae7c4dfcdcb353b095b8375fa
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>/dev/shm/.x/secure
-</span></span><span style="display:flex;"><span>恶意文件md5：388826af99f6a6ad3c104959f52ea783
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="3整理下一些共性问题">3、整理下一些共性问题</h2>
-<h3 id="31-crontab--l失效">3.1 crontab -l失效</h3>
-<p>crontab -l查不到但是查看/var/log/cron还是会有挖矿的定时任务<br>
-挖矿病毒的定时任务喜欢藏在/var/spool/cron/这里</p>
-<h3 id="32-喜欢隐藏在tmp或var这些临时目录">3.2 喜欢隐藏在/tmp或/var这些临时目录</h3>
-<p>不光喜欢临时目录，而且都是隐藏格式的文件夹，ls 不带-a 的话可能就没法发现<br>
-守护进程和病毒本体放在不同隐藏目录，狡兔三窟</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/dev/shm/.x/secure
-</span></span><span style="display:flex;"><span>/var/tmp/.xri/monitor
-</span></span><span style="display:flex;"><span>/home/oracle/.dhpcd
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="33-清理系统日志">3.3 清理系统日志</h3>
-<p>日志和痕迹基本上都被清理干净，很难找到一些蛛丝马迹</p>
-<pre tabindex="0"><code>其他日志记录：
-echo 0&gt;/var/spool/mail/root
-last日志
-echo 0&gt;/var/log/wtmp
-echo 0&gt;/var/log/secure
-echo 0&gt;/var/log/cron
-history日志 echo &gt; /root/.bash_history
-
-history -c
-
-查看机器创建以来登陆过的用户
-/var/log/wtmp
-
-查看机器当前登录的全部用户
-/var/run/utmp
-
-登录信息
-/var/log/secure
-</code></pre><h3 id="34-前置脚本布置环境">3.4 前置脚本布置环境</h3>
-<p>有部分病毒前置脚本加工成二进制，有部分直接 curl 从远程获取并无痕执行<br>
-很难提取到前置脚本</p>
-<h3 id="35-挖矿本体程序都是二进制或加壳">3.5 挖矿本体程序都是二进制或加壳</h3>
-<p>通过 top 、 ps -axuf 或 lsof -i 找到异常进程并跟踪到挖矿本体目录后，发现这些挖矿程序本体都是 ELF 的二进制，有的甚至加壳<br>
-ELF用ida pro 分析下，汇编晦涩难懂，只能提取是否还有价值的信息<br>
-加壳更加不擅长砸壳，只能点到位置，把病毒本体和守护进程、定时任务这些清理干净还原</p>
-<h3 id="36-部份挖矿病毒还会感染">3.6 部份挖矿病毒还会感染</h3>
-<p>部分挖矿病毒还会通过 .ssh/know_hosts 文件进行感染，需要注意排查</p>
-<h3 id="37-部分挖矿病毒会伪装成系统进程">3.7 部分挖矿病毒会伪装成系统进程</h3>
-<p>部分挖矿病毒还会伪装成系统进程，比如kerberdos，直接安装到/user/sbin 目录下</p>
-<h3 id="39-部分挖矿病毒会篡改top-grep等系统命令">3.9 部分挖矿病毒会篡改top grep等系统命令</h3>
-<p>部分挖矿病毒还会篡改top、grep等系统基础命令，达到过滤病毒本体的目录，这点通过 busybox 即可解决</p>
-<h3 id="310-部分挖矿病毒感染途径是开源软件的漏洞">3.10 部分挖矿病毒感染途径是开源软件的漏洞</h3>
-<p>比如jekins、redis、apache、文件上传漏洞</p>
-<h3 id="311-部分挖矿病毒比较克制不占满cpu">3.11 部分挖矿病毒比较克制，不占满cpu</h3>
-<p>部分病毒为了达到细水长流的目的，不会跑满所有cpu核心，会伪装成系统进程并只占用一些程序常规的占用率，达到细水长流的目的</p>
-<h3 id="312-部分挖矿病毒是针对容器化的">3.12 部分挖矿病毒是针对容器化的</h3>
-<p>比如针对docker，不过目前为止，发现的几期都是针对ECS的</p>
-<h2 id="4防护建议">4、防护建议</h2>
-<h3 id="41-注意账号密码保管">4.1 注意账号密码保管</h3>
-<p>不要设置过于简单的密码</p>
-<h3 id="42-使用堡垒机">4.2 使用堡垒机</h3>
-<p>目前有一例怀疑是外包开发监守自盗，自己安装了开源挖矿程序，并且本地编译然后启动的</p>
-<h3 id="43-控制端口">4.3 控制端口</h3>
-<p>按白名单规则开放，只开放需要的端口，其他端口禁止</p>
-<h3 id="44-云服务器的云盾产品尽量安装">4.4 云服务器的云盾产品尽量安装</h3>
-<p>云盾产品能够多方位检测入侵和病毒，比如通过病毒本体的 hash 值、异常进程、异常cpu 占用率等因素提醒你服务器异常并排查</p>
-<h3 id="45-不要图方便直接开公网地址和端口">4.5 不要图方便直接开公网地址和端口</h3>
-<p>尽量通过堡垒机跳转或者 VPN 跳转，一般应用都是通过 nginx 或者 slb 提供80 443访问的，不会直连服务器，自己方便了，没加固做好防护就是给这些病毒可乘之机</p>
-<h3 id="46-第三方开源工具需要关注定期升级">4.6 第三方开源工具需要关注，定期升级</h3>
-<p>关注第三方开源工具是否存在0day 漏洞等，第三方开源工具的 CVE 带来的危害也很大</p>
-<h3 id="47-做好网络规划隔离">4.7 做好网络规划隔离</h3>
-<p>规划好网络，测试、生产、办公环境等做好虚拟隔离</p>
-<h2 id="5挖矿病毒的参考">5、挖矿病毒的参考</h2>
-<p>挖矿进程——pool.minexmr.com的解决办法1: <a href="https://blog.csdn.net/dot_life/article/details/105480202">https://blog.csdn.net/dot_life/article/details/105480202</a><br>
-挖矿进程——pool.minexmr.com的解决办法2: <a href="https://blog.csdn.net/qq_16845639/article/details/77650271">https://blog.csdn.net/qq_16845639/article/details/77650271</a><br>
-kerberods挖矿病毒查杀及分析: <a href="https://blog.csdn.net/u010457406/article/details/89328869">https://blog.csdn.net/u010457406/article/details/89328869</a></p>
-
+<p>2024年国内无法访问docker hub了，且国内的一些公共镜像提供服务组织陆续关停服务。
+因23年开始陆续每年有重要项目要上线，很少有时间静下心来写问题东西，这里简短记录下最近编译个开源组件的os镜像的一些问题和解决方案</p>
+<h2 id="1docker-hub无法访问问题">1、docker hub无法访问问题</h2>
+<p>可以用国内一些云厂商的代理或者加速地址。
+[https://github.com/dongyubin/DockerHub]
+比如道客就提供了一个，这里不是说只有道客提供，只是正好用道客的加速成功拉取了ubuntu的镜像就以道客举例
+[https://github.com/DaoCloud/public-image-mirror]</p>
+<h2 id="2mac端编译其他平台格式">2、Mac端编译其他平台格式</h2>
+<p>比如要编译centos AMD64</p>
+<pre tabindex="0"><code>docker build --platform linux/amd64 -t iamges_name .
+</code></pre><h2 id="3突发奇想试试异星工厂的服务端镜像竟然还真有网友整理的">3、突发奇想试试异星工厂的服务端镜像，竟然还真有网友整理的</h2>
+<p>官方也有岀，但是没梯子情况下网络是不通的</p>
+<pre tabindex="0"><code>docker pull registry.cn-shanghai.aliyuncs.com/wittchen/factorio:2.0.60
+</code></pre><h2 id="4idc机房编译不行试试本地编译">4、IDC机房编译不行试试本地编译</h2>
+<p>IDC机场编译OS镜像，ubuntu需要从aliyun下载包含ubuntu的GPG文件，卡壳了半天，在没有梯子情况下，切换到办公电脑编译成功</p>
+<h2 id="5因github等需要设置2步验证或者本地不允许账号密码直连">5、因github等需要设置2步验证或者本地不允许账号密码直连</h2>
+<p>基于macos可以采用&quot;HTTPS + 令牌 + osxkeychain&quot;</p>
+<pre tabindex="0"><code>macOS的 “钥匙串访问”
+在弹窗中输入：
+账号：你的 GitHub/Gitee 用户名。
+密码：粘贴第一步复制的个人访问令牌（不是你的账户登录密码）。
+点击 登录 或 允许，并务必勾选“始终允许”。
+完成后，凭据将被永久安全地存储在macOS系统钥匙串中，后续所有操作均无需再输入
+</code></pre>
         </div>
 
         
 <div class="post-archive">
     <ul class="post-copyright">
         <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
-        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2022-01-24-miner_virus_3/">https://anTtutu.github.io/post/2022-01-24-miner_virus_3/</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2026-01-13-docker-build/">https://anTtutu.github.io/post/2026-01-13-docker-build/</a></li>
         <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
     </ul>
 </div>
@@ -463,15 +266,15 @@ kerberods挖矿病毒查杀及分析: <a href="https://blog.csdn.net/u010457406/
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/2022-01-07-regexp/">一些正则小细节-不定期补充</a></li>
+        <li><a href="/post/2025-02-13-mvnd/">mvnd结合idea使用</a></li>
         
-        <li><a href="/post/2022-01-06-sdkman/">sdkman的使用</a></li>
+        <li><a href="/post/2024-04-15-postgresql/">postgresql数据库常用记录</a></li>
         
-        <li><a href="/post/2021-12-23-mysql_table_clean/">mysql大表的数据清理</a></li>
+        <li><a href="/post/2023-06-16-miner_virus_5/">挖矿病毒5-私有云机房挖矿病毒定位</a></li>
         
-        <li><a href="/post/2021-12-17-nmap/">nmap参数详解</a></li>
+        <li><a href="/post/2022-12-26-covid-19/">羊了</a></li>
         
-        <li><a href="/post/2021-12-13-log4j2_cve/">log4j2远程执行漏洞</a></li>
+        <li><a href="/post/2022-12-19-git_delete_history/">git删除历史提交记录</a></li>
         
     </ul>
 </div>
