@@ -236,329 +236,329 @@
 <h2 id="1mysql">1、mysql</h2>
 <h3 id="11-received-fatal-alert-protocol_version">1.1 Received fatal alert: protocol_version</h3>
 <p>因为更换了数据源才发现并记录，之前用的是mariadb8正常，换了docker mysql8就报错，不过为了减少无法定位的错建议采用完整的url连接串。</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Caused by<span style="color:#000;font-weight:bold">:</span> com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">mysql</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">jdbc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">exceptions</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">jdbc4</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">CommunicationsException</span><span style="color:#000;font-weight:bold">:</span> Communications link failure
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>The last packet successfully received from the server was 6 milliseconds ago<span style="color:#000;font-weight:bold">.</span>  The last packet sent successfully to the server was 5 milliseconds ago<span style="color:#000;font-weight:bold">.</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Caused by<span style="color:#000;font-weight:bold">:</span> javax<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">net</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ssl</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">SSLException</span><span style="color:#000;font-weight:bold">:</span> Received fatal alert<span style="color:#000;font-weight:bold">:</span> protocol_version
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Caused by<span style="color:#000;font-weight:bold">:</span> com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">mysql</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">jdbc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">exceptions</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">jdbc4</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">CommunicationsException</span><span style="color:#000;font-weight:bold">:</span> Communications link failure
+
+The last packet successfully received from the server was 6 milliseconds ago<span style="color:#000;font-weight:bold">.</span>  The last packet sent successfully to the server was 5 milliseconds ago<span style="color:#000;font-weight:bold">.</span>
+
+Caused by<span style="color:#000;font-weight:bold">:</span> javax<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">net</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ssl</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">SSLException</span><span style="color:#000;font-weight:bold">:</span> Received fatal alert<span style="color:#000;font-weight:bold">:</span> protocol_version
+</code></pre></td></tr></table>
 </div>
 </div><p>原因：<br>
 spring.database.url连接串需要增加useSSL=false</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>spring<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">datasource</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">url</span><span style="color:#000;font-weight:bold">=</span>jdbc<span style="color:#000;font-weight:bold">:</span>mysql<span style="color:#000;font-weight:bold">:</span><span style="color:#998;font-style:italic">//localhost:3306/test?useUnicode=true&amp;zeroDateTimeBehavior=convertToNull&amp;characterEncoding=UTF-8&amp;useSSL=false
-</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">spring<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">datasource</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">url</span><span style="color:#000;font-weight:bold">=</span>jdbc<span style="color:#000;font-weight:bold">:</span>mysql<span style="color:#000;font-weight:bold">:</span><span style="color:#998;font-style:italic">//localhost:3306/test?useUnicode=true&amp;zeroDateTimeBehavior=convertToNull&amp;characterEncoding=UTF-8&amp;useSSL=false
+</span></code></pre></td></tr></table>
 </div>
 </div><h3 id="12-unknown-system-variable-query_cache_size">1.2 Unknown system variable &lsquo;query_cache_size&rsquo;</h3>
 <p>因为更换了数据源才发现并记录，之前用的是mariadb8正常，换了docker mysql8就报错记录。</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Unknown system variable <span style="color:#a61717;background-color:#e3d2d2">&#39;</span>query_cache_size<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Unknown system variable <span style="color:#a61717;background-color:#e3d2d2">&#39;</span>query_cache_size<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>原因：<br>
 连接的数据库mysql是8.*版本, 但是mybatis用的是低于8.*的版本导致, 升级相同版本的包</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#998;font-style:italic">&lt;!-- mysql --&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;groupId&gt;</span>mysql<span style="color:#000080">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#000080">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;version&gt;</span>8.0.28<span style="color:#000080">&lt;/version&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/dependency&gt;</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#998;font-style:italic">&lt;!-- mysql --&gt;</span>
+<span style="color:#000080">&lt;dependency&gt;</span>
+    <span style="color:#000080">&lt;groupId&gt;</span>mysql<span style="color:#000080">&lt;/groupId&gt;</span>
+    <span style="color:#000080">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#000080">&lt;/artifactId&gt;</span>
+    <span style="color:#000080">&lt;version&gt;</span>8.0.28<span style="color:#000080">&lt;/version&gt;</span>
+<span style="color:#000080">&lt;/dependency&gt;</span>
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="2maven">2、maven</h2>
 <h3 id="21-failed-to-execute-goal-orgapachemavenpluginsmaven-resources-plugin320">2.1 Failed to execute goal org.apache.maven.plugins:maven-resources-plugin:3.2.0</h3>
 <p>maven打包编译的时候报这个错，暂没找到具体根因，暂调整版本号可以解决问题</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Failed to execute goal org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">maven</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">plugins</span><span style="color:#000;font-weight:bold">:</span>maven<span style="color:#000;font-weight:bold">-</span>resources<span style="color:#000;font-weight:bold">-</span>plugin<span style="color:#000;font-weight:bold">:</span>3<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">2</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">0</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Failed to execute goal org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">maven</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">plugins</span><span style="color:#000;font-weight:bold">:</span>maven<span style="color:#000;font-weight:bold">-</span>resources<span style="color:#000;font-weight:bold">-</span>plugin<span style="color:#000;font-weight:bold">:</span>3<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">2</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">0</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>原因：
 maven的版本包冲突，具体详细原因暂时没查到，后续分析出了原理再更新</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;build&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;plugins&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;plugin&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#000080">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span style="color:#000080">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;/plugin&gt;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">&lt;!--在这里修改版本--&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;plugin&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#000080">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;artifactId&gt;</span>maven-resources-plugin<span style="color:#000080">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;version&gt;</span>2.4.3<span style="color:#000080">&lt;/version&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;/plugin&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#998;font-style:italic">&lt;!----&gt;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;/plugins&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/build&gt;</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#000080">&lt;build&gt;</span>
+    <span style="color:#000080">&lt;plugins&gt;</span>
+        <span style="color:#000080">&lt;plugin&gt;</span>
+            <span style="color:#000080">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#000080">&lt;/groupId&gt;</span>
+            <span style="color:#000080">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span style="color:#000080">&lt;/artifactId&gt;</span>
+        <span style="color:#000080">&lt;/plugin&gt;</span>
+
+        <span style="color:#998;font-style:italic">&lt;!--在这里修改版本--&gt;</span>
+        <span style="color:#000080">&lt;plugin&gt;</span>
+            <span style="color:#000080">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#000080">&lt;/groupId&gt;</span>
+            <span style="color:#000080">&lt;artifactId&gt;</span>maven-resources-plugin<span style="color:#000080">&lt;/artifactId&gt;</span>
+            <span style="color:#000080">&lt;version&gt;</span>2.4.3<span style="color:#000080">&lt;/version&gt;</span>
+        <span style="color:#000080">&lt;/plugin&gt;</span>
+        <span style="color:#998;font-style:italic">&lt;!----&gt;</span>
+
+    <span style="color:#000080">&lt;/plugins&gt;</span>
+<span style="color:#000080">&lt;/build&gt;</span>
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="3spring-cache">3、spring cache</h2>
 <p>spring cache碰到的执行错误，不影响启动</p>
 <h3 id="31">3.1</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">lang</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">IllegalStateException</span><span style="color:#000;font-weight:bold">:</span> No cache could be resolved <span style="color:#000;font-weight:bold">for</span> <span style="color:#a61717;background-color:#e3d2d2">&#39;</span>Builder<span style="color:#000;font-weight:bold">[</span><span style="color:#000;font-weight:bold">public</span> com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">sxt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">entity</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Teacher</span> com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">sxt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">service</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">impl</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">TeacherServiceImpl</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">queryById</span><span style="color:#000;font-weight:bold">(</span>java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">lang</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Integer</span><span style="color:#000;font-weight:bold">)]</span> caches<span style="color:#000;font-weight:bold">=[]</span> <span style="color:#000;font-weight:bold">|</span> key<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span>member<span style="color:#000;font-weight:bold">:</span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span><span style="color:#000;font-weight:bold">+</span><span style="color:#a61717;background-color:#e3d2d2">#</span>id<span style="color:#a61717;background-color:#e3d2d2">&#39;</span> <span style="color:#000;font-weight:bold">|</span> keyGenerator<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span> <span style="color:#000;font-weight:bold">|</span> cacheManager<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span> <span style="color:#000;font-weight:bold">|</span> cacheResolver<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span> <span style="color:#000;font-weight:bold">|</span> condition<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span> <span style="color:#000;font-weight:bold">|</span> unless<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;#</span>result <span style="color:#000;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span> <span style="color:#000;font-weight:bold">|</span> sync<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span><span style="color:#000;font-weight:bold">false</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span> using resolver <span style="color:#a61717;background-color:#e3d2d2">&#39;</span>org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">springframework</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">cache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">interceptor</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">SimpleCacheResolver</span><span style="color:#3c5d5d;font-weight:bold">@4ae15abe</span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span><span style="color:#000;font-weight:bold">.</span> At least one cache should be provided per cache operation<span style="color:#000;font-weight:bold">.</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">lang</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">IllegalStateException</span><span style="color:#000;font-weight:bold">:</span> No cache could be resolved <span style="color:#000;font-weight:bold">for</span> <span style="color:#a61717;background-color:#e3d2d2">&#39;</span>Builder<span style="color:#000;font-weight:bold">[</span><span style="color:#000;font-weight:bold">public</span> com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">sxt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">entity</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Teacher</span> com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">sxt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">service</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">impl</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">TeacherServiceImpl</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">queryById</span><span style="color:#000;font-weight:bold">(</span>java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">lang</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Integer</span><span style="color:#000;font-weight:bold">)]</span> caches<span style="color:#000;font-weight:bold">=[]</span> <span style="color:#000;font-weight:bold">|</span> key<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span>member<span style="color:#000;font-weight:bold">:</span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span><span style="color:#000;font-weight:bold">+</span><span style="color:#a61717;background-color:#e3d2d2">#</span>id<span style="color:#a61717;background-color:#e3d2d2">&#39;</span> <span style="color:#000;font-weight:bold">|</span> keyGenerator<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span> <span style="color:#000;font-weight:bold">|</span> cacheManager<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span> <span style="color:#000;font-weight:bold">|</span> cacheResolver<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span> <span style="color:#000;font-weight:bold">|</span> condition<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span> <span style="color:#000;font-weight:bold">|</span> unless<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;#</span>result <span style="color:#000;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span> <span style="color:#000;font-weight:bold">|</span> sync<span style="color:#000;font-weight:bold">=</span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span><span style="color:#000;font-weight:bold">false</span><span style="color:#a61717;background-color:#e3d2d2">&#39;&#39;</span> using resolver <span style="color:#a61717;background-color:#e3d2d2">&#39;</span>org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">springframework</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">cache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">interceptor</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">SimpleCacheResolver</span><span style="color:#3c5d5d;font-weight:bold">@4ae15abe</span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span><span style="color:#000;font-weight:bold">.</span> At least one cache should be provided per cache operation<span style="color:#000;font-weight:bold">.</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>原因：<br>
 @Cacheable缺少cacheNames参数</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#998;font-style:italic">// 第一种 在方法的@Cacheable增加cacheNames，如果还有其他方法没添加，需要挨个方法都增加，建议用第二种
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">TestQueryImpl</span> <span style="color:#000;font-weight:bold">implements</span> TestQuery <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#3c5d5d;font-weight:bold">@Cacheable</span><span style="color:#000;font-weight:bold">(</span>cacheNames <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#d14">&#34;user&#34;</span><span style="color:#000;font-weight:bold">},</span> key <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;#id&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> User <span style="color:#900;font-weight:bold">findById</span><span style="color:#000;font-weight:bold">(</span>BigInteger id<span style="color:#000;font-weight:bold">){</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">return</span> userMapper<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">selectByPrimaryKey</span><span style="color:#000;font-weight:bold">(</span>id<span style="color:#000;font-weight:bold">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">// 第二种 在类名增加@CacheConfig(cacheNames = &#34;***&#34;)，其他方法就不用挨个添加了
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span><span style="color:#3c5d5d;font-weight:bold">@Service</span>
-</span></span><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@Cacheable</span><span style="color:#000;font-weight:bold">(</span>cacheManager <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;redisCacheManager&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@CacheConfig</span><span style="color:#000;font-weight:bold">(</span>cacheNames <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;user&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">TestQueryImpl</span> <span style="color:#000;font-weight:bold">implements</span> TestQuery <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#998;font-style:italic">// 第一种 在方法的@Cacheable增加cacheNames，如果还有其他方法没添加，需要挨个方法都增加，建议用第二种
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">TestQueryImpl</span> <span style="color:#000;font-weight:bold">implements</span> TestQuery <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#3c5d5d;font-weight:bold">@Cacheable</span><span style="color:#000;font-weight:bold">(</span>cacheNames <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#d14">&#34;user&#34;</span><span style="color:#000;font-weight:bold">},</span> key <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;#id&#34;</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">public</span> User <span style="color:#900;font-weight:bold">findById</span><span style="color:#000;font-weight:bold">(</span>BigInteger id<span style="color:#000;font-weight:bold">){</span>
+        <span style="color:#000;font-weight:bold">return</span> userMapper<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">selectByPrimaryKey</span><span style="color:#000;font-weight:bold">(</span>id<span style="color:#000;font-weight:bold">);</span>
+    <span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#998;font-style:italic">// 第二种 在类名增加@CacheConfig(cacheNames = &#34;***&#34;)，其他方法就不用挨个添加了
+</span><span style="color:#998;font-style:italic"></span><span style="color:#3c5d5d;font-weight:bold">@Service</span>
+<span style="color:#3c5d5d;font-weight:bold">@Cacheable</span><span style="color:#000;font-weight:bold">(</span>cacheManager <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;redisCacheManager&#34;</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#3c5d5d;font-weight:bold">@CacheConfig</span><span style="color:#000;font-weight:bold">(</span>cacheNames <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;user&#34;</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">TestQueryImpl</span> <span style="color:#000;font-weight:bold">implements</span> TestQuery <span style="color:#000;font-weight:bold">{</span>
+
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="4mybatis">4、mybatis</h2>
 <h3 id="41-orgapacheibatisbindingbindingexception-invalid-bound-statement-not-found">4.1 org.apache.ibatis.binding.BindingException: Invalid bound statement (not found)</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ibatis</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">binding</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">BindingException</span><span style="color:#000;font-weight:bold">:</span> Invalid bound <span style="color:#900;font-weight:bold">statement</span> <span style="color:#000;font-weight:bold">(</span>not found<span style="color:#000;font-weight:bold">)</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ibatis</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">binding</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">BindingException</span><span style="color:#000;font-weight:bold">:</span> Invalid bound <span style="color:#900;font-weight:bold">statement</span> <span style="color:#000;font-weight:bold">(</span>not found<span style="color:#000;font-weight:bold">)</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>原因：</p>
 <ul>
 <li>1、target\classes下没编译出来*Mapper.xml，用mvn compile下或build下项目即可</li>
 <li>2、xxxMapper.xml文件没有按照传统的maven架构进行放置，在pom增加resource, 参考下面示例</li>
 </ul>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;build&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;resources&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;resource&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;directory&gt;</span>src/main/java<span style="color:#000080">&lt;/directory&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;includes&gt;</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#000080">&lt;include&gt;</span>**/*.properties<span style="color:#000080">&lt;/include&gt;</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#000080">&lt;include&gt;</span>**/*.xml<span style="color:#000080">&lt;/include&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;/includes&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;filtering&gt;</span>false<span style="color:#000080">&lt;/filtering&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;/resource&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;/resources&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/build&gt;</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#000080">&lt;build&gt;</span>
+    <span style="color:#000080">&lt;resources&gt;</span>
+        <span style="color:#000080">&lt;resource&gt;</span>
+            <span style="color:#000080">&lt;directory&gt;</span>src/main/java<span style="color:#000080">&lt;/directory&gt;</span>
+            <span style="color:#000080">&lt;includes&gt;</span>
+                <span style="color:#000080">&lt;include&gt;</span>**/*.properties<span style="color:#000080">&lt;/include&gt;</span>
+                <span style="color:#000080">&lt;include&gt;</span>**/*.xml<span style="color:#000080">&lt;/include&gt;</span>
+            <span style="color:#000080">&lt;/includes&gt;</span>
+            <span style="color:#000080">&lt;filtering&gt;</span>false<span style="color:#000080">&lt;/filtering&gt;</span>
+        <span style="color:#000080">&lt;/resource&gt;</span>
+    <span style="color:#000080">&lt;/resources&gt;</span>
+<span style="color:#000080">&lt;/build&gt;</span>
+</code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>3、代码配置问题<br>
 检查MapperScan</li>
 </ul>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#3c5d5d;font-weight:bold">@MapperScan</span><span style="color:#000;font-weight:bold">({</span><span style="color:#d14">&#34;com.*.mapper&#34;</span><span style="color:#000;font-weight:bold">})</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#3c5d5d;font-weight:bold">@MapperScan</span><span style="color:#000;font-weight:bold">({</span><span style="color:#d14">&#34;com.*.mapper&#34;</span><span style="color:#000;font-weight:bold">})</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>检查namesapce, 一般通过点击跳转可以验证是否正确</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;mapper</span> <span style="color:#008080">namespace=</span><span style="color:#d14">&#34;com.**.user.mapper.UserMapper&#34;</span><span style="color:#000080">&gt;</span>
-</span></span><span style="display:flex;"><span>......
-</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/mapper&gt;</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#000080">&lt;mapper</span> <span style="color:#008080">namespace=</span><span style="color:#d14">&#34;com.**.user.mapper.UserMapper&#34;</span><span style="color:#000080">&gt;</span>
+......
+<span style="color:#000080">&lt;/mapper&gt;</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>检查id，一般ide插件可以关联跳转</p>
-<pre tabindex="0"><code>&lt;select id=&#34;selectByPrimaryKey&#34; resultMap=&#34;BaseResultMap&#34; parameterType=&#34;java.lang.Long&#34;&gt;
+<pre tabindex="0"><code>&lt;select id=&quot;selectByPrimaryKey&quot; resultMap=&quot;BaseResultMap&quot; parameterType=&quot;java.lang.Long&quot;&gt;
 ......
 &lt;/select&gt;
 </code></pre><p>检查mybatis的配置，如果不是标准目录和命名需要细心检查</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#000080">mybatis</span>:<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">mapperLocations</span>:<span style="color:#bbb"> </span>classpath:**/mapper/**/*Mapper.xml<span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb">  </span><span style="color:#000080">type-aliases-package</span>:<span style="color:#bbb"> </span>com.**.entity<span style="color:#bbb">
-</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#000080">mybatis</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">mapperLocations</span>:<span style="color:#bbb"> </span>classpath:**/mapper/**/*Mapper.xml<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">type-aliases-package</span>:<span style="color:#bbb"> </span>com.**.entity<span style="color:#bbb">
+</span></code></pre></td></tr></table>
 </div>
 </div><h2 id="5excel">5、excel</h2>
 <p>如果excel保存在 resource 目录下，mvn编译时复制到target\class目录下，容易破坏二进制导致poi解析异常</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Exception in thread <span style="color:#d14">&#34;main&#34;</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">exceptions</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">InvalidOperationException</span><span style="color:#000;font-weight:bold">:</span> Could not open the specified zip entry source stream
-</span></span><span style="display:flex;"><span>	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">opc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ZipPackage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openZipEntrySourceStream</span><span style="color:#000;font-weight:bold">(</span>ZipPackage<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>212<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">opc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ZipPackage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openZipEntrySourceStream</span><span style="color:#000;font-weight:bold">(</span>ZipPackage<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>194<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">opc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ZipPackage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openZipEntrySourceStream</span><span style="color:#000;font-weight:bold">(</span>ZipPackage<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>168<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">opc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ZipPackage</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>ZipPackage<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>149<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">opc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">OPCPackage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">open</span><span style="color:#000;font-weight:bold">(</span>OPCPackage<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>277<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">opc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">OPCPackage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">open</span><span style="color:#000;font-weight:bold">(</span>OPCPackage<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>186<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">analysis</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">v07</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">XlsxSaxAnalyser</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">readOpcPackage</span><span style="color:#000;font-weight:bold">(</span>XlsxSaxAnalyser<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>191<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">analysis</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">v07</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">XlsxSaxAnalyser</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>XlsxSaxAnalyser<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>89<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">analysis</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ExcelAnalyserImpl</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">choiceExcelExecutor</span><span style="color:#000;font-weight:bold">(</span>ExcelAnalyserImpl<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>103<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">analysis</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ExcelAnalyserImpl</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>ExcelAnalyserImpl<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>55<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ExcelReader</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>ExcelReader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>27<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">read</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">builder</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ExcelReaderBuilder</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">build</span><span style="color:#000;font-weight:bold">(</span>ExcelReaderBuilder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>202<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">read</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">builder</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ExcelReaderBuilder</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">sheet</span><span style="color:#000;font-weight:bold">(</span>ExcelReaderBuilder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>239<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">read</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">builder</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ExcelReaderBuilder</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">sheet</span><span style="color:#000;font-weight:bold">(</span>ExcelReaderBuilder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>227<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>Caused by<span style="color:#000;font-weight:bold">:</span> java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">io</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">IOException</span><span style="color:#000;font-weight:bold">:</span> ZIP entry size is too large or invalid
-</span></span><span style="display:flex;"><span>	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">util</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ZipArchiveFakeEntry</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>ZipArchiveFakeEntry<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>43<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">util</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ZipInputStreamZipEntrySource</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>ZipInputStreamZipEntrySource<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>53<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">opc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ZipPackage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openZipEntrySourceStream</span><span style="color:#000;font-weight:bold">(</span>ZipPackage<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>210<span style="color:#000;font-weight:bold">)</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Exception in thread <span style="color:#d14">&#34;main&#34;</span> org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">exceptions</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">InvalidOperationException</span><span style="color:#000;font-weight:bold">:</span> Could not open the specified zip entry source stream
+	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">opc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ZipPackage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openZipEntrySourceStream</span><span style="color:#000;font-weight:bold">(</span>ZipPackage<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>212<span style="color:#000;font-weight:bold">)</span>
+	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">opc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ZipPackage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openZipEntrySourceStream</span><span style="color:#000;font-weight:bold">(</span>ZipPackage<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>194<span style="color:#000;font-weight:bold">)</span>
+	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">opc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ZipPackage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openZipEntrySourceStream</span><span style="color:#000;font-weight:bold">(</span>ZipPackage<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>168<span style="color:#000;font-weight:bold">)</span>
+	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">opc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ZipPackage</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>ZipPackage<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>149<span style="color:#000;font-weight:bold">)</span>
+	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">opc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">OPCPackage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">open</span><span style="color:#000;font-weight:bold">(</span>OPCPackage<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>277<span style="color:#000;font-weight:bold">)</span>
+	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">opc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">OPCPackage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">open</span><span style="color:#000;font-weight:bold">(</span>OPCPackage<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>186<span style="color:#000;font-weight:bold">)</span>
+	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">analysis</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">v07</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">XlsxSaxAnalyser</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">readOpcPackage</span><span style="color:#000;font-weight:bold">(</span>XlsxSaxAnalyser<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>191<span style="color:#000;font-weight:bold">)</span>
+	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">analysis</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">v07</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">XlsxSaxAnalyser</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>XlsxSaxAnalyser<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>89<span style="color:#000;font-weight:bold">)</span>
+	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">analysis</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ExcelAnalyserImpl</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">choiceExcelExecutor</span><span style="color:#000;font-weight:bold">(</span>ExcelAnalyserImpl<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>103<span style="color:#000;font-weight:bold">)</span>
+	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">analysis</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ExcelAnalyserImpl</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>ExcelAnalyserImpl<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>55<span style="color:#000;font-weight:bold">)</span>
+	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ExcelReader</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>ExcelReader<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>27<span style="color:#000;font-weight:bold">)</span>
+	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">read</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">builder</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ExcelReaderBuilder</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">build</span><span style="color:#000;font-weight:bold">(</span>ExcelReaderBuilder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>202<span style="color:#000;font-weight:bold">)</span>
+	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">read</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">builder</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ExcelReaderBuilder</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">sheet</span><span style="color:#000;font-weight:bold">(</span>ExcelReaderBuilder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>239<span style="color:#000;font-weight:bold">)</span>
+	at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">alibaba</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">excel</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">read</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">builder</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ExcelReaderBuilder</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">sheet</span><span style="color:#000;font-weight:bold">(</span>ExcelReaderBuilder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>227<span style="color:#000;font-weight:bold">)</span>
+Caused by<span style="color:#000;font-weight:bold">:</span> java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">io</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">IOException</span><span style="color:#000;font-weight:bold">:</span> ZIP entry size is too large or invalid
+	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">util</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ZipArchiveFakeEntry</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>ZipArchiveFakeEntry<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>43<span style="color:#000;font-weight:bold">)</span>
+	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">util</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ZipInputStreamZipEntrySource</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>ZipInputStreamZipEntrySource<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>53<span style="color:#000;font-weight:bold">)</span>
+	at org<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">apache</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">poi</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openxml4j</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">opc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ZipPackage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">openZipEntrySourceStream</span><span style="color:#000;font-weight:bold">(</span>ZipPackage<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>210<span style="color:#000;font-weight:bold">)</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>需要在 pom 的 maven-resources-plugin 增加 filter，这样 excel 文件被 mvn 复制到 target\class 时不编译保留原格式</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;plugin&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#000080">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;artifactId&gt;</span>maven-resources-plugin<span style="color:#000080">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;version&gt;</span>2.4.3<span style="color:#000080">&lt;/version&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">&lt;!-- resource 目录下的 xls 被 mvn 复制到 target/class 目录后二进制文件会破坏导致 excel 解析异常，需添加这个过滤 --&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;configuration&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;nonFilteredFileExtensions&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;nonFilteredFileExtension&gt;</span>xlsx<span style="color:#000080">&lt;/nonFilteredFileExtension&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;nonFilteredFileExtension&gt;</span>xls<span style="color:#000080">&lt;/nonFilteredFileExtension&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;/nonFilteredFileExtensions&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;/configuration&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/plugin&gt;</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#000080">&lt;plugin&gt;</span>
+    <span style="color:#000080">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#000080">&lt;/groupId&gt;</span>
+    <span style="color:#000080">&lt;artifactId&gt;</span>maven-resources-plugin<span style="color:#000080">&lt;/artifactId&gt;</span>
+    <span style="color:#000080">&lt;version&gt;</span>2.4.3<span style="color:#000080">&lt;/version&gt;</span>
+    <span style="color:#998;font-style:italic">&lt;!-- resource 目录下的 xls 被 mvn 复制到 target/class 目录后二进制文件会破坏导致 excel 解析异常，需添加这个过滤 --&gt;</span>
+    <span style="color:#000080">&lt;configuration&gt;</span>
+        <span style="color:#000080">&lt;nonFilteredFileExtensions&gt;</span>
+            <span style="color:#000080">&lt;nonFilteredFileExtension&gt;</span>xlsx<span style="color:#000080">&lt;/nonFilteredFileExtension&gt;</span>
+            <span style="color:#000080">&lt;nonFilteredFileExtension&gt;</span>xls<span style="color:#000080">&lt;/nonFilteredFileExtension&gt;</span>
+        <span style="color:#000080">&lt;/nonFilteredFileExtensions&gt;</span>
+    <span style="color:#000080">&lt;/configuration&gt;</span>
+<span style="color:#000080">&lt;/plugin&gt;</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>to be continue&hellip;</p>
 <h2 id="6官方文档">6、官方文档</h2>
@@ -757,6 +757,14 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
     </li>
     
@@ -786,14 +794,6 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li>
         <a href="https://anTtutu.github.io/post/2022-12-19-git_delete_history/" title="git删除历史提交记录" target="_blank">git删除历史提交记录</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-11-28-python_muilt_version/" title="python多版本管理工具" target="_blank">python多版本管理工具</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-11-22-springboot_start_failed/" title="springboot常见兼容性错误" target="_blank">springboot常见兼容性错误</a>
     </li>
     
 </ul>
@@ -837,6 +837,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/check/">check (5)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/claude-code/">claude code (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cli/">cli (1)</a></li>
@@ -862,6 +864,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <li><a href="https://anTtutu.github.io/categories/dockerfile/">dockerfile (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/drawio/">drawio (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
     
@@ -933,6 +937,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/maven/">maven (3)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/mcp/">mcp (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/mine/">mine (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
@@ -978,6 +984,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <li><a href="https://anTtutu.github.io/categories/sdk/">sdk (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/shell/">shell (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/skill/">skill (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     

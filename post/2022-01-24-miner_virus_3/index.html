@@ -258,112 +258,112 @@
 <h2 id="1分析">1、分析</h2>
 <p>这次思路改进了些，起初有个只是定时任务没被清理，阿里云通过定时任务关键字&quot;pool.minexmr.com:4444&quot;报了蠕虫病毒，但是根据关键字查看，这像挖矿<br>
 然后 top 了半天没看到结果，怀疑是top被篡改了？？？然后进了/usr/bin/核对下 top 的时间，发现没差异呀，但是本着稳妥起见，还是下载 busybox</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://busybox.net/downloads/binaries/1.30.0-i686/busybox 
-</span></span><span style="display:flex;"><span>chmod +x busybox
-</span></span><span style="display:flex;"><span>cp busybox /usr/bin 
-</span></span><span style="display:flex;"><span>busybox  top
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget https://busybox.net/downloads/binaries/1.30.0-i686/busybox 
+chmod +x busybox
+cp busybox /usr/bin 
+busybox  top
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="2按步骤排查">2、按步骤排查</h2>
 <p>剩余步骤跟<a href="/post/2021-01-28-miner_virus_2">挖矿病毒2-分析和排查思路</a>一样，只是所有的命令前面是 busybox command</p>
 <h4 id="查到的一些异常样例">查到的一些异常样例</h4>
 <h4 id="案例1">案例1：</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt; cat oracle 
-</span></span><span style="display:flex;"><span><span style="color:#099">2</span> * * * * /home/oracle/.dhpcd -o pool.minexmr.com:4444 -t8 --safe -B &gt;/dev/null 2&gt;/dev/null
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; cat oracle 
+<span style="color:#099">2</span> * * * * /home/oracle/.dhpcd -o pool.minexmr.com:4444 -t8 --safe -B &gt;/dev/null 2&gt;/dev/null
+</code></pre></td></tr></table>
 </div>
 </div><h4 id="案例2">案例2：</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt; cat admin 
-</span></span><span style="display:flex;"><span>*3 * * * * /var/tmp/.xri/monitor
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>&gt; ps -auxf | grep admin
-</span></span><span style="display:flex;"><span>root       <span style="color:#099">746</span>  0.0  0.0 <span style="color:#099">112712</span>   <span style="color:#099">960</span> pts/0    S+   15:56   0:00          <span style="color:#d14">\_</span> grep --color<span style="color:#000;font-weight:bold">=</span>auto admin
-</span></span><span style="display:flex;"><span>admin     <span style="color:#099">5846</span>  0.0  0.0 <span style="color:#099">113320</span>  <span style="color:#099">1520</span> ?        S     <span style="color:#099">2021</span>  10:28 /bin/bash /dev/shm/.x/scp
-</span></span><span style="display:flex;"><span>admin      <span style="color:#099">739</span>  0.0  0.0 <span style="color:#099">107956</span>   <span style="color:#099">356</span> ?        S    15:56   0:00  <span style="color:#d14">\_</span> sleep <span style="color:#099">10</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; cat admin 
+*3 * * * * /var/tmp/.xri/monitor
+
+&gt; ps -auxf | grep admin
+root       <span style="color:#099">746</span>  0.0  0.0 <span style="color:#099">112712</span>   <span style="color:#099">960</span> pts/0    S+   15:56   0:00          <span style="color:#d14">\_</span> grep --color<span style="color:#000;font-weight:bold">=</span>auto admin
+admin     <span style="color:#099">5846</span>  0.0  0.0 <span style="color:#099">113320</span>  <span style="color:#099">1520</span> ?        S     <span style="color:#099">2021</span>  10:28 /bin/bash /dev/shm/.x/scp
+admin      <span style="color:#099">739</span>  0.0  0.0 <span style="color:#099">107956</span>   <span style="color:#099">356</span> ?        S    15:56   0:00  <span style="color:#d14">\_</span> sleep <span style="color:#099">10</span>
+</code></pre></td></tr></table>
 </div>
 </div><h4 id="案例3">案例3：</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt; busybox top
-</span></span><span style="display:flex;"><span>top - 10:20:08 up <span style="color:#099">144</span> days,  9:05,  <span style="color:#099">2</span> users,  load average: 12.07, 12.04, 12.00
-</span></span><span style="display:flex;"><span>Tasks: <span style="color:#099">295</span> total,   <span style="color:#099">1</span> running, <span style="color:#099">171</span> sleeping,   <span style="color:#099">1</span> stopped,   <span style="color:#099">0</span> zombie
-</span></span><span style="display:flex;"><span>%Cpu<span style="color:#000;font-weight:bold">(</span>s<span style="color:#000;font-weight:bold">)</span>: 50.2 us,  0.1 sy,  0.0 ni, 49.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
-</span></span><span style="display:flex;"><span>KiB Mem : <span style="color:#099">47886084</span> total, <span style="color:#099">35389780</span> free,  <span style="color:#099">4350740</span> used,  <span style="color:#099">8145564</span> buff/cache
-</span></span><span style="display:flex;"><span>KiB Swap:   <span style="color:#099">969964</span> total,   <span style="color:#099">969964</span> free,        <span style="color:#099">0</span> used. <span style="color:#099">42956764</span> avail Mem 
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                          
-</span></span><span style="display:flex;"><span> <span style="color:#099">1505</span> root      <span style="color:#099">15</span>  -5 <span style="color:#099">4970560</span> 1.156g  <span style="color:#099">10548</span> S  <span style="color:#099">1200</span>  2.5  40033,13 xmrig
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>&gt; ps -axuf | grep <span style="color:#099">1505</span>
-</span></span><span style="display:flex;"><span>root     <span style="color:#099">32603</span>  0.0  0.0  <span style="color:#099">14428</span>  <span style="color:#099">1008</span> pts/2    S+   10:21   0:00          <span style="color:#d14">\_</span> grep --color<span style="color:#000;font-weight:bold">=</span>auto <span style="color:#099">1505</span>
-</span></span><span style="display:flex;"><span>root      <span style="color:#099">1505</span> <span style="color:#099">1155</span>  2.5 <span style="color:#099">4970560</span> <span style="color:#099">1212316</span> pts/1 S&lt;l+  <span style="color:#099">2021</span> 2402005:53      <span style="color:#d14">\_</span> ./xmrig -o xmr-us-east1.nanopool.org:14444 -u *********48Vd2N2gGEUQfCRq4ooQuZGjknDtCdGRDiVEyoHNL5wSevPCmcewry41DtD4d********* -k --coin monero -a rx/0
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>****替换了钱包地址部分字母
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; busybox top
+top - 10:20:08 up <span style="color:#099">144</span> days,  9:05,  <span style="color:#099">2</span> users,  load average: 12.07, 12.04, 12.00
+Tasks: <span style="color:#099">295</span> total,   <span style="color:#099">1</span> running, <span style="color:#099">171</span> sleeping,   <span style="color:#099">1</span> stopped,   <span style="color:#099">0</span> zombie
+%Cpu<span style="color:#000;font-weight:bold">(</span>s<span style="color:#000;font-weight:bold">)</span>: 50.2 us,  0.1 sy,  0.0 ni, 49.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem : <span style="color:#099">47886084</span> total, <span style="color:#099">35389780</span> free,  <span style="color:#099">4350740</span> used,  <span style="color:#099">8145564</span> buff/cache
+KiB Swap:   <span style="color:#099">969964</span> total,   <span style="color:#099">969964</span> free,        <span style="color:#099">0</span> used. <span style="color:#099">42956764</span> avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                          
+ <span style="color:#099">1505</span> root      <span style="color:#099">15</span>  -5 <span style="color:#099">4970560</span> 1.156g  <span style="color:#099">10548</span> S  <span style="color:#099">1200</span>  2.5  40033,13 xmrig
+
+
+
+&gt; ps -axuf | grep <span style="color:#099">1505</span>
+root     <span style="color:#099">32603</span>  0.0  0.0  <span style="color:#099">14428</span>  <span style="color:#099">1008</span> pts/2    S+   10:21   0:00          <span style="color:#d14">\_</span> grep --color<span style="color:#000;font-weight:bold">=</span>auto <span style="color:#099">1505</span>
+root      <span style="color:#099">1505</span> <span style="color:#099">1155</span>  2.5 <span style="color:#099">4970560</span> <span style="color:#099">1212316</span> pts/1 S&lt;l+  <span style="color:#099">2021</span> 2402005:53      <span style="color:#d14">\_</span> ./xmrig -o xmr-us-east1.nanopool.org:14444 -u *********48Vd2N2gGEUQfCRq4ooQuZGjknDtCdGRDiVEyoHNL5wSevPCmcewry41DtD4d********* -k --coin monero -a rx/0
+
+****替换了钱包地址部分字母
+</code></pre></td></tr></table>
 </div>
 </div><h4 id="案例4">案例4：</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/sbin/kerberods
-</span></span><span style="display:flex;"><span>恶意文件md5：eec085bae7c4dfcdcb353b095b8375fa
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>/dev/shm/.x/secure
-</span></span><span style="display:flex;"><span>恶意文件md5：388826af99f6a6ad3c104959f52ea783
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/usr/sbin/kerberods
+恶意文件md5：eec085bae7c4dfcdcb353b095b8375fa
+
+/dev/shm/.x/secure
+恶意文件md5：388826af99f6a6ad3c104959f52ea783
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="3整理下一些共性问题">3、整理下一些共性问题</h2>
 <h3 id="31-crontab--l失效">3.1 crontab -l失效</h3>
@@ -372,17 +372,17 @@
 <h3 id="32-喜欢隐藏在tmp或var这些临时目录">3.2 喜欢隐藏在/tmp或/var这些临时目录</h3>
 <p>不光喜欢临时目录，而且都是隐藏格式的文件夹，ls 不带-a 的话可能就没法发现<br>
 守护进程和病毒本体放在不同隐藏目录，狡兔三窟</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/dev/shm/.x/secure
-</span></span><span style="display:flex;"><span>/var/tmp/.xri/monitor
-</span></span><span style="display:flex;"><span>/home/oracle/.dhpcd
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/dev/shm/.x/secure
+/var/tmp/.xri/monitor
+/home/oracle/.dhpcd
+</code></pre></td></tr></table>
 </div>
 </div><h3 id="33-清理系统日志">3.3 清理系统日志</h3>
 <p>日志和痕迹基本上都被清理干净，很难找到一些蛛丝马迹</p>
@@ -471,7 +471,7 @@ kerberods挖矿病毒查杀及分析: <a href="https://blog.csdn.net/u010457406/
         
         <li><a href="/post/2021-12-17-nmap/">nmap参数详解</a></li>
         
-        <li><a href="/post/2021-12-13-log4j2_cve/">log4j2远程执行漏洞</a></li>
+        <li><a href="/post/2021-12-13-log4j2_CVE/">log4j2远程执行漏洞</a></li>
         
     </ul>
 </div>
@@ -634,6 +634,14 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
     </li>
     
@@ -663,14 +671,6 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li>
         <a href="https://anTtutu.github.io/post/2022-12-19-git_delete_history/" title="git删除历史提交记录" target="_blank">git删除历史提交记录</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-11-28-python_muilt_version/" title="python多版本管理工具" target="_blank">python多版本管理工具</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-11-22-springboot_start_failed/" title="springboot常见兼容性错误" target="_blank">springboot常见兼容性错误</a>
     </li>
     
 </ul>
@@ -714,6 +714,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/check/">check (5)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/claude-code/">claude code (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cli/">cli (1)</a></li>
@@ -739,6 +741,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <li><a href="https://anTtutu.github.io/categories/dockerfile/">dockerfile (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/drawio/">drawio (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
     
@@ -810,6 +814,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/maven/">maven (3)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/mcp/">mcp (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/mine/">mine (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
@@ -855,6 +861,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <li><a href="https://anTtutu.github.io/categories/sdk/">sdk (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/shell/">shell (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/skill/">skill (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     

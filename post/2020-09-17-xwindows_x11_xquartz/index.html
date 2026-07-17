@@ -22,7 +22,7 @@
     <meta name="description" content="Mac下远程运行Linux的GUI程序">
         
     <meta name="author" content="Anttu">
-    <meta property="og:url" content="https://anTtutu.github.io/post/2020-09-17-xwindows_x11_xquartz/">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2020-09-17-xWindows_x11_xQuartz/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -234,55 +234,55 @@
             <h2 id="前言">前言</h2>
 <p>2019年嫌公司发的E480定制16G太卡更换自己的MacBookPro2015后，一直也没碰到linux下的GUI程序，前阵子有程序jvm内存泄露，生成的dump文件有5G，用自己的mbp解析内存不足，就想到以前整理的IBM的dump分析工具jca458，然后盲目的试了试，修改了DISPLAY的ip，然后启动报错&hellip;</p>
 <p>看来windows下的X11脚本连接Xmanager行不通了，得另外想法子</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root<span style="color:#3c5d5d;font-weight:bold">@javaMemoryDumpAnalyzer</span><span style="color:#000;font-weight:bold">]</span><span style="color:#a61717;background-color:#e3d2d2">#</span> <span style="color:#000;font-weight:bold">./</span>memory<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">sh</span>  
-</span></span><span style="display:flex;"><span>No protocol specified
-</span></span><span style="display:flex;"><span>No protocol specified
-</span></span><span style="display:flex;"><span>Exception occurred in <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">()</span> of IBM Thread and Monitor Dump Analyzer
-</span></span><span style="display:flex;"><span>java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">AWTError</span><span style="color:#000;font-weight:bold">:</span> Can<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>t connect to X11 window server using <span style="color:#a61717;background-color:#e3d2d2">&#39;</span><span style="color:#000;font-weight:bold">*.*.*.*:</span>0<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">0</span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span> as the value of the DISPLAY variable<span style="color:#000;font-weight:bold">.</span>
-</span></span><span style="display:flex;"><span>        at sun<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">X11GraphicsEnvironment</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">initDisplay</span><span style="color:#000;font-weight:bold">(</span>Native Method<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at sun<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">X11GraphicsEnvironment</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">access$200</span><span style="color:#000;font-weight:bold">(</span>X11GraphicsEnvironment<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>65<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at sun<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">X11GraphicsEnvironment$1</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">run</span><span style="color:#000;font-weight:bold">(</span>X11GraphicsEnvironment<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>115<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">security</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">AccessController</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">doPrivileged</span><span style="color:#000;font-weight:bold">(</span>Native Method<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at sun<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">X11GraphicsEnvironment</span><span style="color:#000;font-weight:bold">.&lt;</span>clinit<span style="color:#000;font-weight:bold">&gt;(</span>X11GraphicsEnvironment<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>74<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">lang</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Class</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">forName0</span><span style="color:#000;font-weight:bold">(</span>Native Method<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">lang</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Class</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">forName</span><span style="color:#000;font-weight:bold">(</span>Class<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>264<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">GraphicsEnvironment</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">createGE</span><span style="color:#000;font-weight:bold">(</span>GraphicsEnvironment<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>103<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">GraphicsEnvironment</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLocalGraphicsEnvironment</span><span style="color:#000;font-weight:bold">(</span>GraphicsEnvironment<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>82<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Window</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">initGC</span><span style="color:#000;font-weight:bold">(</span>Window<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>475<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Window</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">init</span><span style="color:#000;font-weight:bold">(</span>Window<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>495<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Window</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>Window<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>537<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Frame</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>Frame<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>420<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Frame</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>Frame<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>385<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at javax<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">swing</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">JFrame</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>JFrame<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>189<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ibm</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">jinwoo</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">thread</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Analyzer</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>Analyzer<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>489<span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>        at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ibm</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">jinwoo</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">thread</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Analyzer</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">main</span><span style="color:#000;font-weight:bold">(</span>Analyzer<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>7029<span style="color:#000;font-weight:bold">)</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">[</span>root<span style="color:#3c5d5d;font-weight:bold">@javaMemoryDumpAnalyzer</span><span style="color:#000;font-weight:bold">]</span><span style="color:#a61717;background-color:#e3d2d2">#</span> <span style="color:#000;font-weight:bold">./</span>memory<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">sh</span>  
+No protocol specified
+No protocol specified
+Exception occurred in <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">()</span> of IBM Thread and Monitor Dump Analyzer
+java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">AWTError</span><span style="color:#000;font-weight:bold">:</span> Can<span style="color:#a61717;background-color:#e3d2d2">&#39;</span>t connect to X11 window server using <span style="color:#a61717;background-color:#e3d2d2">&#39;</span><span style="color:#000;font-weight:bold">*.*.*.*:</span>0<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">0</span><span style="color:#a61717;background-color:#e3d2d2">&#39;</span> as the value of the DISPLAY variable<span style="color:#000;font-weight:bold">.</span>
+        at sun<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">X11GraphicsEnvironment</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">initDisplay</span><span style="color:#000;font-weight:bold">(</span>Native Method<span style="color:#000;font-weight:bold">)</span>
+        at sun<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">X11GraphicsEnvironment</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">access$200</span><span style="color:#000;font-weight:bold">(</span>X11GraphicsEnvironment<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>65<span style="color:#000;font-weight:bold">)</span>
+        at sun<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">X11GraphicsEnvironment$1</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">run</span><span style="color:#000;font-weight:bold">(</span>X11GraphicsEnvironment<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>115<span style="color:#000;font-weight:bold">)</span>
+        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">security</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">AccessController</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">doPrivileged</span><span style="color:#000;font-weight:bold">(</span>Native Method<span style="color:#000;font-weight:bold">)</span>
+        at sun<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">X11GraphicsEnvironment</span><span style="color:#000;font-weight:bold">.&lt;</span>clinit<span style="color:#000;font-weight:bold">&gt;(</span>X11GraphicsEnvironment<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>74<span style="color:#000;font-weight:bold">)</span>
+        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">lang</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Class</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">forName0</span><span style="color:#000;font-weight:bold">(</span>Native Method<span style="color:#000;font-weight:bold">)</span>
+        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">lang</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Class</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">forName</span><span style="color:#000;font-weight:bold">(</span>Class<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>264<span style="color:#000;font-weight:bold">)</span>
+        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">GraphicsEnvironment</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">createGE</span><span style="color:#000;font-weight:bold">(</span>GraphicsEnvironment<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>103<span style="color:#000;font-weight:bold">)</span>
+        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">GraphicsEnvironment</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getLocalGraphicsEnvironment</span><span style="color:#000;font-weight:bold">(</span>GraphicsEnvironment<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>82<span style="color:#000;font-weight:bold">)</span>
+        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Window</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">initGC</span><span style="color:#000;font-weight:bold">(</span>Window<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>475<span style="color:#000;font-weight:bold">)</span>
+        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Window</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">init</span><span style="color:#000;font-weight:bold">(</span>Window<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>495<span style="color:#000;font-weight:bold">)</span>
+        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Window</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>Window<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>537<span style="color:#000;font-weight:bold">)</span>
+        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Frame</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>Frame<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>420<span style="color:#000;font-weight:bold">)</span>
+        at java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">awt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Frame</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>Frame<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>385<span style="color:#000;font-weight:bold">)</span>
+        at javax<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">swing</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">JFrame</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>JFrame<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>189<span style="color:#000;font-weight:bold">)</span>
+        at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ibm</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">jinwoo</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">thread</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Analyzer</span><span style="color:#000;font-weight:bold">.&lt;</span>init<span style="color:#000;font-weight:bold">&gt;(</span>Analyzer<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>489<span style="color:#000;font-weight:bold">)</span>
+        at com<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">ibm</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">jinwoo</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">thread</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Analyzer</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">main</span><span style="color:#000;font-weight:bold">(</span>Analyzer<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">java</span><span style="color:#000;font-weight:bold">:</span>7029<span style="color:#000;font-weight:bold">)</span>
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="1查询了下报错信息">1、查询了下报错信息</h2>
 <p>MacOS从v10.5附带了X11的升级版本XQuartz，但是从10.7后又不附带了，需要自己额外安装<br>
@@ -298,96 +298,96 @@ XQuartz下载地址：<a href="https://www.xquartz.org">https://www.xquartz.org<
         <img class="mx-auto" alt="" src="/posts/x11/xquartz.jpg" />   
     </p>
 <h2 id="4可能服务器上需要安装xauth可选参考验证后再决策">4、可能服务器上需要安装xauth(可选，参考验证后再决策)</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@javaMemoryDumpAnalyzer<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># yum search xauth</span>
-</span></span><span style="display:flex;"><span>Loaded plugins: fastestmirror, refresh-packagekit, security
-</span></span><span style="display:flex;"><span>Loading mirror speeds from cached hostfile
-</span></span><span style="display:flex;"><span> * base: mirrors.163.com
-</span></span><span style="display:flex;"><span> * extras: mirrors.ustc.edu.cn
-</span></span><span style="display:flex;"><span> * updates: mirrors.ustc.edu.cn
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">=========================================================================</span> N/S Matched: <span style="color:#008080">xauth</span> <span style="color:#000;font-weight:bold">=========================================================================</span>
-</span></span><span style="display:flex;"><span>xorg-x11-xauth.x86_64 : X.Org X11 X authority utilities
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  Name and summary matches only, use <span style="color:#d14">&#34;search all&#34;</span> <span style="color:#000;font-weight:bold">for</span> everything.
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@javaMemoryDumpAnalyzer<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># yum search xauth</span>
+Loaded plugins: fastestmirror, refresh-packagekit, security
+Loading mirror speeds from cached hostfile
+ * base: mirrors.163.com
+ * extras: mirrors.ustc.edu.cn
+ * updates: mirrors.ustc.edu.cn
+<span style="color:#000;font-weight:bold">=========================================================================</span> N/S Matched: <span style="color:#008080">xauth</span> <span style="color:#000;font-weight:bold">=========================================================================</span>
+xorg-x11-xauth.x86_64 : X.Org X11 X authority utilities
+
+  Name and summary matches only, use <span style="color:#d14">&#34;search all&#34;</span> <span style="color:#000;font-weight:bold">for</span> everything.
+</code></pre></td></tr></table>
 </div>
 </div><h3 id="41-如果没安装会提示">4.1 如果没安装会提示</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@javaMemoryDumpAnalyzer<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># yum search xauth</span>
-</span></span><span style="display:flex;"><span>Loaded plugins: fastestmirror, refresh-packagekit, security
-</span></span><span style="display:flex;"><span>Loading mirror speeds from cached hostfile
-</span></span><span style="display:flex;"><span> * base: mirrors.163.com
-</span></span><span style="display:flex;"><span> * extras: mirrors.ustc.edu.cn
-</span></span><span style="display:flex;"><span> * updates: mirrors.ustc.edu.cn
-</span></span><span style="display:flex;"><span>Warning: No matches found <span style="color:#000;font-weight:bold">for</span>: xauth
-</span></span><span style="display:flex;"><span>No Matches found
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@javaMemoryDumpAnalyzer<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># yum search xauth</span>
+Loaded plugins: fastestmirror, refresh-packagekit, security
+Loading mirror speeds from cached hostfile
+ * base: mirrors.163.com
+ * extras: mirrors.ustc.edu.cn
+ * updates: mirrors.ustc.edu.cn
+Warning: No matches found <span style="color:#000;font-weight:bold">for</span>: xauth
+No Matches found
+</code></pre></td></tr></table>
 </div>
 </div><h3 id="42-安装命令">4.2 安装命令</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>yum install xauth
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum install xauth
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="5修改服务器上的配置">5、修改服务器上的配置</h2>
 <p>打开服务器上的/etc/ssh/sshd_config</p>
 <p>然后将X11Forwarding以及X11UseLocalhost这两行修改为：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>X11Forwarding yes
-</span></span><span style="display:flex;"><span>X11UseLocalhost no
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">X11Forwarding yes
+X11UseLocalhost no
+</code></pre></td></tr></table>
 </div>
 </div><p>另外如果服务器关闭了IPv6功能，那么还要将AddressFamily这一行修改为：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>AddressFamily inet
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">AddressFamily inet
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="6在服务器上安装x11小工具可选步骤用于验证x11是否成功">6、在服务器上安装X11小工具（可选步骤，用于验证X11是否成功）</h2>
 <p>这步是为了验证X11是否配置成功并生效
 在服务器上执行</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>yum install xorg-x11-apps
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yum install xorg-x11-apps
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="7在mac端连接服务器并启用x11转发功能">7、在Mac端连接服务器并启用X11转发功能</h2>
 <p>打开步骤3安装完成的XQuartz，然后选择XQuartz菜单的『应用程序』 - 『终端』
@@ -395,34 +395,34 @@ XQuartz下载地址：<a href="https://www.xquartz.org">https://www.xquartz.org<
         <img class="mx-auto" alt="" src="/posts/x11/run.jpg" />   
     </p>
 <p>输入ssh连接命令</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh -Y &lt;用户名&gt;@&lt;服务器ip/域名&gt;
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh -Y &lt;用户名&gt;@&lt;服务器ip/域名&gt;
+</code></pre></td></tr></table>
 </div>
 </div><p>连接后，如果终端窗口没有出现以下内容表示X11转发开启成功（这步我没验证出现，是查阅资料说有这个提醒，我的实测没转发成功也没这个提示）</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>X11 forwarding request failed on channel <span style="color:#099">0</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">X11 forwarding request failed on channel <span style="color:#099">0</span>
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="8测试运行x11验证小程序可选">8、测试运行X11验证小程序（可选）</h2>
 <p>步骤6中测试X11小程序派上用场了，虽然是可选步骤，为了保险，还是可以安装下一步一步测试</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>xeyes
-</span></span><span style="display:flex;"><span>xclock
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">xeyes
+xclock
+</code></pre></td></tr></table>
 </div>
 </div><p>运行之后稍等，Mac这边会弹出2个窗口的小程序，分别是一个会随光标转动的眼睛和一个会走动的时钟，如下图这样展示就表示成功了。
 
@@ -433,15 +433,15 @@ XQuartz下载地址：<a href="https://www.xquartz.org">https://www.xquartz.org<
 <h2 id="9原理解析">9、原理解析</h2>
 <p>当ssh连接简历完成并成功开启X11转发后，服务器默认会监听127.0.0.1(localhost)的6010端口</p>
 <p>可以在服务器上查看DISPLAY环境变量</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@javaMemoryDumpAnalyzer ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># echo $DISPLAY</span>
-</span></span><span style="display:flex;"><span>localhost:10.0
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@javaMemoryDumpAnalyzer ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># echo $DISPLAY</span>
+localhost:10.0
+</code></pre></td></tr></table>
 </div>
 </div><p>不过随着开的XQuaztr终端窗口通过ssh连接服务器越多，DISPLAY的值会递增，11.0、12.0&hellip;，第一个终端窗口才是10.0</p>
 <pre tabindex="0"><code>DISPLAY环境变量中的值：  
@@ -465,7 +465,7 @@ localhost：表示X服务器的地址。
 <div class="post-archive">
     <ul class="post-copyright">
         <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
-        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2020-09-17-xwindows_x11_xquartz/">https://anTtutu.github.io/post/2020-09-17-xwindows_x11_xquartz/</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2020-09-17-xWindows_x11_xQuartz/">https://anTtutu.github.io/post/2020-09-17-xWindows_x11_xQuartz/</a></li>
         <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
     </ul>
 </div>
@@ -656,6 +656,14 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
     </li>
     
@@ -685,14 +693,6 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li>
         <a href="https://anTtutu.github.io/post/2022-12-19-git_delete_history/" title="git删除历史提交记录" target="_blank">git删除历史提交记录</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-11-28-python_muilt_version/" title="python多版本管理工具" target="_blank">python多版本管理工具</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-11-22-springboot_start_failed/" title="springboot常见兼容性错误" target="_blank">springboot常见兼容性错误</a>
     </li>
     
 </ul>
@@ -736,6 +736,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/check/">check (5)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/claude-code/">claude code (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cli/">cli (1)</a></li>
@@ -761,6 +763,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <li><a href="https://anTtutu.github.io/categories/dockerfile/">dockerfile (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/drawio/">drawio (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
     
@@ -832,6 +836,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/maven/">maven (3)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/mcp/">mcp (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/mine/">mine (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
@@ -877,6 +883,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <li><a href="https://anTtutu.github.io/categories/sdk/">sdk (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/shell/">shell (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/skill/">skill (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     

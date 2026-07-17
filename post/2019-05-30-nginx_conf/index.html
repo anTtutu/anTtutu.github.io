@@ -246,101 +246,101 @@
 <h2 id="1nginx运行工作进程数量">1、Nginx运行工作进程数量</h2>
 <p>Nginx运行工作进程个数一般设置CPU的核心或者核心数x2。<br>
 如果不了解cpu的核数，可以top命令之后按1看出来，也可以查看/proc/cpuinfo文件</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grep ^processor /proc/cpuinfo | wc -l 
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">grep ^processor /proc/cpuinfo | wc -l 
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@lx~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># vi /usr/local/nginx1.10/conf/nginx.conf</span>
-</span></span><span style="display:flex;"><span>worker_processes 4;
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@lx~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># /usr/local/nginx1.10/sbin/nginx-s reload</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">[</span>root@lx~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># ps -aux | grep nginx |grep -v grep</span>
-</span></span><span style="display:flex;"><span>root <span style="color:#099">9834</span> 0.0 0.0 <span style="color:#099">47556</span> <span style="color:#099">1948</span> ?     Ss 22:36 0:00 nginx: master processnginx
-</span></span><span style="display:flex;"><span>www <span style="color:#099">10135</span> 0.0 0.0 <span style="color:#099">50088</span> <span style="color:#099">2004</span> ?       S   22:58 0:00 nginx: worker process
-</span></span><span style="display:flex;"><span>www <span style="color:#099">10136</span> 0.0 0.0 <span style="color:#099">50088</span> <span style="color:#099">2004</span> ?       S   22:58 0:00 nginx: worker process
-</span></span><span style="display:flex;"><span>www <span style="color:#099">10137</span> 0.0 0.0 <span style="color:#099">50088</span> <span style="color:#099">2004</span> ?       S   22:58 0:00 nginx: worker process
-</span></span><span style="display:flex;"><span>www <span style="color:#099">10138</span> 0.0 0.0 <span style="color:#099">50088</span> <span style="color:#099">2004</span> ?       S   22:58 0:00 nginx: worker process
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@lx~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># vi /usr/local/nginx1.10/conf/nginx.conf</span>
+worker_processes 4;
+<span style="color:#000;font-weight:bold">[</span>root@lx~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># /usr/local/nginx1.10/sbin/nginx-s reload</span>
+<span style="color:#000;font-weight:bold">[</span>root@lx~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># ps -aux | grep nginx |grep -v grep</span>
+root <span style="color:#099">9834</span> 0.0 0.0 <span style="color:#099">47556</span> <span style="color:#099">1948</span> ?     Ss 22:36 0:00 nginx: master processnginx
+www <span style="color:#099">10135</span> 0.0 0.0 <span style="color:#099">50088</span> <span style="color:#099">2004</span> ?       S   22:58 0:00 nginx: worker process
+www <span style="color:#099">10136</span> 0.0 0.0 <span style="color:#099">50088</span> <span style="color:#099">2004</span> ?       S   22:58 0:00 nginx: worker process
+www <span style="color:#099">10137</span> 0.0 0.0 <span style="color:#099">50088</span> <span style="color:#099">2004</span> ?       S   22:58 0:00 nginx: worker process
+www <span style="color:#099">10138</span> 0.0 0.0 <span style="color:#099">50088</span> <span style="color:#099">2004</span> ?       S   22:58 0:00 nginx: worker process
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="2nginx运行cpu亲和力">2、Nginx运行CPU亲和力</h2>
 <p>比如4核配置：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>worker_processes 4;
-</span></span><span style="display:flex;"><span>worker_cpu_affinity <span style="color:#099">0001</span> <span style="color:#099">0010</span> <span style="color:#099">0100</span> <span style="color:#099">1000</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">worker_processes 4;
+worker_cpu_affinity <span style="color:#099">0001</span> <span style="color:#099">0010</span> <span style="color:#099">0100</span> <span style="color:#099">1000</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>比如8核配置：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>worker_processes 8;
-</span></span><span style="display:flex;"><span>worker_cpu_affinity <span style="color:#099">00000001</span> <span style="color:#099">00000010</span> <span style="color:#099">00000100</span> <span style="color:#099">0000100000010000</span> <span style="color:#099">00100000</span> <span style="color:#099">01000000</span> 10000000;
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">worker_processes 8;
+worker_cpu_affinity <span style="color:#099">00000001</span> <span style="color:#099">00000010</span> <span style="color:#099">00000100</span> <span style="color:#099">0000100000010000</span> <span style="color:#099">00100000</span> <span style="color:#099">01000000</span> 10000000;
+</code></pre></td></tr></table>
 </div>
 </div><p>worker_processes最多开启8个，8个以上性能提升不会再提升了，而且稳定性变得更低，所以8个进程够用了。</p>
 <h2 id="3nginx最大打开文件数">3、Nginx最大打开文件数</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>worker_rlimit_nofile 65535;
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">worker_rlimit_nofile 65535;
+</code></pre></td></tr></table>
 </div>
 </div><p>这个指令是指当一个nginx进程打开的最多文件描述符数目，理论值应该是最多打开文件数（ulimit -n）与nginx进程数相除，但是nginx分配请求并不是那么均匀，所以最好与ulimit -n的值保持一致。</p>
 <h3 id="注">注：</h3>
 <p>文件资源限制的配置可以在/etc/security/limits.conf设置，针对root/user等各个用户或者*代表所有用户来设置。</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>*   soft nofile   <span style="color:#099">65535</span>
-</span></span><span style="display:flex;"><span>*   hard nofile   <span style="color:#099">65535</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">*   soft nofile   <span style="color:#099">65535</span>
+*   hard nofile   <span style="color:#099">65535</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>用户重新登录生效（ulimit -n）</p>
 <h2 id="4nginx事件处理模型">4、Nginx事件处理模型</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>events <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>  use epoll;
-</span></span><span style="display:flex;"><span>  worker_connections 65535;
-</span></span><span style="display:flex;"><span>  multi_accept on;
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">events <span style="color:#000;font-weight:bold">{</span>
+  use epoll;
+  worker_connections 65535;
+  multi_accept on;
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></td></tr></table>
 </div>
 </div><table>
 <thead>
@@ -365,29 +365,29 @@
 </tbody>
 </table>
 <h2 id="5开启高效传输模式">5、开启高效传输模式</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>http <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>  include mime.types;
-</span></span><span style="display:flex;"><span>  default_type application/octet-stream;
-</span></span><span style="display:flex;"><span>  ……
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  sendfile on;
-</span></span><span style="display:flex;"><span>  tcp_nopush on;
-</span></span><span style="display:flex;"><span>  ……
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http <span style="color:#000;font-weight:bold">{</span>
+  include mime.types;
+  default_type application/octet-stream;
+  ……
+
+  sendfile on;
+  tcp_nopush on;
+  ……
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></td></tr></table>
 </div>
 </div><table>
 <thead>
@@ -417,35 +417,35 @@
 </table>
 <h2 id="6连接超时时间">6、连接超时时间</h2>
 <p>主要目的是保护服务器资源，CPU，内存，控制连接数，因为建立连接也是需要消耗资源的。</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>keepalive_timeout 60;
-</span></span><span style="display:flex;"><span>tcp_nodelay on;
-</span></span><span style="display:flex;"><span>client_header_buffer_size 4k;
-</span></span><span style="display:flex;"><span>open_file_cache <span style="color:#008080">max</span><span style="color:#000;font-weight:bold">=</span><span style="color:#099">102400</span> <span style="color:#008080">inactive</span><span style="color:#000;font-weight:bold">=</span>20s;
-</span></span><span style="display:flex;"><span>open_file_cache_valid 30s;
-</span></span><span style="display:flex;"><span>open_file_cache_min_uses 1;
-</span></span><span style="display:flex;"><span>client_header_timeout 15;
-</span></span><span style="display:flex;"><span>client_body_timeout 15;
-</span></span><span style="display:flex;"><span>reset_timedout_connection on;
-</span></span><span style="display:flex;"><span>send_timeout 15;
-</span></span><span style="display:flex;"><span>server_tokens off;
-</span></span><span style="display:flex;"><span>client_max_body_size 10m;
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">keepalive_timeout 60;
+tcp_nodelay on;
+client_header_buffer_size 4k;
+open_file_cache <span style="color:#008080">max</span><span style="color:#000;font-weight:bold">=</span><span style="color:#099">102400</span> <span style="color:#008080">inactive</span><span style="color:#000;font-weight:bold">=</span>20s;
+open_file_cache_valid 30s;
+open_file_cache_min_uses 1;
+client_header_timeout 15;
+client_body_timeout 15;
+reset_timedout_connection on;
+send_timeout 15;
+server_tokens off;
+client_max_body_size 10m;
+</code></pre></td></tr></table>
 </div>
 </div><table>
 <thead>
@@ -506,31 +506,31 @@
 </tbody>
 </table>
 <h2 id="7fastcgi-调优">7、fastcgi 调优</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>fastcgi_connect_timeout 600;
-</span></span><span style="display:flex;"><span>fastcgi_send_timeout 600;
-</span></span><span style="display:flex;"><span>fastcgi_read_timeout 600;
-</span></span><span style="display:flex;"><span>fastcgi_buffer_size 64k;
-</span></span><span style="display:flex;"><span>fastcgi_buffers <span style="color:#099">4</span> 64k;
-</span></span><span style="display:flex;"><span>fastcgi_busy_buffers_size 128k;
-</span></span><span style="display:flex;"><span>fastcgi_temp_file_write_size 128k;
-</span></span><span style="display:flex;"><span>fastcgi_temp_path/usr/local/nginx1.10/nginx_tmp;
-</span></span><span style="display:flex;"><span>fastcgi_intercept_errors on;
-</span></span><span style="display:flex;"><span>fastcgi_cache_path/usr/local/nginx1.10/fastcgi_cache <span style="color:#008080">levels</span><span style="color:#000;font-weight:bold">=</span>1:2 <span style="color:#008080">keys_zone</span><span style="color:#000;font-weight:bold">=</span>cache_fastcgi:128minactive<span style="color:#000;font-weight:bold">=</span>1d <span style="color:#008080">max_size</span><span style="color:#000;font-weight:bold">=</span>10g;
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">fastcgi_connect_timeout 600;
+fastcgi_send_timeout 600;
+fastcgi_read_timeout 600;
+fastcgi_buffer_size 64k;
+fastcgi_buffers <span style="color:#099">4</span> 64k;
+fastcgi_busy_buffers_size 128k;
+fastcgi_temp_file_write_size 128k;
+fastcgi_temp_path/usr/local/nginx1.10/nginx_tmp;
+fastcgi_intercept_errors on;
+fastcgi_cache_path/usr/local/nginx1.10/fastcgi_cache <span style="color:#008080">levels</span><span style="color:#000;font-weight:bold">=</span>1:2 <span style="color:#008080">keys_zone</span><span style="color:#000;font-weight:bold">=</span>cache_fastcgi:128minactive<span style="color:#000;font-weight:bold">=</span>1d <span style="color:#008080">max_size</span><span style="color:#000;font-weight:bold">=</span>10g;
+</code></pre></td></tr></table>
 </div>
 </div><table>
 <thead>
@@ -620,27 +620,27 @@ fastcgi_cache缓存减少了nginx与php的通信的次数，更减轻了php和�
 <p>使用gzip压缩功能，可能为我们节约带宽，加快传输速度，有更好的体验，也为我们节约成本，所以说这是一个重点。<br>
 Nginx启用压缩功能需要你来ngx_http_gzip_module模块，apache使用的是mod_deflate。<br>
 一般我们需要压缩的内容有：文本，js，html，css，对于图片，视频，flash什么的不压缩，同时也要注意，我们使用gzip的功能是需要消耗CPU的！</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gzip on;
-</span></span><span style="display:flex;"><span>gzip_min_length 2k;
-</span></span><span style="display:flex;"><span>gzip_buffers   <span style="color:#099">4</span> 32k;
-</span></span><span style="display:flex;"><span>gzip_http_version 1.1;
-</span></span><span style="display:flex;"><span>gzip_comp_level 6;
-</span></span><span style="display:flex;"><span>gzip_typestext/plain text/css text/javascriptapplication/json application/javascript application/x-javascriptapplication/xml;
-</span></span><span style="display:flex;"><span>gzip_vary on;
-</span></span><span style="display:flex;"><span>gzip_proxied any;
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gzip on;
+gzip_min_length 2k;
+gzip_buffers   <span style="color:#099">4</span> 32k;
+gzip_http_version 1.1;
+gzip_comp_level 6;
+gzip_typestext/plain text/css text/javascriptapplication/json application/javascript application/x-javascriptapplication/xml;
+gzip_vary on;
+gzip_proxied any;
+</code></pre></td></tr></table>
 </div>
 </div><table>
 <thead>
@@ -682,33 +682,33 @@ Nginx启用压缩功能需要你来ngx_http_gzip_module模块，apache使用的�
 </table>
 <h2 id="9expires-缓存调优">9、expires 缓存调优</h2>
 <p>缓存，主要针对于图片，css，js等元素更改机会比较少的情况下使用，特别是图片，占用带宽大，我们完全可以设置图片在浏览器本地缓存365d，css，js，html可以缓存个10来天，这样用户第一次打开加载慢一点，第二次，就非常快了！缓存的时候，我们需要将需要缓存的拓展名列出来， Expires缓存配置在server字段里面。</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>location ~* <span style="color:#d14">\.</span><span style="color:#000;font-weight:bold">(</span>ico|jpe?g|gif|png|bmp|swf|flv<span style="color:#000;font-weight:bold">)</span>$ <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>expires 30d;
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">#log_not_found off;</span>
-</span></span><span style="display:flex;"><span>access_log off;
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>location ~* <span style="color:#d14">\.</span><span style="color:#000;font-weight:bold">(</span>js|css<span style="color:#000;font-weight:bold">)</span>$ <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>expires 7d;
-</span></span><span style="display:flex;"><span>log_not_found off;
-</span></span><span style="display:flex;"><span>access_log off;
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">location ~* <span style="color:#d14">\.</span><span style="color:#000;font-weight:bold">(</span>ico|jpe?g|gif|png|bmp|swf|flv<span style="color:#000;font-weight:bold">)</span>$ <span style="color:#000;font-weight:bold">{</span>
+expires 30d;
+<span style="color:#998;font-style:italic">#log_not_found off;</span>
+access_log off;
+<span style="color:#000;font-weight:bold">}</span>
+
+location ~* <span style="color:#d14">\.</span><span style="color:#000;font-weight:bold">(</span>js|css<span style="color:#000;font-weight:bold">)</span>$ <span style="color:#000;font-weight:bold">{</span>
+expires 7d;
+log_not_found off;
+access_log off;
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></td></tr></table>
 </div>
 </div><h3 id="注-1">注：</h3>
 <p>log_not_found off;是否在error_log中记录不存在的错误。默认是。</p>
@@ -728,29 +728,29 @@ Nginx启用压缩功能需要你来ngx_http_gzip_module模块，apache使用的�
 水印，品牌宣传，你的带宽，服务器足够；<br>
 防火墙，直接控制，前提是你知道IP来源；<br>
 防盗链策略下面的方法是直接给予404的错误提示。</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>location ~*^.+<span style="color:#d14">\.</span><span style="color:#000;font-weight:bold">(</span>jpg|gif|png|swf|flv|wma|wmv|asf|mp3|mmf|zip|rar<span style="color:#000;font-weight:bold">)</span>$ <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>valid_referers noneblocked www.benet.com benet.com;
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#008080">$invalid_referer</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#998;font-style:italic">#return 302 http://www.benet.com/img/nolink.jpg;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">return</span> 404;
-</span></span><span style="display:flex;"><span>  break;
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>access_log off;
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">location ~*^.+<span style="color:#d14">\.</span><span style="color:#000;font-weight:bold">(</span>jpg|gif|png|swf|flv|wma|wmv|asf|mp3|mmf|zip|rar<span style="color:#000;font-weight:bold">)</span>$ <span style="color:#000;font-weight:bold">{</span>
+valid_referers noneblocked www.benet.com benet.com;
+<span style="color:#000;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#008080">$invalid_referer</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#998;font-style:italic">#return 302 http://www.benet.com/img/nolink.jpg;</span>
+  <span style="color:#000;font-weight:bold">return</span> 404;
+  break;
+<span style="color:#000;font-weight:bold">}</span>
+access_log off;
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></td></tr></table>
 </div>
 </div><h3 id="参数可以使如下形式">参数可以使如下形式：</h3>
 <table>
@@ -859,108 +859,108 @@ Nginx启用压缩功能需要你来ngx_http_gzip_module模块，apache使用的�
 </tbody>
 </table>
 <h3 id="下面贴一个完整的内核优化设置">下面贴一个完整的内核优化设置：</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>fs.file-max <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">999999</span>
-</span></span><span style="display:flex;"><span>net.ipv4.ip_forward <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>
-</span></span><span style="display:flex;"><span>net.ipv4.conf.default.rp_filter <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
-</span></span><span style="display:flex;"><span>net.ipv4.conf.default.accept_source_route <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>
-</span></span><span style="display:flex;"><span>kernel.sysrq <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>
-</span></span><span style="display:flex;"><span>kernel.core_uses_pid <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_syncookies <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
-</span></span><span style="display:flex;"><span>kernel.msgmnb <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">65536</span>
-</span></span><span style="display:flex;"><span>kernel.msgmax <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">65536</span>
-</span></span><span style="display:flex;"><span>kernel.shmmax <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">68719476736</span>
-</span></span><span style="display:flex;"><span>kernel.shmall <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">4294967296</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_max_tw_buckets <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">6000</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_sack <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_window_scaling <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_rmem <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">10240</span> <span style="color:#099">87380</span> <span style="color:#099">12582912</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_wmem <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">10240</span> <span style="color:#099">87380</span> <span style="color:#099">12582912</span>
-</span></span><span style="display:flex;"><span>net.core.wmem_default <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">8388608</span>
-</span></span><span style="display:flex;"><span>net.core.rmem_default <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">8388608</span>
-</span></span><span style="display:flex;"><span>net.core.rmem_max <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">16777216</span>
-</span></span><span style="display:flex;"><span>net.core.wmem_max <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">16777216</span>
-</span></span><span style="display:flex;"><span>net.core.netdev_max_backlog <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">262144</span>
-</span></span><span style="display:flex;"><span>net.core.somaxconn <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">40960</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_max_orphans <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">3276800</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_max_syn_backlog <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">262144</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_timestamps <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_synack_retries <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_syn_retries <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_tw_recycle <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_tw_reuse <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_mem <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">94500000</span> <span style="color:#099">915000000</span> <span style="color:#099">927000000</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_fin_timeout <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
-</span></span><span style="display:flex;"><span>net.ipv4.tcp_keepalive_time <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">30</span>
-</span></span><span style="display:flex;"><span>net.ipv4.ip_local_port_range <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1024</span> <span style="color:#099">65000</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">fs.file-max <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">999999</span>
+net.ipv4.ip_forward <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>
+net.ipv4.conf.default.rp_filter <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
+net.ipv4.conf.default.accept_source_route <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>
+kernel.sysrq <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>
+kernel.core_uses_pid <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
+net.ipv4.tcp_syncookies <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
+kernel.msgmnb <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">65536</span>
+kernel.msgmax <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">65536</span>
+kernel.shmmax <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">68719476736</span>
+kernel.shmall <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">4294967296</span>
+net.ipv4.tcp_max_tw_buckets <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">6000</span>
+net.ipv4.tcp_sack <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
+net.ipv4.tcp_window_scaling <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
+net.ipv4.tcp_rmem <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">10240</span> <span style="color:#099">87380</span> <span style="color:#099">12582912</span>
+net.ipv4.tcp_wmem <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">10240</span> <span style="color:#099">87380</span> <span style="color:#099">12582912</span>
+net.core.wmem_default <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">8388608</span>
+net.core.rmem_default <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">8388608</span>
+net.core.rmem_max <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">16777216</span>
+net.core.wmem_max <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">16777216</span>
+net.core.netdev_max_backlog <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">262144</span>
+net.core.somaxconn <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">40960</span>
+net.ipv4.tcp_max_orphans <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">3276800</span>
+net.ipv4.tcp_max_syn_backlog <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">262144</span>
+net.ipv4.tcp_timestamps <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>
+net.ipv4.tcp_synack_retries <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
+net.ipv4.tcp_syn_retries <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
+net.ipv4.tcp_tw_recycle <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
+net.ipv4.tcp_tw_reuse <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
+net.ipv4.tcp_mem <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">94500000</span> <span style="color:#099">915000000</span> <span style="color:#099">927000000</span>
+net.ipv4.tcp_fin_timeout <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>
+net.ipv4.tcp_keepalive_time <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">30</span>
+net.ipv4.ip_local_port_range <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1024</span> <span style="color:#099">65000</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>执行sysctl  -p使内核修改生效。</p>
 <h2 id="12关于系统连接数的优化">12、关于系统连接数的优化</h2>
 <p>linux 默认值 open files为1024。查看当前系统值：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#998;font-style:italic"># ulimit -n</span>
-</span></span><span style="display:flex;"><span><span style="color:#099">1024</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># ulimit -n</span>
+<span style="color:#099">1024</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>说明server只允许同时打开1024个文件。<br>
 使用ulimit -a 可以查看当前系统的所有限制值，使用ulimit -n 可以查看当前的最大打开文件数。<br>
 新装的linux 默认只有1024 ，当作负载较大的服务器时，很容易遇到error: too many open files。<br>
 因此，需要将其改大，在/etc/security/limits.conf最后增加：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>*               soft    nofile         <span style="color:#099">65535</span>
-</span></span><span style="display:flex;"><span>*               hard    nofile         <span style="color:#099">65535</span>
-</span></span><span style="display:flex;"><span>*               soft    noproc         <span style="color:#099">65535</span>
-</span></span><span style="display:flex;"><span>*               hard    noproc         <span style="color:#099">65535</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">*               soft    nofile         <span style="color:#099">65535</span>
+*               hard    nofile         <span style="color:#099">65535</span>
+*               soft    noproc         <span style="color:#099">65535</span>
+*               hard    noproc         <span style="color:#099">65535</span>
+</code></pre></td></tr></table>
 </div>
 </div>
         </div>
@@ -1158,6 +1158,14 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
     </li>
     
@@ -1187,14 +1195,6 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li>
         <a href="https://anTtutu.github.io/post/2022-12-19-git_delete_history/" title="git删除历史提交记录" target="_blank">git删除历史提交记录</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-11-28-python_muilt_version/" title="python多版本管理工具" target="_blank">python多版本管理工具</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-11-22-springboot_start_failed/" title="springboot常见兼容性错误" target="_blank">springboot常见兼容性错误</a>
     </li>
     
 </ul>
@@ -1238,6 +1238,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/check/">check (5)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/claude-code/">claude code (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cli/">cli (1)</a></li>
@@ -1263,6 +1265,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <li><a href="https://anTtutu.github.io/categories/dockerfile/">dockerfile (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/drawio/">drawio (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
     
@@ -1334,6 +1338,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/maven/">maven (3)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/mcp/">mcp (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/mine/">mine (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
@@ -1379,6 +1385,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <li><a href="https://anTtutu.github.io/categories/sdk/">sdk (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/shell/">shell (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/skill/">skill (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     

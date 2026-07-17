@@ -226,98 +226,98 @@
 <h2 id="1分配一个1t的新盘hddsdd随规划选择">1、分配一个1T的新盘，HDD、SDD随规划选择</h2>
 <p>这个一般在磁阵或者云管理平台操作，不需要什么命令，一般都是图形化操作</p>
 <h2 id="2查找新分配的1t新盘">2、查找新分配的1T新盘</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>fdisk -l     
-</span></span><span style="display:flex;"><span>lvmdiskscan
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">fdisk -l     
+lvmdiskscan
+</code></pre></td></tr></table>
 </div>
 </div><p>个人建议第二个命令，2个命令都会返回一堆查询值，怎么判断谁是新盘，谁是已使用的盘，这点有运维经验的人还是不成问题的，不详说</p>
 <h2 id="3创建新pv">3、创建新PV</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pvcreate /dev/sdd 
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pvcreate /dev/sdd 
+</code></pre></td></tr></table>
 </div>
 </div><p>假设sdd表示新增的1T数据盘</p>
 <h2 id="4加入到原来的vg">4、加入到原来的VG</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vgextend VolGroup /dev/sdd 
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vgextend VolGroup /dev/sdd 
+</code></pre></td></tr></table>
 </div>
 </div><p>VolGroup表示原来的vg name</p>
 <h2 id="5查看fe-size">5、查看FE size</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vgdisplay
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vgdisplay
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="6新增pe到待扩容的空间">6、新增PE到待扩容的空间</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lvextend -l +23039 /dev/VolGroup/lv_mysql
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lvextend -l +23039 /dev/VolGroup/lv_mysql
+</code></pre></td></tr></table>
 </div>
 </div><p>(+23039为上一步查到的Free PE的大小)</p>
 <p>也可以不用查看FE size直接100%</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> lvcreate -n lv_data -l 100%FREE vg_data
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> lvcreate -n lv_data -l 100%FREE vg_data
+</code></pre></td></tr></table>
 </div>
 </div><p>新建lv，可以直接使用100%</p>
 <h2 id="7调整文件系统大小">7、调整文件系统大小</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>resize2fs /dev/VolGroup/lv_mysql 
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">resize2fs /dev/VolGroup/lv_mysql 
+</code></pre></td></tr></table>
 </div>
 </div><p>根据磁盘大小等待的时间有长短,这一步需要耐心等待</p>
 <h2 id="8注意">8、注意</h2>
 <p>云服务器可能存在盘符跳变的坑
 碰到一起案例，云服务器的盘符重启会自动变，比如刚添加时是sdc，但是可能下一次重启，sdc会变成sdd，但是背后的UUID并没变，需要采用UUID来</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>blkid
-</span></span><span style="display:flex;"><span>/dev/sdb1: <span style="color:#008080">UUID</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;******-3202-4d59-b101-b098988696f5&#34;</span> <span style="color:#008080">TYPE</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;ext4&#34;</span> 
-</span></span><span style="display:flex;"><span>/dev/sdc1: <span style="color:#008080">UUID</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;******-JAcw-YPuj-IOBe-fqZh-FdTJ-eKrJug&#34;</span> <span style="color:#008080">TYPE</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;LVM2_member&#34;</span> 
-</span></span><span style="display:flex;"><span>/dev/sde: <span style="color:#008080">UUID</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;*******-c4b6-4ac0-bbbf-3d7c21d6283b&#34;</span> <span style="color:#008080">TYPE</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;ext4&#34;</span> 
-</span></span><span style="display:flex;"><span>/dev/sdd: <span style="color:#008080">UUID</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;*******-1aTl-gv7a-yB69-gG2q-sX7y-p4nGRT&#34;</span> <span style="color:#008080">TYPE</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;LVM2_member&#34;</span> 
-</span></span><span style="display:flex;"><span>/dev/sda1: <span style="color:#008080">UUID</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;******-fef6-4075-941e-e7ce50fb3e50&#34;</span> <span style="color:#008080">TYPE</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;ext4&#34;</span> 
-</span></span><span style="display:flex;"><span>/dev/mapper/VolGroup-lv_mysql: <span style="color:#008080">UUID</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;*******-6b9a-4c0d-869c-5b0386a36d61&#34;</span> <span style="color:#008080">TYPE</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;ext4&#34;</span> 
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">blkid
+/dev/sdb1: <span style="color:#008080">UUID</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;******-3202-4d59-b101-b098988696f5&#34;</span> <span style="color:#008080">TYPE</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;ext4&#34;</span> 
+/dev/sdc1: <span style="color:#008080">UUID</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;******-JAcw-YPuj-IOBe-fqZh-FdTJ-eKrJug&#34;</span> <span style="color:#008080">TYPE</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;LVM2_member&#34;</span> 
+/dev/sde: <span style="color:#008080">UUID</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;*******-c4b6-4ac0-bbbf-3d7c21d6283b&#34;</span> <span style="color:#008080">TYPE</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;ext4&#34;</span> 
+/dev/sdd: <span style="color:#008080">UUID</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;*******-1aTl-gv7a-yB69-gG2q-sX7y-p4nGRT&#34;</span> <span style="color:#008080">TYPE</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;LVM2_member&#34;</span> 
+/dev/sda1: <span style="color:#008080">UUID</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;******-fef6-4075-941e-e7ce50fb3e50&#34;</span> <span style="color:#008080">TYPE</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;ext4&#34;</span> 
+/dev/mapper/VolGroup-lv_mysql: <span style="color:#008080">UUID</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;*******-6b9a-4c0d-869c-5b0386a36d61&#34;</span> <span style="color:#008080">TYPE</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;ext4&#34;</span> 
+</code></pre></td></tr></table>
 </div>
 </div><p>提取到UUID后，可以把自动mount配置在/etc/fstab</p>
 
@@ -349,7 +349,7 @@
         
         <li><a href="/post/2018-09-16-mydumper/">mydumper第三方备份还原工具</a></li>
         
-        <li><a href="/post/2018-04-10-orangepi/">OrangePi</a></li>
+        <li><a href="/post/2018-04-10-OrangePi/">OrangePi</a></li>
         
     </ul>
 </div>
@@ -518,6 +518,14 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
     </li>
     
@@ -547,14 +555,6 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li>
         <a href="https://anTtutu.github.io/post/2022-12-19-git_delete_history/" title="git删除历史提交记录" target="_blank">git删除历史提交记录</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-11-28-python_muilt_version/" title="python多版本管理工具" target="_blank">python多版本管理工具</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-11-22-springboot_start_failed/" title="springboot常见兼容性错误" target="_blank">springboot常见兼容性错误</a>
     </li>
     
 </ul>
@@ -598,6 +598,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/check/">check (5)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/claude-code/">claude code (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cli/">cli (1)</a></li>
@@ -623,6 +625,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <li><a href="https://anTtutu.github.io/categories/dockerfile/">dockerfile (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/drawio/">drawio (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
     
@@ -694,6 +698,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/maven/">maven (3)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/mcp/">mcp (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/mine/">mine (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
@@ -739,6 +745,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <li><a href="https://anTtutu.github.io/categories/sdk/">sdk (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/shell/">shell (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/skill/">skill (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     

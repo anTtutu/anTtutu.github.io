@@ -220,516 +220,516 @@
 <h2 id="思路">思路</h2>
 <p>改造过的Caesar算法，利用随机数加密，生成前12位 + 后4位随机数，经测试大量数据和实际使用验证，无重复值出现，可以放心使用</p>
 <h2 id="1代码">1、代码</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">129
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">130
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">131
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">132
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">133
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">134
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">135
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">136
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">137
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">138
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">139
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">140
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">141
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">142
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">143
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">129
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">130
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">131
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">132
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">133
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">134
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">135
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">136
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">137
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">138
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">139
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">140
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">141
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">142
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">143
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#998;font-style:italic">// key  
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">static</span> String KEYS <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;0123456789qwertyuiopasdfghjklzxcvbnm&#34;</span><span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">/** 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"> * 唯一id生成工具类，12位字母+数字 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"> *  
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"> * @param id 随机整数即可 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"> */</span>  
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getRandomId</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> id<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>    String ret <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>    String num <span style="color:#000;font-weight:bold">=</span> String<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;%09d&#34;</span><span style="color:#000;font-weight:bold">,</span> id<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>    Random random <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#458;font-weight:bold">int</span> key <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>10<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#458;font-weight:bold">int</span> seed <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>100<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>    Caesar caesar <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Caesar<span style="color:#000;font-weight:bold">(</span>KEYS<span style="color:#000;font-weight:bold">,</span> seed<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>    num <span style="color:#000;font-weight:bold">=</span> caesar<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encode</span><span style="color:#000;font-weight:bold">(</span>key<span style="color:#000;font-weight:bold">,</span> num<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>    ret <span style="color:#000;font-weight:bold">=</span> num <span style="color:#000;font-weight:bold">+</span> String<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;%01d&#34;</span><span style="color:#000;font-weight:bold">,</span> key<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">+</span> String<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;%02x&#34;</span><span style="color:#000;font-weight:bold">,</span> seed<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">return</span> ret<span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">/** 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"> * id唯一值生成工具类&lt;br&gt; 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"> * 格式：test_xxxx，总共21位随机码  
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"> * @return test_+16位随机码 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"> */</span>  
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getID</span><span style="color:#000;font-weight:bold">()</span>  
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">// 前缀  
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span>    String prefix <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;test_&#34;</span><span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">// 随机码  
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span>    String main <span style="color:#000;font-weight:bold">=</span> TestRandomUUID<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getRandomId</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">().</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>1000000<span style="color:#000;font-weight:bold">));</span>  
-</span></span><span style="display:flex;"><span>    String end <span style="color:#000;font-weight:bold">=</span> RandomUtils<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getRandomAlphamericStrNew</span><span style="color:#000;font-weight:bold">(</span>4<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>      
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">return</span> prefix <span style="color:#000;font-weight:bold">+</span> main <span style="color:#000;font-weight:bold">+</span> end<span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">RandomUtils</span>  
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>     <span style="color:#998;font-style:italic">/** 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     * 获得特定长度的一串随机数字 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     *  
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     * @param length  
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     * @return 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     */</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getRandomNumberStr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> length<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        StringBuilder builder <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>        Random random <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> length<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>            builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>10<span style="color:#000;font-weight:bold">));</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">return</span> builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">/** 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     * 获得特定长度的一个随机字母数字混编字符串（所包含的字符包括0-9A-Z) 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     *  
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     * @param length 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     * @return 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     */</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getRandomAlphamericStr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> length<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        StringBuilder builder <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>        Random random <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> length<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#458;font-weight:bold">int</span> n <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>36<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">&lt;</span> 10<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>n<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">else</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">((</span><span style="color:#458;font-weight:bold">char</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">+</span> 55<span style="color:#000;font-weight:bold">));</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">return</span> builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">/** 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     * 获得特定长度的一个随机字母数字混编字符串（所包含的字符包括0-9a-z) 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     *  
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     * @param length 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     * @return 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     */</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getRandomAlphamericStrNew</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> length<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        StringBuilder builder <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>        Random random <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> length<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#458;font-weight:bold">int</span> n <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>36<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">&lt;</span> 10<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>n<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">else</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">((</span><span style="color:#458;font-weight:bold">char</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">+</span> 87<span style="color:#000;font-weight:bold">));</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">return</span> builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#998;font-style:italic">/** 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     * 获得特定长度的一个随机十六进制数字字母混编字符串(所包含的字符包括0-9A-F) 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     *  
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     * @param length 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     * @return 
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic">     */</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getRandomHexStr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> length<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        StringBuilder builder <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>        Random random <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> length<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#458;font-weight:bold">int</span> n <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>16<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">&lt;</span> 10<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>n<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">else</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">((</span><span style="color:#458;font-weight:bold">char</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">+</span> 55<span style="color:#000;font-weight:bold">));</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">return</span> builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> 100<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>            System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>RandomUtils<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getRandomAlphamericStrNew</span><span style="color:#000;font-weight:bold">(</span>4<span style="color:#000;font-weight:bold">));</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#998;font-style:italic">// String num = String.format(&#34;%09d&#34;, new Random().nextInt(100000));  
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span>            <span style="color:#998;font-style:italic">// System.out.println(num);  
-</span></span></span><span style="display:flex;"><span><span style="color:#998;font-style:italic"></span>        <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>  
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#998;font-style:italic">// key  
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">static</span> String KEYS <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;0123456789qwertyuiopasdfghjklzxcvbnm&#34;</span><span style="color:#000;font-weight:bold">;</span>  
+  
+<span style="color:#998;font-style:italic">/** 
+</span><span style="color:#998;font-style:italic"> * 唯一id生成工具类，12位字母+数字 
+</span><span style="color:#998;font-style:italic"> *  
+</span><span style="color:#998;font-style:italic"> * @param id 随机整数即可 
+</span><span style="color:#998;font-style:italic"> */</span>  
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getRandomId</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> id<span style="color:#000;font-weight:bold">)</span>  
+<span style="color:#000;font-weight:bold">{</span>  
+    String ret <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>  
+    String num <span style="color:#000;font-weight:bold">=</span> String<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;%09d&#34;</span><span style="color:#000;font-weight:bold">,</span> id<span style="color:#000;font-weight:bold">);</span>  
+    Random random <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">();</span>  
+    <span style="color:#458;font-weight:bold">int</span> key <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>10<span style="color:#000;font-weight:bold">);</span>  
+    <span style="color:#458;font-weight:bold">int</span> seed <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>100<span style="color:#000;font-weight:bold">);</span>  
+    Caesar caesar <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Caesar<span style="color:#000;font-weight:bold">(</span>KEYS<span style="color:#000;font-weight:bold">,</span> seed<span style="color:#000;font-weight:bold">);</span>  
+    num <span style="color:#000;font-weight:bold">=</span> caesar<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encode</span><span style="color:#000;font-weight:bold">(</span>key<span style="color:#000;font-weight:bold">,</span> num<span style="color:#000;font-weight:bold">);</span>  
+    ret <span style="color:#000;font-weight:bold">=</span> num <span style="color:#000;font-weight:bold">+</span> String<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;%01d&#34;</span><span style="color:#000;font-weight:bold">,</span> key<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">+</span> String<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;%02x&#34;</span><span style="color:#000;font-weight:bold">,</span> seed<span style="color:#000;font-weight:bold">);</span>  
+  
+    <span style="color:#000;font-weight:bold">return</span> ret<span style="color:#000;font-weight:bold">;</span>  
+<span style="color:#000;font-weight:bold">}</span>  
+  
+<span style="color:#998;font-style:italic">/** 
+</span><span style="color:#998;font-style:italic"> * id唯一值生成工具类&lt;br&gt; 
+</span><span style="color:#998;font-style:italic"> * 格式：test_xxxx，总共21位随机码  
+</span><span style="color:#998;font-style:italic"> * @return test_+16位随机码 
+</span><span style="color:#998;font-style:italic"> */</span>  
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getID</span><span style="color:#000;font-weight:bold">()</span>  
+<span style="color:#000;font-weight:bold">{</span>  
+    <span style="color:#998;font-style:italic">// 前缀  
+</span><span style="color:#998;font-style:italic"></span>    String prefix <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;test_&#34;</span><span style="color:#000;font-weight:bold">;</span>  
+    <span style="color:#998;font-style:italic">// 随机码  
+</span><span style="color:#998;font-style:italic"></span>    String main <span style="color:#000;font-weight:bold">=</span> TestRandomUUID<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getRandomId</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">().</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>1000000<span style="color:#000;font-weight:bold">));</span>  
+    String end <span style="color:#000;font-weight:bold">=</span> RandomUtils<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getRandomAlphamericStrNew</span><span style="color:#000;font-weight:bold">(</span>4<span style="color:#000;font-weight:bold">);</span>  
+      
+    <span style="color:#000;font-weight:bold">return</span> prefix <span style="color:#000;font-weight:bold">+</span> main <span style="color:#000;font-weight:bold">+</span> end<span style="color:#000;font-weight:bold">;</span>  
+<span style="color:#000;font-weight:bold">}</span>  
+
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">RandomUtils</span>  
+<span style="color:#000;font-weight:bold">{</span>  
+     <span style="color:#998;font-style:italic">/** 
+</span><span style="color:#998;font-style:italic">     * 获得特定长度的一串随机数字 
+</span><span style="color:#998;font-style:italic">     *  
+</span><span style="color:#998;font-style:italic">     * @param length  
+</span><span style="color:#998;font-style:italic">     * @return 
+</span><span style="color:#998;font-style:italic">     */</span>  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getRandomNumberStr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> length<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        StringBuilder builder <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>  
+        Random random <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">();</span>  
+        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> length<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>10<span style="color:#000;font-weight:bold">));</span>  
+        <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">return</span> builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#998;font-style:italic">/** 
+</span><span style="color:#998;font-style:italic">     * 获得特定长度的一个随机字母数字混编字符串（所包含的字符包括0-9A-Z) 
+</span><span style="color:#998;font-style:italic">     *  
+</span><span style="color:#998;font-style:italic">     * @param length 
+</span><span style="color:#998;font-style:italic">     * @return 
+</span><span style="color:#998;font-style:italic">     */</span>  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getRandomAlphamericStr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> length<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        StringBuilder builder <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>  
+        Random random <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">();</span>  
+        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> length<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            <span style="color:#458;font-weight:bold">int</span> n <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>36<span style="color:#000;font-weight:bold">);</span>  
+            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">&lt;</span> 10<span style="color:#000;font-weight:bold">)</span>  
+            <span style="color:#000;font-weight:bold">{</span>  
+                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>n<span style="color:#000;font-weight:bold">);</span>  
+            <span style="color:#000;font-weight:bold">}</span>  
+            <span style="color:#000;font-weight:bold">else</span>  
+            <span style="color:#000;font-weight:bold">{</span>  
+                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">((</span><span style="color:#458;font-weight:bold">char</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">+</span> 55<span style="color:#000;font-weight:bold">));</span>  
+            <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">return</span> builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#998;font-style:italic">/** 
+</span><span style="color:#998;font-style:italic">     * 获得特定长度的一个随机字母数字混编字符串（所包含的字符包括0-9a-z) 
+</span><span style="color:#998;font-style:italic">     *  
+</span><span style="color:#998;font-style:italic">     * @param length 
+</span><span style="color:#998;font-style:italic">     * @return 
+</span><span style="color:#998;font-style:italic">     */</span>  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getRandomAlphamericStrNew</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> length<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        StringBuilder builder <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>  
+        Random random <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">();</span>  
+        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> length<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            <span style="color:#458;font-weight:bold">int</span> n <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>36<span style="color:#000;font-weight:bold">);</span>  
+            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">&lt;</span> 10<span style="color:#000;font-weight:bold">)</span>  
+            <span style="color:#000;font-weight:bold">{</span>  
+                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>n<span style="color:#000;font-weight:bold">);</span>  
+            <span style="color:#000;font-weight:bold">}</span>  
+            <span style="color:#000;font-weight:bold">else</span>  
+            <span style="color:#000;font-weight:bold">{</span>  
+                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">((</span><span style="color:#458;font-weight:bold">char</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">+</span> 87<span style="color:#000;font-weight:bold">));</span>  
+            <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">return</span> builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#998;font-style:italic">/** 
+</span><span style="color:#998;font-style:italic">     * 获得特定长度的一个随机十六进制数字字母混编字符串(所包含的字符包括0-9A-F) 
+</span><span style="color:#998;font-style:italic">     *  
+</span><span style="color:#998;font-style:italic">     * @param length 
+</span><span style="color:#998;font-style:italic">     * @return 
+</span><span style="color:#998;font-style:italic">     */</span>  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> String <span style="color:#900;font-weight:bold">getRandomHexStr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> length<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        StringBuilder builder <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>  
+        Random random <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Random<span style="color:#000;font-weight:bold">();</span>  
+        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> length<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            <span style="color:#458;font-weight:bold">int</span> n <span style="color:#000;font-weight:bold">=</span> random<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">nextInt</span><span style="color:#000;font-weight:bold">(</span>16<span style="color:#000;font-weight:bold">);</span>  
+            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">&lt;</span> 10<span style="color:#000;font-weight:bold">)</span>  
+            <span style="color:#000;font-weight:bold">{</span>  
+                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>n<span style="color:#000;font-weight:bold">);</span>  
+            <span style="color:#000;font-weight:bold">}</span>  
+            <span style="color:#000;font-weight:bold">else</span>  
+            <span style="color:#000;font-weight:bold">{</span>  
+                builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">((</span><span style="color:#458;font-weight:bold">char</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span>n <span style="color:#000;font-weight:bold">+</span> 55<span style="color:#000;font-weight:bold">));</span>  
+            <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">return</span> builder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> 100<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>RandomUtils<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getRandomAlphamericStrNew</span><span style="color:#000;font-weight:bold">(</span>4<span style="color:#000;font-weight:bold">));</span>  
+            <span style="color:#998;font-style:italic">// String num = String.format(&#34;%09d&#34;, new Random().nextInt(100000));  
+</span><span style="color:#998;font-style:italic"></span>            <span style="color:#998;font-style:italic">// System.out.println(num);  
+</span><span style="color:#998;font-style:italic"></span>        <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#000;font-weight:bold">}</span>  
+<span style="color:#000;font-weight:bold">}</span>  
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="2凯撒算法工具类">2、凯撒算法工具类</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Caesar</span>  
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">private</span> String table<span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> seedA <span style="color:#000;font-weight:bold">=</span> 1103515245<span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> seedB <span style="color:#000;font-weight:bold">=</span> 12345<span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Caesar</span><span style="color:#000;font-weight:bold">(</span>String table<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> seed<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">table</span> <span style="color:#000;font-weight:bold">=</span> chaos<span style="color:#000;font-weight:bold">(</span>table<span style="color:#000;font-weight:bold">,</span> seed<span style="color:#000;font-weight:bold">,</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">());</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Caesar</span><span style="color:#000;font-weight:bold">(</span>String table<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">(</span>table<span style="color:#000;font-weight:bold">,</span> 11<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Caesar</span><span style="color:#000;font-weight:bold">()</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">(</span>11<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Caesar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> seed<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&#34;</span><span style="color:#000;font-weight:bold">,</span> seed<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">char</span> <span style="color:#900;font-weight:bold">dict</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">boolean</span> reverse<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#458;font-weight:bold">int</span> s <span style="color:#000;font-weight:bold">=</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">(),</span> index <span style="color:#000;font-weight:bold">=</span> reverse <span style="color:#000;font-weight:bold">?</span> s <span style="color:#000;font-weight:bold">-</span> i <span style="color:#000;font-weight:bold">:</span> i<span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">return</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">charAt</span><span style="color:#000;font-weight:bold">(</span>index<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">dict</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">char</span> c<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">boolean</span> reverse<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#458;font-weight:bold">int</span> s <span style="color:#000;font-weight:bold">=</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">(),</span> index <span style="color:#000;font-weight:bold">=</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">indexOf</span><span style="color:#000;font-weight:bold">(</span>c<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">return</span> reverse <span style="color:#000;font-weight:bold">?</span> s <span style="color:#000;font-weight:bold">-</span> index <span style="color:#000;font-weight:bold">:</span> index<span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">seed</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> seed<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#458;font-weight:bold">long</span> temp <span style="color:#000;font-weight:bold">=</span> seed<span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">((</span>temp <span style="color:#000;font-weight:bold">*</span> seedA <span style="color:#000;font-weight:bold">+</span> seedB<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">&amp;</span> 0x7fffffffL<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">chaos</span><span style="color:#000;font-weight:bold">(</span>String data<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> seed<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> cnt<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        StringBuffer buf <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuffer<span style="color:#000;font-weight:bold">(</span>data<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#458;font-weight:bold">char</span> tmp<span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#458;font-weight:bold">int</span> a<span style="color:#000;font-weight:bold">,</span> b<span style="color:#000;font-weight:bold">,</span> r <span style="color:#000;font-weight:bold">=</span> data<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> cnt<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">+=</span> 1<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>            seed <span style="color:#000;font-weight:bold">=</span> seed<span style="color:#000;font-weight:bold">(</span>seed<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>            a <span style="color:#000;font-weight:bold">=</span> seed <span style="color:#000;font-weight:bold">%</span> r<span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>            seed <span style="color:#000;font-weight:bold">=</span> seed<span style="color:#000;font-weight:bold">(</span>seed<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>            b <span style="color:#000;font-weight:bold">=</span> seed <span style="color:#000;font-weight:bold">%</span> r<span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>            tmp <span style="color:#000;font-weight:bold">=</span> buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">charAt</span><span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>            buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setCharAt</span><span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">charAt</span><span style="color:#000;font-weight:bold">(</span>b<span style="color:#000;font-weight:bold">));</span>  
-</span></span><span style="display:flex;"><span>            buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setCharAt</span><span style="color:#000;font-weight:bold">(</span>b<span style="color:#000;font-weight:bold">,</span> tmp<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">return</span> buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">crypto</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">boolean</span> reverse<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> key<span style="color:#000;font-weight:bold">,</span> String text<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        String ret <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>        StringBuilder buf <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#458;font-weight:bold">int</span> m<span style="color:#000;font-weight:bold">,</span> s <span style="color:#000;font-weight:bold">=</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">(),</span> e <span style="color:#000;font-weight:bold">=</span> text<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> e<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">+=</span> 1<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>            m <span style="color:#000;font-weight:bold">=</span> dict<span style="color:#000;font-weight:bold">(</span>text<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">charAt</span><span style="color:#000;font-weight:bold">(</span>i<span style="color:#000;font-weight:bold">),</span> reverse<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>m <span style="color:#000;font-weight:bold">&lt;</span> 0<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>                <span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>            m <span style="color:#000;font-weight:bold">=</span> m <span style="color:#000;font-weight:bold">+</span> key <span style="color:#000;font-weight:bold">+</span> i<span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>            buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>dict<span style="color:#000;font-weight:bold">(</span>m <span style="color:#000;font-weight:bold">%</span> s<span style="color:#000;font-weight:bold">,</span> reverse<span style="color:#000;font-weight:bold">));</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">==</span> e<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>            ret <span style="color:#000;font-weight:bold">=</span> buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">return</span> ret<span style="color:#000;font-weight:bold">;</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">encode</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> key<span style="color:#000;font-weight:bold">,</span> String text<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">return</span> crypto<span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span> key<span style="color:#000;font-weight:bold">,</span> text<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">decode</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> key<span style="color:#000;font-weight:bold">,</span> String text<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">return</span> crypto<span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">,</span> key<span style="color:#000;font-weight:bold">,</span> text<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">{</span>  
-</span></span><span style="display:flex;"><span>        Caesar caesar <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Caesar<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;0123456789qwertyuiopasdfghjklzxcvbnm&#34;</span><span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>        String data <span style="color:#000;font-weight:bold">=</span> caesar<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encode</span><span style="color:#000;font-weight:bold">(</span>32<span style="color:#000;font-weight:bold">,</span> <span style="color:#d14">&#34;23423&#34;</span><span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>        System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>data<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>        String pass <span style="color:#000;font-weight:bold">=</span> caesar<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">decode</span><span style="color:#000;font-weight:bold">(</span>32<span style="color:#000;font-weight:bold">,</span> data<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>        System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>pass<span style="color:#000;font-weight:bold">);</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>  
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Caesar</span>  
+<span style="color:#000;font-weight:bold">{</span>  
+    <span style="color:#000;font-weight:bold">private</span> String table<span style="color:#000;font-weight:bold">;</span>  
+    <span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> seedA <span style="color:#000;font-weight:bold">=</span> 1103515245<span style="color:#000;font-weight:bold">;</span>  
+    <span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> seedB <span style="color:#000;font-weight:bold">=</span> 12345<span style="color:#000;font-weight:bold">;</span>  
+  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Caesar</span><span style="color:#000;font-weight:bold">(</span>String table<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> seed<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">table</span> <span style="color:#000;font-weight:bold">=</span> chaos<span style="color:#000;font-weight:bold">(</span>table<span style="color:#000;font-weight:bold">,</span> seed<span style="color:#000;font-weight:bold">,</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">());</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Caesar</span><span style="color:#000;font-weight:bold">(</span>String table<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">(</span>table<span style="color:#000;font-weight:bold">,</span> 11<span style="color:#000;font-weight:bold">);</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Caesar</span><span style="color:#000;font-weight:bold">()</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">(</span>11<span style="color:#000;font-weight:bold">);</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Caesar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> seed<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&#34;</span><span style="color:#000;font-weight:bold">,</span> seed<span style="color:#000;font-weight:bold">);</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">char</span> <span style="color:#900;font-weight:bold">dict</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">boolean</span> reverse<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#458;font-weight:bold">int</span> s <span style="color:#000;font-weight:bold">=</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">(),</span> index <span style="color:#000;font-weight:bold">=</span> reverse <span style="color:#000;font-weight:bold">?</span> s <span style="color:#000;font-weight:bold">-</span> i <span style="color:#000;font-weight:bold">:</span> i<span style="color:#000;font-weight:bold">;</span>  
+        <span style="color:#000;font-weight:bold">return</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">charAt</span><span style="color:#000;font-weight:bold">(</span>index<span style="color:#000;font-weight:bold">);</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">dict</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">char</span> c<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">boolean</span> reverse<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#458;font-weight:bold">int</span> s <span style="color:#000;font-weight:bold">=</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">(),</span> index <span style="color:#000;font-weight:bold">=</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">indexOf</span><span style="color:#000;font-weight:bold">(</span>c<span style="color:#000;font-weight:bold">);</span>  
+        <span style="color:#000;font-weight:bold">return</span> reverse <span style="color:#000;font-weight:bold">?</span> s <span style="color:#000;font-weight:bold">-</span> index <span style="color:#000;font-weight:bold">:</span> index<span style="color:#000;font-weight:bold">;</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">seed</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> seed<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#458;font-weight:bold">long</span> temp <span style="color:#000;font-weight:bold">=</span> seed<span style="color:#000;font-weight:bold">;</span>  
+        <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">((</span>temp <span style="color:#000;font-weight:bold">*</span> seedA <span style="color:#000;font-weight:bold">+</span> seedB<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">&amp;</span> 0x7fffffffL<span style="color:#000;font-weight:bold">);</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">chaos</span><span style="color:#000;font-weight:bold">(</span>String data<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> seed<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> cnt<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        StringBuffer buf <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuffer<span style="color:#000;font-weight:bold">(</span>data<span style="color:#000;font-weight:bold">);</span>  
+        <span style="color:#458;font-weight:bold">char</span> tmp<span style="color:#000;font-weight:bold">;</span>  
+        <span style="color:#458;font-weight:bold">int</span> a<span style="color:#000;font-weight:bold">,</span> b<span style="color:#000;font-weight:bold">,</span> r <span style="color:#000;font-weight:bold">=</span> data<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">();</span>  
+        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> cnt<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">+=</span> 1<span style="color:#000;font-weight:bold">)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            seed <span style="color:#000;font-weight:bold">=</span> seed<span style="color:#000;font-weight:bold">(</span>seed<span style="color:#000;font-weight:bold">);</span>  
+            a <span style="color:#000;font-weight:bold">=</span> seed <span style="color:#000;font-weight:bold">%</span> r<span style="color:#000;font-weight:bold">;</span>  
+            seed <span style="color:#000;font-weight:bold">=</span> seed<span style="color:#000;font-weight:bold">(</span>seed<span style="color:#000;font-weight:bold">);</span>  
+            b <span style="color:#000;font-weight:bold">=</span> seed <span style="color:#000;font-weight:bold">%</span> r<span style="color:#000;font-weight:bold">;</span>  
+            tmp <span style="color:#000;font-weight:bold">=</span> buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">charAt</span><span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">);</span>  
+            buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setCharAt</span><span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">charAt</span><span style="color:#000;font-weight:bold">(</span>b<span style="color:#000;font-weight:bold">));</span>  
+            buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setCharAt</span><span style="color:#000;font-weight:bold">(</span>b<span style="color:#000;font-weight:bold">,</span> tmp<span style="color:#000;font-weight:bold">);</span>  
+        <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">return</span> buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">crypto</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">boolean</span> reverse<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> key<span style="color:#000;font-weight:bold">,</span> String text<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        String ret <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>  
+        StringBuilder buf <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>  
+        <span style="color:#458;font-weight:bold">int</span> m<span style="color:#000;font-weight:bold">,</span> s <span style="color:#000;font-weight:bold">=</span> table<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">(),</span> e <span style="color:#000;font-weight:bold">=</span> text<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">();</span>  
+  
+        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> e<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">+=</span> 1<span style="color:#000;font-weight:bold">)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            m <span style="color:#000;font-weight:bold">=</span> dict<span style="color:#000;font-weight:bold">(</span>text<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">charAt</span><span style="color:#000;font-weight:bold">(</span>i<span style="color:#000;font-weight:bold">),</span> reverse<span style="color:#000;font-weight:bold">);</span>  
+            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>m <span style="color:#000;font-weight:bold">&lt;</span> 0<span style="color:#000;font-weight:bold">)</span>  
+            <span style="color:#000;font-weight:bold">{</span>  
+                <span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>  
+            <span style="color:#000;font-weight:bold">}</span>  
+            m <span style="color:#000;font-weight:bold">=</span> m <span style="color:#000;font-weight:bold">+</span> key <span style="color:#000;font-weight:bold">+</span> i<span style="color:#000;font-weight:bold">;</span>  
+            buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>dict<span style="color:#000;font-weight:bold">(</span>m <span style="color:#000;font-weight:bold">%</span> s<span style="color:#000;font-weight:bold">,</span> reverse<span style="color:#000;font-weight:bold">));</span>  
+        <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">==</span> e<span style="color:#000;font-weight:bold">)</span>  
+        <span style="color:#000;font-weight:bold">{</span>  
+            ret <span style="color:#000;font-weight:bold">=</span> buf<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>  
+        <span style="color:#000;font-weight:bold">}</span>  
+        <span style="color:#000;font-weight:bold">return</span> ret<span style="color:#000;font-weight:bold">;</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">encode</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> key<span style="color:#000;font-weight:bold">,</span> String text<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#000;font-weight:bold">return</span> crypto<span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span> key<span style="color:#000;font-weight:bold">,</span> text<span style="color:#000;font-weight:bold">);</span>  
+  
+    <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">decode</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> key<span style="color:#000;font-weight:bold">,</span> String text<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        <span style="color:#000;font-weight:bold">return</span> crypto<span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">,</span> key<span style="color:#000;font-weight:bold">,</span> text<span style="color:#000;font-weight:bold">);</span>  
+    <span style="color:#000;font-weight:bold">}</span>  
+  
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span>  
+    <span style="color:#000;font-weight:bold">{</span>  
+        Caesar caesar <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Caesar<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;0123456789qwertyuiopasdfghjklzxcvbnm&#34;</span><span style="color:#000;font-weight:bold">);</span>  
+        String data <span style="color:#000;font-weight:bold">=</span> caesar<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">encode</span><span style="color:#000;font-weight:bold">(</span>32<span style="color:#000;font-weight:bold">,</span> <span style="color:#d14">&#34;23423&#34;</span><span style="color:#000;font-weight:bold">);</span>  
+        System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>data<span style="color:#000;font-weight:bold">);</span>  
+        String pass <span style="color:#000;font-weight:bold">=</span> caesar<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">decode</span><span style="color:#000;font-weight:bold">(</span>32<span style="color:#000;font-weight:bold">,</span> data<span style="color:#000;font-weight:bold">);</span>  
+        System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>pass<span style="color:#000;font-weight:bold">);</span>  
+  
+    <span style="color:#000;font-weight:bold">}</span>  
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></td></tr></table>
 </div>
 </div>
         </div>
@@ -925,6 +925,14 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
     </li>
     
@@ -954,14 +962,6 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li>
         <a href="https://anTtutu.github.io/post/2022-12-19-git_delete_history/" title="git删除历史提交记录" target="_blank">git删除历史提交记录</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-11-28-python_muilt_version/" title="python多版本管理工具" target="_blank">python多版本管理工具</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-11-22-springboot_start_failed/" title="springboot常见兼容性错误" target="_blank">springboot常见兼容性错误</a>
     </li>
     
 </ul>
@@ -1005,6 +1005,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/check/">check (5)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/claude-code/">claude code (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cli/">cli (1)</a></li>
@@ -1030,6 +1032,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <li><a href="https://anTtutu.github.io/categories/dockerfile/">dockerfile (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/drawio/">drawio (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
     
@@ -1101,6 +1105,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/maven/">maven (3)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/mcp/">mcp (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/mine/">mine (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
@@ -1146,6 +1152,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <li><a href="https://anTtutu.github.io/categories/sdk/">sdk (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/shell/">shell (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/skill/">skill (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     

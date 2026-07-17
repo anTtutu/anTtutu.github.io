@@ -22,7 +22,7 @@
     <meta name="description" content="log4j2远程执行漏洞">
         
     <meta name="author" content="Anttu">
-    <meta property="og:url" content="https://anTtutu.github.io/post/2021-12-13-log4j2_cve/">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2021-12-13-log4j2_CVE/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -234,33 +234,33 @@
             <h2 id="前言">前言</h2>
 <p>12月9日爆出来的log4j2远程执行漏洞，因为影响巨大，网上新闻和介绍特别多，这里不多说，间接使用log4j2的第三方也不少，等官网修复不知道是否赶得上，直接采用暴力删除jndilook.class最简单</p>
 <h2 id="1直接删除漏洞class">1、直接删除漏洞class</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#999;font-weight:bold;font-style:italic">#!/bin/bash
-</span></span></span><span style="display:flex;"><span><span style="color:#999;font-weight:bold;font-style:italic"></span><span style="color:#0086b3">set</span> -eu
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">for</span> JAR_PATH in <span style="color:#d14">&#34;</span><span style="color:#008080">$@</span><span style="color:#d14">&#34;</span>; <span style="color:#000;font-weight:bold">do</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">[[</span> <span style="color:#008080">$JAR_PATH</span> !<span style="color:#000;font-weight:bold">=</span> *log4j-core*.jar <span style="color:#000;font-weight:bold">]]</span> <span style="color:#000;font-weight:bold">||</span> <span style="color:#000;font-weight:bold">[</span> -e <span style="color:#d14">&#34;</span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">.bak&#34;</span> <span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">||</span> ! <span style="color:#000;font-weight:bold">[</span> -f <span style="color:#d14">&#34;</span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">&#34;</span> <span style="color:#000;font-weight:bold">]</span>; <span style="color:#000;font-weight:bold">then</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;Skipped </span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">&#34;</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">continue</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">fi</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;Processing </span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">&#34;</span>
-</span></span><span style="display:flex;"><span>	cp -p <span style="color:#d14">&#34;</span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">&#34;</span> <span style="color:#d14">&#34;</span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">.bak&#34;</span>
-</span></span><span style="display:flex;"><span>	zip -q -d <span style="color:#d14">&#34;</span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">&#34;</span> org/apache/logging/log4j/core/lookup/JndiLookup.class
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">done</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#999;font-weight:bold;font-style:italic">#!/bin/bash
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span><span style="color:#0086b3">set</span> -eu
+<span style="color:#000;font-weight:bold">for</span> JAR_PATH in <span style="color:#d14">&#34;</span><span style="color:#008080">$@</span><span style="color:#d14">&#34;</span>; <span style="color:#000;font-weight:bold">do</span>
+	<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">[[</span> <span style="color:#008080">$JAR_PATH</span> !<span style="color:#000;font-weight:bold">=</span> *log4j-core*.jar <span style="color:#000;font-weight:bold">]]</span> <span style="color:#000;font-weight:bold">||</span> <span style="color:#000;font-weight:bold">[</span> -e <span style="color:#d14">&#34;</span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">.bak&#34;</span> <span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">||</span> ! <span style="color:#000;font-weight:bold">[</span> -f <span style="color:#d14">&#34;</span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">&#34;</span> <span style="color:#000;font-weight:bold">]</span>; <span style="color:#000;font-weight:bold">then</span>
+		<span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;Skipped </span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">&#34;</span>
+		<span style="color:#000;font-weight:bold">continue</span>
+	<span style="color:#000;font-weight:bold">fi</span>
+	<span style="color:#0086b3">echo</span> <span style="color:#d14">&#34;Processing </span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">&#34;</span>
+	cp -p <span style="color:#d14">&#34;</span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">&#34;</span> <span style="color:#d14">&#34;</span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">.bak&#34;</span>
+	zip -q -d <span style="color:#d14">&#34;</span><span style="color:#008080">$JAR_PATH</span><span style="color:#d14">&#34;</span> org/apache/logging/log4j/core/lookup/JndiLookup.class
+<span style="color:#000;font-weight:bold">done</span>
+</code></pre></td></tr></table>
 </div>
 </div><h2 id="2apache-log4j2漏洞官方说明">2、Apache log4j2漏洞官方说明</h2>
 <p>官方漏洞说明： <a href="https://logging.apache.org/log4j/2.x/security.html">https://logging.apache.org/log4j/2.x/security.html</a></p>
@@ -299,74 +299,74 @@ zipkin
 <p><strong>中级</strong></p>
 <h3 id="72-漏洞配置">7.2 漏洞配置</h3>
 <p>初始配置demo</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;configuration</span> <span style="color:#008080">scan=</span><span style="color:#d14">&#34;true&#34;</span> <span style="color:#008080">scanPeriod=</span><span style="color:#d14">&#34;10 seconds&#34;</span> <span style="color:#008080">debug=</span><span style="color:#d14">&#34;true&#34;</span><span style="color:#000080">&gt;</span>  
-</span></span><span style="display:flex;"><span>　　　<span style="color:#000080">&lt;appender</span> <span style="color:#008080">name=</span><span style="color:#d14">&#34;STDOUT&#34;</span> <span style="color:#008080">class=</span><span style="color:#d14">&#34;ch.qos.logback.core.ConsoleAppender&#34;</span><span style="color:#000080">&gt;</span>  
-</span></span><span style="display:flex;"><span>    　　　　　 <span style="color:#000080">&lt;encoder&gt;</span>  
-</span></span><span style="display:flex;"><span>    　　　　　　　　　<span style="color:#000080">&lt;pattern&gt;</span>%-4relative [%thread] %-5level %logger{35} - %msg %n<span style="color:#000080">&lt;/pattern&gt;</span>  
-</span></span><span style="display:flex;"><span>    　　　　　 <span style="color:#000080">&lt;/encoder&gt;</span>  
-</span></span><span style="display:flex;"><span>    　　　<span style="color:#000080">&lt;/appender&gt;</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;appender</span> <span style="color:#008080">name=</span><span style="color:#d14">&#34;DB&#34;</span> <span style="color:#008080">class=</span><span style="color:#d14">&#34;ch.qos.logback.classic.db.DBAppender&#34;</span><span style="color:#000080">&gt;</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;connectionSource</span> <span style="color:#008080">class=</span><span style="color:#d14">&#34;ch.qos.logback.core.db.JNDIConnectionSource&#34;</span><span style="color:#000080">&gt;</span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#000080">&lt;jndiLocation&gt;</span>ldap://127.0.0.1:1389/erqtcd<span style="color:#000080">&lt;/jndiLocation&gt;</span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#000080">&lt;/connectionSource&gt;</span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;/appender&gt;</span>  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    　　　<span style="color:#000080">&lt;root</span> <span style="color:#008080">level=</span><span style="color:#d14">&#34;DEBUG&#34;</span><span style="color:#000080">&gt;</span>  
-</span></span><span style="display:flex;"><span>    　　　　　　<span style="color:#000080">&lt;appender-ref</span> <span style="color:#008080">ref=</span><span style="color:#d14">&#34;STDOUT&#34;</span> <span style="color:#000080">/&gt;</span>  
-</span></span><span style="display:flex;"><span>    　　　<span style="color:#000080">&lt;/root&gt;</span>  
-</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/configuration&gt;</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#000080">&lt;configuration</span> <span style="color:#008080">scan=</span><span style="color:#d14">&#34;true&#34;</span> <span style="color:#008080">scanPeriod=</span><span style="color:#d14">&#34;10 seconds&#34;</span> <span style="color:#008080">debug=</span><span style="color:#d14">&#34;true&#34;</span><span style="color:#000080">&gt;</span>  
+　　　<span style="color:#000080">&lt;appender</span> <span style="color:#008080">name=</span><span style="color:#d14">&#34;STDOUT&#34;</span> <span style="color:#008080">class=</span><span style="color:#d14">&#34;ch.qos.logback.core.ConsoleAppender&#34;</span><span style="color:#000080">&gt;</span>  
+    　　　　　 <span style="color:#000080">&lt;encoder&gt;</span>  
+    　　　　　　　　　<span style="color:#000080">&lt;pattern&gt;</span>%-4relative [%thread] %-5level %logger{35} - %msg %n<span style="color:#000080">&lt;/pattern&gt;</span>  
+    　　　　　 <span style="color:#000080">&lt;/encoder&gt;</span>  
+    　　　<span style="color:#000080">&lt;/appender&gt;</span>  
+    <span style="color:#000080">&lt;appender</span> <span style="color:#008080">name=</span><span style="color:#d14">&#34;DB&#34;</span> <span style="color:#008080">class=</span><span style="color:#d14">&#34;ch.qos.logback.classic.db.DBAppender&#34;</span><span style="color:#000080">&gt;</span>  
+        <span style="color:#000080">&lt;connectionSource</span> <span style="color:#008080">class=</span><span style="color:#d14">&#34;ch.qos.logback.core.db.JNDIConnectionSource&#34;</span><span style="color:#000080">&gt;</span>  
+            <span style="color:#000080">&lt;jndiLocation&gt;</span>ldap://127.0.0.1:1389/erqtcd<span style="color:#000080">&lt;/jndiLocation&gt;</span>  
+        <span style="color:#000080">&lt;/connectionSource&gt;</span>  
+    <span style="color:#000080">&lt;/appender&gt;</span>  
+  
+    　　　<span style="color:#000080">&lt;root</span> <span style="color:#008080">level=</span><span style="color:#d14">&#34;DEBUG&#34;</span><span style="color:#000080">&gt;</span>  
+    　　　　　　<span style="color:#000080">&lt;appender-ref</span> <span style="color:#008080">ref=</span><span style="color:#d14">&#34;STDOUT&#34;</span> <span style="color:#000080">/&gt;</span>  
+    　　　<span style="color:#000080">&lt;/root&gt;</span>  
+<span style="color:#000080">&lt;/configuration&gt;</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>存在漏洞的配置demo</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#000080">&lt;configuration</span> <span style="color:#008080">scan=</span><span style="color:#d14">&#34;true&#34;</span> <span style="color:#008080">scanPeriod=</span><span style="color:#d14">&#34;10 seconds&#34;</span> <span style="color:#008080">debug=</span><span style="color:#d14">&#34;true&#34;</span><span style="color:#000080">&gt;</span>
-</span></span><span style="display:flex;"><span>　　　<span style="color:#000080">&lt;appender</span> <span style="color:#008080">name=</span><span style="color:#d14">&#34;STDOUT&#34;</span> <span style="color:#008080">class=</span><span style="color:#d14">&#34;ch.qos.logback.core.ConsoleAppender&#34;</span><span style="color:#000080">&gt;</span>
-</span></span><span style="display:flex;"><span>    　　　　　 <span style="color:#000080">&lt;encoder&gt;</span>
-</span></span><span style="display:flex;"><span>    　　　　　　　　　<span style="color:#000080">&lt;pattern&gt;</span>%-4relative [%thread] %-5level %logger{35} - %msg %n<span style="color:#000080">&lt;/pattern&gt;</span>
-</span></span><span style="display:flex;"><span>    　　　　　 <span style="color:#000080">&lt;/encoder&gt;</span>
-</span></span><span style="display:flex;"><span>    　　　<span style="color:#000080">&lt;/appender&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000080">&lt;insertFromJNDI</span> <span style="color:#008080">env-entry-name=</span><span style="color:#d14">&#34;ldap://127.0.0.1:1389/erqtcd&#34;</span> <span style="color:#008080">as=</span><span style="color:#d14">&#34;appName&#34;</span> <span style="color:#000080">/&gt;</span>  
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>　　　<span style="color:#000080">&lt;root</span> <span style="color:#008080">level=</span><span style="color:#d14">&#34;DEBUG&#34;</span><span style="color:#000080">&gt;</span>
-</span></span><span style="display:flex;"><span>    　　　　　　<span style="color:#000080">&lt;appender-ref</span> <span style="color:#008080">ref=</span><span style="color:#d14">&#34;STDOUT&#34;</span> <span style="color:#000080">/&gt;</span>
-</span></span><span style="display:flex;"><span>    　　　<span style="color:#000080">&lt;/root&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#000080">&lt;/configuration&gt;</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#000080">&lt;configuration</span> <span style="color:#008080">scan=</span><span style="color:#d14">&#34;true&#34;</span> <span style="color:#008080">scanPeriod=</span><span style="color:#d14">&#34;10 seconds&#34;</span> <span style="color:#008080">debug=</span><span style="color:#d14">&#34;true&#34;</span><span style="color:#000080">&gt;</span>
+　　　<span style="color:#000080">&lt;appender</span> <span style="color:#008080">name=</span><span style="color:#d14">&#34;STDOUT&#34;</span> <span style="color:#008080">class=</span><span style="color:#d14">&#34;ch.qos.logback.core.ConsoleAppender&#34;</span><span style="color:#000080">&gt;</span>
+    　　　　　 <span style="color:#000080">&lt;encoder&gt;</span>
+    　　　　　　　　　<span style="color:#000080">&lt;pattern&gt;</span>%-4relative [%thread] %-5level %logger{35} - %msg %n<span style="color:#000080">&lt;/pattern&gt;</span>
+    　　　　　 <span style="color:#000080">&lt;/encoder&gt;</span>
+    　　　<span style="color:#000080">&lt;/appender&gt;</span>
+    <span style="color:#000080">&lt;insertFromJNDI</span> <span style="color:#008080">env-entry-name=</span><span style="color:#d14">&#34;ldap://127.0.0.1:1389/erqtcd&#34;</span> <span style="color:#008080">as=</span><span style="color:#d14">&#34;appName&#34;</span> <span style="color:#000080">/&gt;</span>  
+
+　　　<span style="color:#000080">&lt;root</span> <span style="color:#008080">level=</span><span style="color:#d14">&#34;DEBUG&#34;</span><span style="color:#000080">&gt;</span>
+    　　　　　　<span style="color:#000080">&lt;appender-ref</span> <span style="color:#008080">ref=</span><span style="color:#d14">&#34;STDOUT&#34;</span> <span style="color:#000080">/&gt;</span>
+    　　　<span style="color:#000080">&lt;/root&gt;</span>
+<span style="color:#000080">&lt;/configuration&gt;</span>
+</code></pre></td></tr></table>
 </div>
 </div><h3 id="73-漏洞说明">7.3 漏洞说明</h3>
 <p>漏洞复现说明: <a href="https://github.com/cn-panda/logbackRceDemo">https://github.com/cn-panda/logbackRceDemo</a></p>
@@ -378,21 +378,21 @@ zipkin
 </code></pre><p>注：如果杜绝了步骤1的文件上传漏洞，这个中级漏洞就很难触发</p>
 <h2 id="8log4j1x的漏洞">8、log4j1.X的漏洞</h2>
 <p>log4j1.X 已经2015年停止维护了，不过如果还有历史项目在使用的话，可以参考步骤1删除下面的class</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>org<span style="color:#000;font-weight:bold">/</span>apache<span style="color:#000;font-weight:bold">/</span>log4j<span style="color:#000;font-weight:bold">/</span>net<span style="color:#000;font-weight:bold">/</span>JMSAppender<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">org<span style="color:#000;font-weight:bold">/</span>apache<span style="color:#000;font-weight:bold">/</span>log4j<span style="color:#000;font-weight:bold">/</span>net<span style="color:#000;font-weight:bold">/</span>JMSAppender<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span>
+</code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>zip -q -d log4j-*.jar org/apache/log4j/net/JMSAppender.class
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">zip -q -d log4j-*.jar org/apache/log4j/net/JMSAppender.class
+</code></pre></td></tr></table>
 </div>
 </div>
         </div>
@@ -401,7 +401,7 @@ zipkin
 <div class="post-archive">
     <ul class="post-copyright">
         <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
-        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2021-12-13-log4j2_cve/">https://anTtutu.github.io/post/2021-12-13-log4j2_cve/</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2021-12-13-log4j2_CVE/">https://anTtutu.github.io/post/2021-12-13-log4j2_CVE/</a></li>
         <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
     </ul>
 </div>
@@ -586,6 +586,14 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
     </li>
     
@@ -615,14 +623,6 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li>
         <a href="https://anTtutu.github.io/post/2022-12-19-git_delete_history/" title="git删除历史提交记录" target="_blank">git删除历史提交记录</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-11-28-python_muilt_version/" title="python多版本管理工具" target="_blank">python多版本管理工具</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-11-22-springboot_start_failed/" title="springboot常见兼容性错误" target="_blank">springboot常见兼容性错误</a>
     </li>
     
 </ul>
@@ -666,6 +666,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/check/">check (5)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/claude-code/">claude code (2)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cli/">cli (1)</a></li>
@@ -691,6 +693,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <li><a href="https://anTtutu.github.io/categories/dockerfile/">dockerfile (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/drawio/">drawio (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
     
@@ -762,6 +766,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/maven/">maven (3)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/mcp/">mcp (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/mine/">mine (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
@@ -807,6 +813,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <li><a href="https://anTtutu.github.io/categories/sdk/">sdk (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/shell/">shell (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/skill/">skill (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
     
