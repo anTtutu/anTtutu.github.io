@@ -76,6 +76,76 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2017-05-25-log4j_config/" title="Log4j参数整理" target="_blank">Log4j参数整理</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2017年5月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/log4j' target="_blank">log4j</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/java' target="_blank">java</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>Log4j 1.x的知识点回顾，2015年8月5日，Apache的Logging Services项目管理委员会宣布Log4j 1.x已经结束生命周期，建议升级 Log4j 2.x。</p>
+<h2 id="1-配置文件">1. 配置文件</h2>
+<p>Log4J配置文件的基本格式如下：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#57606a">#配置根Logger</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.rootLogger</span>  <span style="color:#0550ae">=</span>   <span style="color:#0a3069">[ level ]   ,  appenderName1 ,  appenderName2 ,  …</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">#配置日志信息输出目的地Appender</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.appenderName</span>  <span style="color:#0550ae">=</span>  <span style="color:#0a3069">fully.qualified.name.of.appender.class </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　log4j.appender.appenderName.option1  =  value1 </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　… </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　log4j.appender.appenderName.optionN  =  valueN </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">#配置日志信息的格式（布局）</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.appenderName.layout</span>  <span style="color:#0550ae">=</span>  <span style="color:#0a3069">fully.qualified.name.of.layout.class </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　log4j.appender.appenderName.layout.option1  =  value1 </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　… </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　log4j.appender.appenderName.layout.optionN  =  valueN </span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2日志输出级别">2、日志输出级别</h2>
+<p>其中 [level] 共有5级，如下：</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2017-05-25-log4j_config/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2017-05-23-lvm_vxvm3/" title="VCS第七波-磁阵管理LVM和VxVM3-LVM" target="_blank">VCS第七波-磁阵管理LVM和VxVM3-LVM</a>
             </h1>
         </header>
@@ -2135,40 +2205,6 @@ I/O Fencing: I/O Fencing 使用一种类似投票的机制，来防止Cluster分
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2017-03-09-java_captach/" title="Java高防OCR和机器人图形验证码" target="_blank">Java高防OCR和机器人图形验证码</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2017年3月9日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/java' target="_blank">java</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/captcha' target="_blank">captcha</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>结合网上的图形验证码技术，不依赖第三方包纯java加工了一个比较复杂的图形验证码方案，防OCR、防机器人。 <br>
-网上的图形验证码方案都是零星的，弄了一个随机字体、随机彩色字符、随机字体大小、随机扭曲、随机旋转等技术，能有效的防OCR、描边、深浅色等技术识别。 <br>
-本意是想区分登录、领券、抽奖等一些场景操作的，后来一想，随机拼人品吧，于是就有了下面的工具类。</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2017-03-09-java_captach/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -2222,7 +2258,20 @@ I/O Fencing: I/O Fencing 使用一种类似投票的机制，来防止Cluster分
         </li>
         
     
+        
+        
+        <li >
+            <a href="https://anTtutu.github.io/page/12/">12</a>
+        </li>
+        
+    
 
+    
+    
+
+    <li class="next">
+        <a href="https://anTtutu.github.io/page/12/">下一页</a>
+    </li>
     
 </ol>
 
@@ -2283,6 +2332,10 @@ I/O Fencing: I/O Fencing 使用一种类似投票的机制，来防止Cluster分
     </li>
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-09-07-ydnotes-obsidian/" title="有道云笔记迁移到obsidian" target="_blank">有道云笔记迁移到obsidian</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
     </li>
     
@@ -2312,10 +2365,6 @@ I/O Fencing: I/O Fencing 使用一种类似投票的机制，来防止Cluster分
     
     <li>
         <a href="https://anTtutu.github.io/post/2023-06-16-miner_virus_5/" title="挖矿病毒5-私有云机房挖矿病毒定位" target="_blank">挖矿病毒5-私有云机房挖矿病毒定位</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-12-26-covid-19/" title="羊了" target="_blank">羊了</a>
     </li>
     
 </ul>
@@ -2477,6 +2526,10 @@ I/O Fencing: I/O Fencing 使用一种类似投票的机制，来防止Cluster分
     
     <li><a href="https://anTtutu.github.io/categories/nmap/">Nmap (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/notes/">Notes (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/obsidian/">Obsidian (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/oom/">Oom (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/oracle/">Oracle (3)</a></li>
@@ -2544,6 +2597,8 @@ I/O Fencing: I/O Fencing 使用一种类似投票的机制，来防止Cluster分
     <li><a href="https://anTtutu.github.io/categories/win10/">Win10 (6)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/xrebel/">Xrebel (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ydnotes/">Ydnotes (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/ynote/">Ynote (1)</a></li>
     
