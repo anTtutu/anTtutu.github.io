@@ -336,542 +336,542 @@
 <p>先找到病毒主体文件，然后需要有清晰的排查思路，结合搜集到的信息，可以去一些安全或者漏洞网站查询是否有人中招和排查经验，结合已经曝光的信息再加上自己的思路，可以事半功倍</p>
 <h3 id="21-top异常服务">2.1 top异常服务</h3>
 <p>有的挖矿病毒不会修改服务名，有的会隐藏成sysupdate、networkservice、sysguard这些看着像系统进程的名称，有的还会改成apache、php、mysql等服务名，需要凭职业经验分辨</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">top
-top &gt; top.txt
-vi top.txt
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>top
+</span></span><span style="display:flex;"><span>top &gt; top.txt
+</span></span><span style="display:flex;"><span>vi top.txt
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="22-查看异常进程目录">2.2 查看异常进程目录</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ps -axuf | grep pid
-ls /proc/<span style="color:#000;font-weight:bold">{</span><span style="color:#008080">$pid</span><span style="color:#000;font-weight:bold">}</span>/
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ps -axuf <span style="color:#1f2328">|</span> grep pid
+</span></span><span style="display:flex;"><span>ls /proc/<span style="color:#0550ae">{</span><span style="color:#953800">$pid</span><span style="color:#0550ae">}</span>/
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="23-检查定时任务">2.3 检查定时任务</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/etc/crontab
-/var/spool/cron/root
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/etc/crontab
+</span></span><span style="display:flex;"><span>/var/spool/cron/root
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>有修改的话需要还原</p>
 <h3 id="24-检查账号">2.4 检查账号</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/etc/passwd
-/etc/shadow
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/etc/passwd
+</span></span><span style="display:flex;"><span>/etc/shadow
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>有新增异常账号需要删除,需要留意特权账号uid=0的</p>
 <h3 id="25-检查sudo">2.5 检查sudo</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/etc/sudoers
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/etc/sudoers
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>有新增的异常命令或者账号需要清理</p>
 <h3 id="26-检查环境变量">2.6 检查环境变量</h3>
 <p>root账号的环境变量文件</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">~/.bash_profile
-~/.bashrc
-~/.cshrc
-~/.tcshrc
-~/.profile
-/etc/profile
-<span style="color:#0086b3">echo</span> <span style="color:#008080">$PATH</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>~/.bash_profile
+</span></span><span style="display:flex;"><span>~/.bashrc
+</span></span><span style="display:flex;"><span>~/.cshrc
+</span></span><span style="display:flex;"><span>~/.tcshrc
+</span></span><span style="display:flex;"><span>~/.profile
+</span></span><span style="display:flex;"><span>/etc/profile
+</span></span><span style="display:flex;"><span><span style="color:#6639ba">echo</span> <span style="color:#953800">$PATH</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>有新增的话需要清理</p>
 <p>其他业务账号的环境变量文件需要挨个检查下，因为已经发现本次是admin账号感染，这里就主要排查admin账号</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/<span style="color:#008080">$HOME</span>/.bash_profile
-/<span style="color:#008080">$HOME</span>/.bashrc
-/<span style="color:#008080">$HOME</span>/.cshrc
-/<span style="color:#008080">$HOME</span>/.tcshrc
-/<span style="color:#008080">$HOME</span>/.profile
-<span style="color:#0086b3">echo</span> <span style="color:#008080">$PATH</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/<span style="color:#953800">$HOME</span>/.bash_profile
+</span></span><span style="display:flex;"><span>/<span style="color:#953800">$HOME</span>/.bashrc
+</span></span><span style="display:flex;"><span>/<span style="color:#953800">$HOME</span>/.cshrc
+</span></span><span style="display:flex;"><span>/<span style="color:#953800">$HOME</span>/.tcshrc
+</span></span><span style="display:flex;"><span>/<span style="color:#953800">$HOME</span>/.profile
+</span></span><span style="display:flex;"><span><span style="color:#6639ba">echo</span> <span style="color:#953800">$PATH</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="27-检查执行命令历史记录">2.7 检查执行命令历史记录</h3>
 <p>大多数厉害的挖矿病毒会清理history -c，因此抱着试试看的想法还是检查下</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">.bash_history
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>.bash_history
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>如果服务器上还有其他服务，比如mysql redis mongodb等也需要排查下，比如勒索病毒就好这口</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">.rediscli_history
-.mysql_history
-.dbshell
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>.rediscli_history
+</span></span><span style="display:flex;"><span>.mysql_history
+</span></span><span style="display:flex;"><span>.dbshell
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="28-检查新增的文件或命令">2.8 检查新增的文件或命令</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ls -lart /bin
-ls -lart /sbin
-ls -lart /usr/bin/
-ls -lart /usr/sbin/
-ls -lart /tmp
-ls -lart /etc/init.d/
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls -lart /bin
+</span></span><span style="display:flex;"><span>ls -lart /sbin
+</span></span><span style="display:flex;"><span>ls -lart /usr/bin/
+</span></span><span style="display:flex;"><span>ls -lart /usr/sbin/
+</span></span><span style="display:flex;"><span>ls -lart /tmp
+</span></span><span style="display:flex;"><span>ls -lart /etc/init.d/
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="29-针对上一步可以采用修改日期排查法">2.9 针对上一步可以采用修改日期排查法</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># 查找777权限的文件</span>
-find . -name * -perm <span style="color:#099">777</span>
-<span style="color:#998;font-style:italic"># 按日期查找</span>
-find . -type f -newermt 2020-09-24 -ls
-<span style="color:#998;font-style:italic"># 按时间范围查找</span>
-find . -newermt <span style="color:#d14">&#34;2019-09-09 00:00:00&#34;</span> -not -newermt <span style="color:#d14">&#34;2019-09-10 00:00:00+1&#34;</span>  
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># 查找777权限的文件</span>
+</span></span><span style="display:flex;"><span>find . -name * -perm <span style="color:#0550ae">777</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 按日期查找</span>
+</span></span><span style="display:flex;"><span>find . -type f -newermt 2020-09-24 -ls
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 按时间范围查找</span>
+</span></span><span style="display:flex;"><span>find . -newermt <span style="color:#0a3069">&#34;2019-09-09 00:00:00&#34;</span> -not -newermt <span style="color:#0a3069">&#34;2019-09-10 00:00:00+1&#34;</span>  
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="210-检查异常端口">2.10 检查异常端口</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">netstat -antlp|more
-arp -a
-lsof -i
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>netstat -antlp<span style="color:#1f2328">|</span>more
+</span></span><span style="display:flex;"><span>arp -a
+</span></span><span style="display:flex;"><span>lsof -i
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="211-检查启动项">2.11 检查启动项</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vi  /etc/inittab
-<span style="color:#008080">id</span><span style="color:#000;font-weight:bold">=</span>3：initdefault  <span style="color:#998;font-style:italic">#系统开机后直接进入哪个运行级别</span>
-
-more /etc/rc.local 
-
-<span style="color:#998;font-style:italic"># /etc/rc.d/rc[0~6].d </span>
-ls -lart /etc/rc.d/rc0.d/
-ls -lart /etc/rc.d/rc1.d/
-ls -lart /etc/rc.d/rc2.d/
-ls -lart /etc/rc.d/rc3.d/
-ls -lart /etc/rc.d/rc4.d/
-ls -lart /etc/rc.d/rc5.d/
-ls -lart /etc/rc.d/rc6.d/
-
-ls -lart /etc/rc.d/init.d/
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vi  /etc/inittab
+</span></span><span style="display:flex;"><span><span style="color:#953800">id</span><span style="color:#0550ae">=</span>3：initdefault  <span style="color:#57606a">#系统开机后直接进入哪个运行级别</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>more /etc/rc.local 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># /etc/rc.d/rc[0~6].d </span>
+</span></span><span style="display:flex;"><span>ls -lart /etc/rc.d/rc0.d/
+</span></span><span style="display:flex;"><span>ls -lart /etc/rc.d/rc1.d/
+</span></span><span style="display:flex;"><span>ls -lart /etc/rc.d/rc2.d/
+</span></span><span style="display:flex;"><span>ls -lart /etc/rc.d/rc3.d/
+</span></span><span style="display:flex;"><span>ls -lart /etc/rc.d/rc4.d/
+</span></span><span style="display:flex;"><span>ls -lart /etc/rc.d/rc5.d/
+</span></span><span style="display:flex;"><span>ls -lart /etc/rc.d/rc6.d/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ls -lart /etc/rc.d/init.d/
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>清理异常启动项</p>
 <h3 id="212-检查计划任务">2.12 检查计划任务</h3>
 <p>一般会隐藏</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">crontab -l
-ls /etc/cron*
-/etc/crontab
-/var/spool/cron/root
-/etc/anacrontab
-/var/spool/anacron/*
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>crontab -l
+</span></span><span style="display:flex;"><span>ls /etc/cron*
+</span></span><span style="display:flex;"><span>/etc/crontab
+</span></span><span style="display:flex;"><span>/var/spool/cron/root
+</span></span><span style="display:flex;"><span>/etc/anacrontab
+</span></span><span style="display:flex;"><span>/var/spool/anacron/*
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>清理和还原定时任务</p>
 <h3 id="213-异常目录">2.13 异常目录</h3>
 <p>挖矿一般喜欢用.隐藏目录或者/tmp下</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ls -lart /tmp | more
-ls -lart ~ | more
-ls -lart <span style="color:#008080">$HOME</span> | more
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls -lart /tmp <span style="color:#1f2328">|</span> more
+</span></span><span style="display:flex;"><span>ls -lart ~ <span style="color:#1f2328">|</span> more
+</span></span><span style="display:flex;"><span>ls -lart <span style="color:#953800">$HOME</span> <span style="color:#1f2328">|</span> more
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="214-检查安装的服务">2.14 检查安装的服务</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chkconfig  --list | more
-<span style="color:#998;font-style:italic"># 中文环境</span>
-chkconfig --list | grep <span style="color:#d14">&#34;3:启用\|5:启用&#34;</span>
-<span style="color:#998;font-style:italic"># 英文环境</span>
-chkconfig --list | grep <span style="color:#d14">&#34;3:on\|5:on&#34;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chkconfig  --list <span style="color:#1f2328">|</span> more
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 中文环境</span>
+</span></span><span style="display:flex;"><span>chkconfig --list <span style="color:#1f2328">|</span> grep <span style="color:#0a3069">&#34;3:启用\|5:启用&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 英文环境</span>
+</span></span><span style="display:flex;"><span>chkconfig --list <span style="color:#1f2328">|</span> grep <span style="color:#0a3069">&#34;3:on\|5:on&#34;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="215-检查日志和分析">2.15 检查日志和分析</h3>
 <p>系统日志 日志默认存放位置：/var/log/</p>
 <p>查看日志配置情况：more /etc/rsyslog.conf</p>
 <table>
-<thead>
-<tr>
-<th>日志文件</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>/var/log/cron</td>
-<td>记录了系统定时任务相关的日志</td>
-</tr>
-<tr>
-<td>/var/log/cups</td>
-<td>记录打印信息的日志</td>
-</tr>
-<tr>
-<td>/var/log/dmesg</td>
-<td>记录了系统在开机时内核自检的信息，也可以使用dmesg命令直接查看内核自检信息</td>
-</tr>
-<tr>
-<td>/var/log/mailog</td>
-<td>记录邮件信息</td>
-</tr>
-<tr>
-<td>/var/log/message</td>
-<td>记录系统重要信息的日志。这个日志文件中会记录Linux系统的绝大多数重要信息，如果系统出现问题时，首先要检查的就应该是这个日志文件</td>
-</tr>
-<tr>
-<td>/var/log/btmp</td>
-<td>记录错误登录日志，这个文件是二进制文件，不能直接vi查看，而要使用lastb命令查看</td>
-</tr>
-<tr>
-<td>/var/log/lastlog</td>
-<td>记录系统中所有用户最后一次登录时间的日志，这个文件是二进制文件，不能直接vi，而要使用lastlog命令查看</td>
-</tr>
-<tr>
-<td>/var/log/wtmp</td>
-<td>永久记录所有用户的登录、注销信息，同时记录系统的启动、重启、关机事件。同样这个文件也是一个二进制文件，不能直接vi，而需要使用last命令来查看</td>
-</tr>
-<tr>
-<td>/var/log/utmp</td>
-<td>记录当前已经登录的用户信息，这个文件会随着用户的登录和注销不断变化，只记录当前登录用户的信息。同样这个文件不能直接vi，而要使用w,who,users等命令来查询</td>
-</tr>
-<tr>
-<td>/var/log/secure</td>
-<td>记录验证和授权方面的信息，只要涉及账号和密码的程序都会记录，比如SSH登录，su切换用户，sudo授权，甚至添加用户和修改用户密码都会记录在这个日志文件中</td>
-</tr>
-</tbody>
+	<thead>
+			<tr>
+					<th>日志文件</th>
+					<th>说明</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>/var/log/cron</td>
+					<td>记录了系统定时任务相关的日志</td>
+			</tr>
+			<tr>
+					<td>/var/log/cups</td>
+					<td>记录打印信息的日志</td>
+			</tr>
+			<tr>
+					<td>/var/log/dmesg</td>
+					<td>记录了系统在开机时内核自检的信息，也可以使用dmesg命令直接查看内核自检信息</td>
+			</tr>
+			<tr>
+					<td>/var/log/mailog</td>
+					<td>记录邮件信息</td>
+			</tr>
+			<tr>
+					<td>/var/log/message</td>
+					<td>记录系统重要信息的日志。这个日志文件中会记录Linux系统的绝大多数重要信息，如果系统出现问题时，首先要检查的就应该是这个日志文件</td>
+			</tr>
+			<tr>
+					<td>/var/log/btmp</td>
+					<td>记录错误登录日志，这个文件是二进制文件，不能直接vi查看，而要使用lastb命令查看</td>
+			</tr>
+			<tr>
+					<td>/var/log/lastlog</td>
+					<td>记录系统中所有用户最后一次登录时间的日志，这个文件是二进制文件，不能直接vi，而要使用lastlog命令查看</td>
+			</tr>
+			<tr>
+					<td>/var/log/wtmp</td>
+					<td>永久记录所有用户的登录、注销信息，同时记录系统的启动、重启、关机事件。同样这个文件也是一个二进制文件，不能直接vi，而需要使用last命令来查看</td>
+			</tr>
+			<tr>
+					<td>/var/log/utmp</td>
+					<td>记录当前已经登录的用户信息，这个文件会随着用户的登录和注销不断变化，只记录当前登录用户的信息。同样这个文件不能直接vi，而要使用w,who,users等命令来查询</td>
+			</tr>
+			<tr>
+					<td>/var/log/secure</td>
+					<td>记录验证和授权方面的信息，只要涉及账号和密码的程序都会记录，比如SSH登录，su切换用户，sudo授权，甚至添加用户和修改用户密码都会记录在这个日志文件中</td>
+			</tr>
+	</tbody>
 </table>
 <h3 id="216-其他有用的日志">2.16 其他有用的日志</h3>
 <p>apt-get安装日志</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gedit /var/log/apt/term.log
-cat /var/log/apt/history.log | more
-/var/log/dpkg.log
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gedit /var/log/apt/term.log
+</span></span><span style="display:flex;"><span>cat /var/log/apt/history.log <span style="color:#1f2328">|</span> more
+</span></span><span style="display:flex;"><span>/var/log/dpkg.log
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>yum安装日志和历史信息</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># 查看yum安装软件日志的方法</span>
-/var/log/yum.log
-<span style="color:#998;font-style:italic"># 查看yum使用的历史记录的方法</span>
-yum <span style="color:#0086b3">history</span> info
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># 查看yum安装软件日志的方法</span>
+</span></span><span style="display:flex;"><span>/var/log/yum.log
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 查看yum使用的历史记录的方法</span>
+</span></span><span style="display:flex;"><span>yum <span style="color:#6639ba">history</span> info
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="217-检查安装的rpm包或者是否动过手脚">2.17 检查安装的rpm包或者是否动过手脚</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>root@docker-test ~<span style="color:#000;font-weight:bold">]</span><span style="color:#998;font-style:italic"># rpm -Va</span>
-....L....  c /etc/pam.d/fingerprint-auth
-....L....  c /etc/pam.d/password-auth
-....L....  c /etc/pam.d/postlogin
-....L....  c /etc/pam.d/smartcard-auth
-....L....  c /etc/pam.d/system-auth
-.M.......  g /var/log/dmesg
-.M.......  g /var/log/dmesg.old
-.......T.  c /etc/selinux/targeted/contexts/customizable_types
-S.5....T.  c /etc/sysconfig/authconfig
-.M.......  g /etc/pki/ca-trust/extracted/java/cacerts
-.M.......  g /etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt
-.M.......  g /etc/pki/ca-trust/extracted/pem/email-ca-bundle.pem
-.M.......  g /etc/pki/ca-trust/extracted/pem/objsign-ca-bundle.pem
-.M.......  g /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
-.M.......  g /boot/initramfs-3.10.0-957.el7.x86_64.img
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0550ae">[</span>root@docker-test ~<span style="color:#0550ae">]</span><span style="color:#57606a"># rpm -Va</span>
+</span></span><span style="display:flex;"><span>....L....  c /etc/pam.d/fingerprint-auth
+</span></span><span style="display:flex;"><span>....L....  c /etc/pam.d/password-auth
+</span></span><span style="display:flex;"><span>....L....  c /etc/pam.d/postlogin
+</span></span><span style="display:flex;"><span>....L....  c /etc/pam.d/smartcard-auth
+</span></span><span style="display:flex;"><span>....L....  c /etc/pam.d/system-auth
+</span></span><span style="display:flex;"><span>.M.......  g /var/log/dmesg
+</span></span><span style="display:flex;"><span>.M.......  g /var/log/dmesg.old
+</span></span><span style="display:flex;"><span>.......T.  c /etc/selinux/targeted/contexts/customizable_types
+</span></span><span style="display:flex;"><span>S.5....T.  c /etc/sysconfig/authconfig
+</span></span><span style="display:flex;"><span>.M.......  g /etc/pki/ca-trust/extracted/java/cacerts
+</span></span><span style="display:flex;"><span>.M.......  g /etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt
+</span></span><span style="display:flex;"><span>.M.......  g /etc/pki/ca-trust/extracted/pem/email-ca-bundle.pem
+</span></span><span style="display:flex;"><span>.M.......  g /etc/pki/ca-trust/extracted/pem/objsign-ca-bundle.pem
+</span></span><span style="display:flex;"><span>.M.......  g /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+</span></span><span style="display:flex;"><span>.M.......  g /boot/initramfs-3.10.0-957.el7.x86_64.img
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>参数说明：</p>
 <table>
-<thead>
-<tr>
-<th>参数</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>S</td>
-<td>表示文件长度发生了变化</td>
-</tr>
-<tr>
-<td>M</td>
-<td>表示文件的访问权限或文件类型发生了变化</td>
-</tr>
-<tr>
-<td>5</td>
-<td>表示MD5校验和发生了变化</td>
-</tr>
-<tr>
-<td>D</td>
-<td>表示设备节点的属性发生了变化</td>
-</tr>
-<tr>
-<td>L</td>
-<td>表示文件的符号链接发生了变化</td>
-</tr>
-<tr>
-<td>U</td>
-<td>表示文件/子目录/设备节点的owner发生了变化</td>
-</tr>
-<tr>
-<td>G</td>
-<td>表示文件/子目录/设备节点的group发生了变化</td>
-</tr>
-<tr>
-<td>T</td>
-<td>表示文件最后一次的修改时间是发生了变化</td>
-</tr>
-</tbody>
+	<thead>
+			<tr>
+					<th>参数</th>
+					<th>含义</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>S</td>
+					<td>表示文件长度发生了变化</td>
+			</tr>
+			<tr>
+					<td>M</td>
+					<td>表示文件的访问权限或文件类型发生了变化</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>表示MD5校验和发生了变化</td>
+			</tr>
+			<tr>
+					<td>D</td>
+					<td>表示设备节点的属性发生了变化</td>
+			</tr>
+			<tr>
+					<td>L</td>
+					<td>表示文件的符号链接发生了变化</td>
+			</tr>
+			<tr>
+					<td>U</td>
+					<td>表示文件/子目录/设备节点的owner发生了变化</td>
+			</tr>
+			<tr>
+					<td>G</td>
+					<td>表示文件/子目录/设备节点的group发生了变化</td>
+			</tr>
+			<tr>
+					<td>T</td>
+					<td>表示文件最后一次的修改时间是发生了变化</td>
+			</tr>
+	</tbody>
 </table>
 <h3 id="218-检查命令的完整性">2.18 检查命令的完整性</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">rpm -qf /bin/ls
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rpm -qf /bin/ls
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="219-检查hosts文件">2.19 检查hosts文件</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/etc/hosts
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/etc/hosts
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>清理异常的映射地址</p>
 <h3 id="220-检查ssh文件">2.20 检查.ssh文件</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ls -lart ~/.ssh
-ls -lart <span style="color:#008080">$HOME</span>/.ssh
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls -lart ~/.ssh
+</span></span><span style="display:flex;"><span>ls -lart <span style="color:#953800">$HOME</span>/.ssh
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>清理异常的pub key和ssh信任</p>
 <h3 id="221-检查防火墙-iptables">2.21 检查防火墙-iptables</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables --list
-<span style="color:#998;font-style:italic"># centos</span>
-cat /etc/sysconfig/iptables-config
-<span style="color:#998;font-style:italic"># ubuntu没有具体的规则文件，保存在内存中</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>iptables --list
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># centos</span>
+</span></span><span style="display:flex;"><span>cat /etc/sysconfig/iptables-config
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># ubuntu没有具体的规则文件，保存在内存中</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>清理异常的规则</p>
 <h3 id="222-检查别名">2.22 检查别名</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0086b3">alias</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#6639ba">alias</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>清理异常的别名</p>
 <h2 id="3加固">3、加固</h2>
 <p>这里列举下部分比较容易的加固方式</p>
 <h3 id="31-条件提前做md5sum值">3.1 条件提前做md5sum值</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">find / -user root -perm -2000 -print | xargs md5sum &gt; 1.log
-find / -user root -perm -4000 -print | xargs md5sum &gt; 2.log
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>find / -user root -perm -2000 -print <span style="color:#1f2328">|</span> xargs md5sum &gt; 1.log
+</span></span><span style="display:flex;"><span>find / -user root -perm -4000 -print <span style="color:#1f2328">|</span> xargs md5sum &gt; 2.log
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>提前把关键文件的md5值搜集，后续可以比对</p>
 <h3 id="32-增加history的记录条数和详细信息">3.2 增加history的记录条数和详细信息</h3>
 <p>保存1W条history</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#008080">HISTFILESIZE</span><span style="color:#000;font-weight:bold">=</span><span style="color:#099">2000</span> <span style="color:#998;font-style:italic">#设置保存历史命令的文件大小</span>
-<span style="color:#008080">HISTSIZE</span><span style="color:#000;font-weight:bold">=</span><span style="color:#099">10000</span>    <span style="color:#998;font-style:italic">#保存历史命令条数</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#953800">HISTFILESIZE</span><span style="color:#0550ae">=</span><span style="color:#0550ae">2000</span> <span style="color:#57606a">#设置保存历史命令的文件大小</span>
+</span></span><span style="display:flex;"><span><span style="color:#953800">HISTSIZE</span><span style="color:#0550ae">=</span><span style="color:#0550ae">10000</span>    <span style="color:#57606a">#保存历史命令条数</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>history记录详细信息</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic">###### 加固历史命令显示 #########</span>
-<span style="color:#008080">USER_IP</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">`</span>who -u am i 2&gt;/dev/null | awk <span style="color:#d14">&#39;{print $NF}&#39;</span> | sed -e <span style="color:#d14">&#39;s/[()]//g&#39;</span><span style="color:#d14">`</span>
-<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">[</span> <span style="color:#d14">&#34;</span><span style="color:#008080">$USER_IP</span><span style="color:#d14">&#34;</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;&#34;</span> <span style="color:#000;font-weight:bold">]</span>
-<span style="color:#000;font-weight:bold">then</span>
-<span style="color:#008080">USER_IP</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">`</span>hostname<span style="color:#d14">`</span>
-<span style="color:#000;font-weight:bold">fi</span>
-<span style="color:#0086b3">export</span> <span style="color:#008080">HISTTIMEFORMAT</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;%F %T </span><span style="color:#008080">$USER_IP</span><span style="color:#d14"> `whoami` &#34;</span>
-<span style="color:#0086b3">shopt</span> -s histappend
-<span style="color:#0086b3">export</span> <span style="color:#008080">PROMPT_COMMAND</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;history -a&#34;</span>
-<span style="color:#998;font-style:italic">###### 加固历史命令显示 #########</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a">###### 加固历史命令显示 #########</span>
+</span></span><span style="display:flex;"><span><span style="color:#953800">USER_IP</span><span style="color:#0550ae">=</span><span style="color:#0a3069">`</span>who -u am i 2&gt;/dev/null <span style="color:#1f2328">|</span> awk <span style="color:#0a3069">&#39;{print $NF}&#39;</span> <span style="color:#1f2328">|</span> sed -e <span style="color:#0a3069">&#39;s/[()]//g&#39;</span><span style="color:#0a3069">`</span>
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">if</span> <span style="color:#0550ae">[</span> <span style="color:#0a3069">&#34;</span><span style="color:#953800">$USER_IP</span><span style="color:#0a3069">&#34;</span> <span style="color:#0550ae">=</span> <span style="color:#0a3069">&#34;&#34;</span> <span style="color:#0550ae">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">then</span>
+</span></span><span style="display:flex;"><span><span style="color:#953800">USER_IP</span><span style="color:#0550ae">=</span><span style="color:#0a3069">`</span>hostname<span style="color:#0a3069">`</span>
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">fi</span>
+</span></span><span style="display:flex;"><span><span style="color:#6639ba">export</span> <span style="color:#953800">HISTTIMEFORMAT</span><span style="color:#0550ae">=</span><span style="color:#0a3069">&#34;%F %T </span><span style="color:#953800">$USER_IP</span><span style="color:#0a3069"> `whoami` &#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6639ba">shopt</span> -s histappend
+</span></span><span style="display:flex;"><span><span style="color:#6639ba">export</span> <span style="color:#953800">PROMPT_COMMAND</span><span style="color:#0550ae">=</span><span style="color:#0a3069">&#34;history -a&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">###### 加固历史命令显示 #########</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="4挖矿病毒的参考">4、挖矿病毒的参考</h2>
 <p>因为我发觉的2次挖矿病毒跟下面的部分表相很像但是又不完全一样，可能是变种或者改进了<br>
@@ -1065,6 +1065,7 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
 
     <script src='/js/asciinema-player.js'></script>
 
+
                 </div>
 
                 <div id="secondary">
@@ -1080,6 +1081,10 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <section class="widget">
         <h3 class="widget-title">最近文章</h3>
 <ul class="widget-list">
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-10-docker_images/" title="日常研究备用的一些镜像记录" target="_blank">日常研究备用的一些镜像记录</a>
+    </li>
     
     <li>
         <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
@@ -1117,10 +1122,6 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
         <a href="https://anTtutu.github.io/post/2022-12-26-covid-19/" title="羊了" target="_blank">羊了</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-12-19-git_delete_history/" title="git删除历史提交记录" target="_blank">git删除历史提交记录</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -1130,225 +1131,229 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://anTtutu.github.io/categories/about/">about (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/android/">android (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/app/">app (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/app/">App (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/aria2/">aria2 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/aria2/">Aria2 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/arm64/">Arm64 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/arthas/">arthas (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/arthas/">Arthas (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/awr/">Awr (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">Backend_execute (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/backup/">Backup (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/blog/">Blog (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/bug/">Bug (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/build/">build (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/build/">Build (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cache/">cache (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cache/">Cache (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/caffeine/">caffeine (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/caffeine/">Caffeine (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/captcha/">captcha (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/captcha/">Captcha (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/check/">check (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/check/">Check (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/claude-code/">claude code (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/claude-code/">Claude Code (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/clean/">Clean (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cli/">cli (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cli/">Cli (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cluster/">Cluster (4)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/covid-19/">covid-19 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/covid-19/">Covid-19 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cve/">Cve (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cygwin/">Cygwin (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">Dataguard (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/db/">db (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/db/">Db (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">Deepfacelab (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/devops/">devops (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/docker/">docker (6)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/docker/">Docker (7)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dockerfile/">dockerfile (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dockerfile/">Dockerfile (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dos/">Dos (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/drawio/">drawio (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/drawio/">Drawio (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dump/">Dump (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">Eclipse (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/explain/">Explain (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/faker/">faker (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/faker/">Faker (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/gcc/">gcc (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/gcc/">Gcc (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/git/">git (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/git/">Git (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/github/">github (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/github/">Github (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/gitment/">Gitment (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">Gitpages (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/go/">go (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/go/">Go (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/h2/">H2 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/h5/">H5 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/ha/">Ha (4)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/http/">Http (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/hugo/">Hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/id/">id (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/id/">Id (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/idea/">idea (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/idea/">Idea (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/images/">images (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/image/">Image (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/images/">Images (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">Java (24)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jenkins/">jenkins (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">Jekyll (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jenkins/">Jenkins (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">Jrebel (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jsr/">jsr (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/js/">Js (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jvm/">jvm (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jsr/">Jsr (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/k8s/">K8s (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/kafka/">Kafka (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (22)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/kali/">Kali (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/kenlm/">Kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (22)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/lombok/">lombok (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/log/">Log (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mac/">mac (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/log4j/">Log4j (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/matplotlib/">matplotlib (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/lombok/">Lombok (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/maven/">maven (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mac/">Mac (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mcp/">mcp (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/matplotlib/">Matplotlib (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mine/">mine (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/maven/">Maven (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mcp/">Mcp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mvnd/">mvnd (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mine/">Mine (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mysql/">mysql (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mongodb/">Mongodb (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/nginx/">nginx (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mvnd/">Mvnd (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/nginx/">Nginx (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/nmap/">Nmap (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/oom/">Oom (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/oss/">oss (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/oracle/">Oracle (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/package/">package (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/orangePi/">OrangePi (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/pages/">pages (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/oss/">Oss (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/pandas/">pandas (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/package/">Package (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/pg/">pg (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/pages/">Pages (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/pandas/">Pandas (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/postgresql/">postgresql (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/pg/">Pg (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">python (9)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/port/">Port (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/postgresql/">Postgresql (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/redis/">redis (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">Python (9)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/rec/">Rec (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/safe/">safe (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/sdk/">sdk (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/regexp/">Regexp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/shell/">shell (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/safe/">Safe (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/skill/">skill (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/sdk/">Sdk (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/skill/">Skill (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/split/">Split (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/spy/">spy (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (4)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/ssd/">ssd (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/spy/">Spy (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/tcp/">tcp (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/sqlmap/">Sqlmap (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/termux/">termux (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/ssd/">Ssd (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/tcp/">Tcp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/testing/">testing (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/termux/">Termux (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/test/">Test (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/testing/">Testing (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/virus/">virus (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (7)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/virus/">Virus (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">Vxvm (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/win10/">Win10 (6)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/zk/">zk (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">Xrebel (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/zookeeper/">zookeeper (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/ynote/">Ynote (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zk/">Zk (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zookeeper/">Zookeeper (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
     
@@ -1361,135 +1366,135 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
-    <a href="https://anTtutu.github.io/tags/about/">about</a>
+    <a href="https://anTtutu.github.io/tags/about/">About</a>
     
-    <a href="https://anTtutu.github.io/tags/android/">android</a>
+    <a href="https://anTtutu.github.io/tags/android/">Android</a>
     
-    <a href="https://anTtutu.github.io/tags/app/">app</a>
+    <a href="https://anTtutu.github.io/tags/app/">App</a>
     
-    <a href="https://anTtutu.github.io/tags/aria2/">aria2</a>
+    <a href="https://anTtutu.github.io/tags/aria2/">Aria2</a>
     
-    <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
+    <a href="https://anTtutu.github.io/tags/arm64/">Arm64</a>
     
-    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    <a href="https://anTtutu.github.io/tags/awr/">Awr</a>
     
-    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    <a href="https://anTtutu.github.io/tags/backup/">Backup</a>
     
-    <a href="https://anTtutu.github.io/tags/blog/">blog</a>
+    <a href="https://anTtutu.github.io/tags/blog/">Blog</a>
     
-    <a href="https://anTtutu.github.io/tags/bug/">bug</a>
+    <a href="https://anTtutu.github.io/tags/bug/">Bug</a>
     
-    <a href="https://anTtutu.github.io/tags/build/">build</a>
+    <a href="https://anTtutu.github.io/tags/build/">Build</a>
     
-    <a href="https://anTtutu.github.io/tags/captcha/">captcha</a>
+    <a href="https://anTtutu.github.io/tags/captcha/">Captcha</a>
     
-    <a href="https://anTtutu.github.io/tags/check/">check</a>
+    <a href="https://anTtutu.github.io/tags/check/">Check</a>
     
-    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    <a href="https://anTtutu.github.io/tags/cluster/">Cluster</a>
     
-    <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    <a href="https://anTtutu.github.io/tags/cygwin/">Cygwin</a>
     
-    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
+    <a href="https://anTtutu.github.io/tags/dataguard/">Dataguard</a>
     
-    <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
+    <a href="https://anTtutu.github.io/tags/deepfacelab/">Deepfacelab</a>
     
-    <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    <a href="https://anTtutu.github.io/tags/dos/">Dos</a>
     
-    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
+    <a href="https://anTtutu.github.io/tags/eclipse/">Eclipse</a>
     
-    <a href="https://anTtutu.github.io/tags/explain/">explain</a>
+    <a href="https://anTtutu.github.io/tags/explain/">Explain</a>
     
-    <a href="https://anTtutu.github.io/tags/gcc/">gcc</a>
+    <a href="https://anTtutu.github.io/tags/gcc/">Gcc</a>
     
-    <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
+    <a href="https://anTtutu.github.io/tags/gitment/">Gitment</a>
     
-    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    <a href="https://anTtutu.github.io/tags/gitpages/">Gitpages</a>
     
-    <a href="https://anTtutu.github.io/tags/go/">go</a>
+    <a href="https://anTtutu.github.io/tags/go/">Go</a>
     
-    <a href="https://anTtutu.github.io/tags/h2/">h2</a>
+    <a href="https://anTtutu.github.io/tags/h2/">H2</a>
     
-    <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    <a href="https://anTtutu.github.io/tags/h5/">H5</a>
     
-    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
+    <a href="https://anTtutu.github.io/tags/ha/">Ha</a>
     
-    <a href="https://anTtutu.github.io/tags/http/">http</a>
+    <a href="https://anTtutu.github.io/tags/http/">Http</a>
     
-    <a href="https://anTtutu.github.io/tags/hugo/">hugo</a>
+    <a href="https://anTtutu.github.io/tags/hugo/">Hugo</a>
     
-    <a href="https://anTtutu.github.io/tags/java/">java</a>
+    <a href="https://anTtutu.github.io/tags/java/">Java</a>
     
-    <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
+    <a href="https://anTtutu.github.io/tags/jekyll/">Jekyll</a>
     
-    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    <a href="https://anTtutu.github.io/tags/jrebel/">Jrebel</a>
     
-    <a href="https://anTtutu.github.io/tags/js/">js</a>
+    <a href="https://anTtutu.github.io/tags/js/">Js</a>
     
-    <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
+    <a href="https://anTtutu.github.io/tags/jsr/">Jsr</a>
     
-    <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    <a href="https://anTtutu.github.io/tags/kafka/">Kafka</a>
     
-    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
+    <a href="https://anTtutu.github.io/tags/kali/">Kali</a>
     
-    <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
+    <a href="https://anTtutu.github.io/tags/kenlm/">Kenlm</a>
     
-    <a href="https://anTtutu.github.io/tags/linux/">linux</a>
+    <a href="https://anTtutu.github.io/tags/linux/">Linux</a>
     
-    <a href="https://anTtutu.github.io/tags/log4j/">log4j</a>
+    <a href="https://anTtutu.github.io/tags/log4j/">Log4j</a>
     
-    <a href="https://anTtutu.github.io/tags/mac/">mac</a>
+    <a href="https://anTtutu.github.io/tags/mac/">Mac</a>
     
-    <a href="https://anTtutu.github.io/tags/mine/">mine</a>
+    <a href="https://anTtutu.github.io/tags/mine/">Mine</a>
     
-    <a href="https://anTtutu.github.io/tags/mongodb/">mongodb</a>
+    <a href="https://anTtutu.github.io/tags/mongodb/">Mongodb</a>
     
-    <a href="https://anTtutu.github.io/tags/mysql/">mysql</a>
+    <a href="https://anTtutu.github.io/tags/mysql/">Mysql</a>
     
-    <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
+    <a href="https://anTtutu.github.io/tags/nginx/">Nginx</a>
     
-    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    <a href="https://anTtutu.github.io/tags/oom/">Oom</a>
     
-    <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
+    <a href="https://anTtutu.github.io/tags/oracle/">Oracle</a>
     
-    <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
+    <a href="https://anTtutu.github.io/tags/orangePi/">OrangePi</a>
     
-    <a href="https://anTtutu.github.io/tags/python/">python</a>
+    <a href="https://anTtutu.github.io/tags/python/">Python</a>
     
-    <a href="https://anTtutu.github.io/tags/rec/">rec</a>
+    <a href="https://anTtutu.github.io/tags/rec/">Rec</a>
     
-    <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    <a href="https://anTtutu.github.io/tags/redis/">Redis</a>
     
-    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
+    <a href="https://anTtutu.github.io/tags/safe/">Safe</a>
     
-    <a href="https://anTtutu.github.io/tags/shell/">shell</a>
+    <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
     
-    <a href="https://anTtutu.github.io/tags/springboot/">springboot</a>
+    <a href="https://anTtutu.github.io/tags/springboot/">Springboot</a>
     
-    <a href="https://anTtutu.github.io/tags/sqlmap/">sqlmap</a>
+    <a href="https://anTtutu.github.io/tags/sqlmap/">Sqlmap</a>
     
-    <a href="https://anTtutu.github.io/tags/ssd/">ssd</a>
+    <a href="https://anTtutu.github.io/tags/ssd/">Ssd</a>
     
-    <a href="https://anTtutu.github.io/tags/tcp/">tcp</a>
+    <a href="https://anTtutu.github.io/tags/tcp/">Tcp</a>
     
-    <a href="https://anTtutu.github.io/tags/termux/">termux</a>
+    <a href="https://anTtutu.github.io/tags/termux/">Termux</a>
     
-    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
     
-    <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
+    <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
     
-    <a href="https://anTtutu.github.io/tags/virus/">virus</a>
+    <a href="https://anTtutu.github.io/tags/virus/">Virus</a>
     
-    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    <a href="https://anTtutu.github.io/tags/vxvm/">Vxvm</a>
     
-    <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    <a href="https://anTtutu.github.io/tags/win10/">Win10</a>
     
-    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
+    <a href="https://anTtutu.github.io/tags/xrebel/">Xrebel</a>
     
-    <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
+    <a href="https://anTtutu.github.io/tags/ynote/">Ynote</a>
     
-    <a href="https://anTtutu.github.io/tags/zk/">zk</a>
+    <a href="https://anTtutu.github.io/tags/zk/">Zk</a>
     
-    <a href="https://anTtutu.github.io/tags/zookeeper/">zookeeper</a>
+    <a href="https://anTtutu.github.io/tags/zookeeper/">Zookeeper</a>
     
     <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
     

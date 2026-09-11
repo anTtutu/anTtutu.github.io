@@ -223,147 +223,317 @@
 <p>Log4j 1.x的知识点回顾，2015年8月5日，Apache的Logging Services项目管理委员会宣布Log4j 1.x已经结束生命周期，建议升级 Log4j 2.x。</p>
 <h2 id="1-配置文件">1. 配置文件</h2>
 <p>Log4J配置文件的基本格式如下：</p>
-<pre tabindex="0"><code class="language-properties" data-lang="properties">#配置根Logger
-log4j.rootLogger  =   [ level ]   ,  appenderName1 ,  appenderName2 ,  …
-
-#配置日志信息输出目的地Appender
-log4j.appender.appenderName  =  fully.qualified.name.of.appender.class 
-　　log4j.appender.appenderName.option1  =  value1 
-　　… 
-　　log4j.appender.appenderName.optionN  =  valueN 
-
-#配置日志信息的格式（布局）
-log4j.appender.appenderName.layout  =  fully.qualified.name.of.layout.class 
-　　log4j.appender.appenderName.layout.option1  =  value1 
-　　… 
-　　log4j.appender.appenderName.layout.optionN  =  valueN 
-</code></pre><h2 id="2日志输出级别">2、日志输出级别</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#57606a">#配置根Logger</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.rootLogger</span>  <span style="color:#0550ae">=</span>   <span style="color:#0a3069">[ level ]   ,  appenderName1 ,  appenderName2 ,  …</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">#配置日志信息输出目的地Appender</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.appenderName</span>  <span style="color:#0550ae">=</span>  <span style="color:#0a3069">fully.qualified.name.of.appender.class </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　log4j.appender.appenderName.option1  =  value1 </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　… </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　log4j.appender.appenderName.optionN  =  valueN </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">#配置日志信息的格式（布局）</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.appenderName.layout</span>  <span style="color:#0550ae">=</span>  <span style="color:#0a3069">fully.qualified.name.of.layout.class </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　log4j.appender.appenderName.layout.option1  =  value1 </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　… </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　log4j.appender.appenderName.layout.optionN  =  valueN </span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2日志输出级别">2、日志输出级别</h2>
 <p>其中 [level] 共有5级，如下：</p>
-<pre tabindex="0"><code class="language-properties" data-lang="properties">FATAL       0  
-ERROR       3  
-WARN        4  
-INFO        6  
-DEBUG       7 
-</code></pre><h2 id="3appender">3、Appender</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#1f2328">FATAL</span>       <span style="color:#0a3069">0  </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">ERROR</span>       <span style="color:#0a3069">3  </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">WARN</span>        <span style="color:#0a3069">4  </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">INFO</span>        <span style="color:#0a3069">6  </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">DEBUG</span>       <span style="color:#0a3069">7 </span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3appender">3、Appender</h2>
 <p>为日志输出目的地，Log4j提供的appender有以下几种：</p>
-<pre tabindex="0"><code class="language-properties" data-lang="properties">org.apache.log4j.ConsoleAppender（控制台），
-org.apache.log4j.FileAppender（文件），
-org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件），
-org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件），
-org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）
-</code></pre><h2 id="4layout">4、Layout</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">org.apache.log4j.ConsoleAppender（控制台），</span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">org.apache.log4j.FileAppender（文件），</span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件），</span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件），</span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4layout">4、Layout</h2>
 <p>日志输出格式，Log4j提供的layout有以下几种：</p>
-<pre tabindex="0"><code class="language-properties" data-lang="properties">org.apache.log4j.HTMLLayout（以HTML表格形式布局），
-org.apache.log4j.PatternLayout（可以灵活地指定布局模式），
-org.apache.log4j.SimpleLayout（包含日志信息的级别和信息字符串），
-org.apache.log4j.TTCCLayout（包含日志产生的时间、线程、类别等等信息）
-</code></pre><h2 id="5打印参数">5、打印参数</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">org.apache.log4j.HTMLLayout（以HTML表格形式布局），</span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">org.apache.log4j.PatternLayout（可以灵活地指定布局模式），</span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">org.apache.log4j.SimpleLayout（包含日志信息的级别和信息字符串），</span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">org.apache.log4j.TTCCLayout（包含日志产生的时间、线程、类别等等信息）</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="5打印参数">5、打印参数</h2>
 <p>Log4J采用类似C语言中的printf函数的打印格式格式化日志信息，如下:</p>
-<pre tabindex="0"><code class="language-properties" data-lang="properties">%m 输出代码中指定的消息
-%p 输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL 
-%r 输出自应用启动到输出该log信息耗费的毫秒数 
-%c 输出所属的类目，通常就是所在类的全名 
-%t 输出产生该日志事件的线程名 
-%n 输出一个回车换行符，Windows平台为“/r/n”，Unix平台为“/n” 
-%d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyyyMMdd HH:mm:ss,SSS}，输出类似：2002年10月18日 22:10:28,921  
-%l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java:10) 
-%x 输出和当前线程相关联的NDC(嵌套诊断环境),尤其用到像java servlets这样的多客户多线程的应用中。
-%% 输出一个&quot;%&quot;字符
-%F 输出日志消息产生时所在的文件名称
-%L 输出代码中的行号
-</code></pre><h2 id="6格式">6、格式</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#1f2328">%m</span> <span style="color:#0a3069">输出代码中指定的消息</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">%p</span> <span style="color:#0a3069">输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">%r</span> <span style="color:#0a3069">输出自应用启动到输出该log信息耗费的毫秒数 </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">%c</span> <span style="color:#0a3069">输出所属的类目，通常就是所在类的全名 </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">%t</span> <span style="color:#0a3069">输出产生该日志事件的线程名 </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">%n</span> <span style="color:#0a3069">输出一个回车换行符，Windows平台为“/r/n”，Unix平台为“/n” </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">%d</span> <span style="color:#0a3069">输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyyyMMdd HH:mm:ss,SSS}，输出类似：2002年10月18日 22:10:28,921  </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">%l</span> <span style="color:#0a3069">输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java:10) </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">%x</span> <span style="color:#0a3069">输出和当前线程相关联的NDC(嵌套诊断环境),尤其用到像java servlets这样的多客户多线程的应用中。</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">%%</span> <span style="color:#0a3069">输出一个&#34;%&#34;字符</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">%F</span> <span style="color:#0a3069">输出日志消息产生时所在的文件名称</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">%L</span> <span style="color:#0a3069">输出代码中的行号</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="6格式">6、格式</h2>
 <p>可以在%与模式字符之间加上修饰符来控制其最小宽度、最大宽度、和文本的对齐方式。如：</p>
-<pre tabindex="0"><code class="language-properties" data-lang="properties">1)%20c：指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，默认的情况下右对齐。
-2)%-20c:指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，&quot;-&quot;号指定左对齐。
-3)%.30c:指定输出category的名称，最大的宽度是30，如果category的名称大于30的话，就会将左边多出的字符截掉，但小于30的话也不会有空格。
-4)%20.30c:如果category的名称小于20就补空格，并且右对齐，如果其名称长于30字符，就从左边较远输出的字符截掉。
-</code></pre><h2 id="7完整的demo">7、完整的demo</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">1)%20c：指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，默认的情况下右对齐。</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">2)%-20c</span><span style="color:#0550ae">:</span><span style="color:#0a3069">指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，&#34;-&#34;号指定左对齐。</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">3)%.30c</span><span style="color:#0550ae">:</span><span style="color:#0a3069">指定输出category的名称，最大的宽度是30，如果category的名称大于30的话，就会将左边多出的字符截掉，但小于30的话也不会有空格。</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">4)%20.30c</span><span style="color:#0550ae">:</span><span style="color:#0a3069">如果category的名称小于20就补空格，并且右对齐，如果其名称长于30字符，就从左边较远输出的字符截掉。</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="7完整的demo">7、完整的demo</h2>
 <p>下面给出的Log4J配置文件实现了输出到控制台，文件，回滚文件，发送日志邮件，输出到数据库日志表，自定义标签等全套功能。</p>
-<pre tabindex="0"><code class="language-properties" data-lang="properties">log4j.rootLogger=DEBUG,CONSOLE,A1,im   
-#DEBUG,CONSOLE,FILE,ROLLING_FILE,MAIL,DATABASE  
-log4j.addivity.org.apache=true  
-###################   
-# Console Appender   
-###################   
-log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender   
-log4j.appender.Threshold=DEBUG   
-log4j.appender.CONSOLE.Target=System.out   
-log4j.appender.CONSOLE.layout=org.apache.log4j.PatternLayout   
-log4j.appender.CONSOLE.layout.ConversionPattern=[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n   
-#log4j.appender.CONSOLE.layout.ConversionPattern=[start]%d{DATE}[DATE]%n%p[PRIORITY]%n%x[NDC]%n%t[THREAD] n%c[CATEGORY]%n%m[MESSAGE]%n%n  
-#####################   
-# File Appender   
-#####################   
-log4j.appender.FILE=org.apache.log4j.FileAppender   
-log4j.appender.FILE.File=file.log   
-log4j.appender.FILE.Append=false   
-log4j.appender.FILE.layout=org.apache.log4j.PatternLayout   
-log4j.appender.FILE.layout.ConversionPattern=[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n   
-# Use this layout for LogFactor 5 analysis  
-########################   
-# Rolling File   
-########################   
-log4j.appender.ROLLING_FILE=org.apache.log4j.RollingFileAppender   
-log4j.appender.ROLLING_FILE.Threshold=ERROR   
-log4j.appender.ROLLING_FILE.File=rolling.log   
-log4j.appender.ROLLING_FILE.Append=true   
-log4j.appender.ROLLING_FILE.MaxFileSize=10KB   
-log4j.appender.ROLLING_FILE.MaxBackupIndex=1   
-log4j.appender.ROLLING_FILE.layout=org.apache.log4j.PatternLayout   
-log4j.appender.ROLLING_FILE.layout.ConversionPattern=[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n  
-####################   
-# Socket Appender   
-####################   
-log4j.appender.SOCKET=org.apache.log4j.RollingFileAppender   
-log4j.appender.SOCKET.RemoteHost=localhost   
-log4j.appender.SOCKET.Port=5001   
-log4j.appender.SOCKET.LocationInfo=true   
-# Set up for Log Facter 5   
-log4j.appender.SOCKET.layout=org.apache.log4j.PatternLayout   
-log4j.appender.SOCET.layout.ConversionPattern=[start]%d{DATE}[DATE]%n%p[PRIORITY]%n%x[NDC]%n%t[THREAD]%n%c[CATEGORY]%n%m[MESSAGE]%n%n  
-########################   
-# Log Factor 5 Appender   
-########################   
-log4j.appender.LF5_APPENDER=org.apache.log4j.lf5.LF5Appender   
-log4j.appender.LF5_APPENDER.MaxNumberOfRecords=2000  
-########################   
-# SMTP Appender   
-#######################   
-log4j.appender.MAIL=org.apache.log4j.net.SMTPAppender   
-log4j.appender.MAIL.Threshold=FATAL   
-log4j.appender.MAIL.BufferSize=10   
-log4j.appender.MAIL.From=testl@sohu.com  
-log4j.appender.MAIL.SMTPHost=smtp.sohu.com   
-log4j.appender.MAIL.Subject=Log4J Message   
-log4j.appender.MAIL.To=test@sohu.com  
-log4j.appender.MAIL.layout=org.apache.log4j.PatternLayout   
-log4j.appender.MAIL.layout.ConversionPattern=[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n  
-########################   
-# JDBC Appender   
-#######################   
-log4j.appender.DATABASE=org.apache.log4j.jdbc.JDBCAppender   
-log4j.appender.DATABASE.URL=jdbc:mysql://localhost:3306/test   
-log4j.appender.DATABASE.driver=com.mysql.jdbc.Driver   
-log4j.appender.DATABASE.user=root   
-log4j.appender.DATABASE.password=   
-log4j.appender.DATABASE.sql=INSERT INTO LOG4J (Message) VALUES ('[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n')   
-log4j.appender.DATABASE.layout=org.apache.log4j.PatternLayout   
-log4j.appender.DATABASE.layout.ConversionPattern=[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n  
-log4j.appender.A1=org.apache.log4j.DailyRollingFileAppender   
-log4j.appender.A1.File=SampleMessages.log4j   
-log4j.appender.A1.DatePattern=yyyyMMdd-HH'.log4j'   
-log4j.appender.A1.layout=org.apache.log4j.xml.XMLLayout  
-###################   
-#自定义Appender   
-###################   
-log4j.appender.im = net.cybercorlin.util.logger.appender.IMAppender  
-log4j.appender.im.host = mail.cybercorlin.net   
-log4j.appender.im.username = username   
-log4j.appender.im.password = password   
-log4j.appender.im.recipient = corlin@yeqiangwei.com  
-log4j.appender.im.layout=org.apache.log4j.PatternLayout   
-log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n
-</code></pre>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">84
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#1f2328">log4j.rootLogger</span><span style="color:#0550ae">=</span><span style="color:#0a3069">DEBUG,CONSOLE,A1,im   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">#DEBUG,CONSOLE,FILE,ROLLING_FILE,MAIL,DATABASE  </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.addivity.org.apache</span><span style="color:#0550ae">=</span><span style="color:#0a3069">true  </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">###################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># Console Appender   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">###################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.CONSOLE</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.ConsoleAppender   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.Threshold</span><span style="color:#0550ae">=</span><span style="color:#0a3069">DEBUG   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.CONSOLE.Target</span><span style="color:#0550ae">=</span><span style="color:#0a3069">System.out   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.CONSOLE.layout</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.PatternLayout   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.CONSOLE.layout.ConversionPattern</span><span style="color:#0550ae">=</span><span style="color:#0a3069">[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">#log4j.appender.CONSOLE.layout.ConversionPattern=[start]%d{DATE}[DATE]%n%p[PRIORITY]%n%x[NDC]%n%t[THREAD] n%c[CATEGORY]%n%m[MESSAGE]%n%n  </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">#####################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># File Appender   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">#####################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.FILE</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.FileAppender   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.FILE.File</span><span style="color:#0550ae">=</span><span style="color:#0a3069">file.log   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.FILE.Append</span><span style="color:#0550ae">=</span><span style="color:#0a3069">false   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.FILE.layout</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.PatternLayout   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.FILE.layout.ConversionPattern</span><span style="color:#0550ae">=</span><span style="color:#0a3069">[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># Use this layout for LogFactor 5 analysis  </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">########################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># Rolling File   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">########################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.ROLLING_FILE</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.RollingFileAppender   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.ROLLING_FILE.Threshold</span><span style="color:#0550ae">=</span><span style="color:#0a3069">ERROR   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.ROLLING_FILE.File</span><span style="color:#0550ae">=</span><span style="color:#0a3069">rolling.log   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.ROLLING_FILE.Append</span><span style="color:#0550ae">=</span><span style="color:#0a3069">true   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.ROLLING_FILE.MaxFileSize</span><span style="color:#0550ae">=</span><span style="color:#0a3069">10KB   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.ROLLING_FILE.MaxBackupIndex</span><span style="color:#0550ae">=</span><span style="color:#0a3069">1   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.ROLLING_FILE.layout</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.PatternLayout   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.ROLLING_FILE.layout.ConversionPattern</span><span style="color:#0550ae">=</span><span style="color:#0a3069">[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n  </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">####################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># Socket Appender   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">####################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.SOCKET</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.RollingFileAppender   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.SOCKET.RemoteHost</span><span style="color:#0550ae">=</span><span style="color:#0a3069">localhost   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.SOCKET.Port</span><span style="color:#0550ae">=</span><span style="color:#0a3069">5001   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.SOCKET.LocationInfo</span><span style="color:#0550ae">=</span><span style="color:#0a3069">true   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># Set up for Log Facter 5   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.SOCKET.layout</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.PatternLayout   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.SOCET.layout.ConversionPattern</span><span style="color:#0550ae">=</span><span style="color:#0a3069">[start]%d{DATE}[DATE]%n%p[PRIORITY]%n%x[NDC]%n%t[THREAD]%n%c[CATEGORY]%n%m[MESSAGE]%n%n  </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">########################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># Log Factor 5 Appender   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">########################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.LF5_APPENDER</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.lf5.LF5Appender   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.LF5_APPENDER.MaxNumberOfRecords</span><span style="color:#0550ae">=</span><span style="color:#0a3069">2000  </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">########################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># SMTP Appender   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">#######################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.MAIL</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.net.SMTPAppender   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.MAIL.Threshold</span><span style="color:#0550ae">=</span><span style="color:#0a3069">FATAL   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.MAIL.BufferSize</span><span style="color:#0550ae">=</span><span style="color:#0a3069">10   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.MAIL.From</span><span style="color:#0550ae">=</span><span style="color:#0a3069">testl@sohu.com  </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.MAIL.SMTPHost</span><span style="color:#0550ae">=</span><span style="color:#0a3069">smtp.sohu.com   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.MAIL.Subject</span><span style="color:#0550ae">=</span><span style="color:#0a3069">Log4J Message   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.MAIL.To</span><span style="color:#0550ae">=</span><span style="color:#0a3069">test@sohu.com  </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.MAIL.layout</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.PatternLayout   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.MAIL.layout.ConversionPattern</span><span style="color:#0550ae">=</span><span style="color:#0a3069">[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n  </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">########################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># JDBC Appender   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">#######################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.DATABASE</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.jdbc.JDBCAppender   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.DATABASE.URL</span><span style="color:#0550ae">=</span><span style="color:#0a3069">jdbc:mysql://localhost:3306/test   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.DATABASE.driver</span><span style="color:#0550ae">=</span><span style="color:#0a3069">com.mysql.jdbc.Driver   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.DATABASE.user</span><span style="color:#0550ae">=</span><span style="color:#0a3069">root   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.DATABASE.password</span><span style="color:#0550ae">=</span>   
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.DATABASE.sql</span><span style="color:#0550ae">=</span><span style="color:#0a3069">INSERT INTO LOG4J (Message) VALUES (&#39;[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n&#39;)   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.DATABASE.layout</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.PatternLayout   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.DATABASE.layout.ConversionPattern</span><span style="color:#0550ae">=</span><span style="color:#0a3069">[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n  </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.A1</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.DailyRollingFileAppender   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.A1.File</span><span style="color:#0550ae">=</span><span style="color:#0a3069">SampleMessages.log4j   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.A1.DatePattern</span><span style="color:#0550ae">=</span><span style="color:#0a3069">yyyyMMdd-HH&#39;.log4j&#39;   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.A1.layout</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.xml.XMLLayout  </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">###################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">#自定义Appender   </span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">###################   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.im</span> <span style="color:#0550ae">=</span> <span style="color:#0a3069">net.cybercorlin.util.logger.appender.IMAppender  </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.im.host</span> <span style="color:#0550ae">=</span> <span style="color:#0a3069">mail.cybercorlin.net   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.im.username</span> <span style="color:#0550ae">=</span> <span style="color:#0a3069">username   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.im.password</span> <span style="color:#0550ae">=</span> <span style="color:#0a3069">password   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.im.recipient</span> <span style="color:#0550ae">=</span> <span style="color:#0a3069">corlin@yeqiangwei.com  </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.im.layout</span><span style="color:#0550ae">=</span><span style="color:#0a3069">org.apache.log4j.PatternLayout   </span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.im.layout.ConversionPattern</span> <span style="color:#0550ae">=</span><span style="color:#0a3069">[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
         </div>
 
         
@@ -389,10 +559,6 @@ log4j.appender.im.layout.ConversionPattern =[framework] %d - %c -%-4r [%t] %-5p 
         <li><a href="/post/2017-04-10-caeser/">利用网上的Caeser算法写了一个唯一id生成工具</a></li>
         
         <li><a href="/post/2017-03-09-java_captach/">Java高防OCR和机器人图形验证码</a></li>
-        
-        <li><a href="/post/2017-05-23-lvm_vxvm3/">VCS第七波-磁阵管理LVM和VxVM3-LVM</a></li>
-        
-        <li><a href="/post/2017-05-22-lvm_vxvm2/">VCS第六波-磁阵管理LVM和VxVM2-VxVM</a></li>
         
     </ul>
 </div>
@@ -544,6 +710,7 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
 
     <script src='/js/asciinema-player.js'></script>
 
+
                 </div>
 
                 <div id="secondary">
@@ -559,6 +726,10 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <section class="widget">
         <h3 class="widget-title">最近文章</h3>
 <ul class="widget-list">
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-10-docker_images/" title="日常研究备用的一些镜像记录" target="_blank">日常研究备用的一些镜像记录</a>
+    </li>
     
     <li>
         <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
@@ -596,10 +767,6 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
         <a href="https://anTtutu.github.io/post/2022-12-26-covid-19/" title="羊了" target="_blank">羊了</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-12-19-git_delete_history/" title="git删除历史提交记录" target="_blank">git删除历史提交记录</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -609,225 +776,229 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://anTtutu.github.io/categories/about/">about (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/android/">android (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/app/">app (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/app/">App (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/aria2/">aria2 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/aria2/">Aria2 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/arm64/">Arm64 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/arthas/">arthas (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/arthas/">Arthas (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/awr/">Awr (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">Backend_execute (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/backup/">Backup (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/blog/">Blog (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/bug/">Bug (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/build/">build (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/build/">Build (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cache/">cache (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cache/">Cache (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/caffeine/">caffeine (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/caffeine/">Caffeine (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/captcha/">captcha (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/captcha/">Captcha (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/check/">check (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/check/">Check (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/claude-code/">claude code (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/claude-code/">Claude Code (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/clean/">Clean (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cli/">cli (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cli/">Cli (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cluster/">Cluster (4)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/covid-19/">covid-19 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/covid-19/">Covid-19 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cve/">Cve (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cygwin/">Cygwin (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">Dataguard (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/db/">db (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/db/">Db (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">Deepfacelab (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/devops/">devops (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/docker/">docker (6)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/docker/">Docker (7)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dockerfile/">dockerfile (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dockerfile/">Dockerfile (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dos/">Dos (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/drawio/">drawio (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/drawio/">Drawio (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dump/">Dump (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">Eclipse (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/explain/">Explain (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/faker/">faker (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/faker/">Faker (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/gcc/">gcc (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/gcc/">Gcc (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/git/">git (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/git/">Git (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/github/">github (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/github/">Github (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/gitment/">Gitment (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">Gitpages (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/go/">go (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/go/">Go (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/h2/">H2 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/h5/">H5 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/ha/">Ha (4)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/http/">Http (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/hugo/">Hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/id/">id (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/id/">Id (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/idea/">idea (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/idea/">Idea (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/images/">images (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/image/">Image (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/images/">Images (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">Java (24)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jenkins/">jenkins (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">Jekyll (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jenkins/">Jenkins (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">Jrebel (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jsr/">jsr (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/js/">Js (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jvm/">jvm (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jsr/">Jsr (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/k8s/">K8s (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/kafka/">Kafka (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (22)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/kali/">Kali (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/kenlm/">Kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (22)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/lombok/">lombok (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/log/">Log (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mac/">mac (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/log4j/">Log4j (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/matplotlib/">matplotlib (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/lombok/">Lombok (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/maven/">maven (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mac/">Mac (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mcp/">mcp (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/matplotlib/">Matplotlib (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mine/">mine (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/maven/">Maven (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mcp/">Mcp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mvnd/">mvnd (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mine/">Mine (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mysql/">mysql (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mongodb/">Mongodb (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/nginx/">nginx (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mvnd/">Mvnd (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/nginx/">Nginx (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/nmap/">Nmap (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/oom/">Oom (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/oss/">oss (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/oracle/">Oracle (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/package/">package (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/orangePi/">OrangePi (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/pages/">pages (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/oss/">Oss (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/pandas/">pandas (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/package/">Package (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/pg/">pg (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/pages/">Pages (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/pandas/">Pandas (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/postgresql/">postgresql (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/pg/">Pg (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">python (9)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/port/">Port (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/postgresql/">Postgresql (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/redis/">redis (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">Python (9)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/rec/">Rec (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/safe/">safe (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/sdk/">sdk (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/regexp/">Regexp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/shell/">shell (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/safe/">Safe (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/skill/">skill (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/sdk/">Sdk (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/skill/">Skill (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/split/">Split (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/spy/">spy (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (4)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/ssd/">ssd (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/spy/">Spy (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/tcp/">tcp (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/sqlmap/">Sqlmap (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/termux/">termux (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/ssd/">Ssd (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/tcp/">Tcp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/testing/">testing (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/termux/">Termux (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/test/">Test (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/testing/">Testing (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/virus/">virus (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (7)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/virus/">Virus (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">Vxvm (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/win10/">Win10 (6)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/zk/">zk (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">Xrebel (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/zookeeper/">zookeeper (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/ynote/">Ynote (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zk/">Zk (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zookeeper/">Zookeeper (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
     
@@ -840,135 +1011,135 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
-    <a href="https://anTtutu.github.io/tags/about/">about</a>
+    <a href="https://anTtutu.github.io/tags/about/">About</a>
     
-    <a href="https://anTtutu.github.io/tags/android/">android</a>
+    <a href="https://anTtutu.github.io/tags/android/">Android</a>
     
-    <a href="https://anTtutu.github.io/tags/app/">app</a>
+    <a href="https://anTtutu.github.io/tags/app/">App</a>
     
-    <a href="https://anTtutu.github.io/tags/aria2/">aria2</a>
+    <a href="https://anTtutu.github.io/tags/aria2/">Aria2</a>
     
-    <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
+    <a href="https://anTtutu.github.io/tags/arm64/">Arm64</a>
     
-    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    <a href="https://anTtutu.github.io/tags/awr/">Awr</a>
     
-    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    <a href="https://anTtutu.github.io/tags/backup/">Backup</a>
     
-    <a href="https://anTtutu.github.io/tags/blog/">blog</a>
+    <a href="https://anTtutu.github.io/tags/blog/">Blog</a>
     
-    <a href="https://anTtutu.github.io/tags/bug/">bug</a>
+    <a href="https://anTtutu.github.io/tags/bug/">Bug</a>
     
-    <a href="https://anTtutu.github.io/tags/build/">build</a>
+    <a href="https://anTtutu.github.io/tags/build/">Build</a>
     
-    <a href="https://anTtutu.github.io/tags/captcha/">captcha</a>
+    <a href="https://anTtutu.github.io/tags/captcha/">Captcha</a>
     
-    <a href="https://anTtutu.github.io/tags/check/">check</a>
+    <a href="https://anTtutu.github.io/tags/check/">Check</a>
     
-    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    <a href="https://anTtutu.github.io/tags/cluster/">Cluster</a>
     
-    <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    <a href="https://anTtutu.github.io/tags/cygwin/">Cygwin</a>
     
-    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
+    <a href="https://anTtutu.github.io/tags/dataguard/">Dataguard</a>
     
-    <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
+    <a href="https://anTtutu.github.io/tags/deepfacelab/">Deepfacelab</a>
     
-    <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    <a href="https://anTtutu.github.io/tags/dos/">Dos</a>
     
-    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
+    <a href="https://anTtutu.github.io/tags/eclipse/">Eclipse</a>
     
-    <a href="https://anTtutu.github.io/tags/explain/">explain</a>
+    <a href="https://anTtutu.github.io/tags/explain/">Explain</a>
     
-    <a href="https://anTtutu.github.io/tags/gcc/">gcc</a>
+    <a href="https://anTtutu.github.io/tags/gcc/">Gcc</a>
     
-    <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
+    <a href="https://anTtutu.github.io/tags/gitment/">Gitment</a>
     
-    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    <a href="https://anTtutu.github.io/tags/gitpages/">Gitpages</a>
     
-    <a href="https://anTtutu.github.io/tags/go/">go</a>
+    <a href="https://anTtutu.github.io/tags/go/">Go</a>
     
-    <a href="https://anTtutu.github.io/tags/h2/">h2</a>
+    <a href="https://anTtutu.github.io/tags/h2/">H2</a>
     
-    <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    <a href="https://anTtutu.github.io/tags/h5/">H5</a>
     
-    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
+    <a href="https://anTtutu.github.io/tags/ha/">Ha</a>
     
-    <a href="https://anTtutu.github.io/tags/http/">http</a>
+    <a href="https://anTtutu.github.io/tags/http/">Http</a>
     
-    <a href="https://anTtutu.github.io/tags/hugo/">hugo</a>
+    <a href="https://anTtutu.github.io/tags/hugo/">Hugo</a>
     
-    <a href="https://anTtutu.github.io/tags/java/">java</a>
+    <a href="https://anTtutu.github.io/tags/java/">Java</a>
     
-    <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
+    <a href="https://anTtutu.github.io/tags/jekyll/">Jekyll</a>
     
-    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    <a href="https://anTtutu.github.io/tags/jrebel/">Jrebel</a>
     
-    <a href="https://anTtutu.github.io/tags/js/">js</a>
+    <a href="https://anTtutu.github.io/tags/js/">Js</a>
     
-    <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
+    <a href="https://anTtutu.github.io/tags/jsr/">Jsr</a>
     
-    <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    <a href="https://anTtutu.github.io/tags/kafka/">Kafka</a>
     
-    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
+    <a href="https://anTtutu.github.io/tags/kali/">Kali</a>
     
-    <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
+    <a href="https://anTtutu.github.io/tags/kenlm/">Kenlm</a>
     
-    <a href="https://anTtutu.github.io/tags/linux/">linux</a>
+    <a href="https://anTtutu.github.io/tags/linux/">Linux</a>
     
-    <a href="https://anTtutu.github.io/tags/log4j/">log4j</a>
+    <a href="https://anTtutu.github.io/tags/log4j/">Log4j</a>
     
-    <a href="https://anTtutu.github.io/tags/mac/">mac</a>
+    <a href="https://anTtutu.github.io/tags/mac/">Mac</a>
     
-    <a href="https://anTtutu.github.io/tags/mine/">mine</a>
+    <a href="https://anTtutu.github.io/tags/mine/">Mine</a>
     
-    <a href="https://anTtutu.github.io/tags/mongodb/">mongodb</a>
+    <a href="https://anTtutu.github.io/tags/mongodb/">Mongodb</a>
     
-    <a href="https://anTtutu.github.io/tags/mysql/">mysql</a>
+    <a href="https://anTtutu.github.io/tags/mysql/">Mysql</a>
     
-    <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
+    <a href="https://anTtutu.github.io/tags/nginx/">Nginx</a>
     
-    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    <a href="https://anTtutu.github.io/tags/oom/">Oom</a>
     
-    <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
+    <a href="https://anTtutu.github.io/tags/oracle/">Oracle</a>
     
-    <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
+    <a href="https://anTtutu.github.io/tags/orangePi/">OrangePi</a>
     
-    <a href="https://anTtutu.github.io/tags/python/">python</a>
+    <a href="https://anTtutu.github.io/tags/python/">Python</a>
     
-    <a href="https://anTtutu.github.io/tags/rec/">rec</a>
+    <a href="https://anTtutu.github.io/tags/rec/">Rec</a>
     
-    <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    <a href="https://anTtutu.github.io/tags/redis/">Redis</a>
     
-    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
+    <a href="https://anTtutu.github.io/tags/safe/">Safe</a>
     
-    <a href="https://anTtutu.github.io/tags/shell/">shell</a>
+    <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
     
-    <a href="https://anTtutu.github.io/tags/springboot/">springboot</a>
+    <a href="https://anTtutu.github.io/tags/springboot/">Springboot</a>
     
-    <a href="https://anTtutu.github.io/tags/sqlmap/">sqlmap</a>
+    <a href="https://anTtutu.github.io/tags/sqlmap/">Sqlmap</a>
     
-    <a href="https://anTtutu.github.io/tags/ssd/">ssd</a>
+    <a href="https://anTtutu.github.io/tags/ssd/">Ssd</a>
     
-    <a href="https://anTtutu.github.io/tags/tcp/">tcp</a>
+    <a href="https://anTtutu.github.io/tags/tcp/">Tcp</a>
     
-    <a href="https://anTtutu.github.io/tags/termux/">termux</a>
+    <a href="https://anTtutu.github.io/tags/termux/">Termux</a>
     
-    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
     
-    <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
+    <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
     
-    <a href="https://anTtutu.github.io/tags/virus/">virus</a>
+    <a href="https://anTtutu.github.io/tags/virus/">Virus</a>
     
-    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    <a href="https://anTtutu.github.io/tags/vxvm/">Vxvm</a>
     
-    <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    <a href="https://anTtutu.github.io/tags/win10/">Win10</a>
     
-    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
+    <a href="https://anTtutu.github.io/tags/xrebel/">Xrebel</a>
     
-    <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
+    <a href="https://anTtutu.github.io/tags/ynote/">Ynote</a>
     
-    <a href="https://anTtutu.github.io/tags/zk/">zk</a>
+    <a href="https://anTtutu.github.io/tags/zk/">Zk</a>
     
-    <a href="https://anTtutu.github.io/tags/zookeeper/">zookeeper</a>
+    <a href="https://anTtutu.github.io/tags/zookeeper/">Zookeeper</a>
     
     <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
     

@@ -149,7 +149,7 @@
       <ul>
         <li><a href="#41-docker的四种网络模式">4.1 docker的四种网络模式</a></li>
         <li><a href="#42-查看存在的网络配置">4.2 查看存在的网络配置</a></li>
-        <li><a href="#43-docker容器启动时可通过--network--指定网络配置">4.3 docker容器启动时可通过&ndash;network  指定网络配置</a></li>
+        <li><a href="#43-docker容器启动时可通过network--指定网络配置">4.3 docker容器启动时可通过&ndash;network  指定网络配置</a></li>
       </ul>
     </li>
   </ul>
@@ -221,671 +221,669 @@
             <h2 id="前言">前言</h2>
 <p>docker 的网络模式整理</p>
 <h2 id="1查看所有容器的-ip">1、查看所有容器的 IP</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker inspect --format<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39;</span> <span style="color:#000;font-weight:bold">$(</span>docker ps -aq<span style="color:#000;font-weight:bold">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker inspect --format<span style="color:#0550ae">=</span><span style="color:#0a3069">&#39;{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39;</span> <span style="color:#cf222e">$(</span>docker ps -aq<span style="color:#cf222e">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</div><div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker inspect --format<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39;</span> <span style="color:#000;font-weight:bold">$(</span>docker ps -aq<span style="color:#000;font-weight:bold">)</span>
-/etcd - 172.17.0.6
-/minio1 - 172.17.0.2
-/getting-started-latest - 172.17.0.3
-/nginx1.22.0 - 172.17.0.12
-/go-docker-v1 - 172.17.0.9
-/java-docker-v1 - 172.17.0.7
-/nodejs-docker-v1 - 172.17.0.8
-/python-docker-v1 - 172.17.0.4
-/mongo6 - 172.17.0.11
-/redis7 - 172.17.0.5
-/mysql8 - 172.17.0.10
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ docker inspect --format<span style="color:#0550ae">=</span><span style="color:#0a3069">&#39;{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39;</span> <span style="color:#cf222e">$(</span>docker ps -aq<span style="color:#cf222e">)</span>
+</span></span><span style="display:flex;"><span>/etcd - 172.17.0.6
+</span></span><span style="display:flex;"><span>/minio1 - 172.17.0.2
+</span></span><span style="display:flex;"><span>/getting-started-latest - 172.17.0.3
+</span></span><span style="display:flex;"><span>/nginx1.22.0 - 172.17.0.12
+</span></span><span style="display:flex;"><span>/go-docker-v1 - 172.17.0.9
+</span></span><span style="display:flex;"><span>/java-docker-v1 - 172.17.0.7
+</span></span><span style="display:flex;"><span>/nodejs-docker-v1 - 172.17.0.8
+</span></span><span style="display:flex;"><span>/python-docker-v1 - 172.17.0.4
+</span></span><span style="display:flex;"><span>/mongo6 - 172.17.0.11
+</span></span><span style="display:flex;"><span>/redis7 - 172.17.0.5
+</span></span><span style="display:flex;"><span>/mysql8 - 172.17.0.10
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="2查看指定容器的ip网络配置包含网络ip等">2、查看指定容器的ip网络配置包含网络，ip等</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker inspect containerId
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker inspect containerId
+</span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">129
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">130
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">131
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">132
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">133
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">134
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">135
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">136
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">137
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">138
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">139
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">140
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">141
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">142
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">143
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">144
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">145
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">146
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">147
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">148
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">149
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">150
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">151
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">152
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">153
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">154
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">155
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">156
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">157
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">158
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">159
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">160
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">161
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">162
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">163
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">164
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">165
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">166
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">167
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">168
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">169
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">170
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">171
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">172
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">173
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">174
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">175
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">176
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">177
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">178
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">179
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">180
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">181
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">182
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">183
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">184
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">185
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">186
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">187
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">188
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">189
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">190
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">191
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">192
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">193
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">194
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">195
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">196
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">197
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">198
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">199
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">200
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">201
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">202
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">203
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">204
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">205
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">206
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">207
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">208
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">209
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">210
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">211
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">212
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">213
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">214
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">215
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">216
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">217
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">218
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">219
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">220
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">221
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">222
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">223
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">224
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">225
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">226
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">227
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">228
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">229
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">230
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">231
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">232
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">233
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">234
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">235
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">236
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">237
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">238
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">239
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">240
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">241
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">242
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">243
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">244
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">245
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">246
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">247
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">248
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">249
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">250
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">251
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">252
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">253
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">254
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">255
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">256
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">257
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">258
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">259
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">260
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">261
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">262
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">263
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">264
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">265
+</div><div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">129
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">130
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">131
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">132
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">133
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">134
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">135
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">136
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">137
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">138
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">139
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">140
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">141
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">142
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">143
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">144
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">145
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">146
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">147
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">148
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">149
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">150
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">151
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">152
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">153
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">154
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">155
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">156
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">157
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">158
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">159
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">160
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">161
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">162
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">163
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">164
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">165
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">166
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">167
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">168
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">169
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">170
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">171
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">172
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">173
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">174
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">175
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">176
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">177
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">178
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">179
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">180
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">181
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">182
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">183
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">184
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">185
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">186
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">187
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">188
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">189
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">190
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">191
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">192
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">193
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">194
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">195
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">196
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">197
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">198
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">199
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">200
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">201
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">202
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">203
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">204
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">205
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">206
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">207
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">208
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">209
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">210
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">211
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">212
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">213
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">214
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">215
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">216
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">217
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">218
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">219
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">220
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">221
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">222
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">223
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">224
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">225
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">226
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">227
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">228
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">229
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">230
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">231
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">232
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">233
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">234
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">235
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">236
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">237
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">238
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">239
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">240
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">241
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">242
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">243
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">244
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">245
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">246
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">247
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">248
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">249
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">250
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">251
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">252
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">253
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">254
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">255
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">256
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">257
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">258
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">259
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">260
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">261
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">262
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">263
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">264
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">265
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker inspect b055811ce23c
-<span style="color:#000;font-weight:bold">[</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#d14">&#34;Id&#34;</span>: <span style="color:#d14">&#34;b055811ce23cf53d3b5e2cf193c0cd4a22a5befbf101bdd940662ecbe64ccc2c&#34;</span>,
-        <span style="color:#d14">&#34;Created&#34;</span>: <span style="color:#d14">&#34;2022-09-06T08:50:31.6648081Z&#34;</span>,
-        <span style="color:#d14">&#34;Path&#34;</span>: <span style="color:#d14">&#34;docker-entrypoint.sh&#34;</span>,
-        <span style="color:#d14">&#34;Args&#34;</span>: <span style="color:#000;font-weight:bold">[</span>
-            <span style="color:#d14">&#34;mysqld&#34;</span>
-        <span style="color:#000;font-weight:bold">]</span>,
-        <span style="color:#d14">&#34;State&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-            <span style="color:#d14">&#34;Status&#34;</span>: <span style="color:#d14">&#34;running&#34;</span>,
-            <span style="color:#d14">&#34;Running&#34;</span>: true,
-            <span style="color:#d14">&#34;Paused&#34;</span>: false,
-            <span style="color:#d14">&#34;Restarting&#34;</span>: false,
-            <span style="color:#d14">&#34;OOMKilled&#34;</span>: false,
-            <span style="color:#d14">&#34;Dead&#34;</span>: false,
-            <span style="color:#d14">&#34;Pid&#34;</span>: 2724,
-            <span style="color:#d14">&#34;ExitCode&#34;</span>: 0,
-            <span style="color:#d14">&#34;Error&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;StartedAt&#34;</span>: <span style="color:#d14">&#34;2022-09-17T12:02:29.756584113Z&#34;</span>,
-            <span style="color:#d14">&#34;FinishedAt&#34;</span>: <span style="color:#d14">&#34;2022-09-17T12:02:27.248114859Z&#34;</span>
-        <span style="color:#000;font-weight:bold">}</span>,
-        <span style="color:#d14">&#34;Image&#34;</span>: <span style="color:#d14">&#34;sha256:ff3b5098b416cc4294d8d5c43c2f0f8251e91711347318e73cb290ffe2783bcb&#34;</span>,
-        <span style="color:#d14">&#34;ResolvConfPath&#34;</span>: <span style="color:#d14">&#34;/var/lib/docker/containers/b055811ce23cf53d3b5e2cf193c0cd4a22a5befbf101bdd940662ecbe64ccc2c/resolv.conf&#34;</span>,
-        <span style="color:#d14">&#34;HostnamePath&#34;</span>: <span style="color:#d14">&#34;/var/lib/docker/containers/b055811ce23cf53d3b5e2cf193c0cd4a22a5befbf101bdd940662ecbe64ccc2c/hostname&#34;</span>,
-        <span style="color:#d14">&#34;HostsPath&#34;</span>: <span style="color:#d14">&#34;/var/lib/docker/containers/b055811ce23cf53d3b5e2cf193c0cd4a22a5befbf101bdd940662ecbe64ccc2c/hosts&#34;</span>,
-        <span style="color:#d14">&#34;LogPath&#34;</span>: <span style="color:#d14">&#34;/var/lib/docker/containers/b055811ce23cf53d3b5e2cf193c0cd4a22a5befbf101bdd940662ecbe64ccc2c/b055811ce23cf53d3b5e2cf193c0cd4a22a5befbf101bdd940662ecbe64ccc2c-json.log&#34;</span>,
-        <span style="color:#d14">&#34;Name&#34;</span>: <span style="color:#d14">&#34;/mysql8&#34;</span>,
-        <span style="color:#d14">&#34;RestartCount&#34;</span>: 0,
-        <span style="color:#d14">&#34;Driver&#34;</span>: <span style="color:#d14">&#34;overlay2&#34;</span>,
-        <span style="color:#d14">&#34;Platform&#34;</span>: <span style="color:#d14">&#34;linux&#34;</span>,
-        <span style="color:#d14">&#34;MountLabel&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-        <span style="color:#d14">&#34;ProcessLabel&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-        <span style="color:#d14">&#34;AppArmorProfile&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-        <span style="color:#d14">&#34;ExecIDs&#34;</span>: null,
-        <span style="color:#d14">&#34;HostConfig&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-            <span style="color:#d14">&#34;Binds&#34;</span>: <span style="color:#000;font-weight:bold">[</span>
-                <span style="color:#d14">&#34;/Users/Downloads/Docker/mysql/config/my.cnf:/etc/mysql/my.cnf&#34;</span>,
-                <span style="color:#d14">&#34;/Users/Downloads/Docker/mysql/data:/usr/data&#34;</span>,
-                <span style="color:#d14">&#34;/Users/Downloads/Docker/mysql/log:/logs&#34;</span>,
-                <span style="color:#d14">&#34;/Users/Downloads/Docker/mysql/localtime:/etc/localtime&#34;</span>
-            <span style="color:#000;font-weight:bold">]</span>,
-            <span style="color:#d14">&#34;ContainerIDFile&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;LogConfig&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-                <span style="color:#d14">&#34;Type&#34;</span>: <span style="color:#d14">&#34;json-file&#34;</span>,
-                <span style="color:#d14">&#34;Config&#34;</span>: <span style="color:#000;font-weight:bold">{}</span>
-            <span style="color:#000;font-weight:bold">}</span>,
-            <span style="color:#d14">&#34;NetworkMode&#34;</span>: <span style="color:#d14">&#34;bridge&#34;</span>,
-            <span style="color:#d14">&#34;PortBindings&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-                <span style="color:#d14">&#34;3306/tcp&#34;</span>: <span style="color:#000;font-weight:bold">[</span>
-                    <span style="color:#000;font-weight:bold">{</span>
-                        <span style="color:#d14">&#34;HostIp&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-                        <span style="color:#d14">&#34;HostPort&#34;</span>: <span style="color:#d14">&#34;3306&#34;</span>
-                    <span style="color:#000;font-weight:bold">}</span>
-                <span style="color:#000;font-weight:bold">]</span>
-            <span style="color:#000;font-weight:bold">}</span>,
-            <span style="color:#d14">&#34;RestartPolicy&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-                <span style="color:#d14">&#34;Name&#34;</span>: <span style="color:#d14">&#34;always&#34;</span>,
-                <span style="color:#d14">&#34;MaximumRetryCount&#34;</span>: <span style="color:#099">0</span>
-            <span style="color:#000;font-weight:bold">}</span>,
-            <span style="color:#d14">&#34;AutoRemove&#34;</span>: false,
-            <span style="color:#d14">&#34;VolumeDriver&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;VolumesFrom&#34;</span>: null,
-            <span style="color:#d14">&#34;CapAdd&#34;</span>: null,
-            <span style="color:#d14">&#34;CapDrop&#34;</span>: null,
-            <span style="color:#d14">&#34;CgroupnsMode&#34;</span>: <span style="color:#d14">&#34;private&#34;</span>,
-            <span style="color:#d14">&#34;Dns&#34;</span>: <span style="color:#000;font-weight:bold">[]</span>,
-            <span style="color:#d14">&#34;DnsOptions&#34;</span>: <span style="color:#000;font-weight:bold">[]</span>,
-            <span style="color:#d14">&#34;DnsSearch&#34;</span>: <span style="color:#000;font-weight:bold">[]</span>,
-            <span style="color:#d14">&#34;ExtraHosts&#34;</span>: null,
-            <span style="color:#d14">&#34;GroupAdd&#34;</span>: null,
-            <span style="color:#d14">&#34;IpcMode&#34;</span>: <span style="color:#d14">&#34;private&#34;</span>,
-            <span style="color:#d14">&#34;Cgroup&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;Links&#34;</span>: null,
-            <span style="color:#d14">&#34;OomScoreAdj&#34;</span>: 0,
-            <span style="color:#d14">&#34;PidMode&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;Privileged&#34;</span>: true,
-            <span style="color:#d14">&#34;PublishAllPorts&#34;</span>: false,
-            <span style="color:#d14">&#34;ReadonlyRootfs&#34;</span>: false,
-            <span style="color:#d14">&#34;SecurityOpt&#34;</span>: <span style="color:#000;font-weight:bold">[</span>
-                <span style="color:#d14">&#34;label=disable&#34;</span>
-            <span style="color:#000;font-weight:bold">]</span>,
-            <span style="color:#d14">&#34;UTSMode&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;UsernsMode&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;ShmSize&#34;</span>: 67108864,
-            <span style="color:#d14">&#34;Runtime&#34;</span>: <span style="color:#d14">&#34;runc&#34;</span>,
-            <span style="color:#d14">&#34;ConsoleSize&#34;</span>: <span style="color:#000;font-weight:bold">[</span>
-                0,
-                <span style="color:#099">0</span>
-            <span style="color:#000;font-weight:bold">]</span>,
-            <span style="color:#d14">&#34;Isolation&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;CpuShares&#34;</span>: 0,
-            <span style="color:#d14">&#34;Memory&#34;</span>: 0,
-            <span style="color:#d14">&#34;NanoCpus&#34;</span>: 0,
-            <span style="color:#d14">&#34;CgroupParent&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;BlkioWeight&#34;</span>: 0,
-            <span style="color:#d14">&#34;BlkioWeightDevice&#34;</span>: <span style="color:#000;font-weight:bold">[]</span>,
-            <span style="color:#d14">&#34;BlkioDeviceReadBps&#34;</span>: null,
-            <span style="color:#d14">&#34;BlkioDeviceWriteBps&#34;</span>: null,
-            <span style="color:#d14">&#34;BlkioDeviceReadIOps&#34;</span>: null,
-            <span style="color:#d14">&#34;BlkioDeviceWriteIOps&#34;</span>: null,
-            <span style="color:#d14">&#34;CpuPeriod&#34;</span>: 0,
-            <span style="color:#d14">&#34;CpuQuota&#34;</span>: 0,
-            <span style="color:#d14">&#34;CpuRealtimePeriod&#34;</span>: 0,
-            <span style="color:#d14">&#34;CpuRealtimeRuntime&#34;</span>: 0,
-            <span style="color:#d14">&#34;CpusetCpus&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;CpusetMems&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;Devices&#34;</span>: <span style="color:#000;font-weight:bold">[]</span>,
-            <span style="color:#d14">&#34;DeviceCgroupRules&#34;</span>: null,
-            <span style="color:#d14">&#34;DeviceRequests&#34;</span>: null,
-            <span style="color:#d14">&#34;KernelMemory&#34;</span>: 0,
-            <span style="color:#d14">&#34;KernelMemoryTCP&#34;</span>: 0,
-            <span style="color:#d14">&#34;MemoryReservation&#34;</span>: 0,
-            <span style="color:#d14">&#34;MemorySwap&#34;</span>: 0,
-            <span style="color:#d14">&#34;MemorySwappiness&#34;</span>: null,
-            <span style="color:#d14">&#34;OomKillDisable&#34;</span>: null,
-            <span style="color:#d14">&#34;PidsLimit&#34;</span>: null,
-            <span style="color:#d14">&#34;Ulimits&#34;</span>: null,
-            <span style="color:#d14">&#34;CpuCount&#34;</span>: 0,
-            <span style="color:#d14">&#34;CpuPercent&#34;</span>: 0,
-            <span style="color:#d14">&#34;IOMaximumIOps&#34;</span>: 0,
-            <span style="color:#d14">&#34;IOMaximumBandwidth&#34;</span>: 0,
-            <span style="color:#d14">&#34;MaskedPaths&#34;</span>: null,
-            <span style="color:#d14">&#34;ReadonlyPaths&#34;</span>: null
-        <span style="color:#000;font-weight:bold">}</span>,
-        <span style="color:#d14">&#34;GraphDriver&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-            <span style="color:#d14">&#34;Data&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-                <span style="color:#d14">&#34;LowerDir&#34;</span>: <span style="color:#d14">&#34;/var/lib/docker/overlay2/262b7fe49ceef30a815f7acd398efd160a8575276a26bd3ed5fe8d03b89c64f5-init/diff:/var/lib/docker/overlay2/f9793fa9c30e39c82416c7664ba9f1bded7164da0eedc04db5f9d34e8ae524bd/diff:/var/lib/docker/overlay2/8bd9971c98c7afafafb6af93fe793eb01881a3e28a25e166cce5037d1867f3a6/diff:/var/lib/docker/overlay2/718e2486037cff064644cfe79f7e0710364ed8b18a2813c501fc921872e154a7/diff:/var/lib/docker/overlay2/d4239c0d55a03ec8e29d9e7a4fcd7aab5f081c4a564eb341d1065f9d0df24429/diff:/var/lib/docker/overlay2/e393d409b7557dac52f8e497f8743ef9663b6037abe9a4edd8cdd66bad9de964/diff:/var/lib/docker/overlay2/1bb134141159fe08fa4dc08b7404e92b103242319663ecee72f5e4aff61c3a40/diff:/var/lib/docker/overlay2/ed42a23c02fe373db201fcc49bf0bd80ee663766ac400aa101163a42ea6ba469/diff:/var/lib/docker/overlay2/d4e972b8eae083ea8c8dc28538c2d92b2e63e4849c348e47783725cbfd42eafa/diff:/var/lib/docker/overlay2/b23c6d2cb95f018ab8ade60d15a40f9bd4eca5568cdae22b10a75b4b22bb8608/diff:/var/lib/docker/overlay2/36e999dce4bab3eee5d5a74b607ee845ebd8b95707222b9f0e57f5d40922b1ce/diff:/var/lib/docker/overlay2/b0f8ffee4114eb3d1797566ab320c34e38e71780e532cadb8d327f03c5a49593/diff&#34;</span>,
-                <span style="color:#d14">&#34;MergedDir&#34;</span>: <span style="color:#d14">&#34;/var/lib/docker/overlay2/262b7fe49ceef30a815f7acd398efd160a8575276a26bd3ed5fe8d03b89c64f5/merged&#34;</span>,
-                <span style="color:#d14">&#34;UpperDir&#34;</span>: <span style="color:#d14">&#34;/var/lib/docker/overlay2/262b7fe49ceef30a815f7acd398efd160a8575276a26bd3ed5fe8d03b89c64f5/diff&#34;</span>,
-                <span style="color:#d14">&#34;WorkDir&#34;</span>: <span style="color:#d14">&#34;/var/lib/docker/overlay2/262b7fe49ceef30a815f7acd398efd160a8575276a26bd3ed5fe8d03b89c64f5/work&#34;</span>
-            <span style="color:#000;font-weight:bold">}</span>,
-            <span style="color:#d14">&#34;Name&#34;</span>: <span style="color:#d14">&#34;overlay2&#34;</span>
-        <span style="color:#000;font-weight:bold">}</span>,
-        <span style="color:#d14">&#34;Mounts&#34;</span>: <span style="color:#000;font-weight:bold">[</span>
-            <span style="color:#000;font-weight:bold">{</span>
-                <span style="color:#d14">&#34;Type&#34;</span>: <span style="color:#d14">&#34;bind&#34;</span>,
-                <span style="color:#d14">&#34;Source&#34;</span>: <span style="color:#d14">&#34;/Users/Downloads/Docker/mysql/localtime&#34;</span>,
-                <span style="color:#d14">&#34;Destination&#34;</span>: <span style="color:#d14">&#34;/etc/localtime&#34;</span>,
-                <span style="color:#d14">&#34;Mode&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-                <span style="color:#d14">&#34;RW&#34;</span>: true,
-                <span style="color:#d14">&#34;Propagation&#34;</span>: <span style="color:#d14">&#34;rprivate&#34;</span>
-            <span style="color:#000;font-weight:bold">}</span>,
-            <span style="color:#000;font-weight:bold">{</span>
-                <span style="color:#d14">&#34;Type&#34;</span>: <span style="color:#d14">&#34;bind&#34;</span>,
-                <span style="color:#d14">&#34;Source&#34;</span>: <span style="color:#d14">&#34;/Users/Downloads/Docker/mysql/config/my.cnf&#34;</span>,
-                <span style="color:#d14">&#34;Destination&#34;</span>: <span style="color:#d14">&#34;/etc/mysql/my.cnf&#34;</span>,
-                <span style="color:#d14">&#34;Mode&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-                <span style="color:#d14">&#34;RW&#34;</span>: true,
-                <span style="color:#d14">&#34;Propagation&#34;</span>: <span style="color:#d14">&#34;rprivate&#34;</span>
-            <span style="color:#000;font-weight:bold">}</span>,
-            <span style="color:#000;font-weight:bold">{</span>
-                <span style="color:#d14">&#34;Type&#34;</span>: <span style="color:#d14">&#34;bind&#34;</span>,
-                <span style="color:#d14">&#34;Source&#34;</span>: <span style="color:#d14">&#34;/Users/Downloads/Docker/mysql/log&#34;</span>,
-                <span style="color:#d14">&#34;Destination&#34;</span>: <span style="color:#d14">&#34;/logs&#34;</span>,
-                <span style="color:#d14">&#34;Mode&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-                <span style="color:#d14">&#34;RW&#34;</span>: true,
-                <span style="color:#d14">&#34;Propagation&#34;</span>: <span style="color:#d14">&#34;rprivate&#34;</span>
-            <span style="color:#000;font-weight:bold">}</span>,
-            <span style="color:#000;font-weight:bold">{</span>
-                <span style="color:#d14">&#34;Type&#34;</span>: <span style="color:#d14">&#34;bind&#34;</span>,
-                <span style="color:#d14">&#34;Source&#34;</span>: <span style="color:#d14">&#34;/Users/Downloads/Docker/mysql/data&#34;</span>,
-                <span style="color:#d14">&#34;Destination&#34;</span>: <span style="color:#d14">&#34;/usr/data&#34;</span>,
-                <span style="color:#d14">&#34;Mode&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-                <span style="color:#d14">&#34;RW&#34;</span>: true,
-                <span style="color:#d14">&#34;Propagation&#34;</span>: <span style="color:#d14">&#34;rprivate&#34;</span>
-            <span style="color:#000;font-weight:bold">}</span>,
-            <span style="color:#000;font-weight:bold">{</span>
-                <span style="color:#d14">&#34;Type&#34;</span>: <span style="color:#d14">&#34;volume&#34;</span>,
-                <span style="color:#d14">&#34;Name&#34;</span>: <span style="color:#d14">&#34;eda1141a1129e17676fc14b6cfedc975c01b8cef030d3042df9543ae0c133ba6&#34;</span>,
-                <span style="color:#d14">&#34;Source&#34;</span>: <span style="color:#d14">&#34;/var/lib/docker/volumes/eda1141a1129e17676fc14b6cfedc975c01b8cef030d3042df9543ae0c133ba6/_data&#34;</span>,
-                <span style="color:#d14">&#34;Destination&#34;</span>: <span style="color:#d14">&#34;/var/lib/mysql&#34;</span>,
-                <span style="color:#d14">&#34;Driver&#34;</span>: <span style="color:#d14">&#34;local&#34;</span>,
-                <span style="color:#d14">&#34;Mode&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-                <span style="color:#d14">&#34;RW&#34;</span>: true,
-                <span style="color:#d14">&#34;Propagation&#34;</span>: <span style="color:#d14">&#34;&#34;</span>
-            <span style="color:#000;font-weight:bold">}</span>
-        <span style="color:#000;font-weight:bold">]</span>,
-        <span style="color:#d14">&#34;Config&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-            <span style="color:#d14">&#34;Hostname&#34;</span>: <span style="color:#d14">&#34;b055811ce23c&#34;</span>,
-            <span style="color:#d14">&#34;Domainname&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;User&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;AttachStdin&#34;</span>: false,
-            <span style="color:#d14">&#34;AttachStdout&#34;</span>: false,
-            <span style="color:#d14">&#34;AttachStderr&#34;</span>: false,
-            <span style="color:#d14">&#34;ExposedPorts&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-                <span style="color:#d14">&#34;3306/tcp&#34;</span>: <span style="color:#000;font-weight:bold">{}</span>,
-                <span style="color:#d14">&#34;33060/tcp&#34;</span>: <span style="color:#000;font-weight:bold">{}</span>
-            <span style="color:#000;font-weight:bold">}</span>,
-            <span style="color:#d14">&#34;Tty&#34;</span>: false,
-            <span style="color:#d14">&#34;OpenStdin&#34;</span>: false,
-            <span style="color:#d14">&#34;StdinOnce&#34;</span>: false,
-            <span style="color:#d14">&#34;Env&#34;</span>: <span style="color:#000;font-weight:bold">[</span>
-                <span style="color:#d14">&#34;MYSQL_PASSWORD=test123456&#34;</span>,
-                <span style="color:#d14">&#34;character-set-server=utf8&#34;</span>,
-                <span style="color:#d14">&#34;collation-server=utf8_general_ci&#34;</span>,
-                <span style="color:#d14">&#34;MYSQL_ROOT_PASSWORD=root123456&#34;</span>,
-                <span style="color:#d14">&#34;MYSQL_USER=mysql&#34;</span>,
-                <span style="color:#d14">&#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#34;</span>,
-                <span style="color:#d14">&#34;GOSU_VERSION=1.14&#34;</span>,
-                <span style="color:#d14">&#34;MYSQL_MAJOR=8.0&#34;</span>,
-                <span style="color:#d14">&#34;MYSQL_VERSION=8.0.30-1.el8&#34;</span>,
-                <span style="color:#d14">&#34;MYSQL_SHELL_VERSION=8.0.30-1.el8&#34;</span>
-            <span style="color:#000;font-weight:bold">]</span>,
-            <span style="color:#d14">&#34;Cmd&#34;</span>: <span style="color:#000;font-weight:bold">[</span>
-                <span style="color:#d14">&#34;mysqld&#34;</span>
-            <span style="color:#000;font-weight:bold">]</span>,
-            <span style="color:#d14">&#34;Image&#34;</span>: <span style="color:#d14">&#34;mysql:8.0&#34;</span>,
-            <span style="color:#d14">&#34;Volumes&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-                <span style="color:#d14">&#34;/var/lib/mysql&#34;</span>: <span style="color:#000;font-weight:bold">{}</span>
-            <span style="color:#000;font-weight:bold">}</span>,
-            <span style="color:#d14">&#34;WorkingDir&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;Entrypoint&#34;</span>: <span style="color:#000;font-weight:bold">[</span>
-                <span style="color:#d14">&#34;docker-entrypoint.sh&#34;</span>
-            <span style="color:#000;font-weight:bold">]</span>,
-            <span style="color:#d14">&#34;OnBuild&#34;</span>: null,
-            <span style="color:#d14">&#34;Labels&#34;</span>: <span style="color:#000;font-weight:bold">{}</span>
-        <span style="color:#000;font-weight:bold">}</span>,
-        <span style="color:#d14">&#34;NetworkSettings&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-            <span style="color:#d14">&#34;Bridge&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;SandboxID&#34;</span>: <span style="color:#d14">&#34;c6b894c6e93f77d1373c596b7e0b739e9077496ae8fd0f9ac4a0e332cd9ff64b&#34;</span>,
-            <span style="color:#d14">&#34;HairpinMode&#34;</span>: false,
-            <span style="color:#d14">&#34;LinkLocalIPv6Address&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;LinkLocalIPv6PrefixLen&#34;</span>: 0,
-            <span style="color:#d14">&#34;Ports&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-                <span style="color:#d14">&#34;3306/tcp&#34;</span>: <span style="color:#000;font-weight:bold">[</span>
-                    <span style="color:#000;font-weight:bold">{</span>
-                        <span style="color:#d14">&#34;HostIp&#34;</span>: <span style="color:#d14">&#34;0.0.0.0&#34;</span>,
-                        <span style="color:#d14">&#34;HostPort&#34;</span>: <span style="color:#d14">&#34;3306&#34;</span>
-                    <span style="color:#000;font-weight:bold">}</span>
-                <span style="color:#000;font-weight:bold">]</span>,
-                <span style="color:#d14">&#34;33060/tcp&#34;</span>: null
-            <span style="color:#000;font-weight:bold">}</span>,
-            <span style="color:#d14">&#34;SandboxKey&#34;</span>: <span style="color:#d14">&#34;/var/run/docker/netns/c6b894c6e93f&#34;</span>,
-            <span style="color:#d14">&#34;SecondaryIPAddresses&#34;</span>: null,
-            <span style="color:#d14">&#34;SecondaryIPv6Addresses&#34;</span>: null,
-            <span style="color:#d14">&#34;EndpointID&#34;</span>: <span style="color:#d14">&#34;632055c898d3becb5e76e5216cd471daed266f115ab84c18dd4f64da4adbf189&#34;</span>,
-            <span style="color:#d14">&#34;Gateway&#34;</span>: <span style="color:#d14">&#34;172.17.0.1&#34;</span>,
-            <span style="color:#d14">&#34;GlobalIPv6Address&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;GlobalIPv6PrefixLen&#34;</span>: 0,
-            <span style="color:#d14">&#34;IPAddress&#34;</span>: <span style="color:#d14">&#34;172.17.0.8&#34;</span>,
-            <span style="color:#d14">&#34;IPPrefixLen&#34;</span>: 16,
-            <span style="color:#d14">&#34;IPv6Gateway&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-            <span style="color:#d14">&#34;MacAddress&#34;</span>: <span style="color:#d14">&#34;02:42:ac:11:00:08&#34;</span>,
-            <span style="color:#d14">&#34;Networks&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-                <span style="color:#d14">&#34;bridge&#34;</span>: <span style="color:#000;font-weight:bold">{</span>
-                    <span style="color:#d14">&#34;IPAMConfig&#34;</span>: null,
-                    <span style="color:#d14">&#34;Links&#34;</span>: null,
-                    <span style="color:#d14">&#34;Aliases&#34;</span>: null,
-                    <span style="color:#d14">&#34;NetworkID&#34;</span>: <span style="color:#d14">&#34;df04e694c73a176ccca94ab55253f9ac8937658faf87c4a23a1215e98c114e28&#34;</span>,
-                    <span style="color:#d14">&#34;EndpointID&#34;</span>: <span style="color:#d14">&#34;632055c898d3becb5e76e5216cd471daed266f115ab84c18dd4f64da4adbf189&#34;</span>,
-                    <span style="color:#d14">&#34;Gateway&#34;</span>: <span style="color:#d14">&#34;172.17.0.1&#34;</span>,
-                    <span style="color:#d14">&#34;IPAddress&#34;</span>: <span style="color:#d14">&#34;172.17.0.8&#34;</span>,
-                    <span style="color:#d14">&#34;IPPrefixLen&#34;</span>: 16,
-                    <span style="color:#d14">&#34;IPv6Gateway&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-                    <span style="color:#d14">&#34;GlobalIPv6Address&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
-                    <span style="color:#d14">&#34;GlobalIPv6PrefixLen&#34;</span>: 0,
-                    <span style="color:#d14">&#34;MacAddress&#34;</span>: <span style="color:#d14">&#34;02:42:ac:11:00:08&#34;</span>,
-                    <span style="color:#d14">&#34;DriverOpts&#34;</span>: null
-                <span style="color:#000;font-weight:bold">}</span>
-            <span style="color:#000;font-weight:bold">}</span>
-        <span style="color:#000;font-weight:bold">}</span>
-    <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">]</span>
-$
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ docker inspect b055811ce23c
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">[</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;Id&#34;</span>: <span style="color:#0a3069">&#34;b055811ce23cf53d3b5e2cf193c0cd4a22a5befbf101bdd940662ecbe64ccc2c&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;Created&#34;</span>: <span style="color:#0a3069">&#34;2022-09-06T08:50:31.6648081Z&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;Path&#34;</span>: <span style="color:#0a3069">&#34;docker-entrypoint.sh&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;Args&#34;</span>: <span style="color:#0550ae">[</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;mysqld&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">]</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;State&#34;</span>: <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Status&#34;</span>: <span style="color:#0a3069">&#34;running&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Running&#34;</span>: true,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Paused&#34;</span>: false,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Restarting&#34;</span>: false,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;OOMKilled&#34;</span>: false,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Dead&#34;</span>: false,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Pid&#34;</span>: 2724,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;ExitCode&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Error&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;StartedAt&#34;</span>: <span style="color:#0a3069">&#34;2022-09-17T12:02:29.756584113Z&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;FinishedAt&#34;</span>: <span style="color:#0a3069">&#34;2022-09-17T12:02:27.248114859Z&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">}</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;Image&#34;</span>: <span style="color:#0a3069">&#34;sha256:ff3b5098b416cc4294d8d5c43c2f0f8251e91711347318e73cb290ffe2783bcb&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;ResolvConfPath&#34;</span>: <span style="color:#0a3069">&#34;/var/lib/docker/containers/b055811ce23cf53d3b5e2cf193c0cd4a22a5befbf101bdd940662ecbe64ccc2c/resolv.conf&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;HostnamePath&#34;</span>: <span style="color:#0a3069">&#34;/var/lib/docker/containers/b055811ce23cf53d3b5e2cf193c0cd4a22a5befbf101bdd940662ecbe64ccc2c/hostname&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;HostsPath&#34;</span>: <span style="color:#0a3069">&#34;/var/lib/docker/containers/b055811ce23cf53d3b5e2cf193c0cd4a22a5befbf101bdd940662ecbe64ccc2c/hosts&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;LogPath&#34;</span>: <span style="color:#0a3069">&#34;/var/lib/docker/containers/b055811ce23cf53d3b5e2cf193c0cd4a22a5befbf101bdd940662ecbe64ccc2c/b055811ce23cf53d3b5e2cf193c0cd4a22a5befbf101bdd940662ecbe64ccc2c-json.log&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;Name&#34;</span>: <span style="color:#0a3069">&#34;/mysql8&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;RestartCount&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;Driver&#34;</span>: <span style="color:#0a3069">&#34;overlay2&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;Platform&#34;</span>: <span style="color:#0a3069">&#34;linux&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;MountLabel&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;ProcessLabel&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;AppArmorProfile&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;ExecIDs&#34;</span>: null,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;HostConfig&#34;</span>: <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Binds&#34;</span>: <span style="color:#0550ae">[</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;/Users/Downloads/Docker/mysql/config/my.cnf:/etc/mysql/my.cnf&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;/Users/Downloads/Docker/mysql/data:/usr/data&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;/Users/Downloads/Docker/mysql/log:/logs&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;/Users/Downloads/Docker/mysql/localtime:/etc/localtime&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">]</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;ContainerIDFile&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;LogConfig&#34;</span>: <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Type&#34;</span>: <span style="color:#0a3069">&#34;json-file&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Config&#34;</span>: <span style="color:#0550ae">{}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">}</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;NetworkMode&#34;</span>: <span style="color:#0a3069">&#34;bridge&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;PortBindings&#34;</span>: <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;3306/tcp&#34;</span>: <span style="color:#0550ae">[</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#0a3069">&#34;HostIp&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>                        <span style="color:#0a3069">&#34;HostPort&#34;</span>: <span style="color:#0a3069">&#34;3306&#34;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#0550ae">}</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0550ae">]</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">}</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;RestartPolicy&#34;</span>: <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Name&#34;</span>: <span style="color:#0a3069">&#34;always&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;MaximumRetryCount&#34;</span>: <span style="color:#0550ae">0</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">}</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;AutoRemove&#34;</span>: false,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;VolumeDriver&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;VolumesFrom&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;CapAdd&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;CapDrop&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;CgroupnsMode&#34;</span>: <span style="color:#0a3069">&#34;private&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Dns&#34;</span>: <span style="color:#0550ae">[]</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;DnsOptions&#34;</span>: <span style="color:#0550ae">[]</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;DnsSearch&#34;</span>: <span style="color:#0550ae">[]</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;ExtraHosts&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;GroupAdd&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;IpcMode&#34;</span>: <span style="color:#0a3069">&#34;private&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Cgroup&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Links&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;OomScoreAdj&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;PidMode&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Privileged&#34;</span>: true,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;PublishAllPorts&#34;</span>: false,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;ReadonlyRootfs&#34;</span>: false,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;SecurityOpt&#34;</span>: <span style="color:#0550ae">[</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;label=disable&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">]</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;UTSMode&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;UsernsMode&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;ShmSize&#34;</span>: 67108864,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Runtime&#34;</span>: <span style="color:#0a3069">&#34;runc&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;ConsoleSize&#34;</span>: <span style="color:#0550ae">[</span>
+</span></span><span style="display:flex;"><span>                0,
+</span></span><span style="display:flex;"><span>                <span style="color:#0550ae">0</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">]</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Isolation&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;CpuShares&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Memory&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;NanoCpus&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;CgroupParent&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;BlkioWeight&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;BlkioWeightDevice&#34;</span>: <span style="color:#0550ae">[]</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;BlkioDeviceReadBps&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;BlkioDeviceWriteBps&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;BlkioDeviceReadIOps&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;BlkioDeviceWriteIOps&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;CpuPeriod&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;CpuQuota&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;CpuRealtimePeriod&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;CpuRealtimeRuntime&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;CpusetCpus&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;CpusetMems&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Devices&#34;</span>: <span style="color:#0550ae">[]</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;DeviceCgroupRules&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;DeviceRequests&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;KernelMemory&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;KernelMemoryTCP&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;MemoryReservation&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;MemorySwap&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;MemorySwappiness&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;OomKillDisable&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;PidsLimit&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Ulimits&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;CpuCount&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;CpuPercent&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;IOMaximumIOps&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;IOMaximumBandwidth&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;MaskedPaths&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;ReadonlyPaths&#34;</span>: null
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">}</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;GraphDriver&#34;</span>: <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Data&#34;</span>: <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;LowerDir&#34;</span>: <span style="color:#0a3069">&#34;/var/lib/docker/overlay2/262b7fe49ceef30a815f7acd398efd160a8575276a26bd3ed5fe8d03b89c64f5-init/diff:/var/lib/docker/overlay2/f9793fa9c30e39c82416c7664ba9f1bded7164da0eedc04db5f9d34e8ae524bd/diff:/var/lib/docker/overlay2/8bd9971c98c7afafafb6af93fe793eb01881a3e28a25e166cce5037d1867f3a6/diff:/var/lib/docker/overlay2/718e2486037cff064644cfe79f7e0710364ed8b18a2813c501fc921872e154a7/diff:/var/lib/docker/overlay2/d4239c0d55a03ec8e29d9e7a4fcd7aab5f081c4a564eb341d1065f9d0df24429/diff:/var/lib/docker/overlay2/e393d409b7557dac52f8e497f8743ef9663b6037abe9a4edd8cdd66bad9de964/diff:/var/lib/docker/overlay2/1bb134141159fe08fa4dc08b7404e92b103242319663ecee72f5e4aff61c3a40/diff:/var/lib/docker/overlay2/ed42a23c02fe373db201fcc49bf0bd80ee663766ac400aa101163a42ea6ba469/diff:/var/lib/docker/overlay2/d4e972b8eae083ea8c8dc28538c2d92b2e63e4849c348e47783725cbfd42eafa/diff:/var/lib/docker/overlay2/b23c6d2cb95f018ab8ade60d15a40f9bd4eca5568cdae22b10a75b4b22bb8608/diff:/var/lib/docker/overlay2/36e999dce4bab3eee5d5a74b607ee845ebd8b95707222b9f0e57f5d40922b1ce/diff:/var/lib/docker/overlay2/b0f8ffee4114eb3d1797566ab320c34e38e71780e532cadb8d327f03c5a49593/diff&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;MergedDir&#34;</span>: <span style="color:#0a3069">&#34;/var/lib/docker/overlay2/262b7fe49ceef30a815f7acd398efd160a8575276a26bd3ed5fe8d03b89c64f5/merged&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;UpperDir&#34;</span>: <span style="color:#0a3069">&#34;/var/lib/docker/overlay2/262b7fe49ceef30a815f7acd398efd160a8575276a26bd3ed5fe8d03b89c64f5/diff&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;WorkDir&#34;</span>: <span style="color:#0a3069">&#34;/var/lib/docker/overlay2/262b7fe49ceef30a815f7acd398efd160a8575276a26bd3ed5fe8d03b89c64f5/work&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">}</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Name&#34;</span>: <span style="color:#0a3069">&#34;overlay2&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">}</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;Mounts&#34;</span>: <span style="color:#0550ae">[</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Type&#34;</span>: <span style="color:#0a3069">&#34;bind&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Source&#34;</span>: <span style="color:#0a3069">&#34;/Users/Downloads/Docker/mysql/localtime&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Destination&#34;</span>: <span style="color:#0a3069">&#34;/etc/localtime&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Mode&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;RW&#34;</span>: true,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Propagation&#34;</span>: <span style="color:#0a3069">&#34;rprivate&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">}</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Type&#34;</span>: <span style="color:#0a3069">&#34;bind&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Source&#34;</span>: <span style="color:#0a3069">&#34;/Users/Downloads/Docker/mysql/config/my.cnf&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Destination&#34;</span>: <span style="color:#0a3069">&#34;/etc/mysql/my.cnf&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Mode&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;RW&#34;</span>: true,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Propagation&#34;</span>: <span style="color:#0a3069">&#34;rprivate&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">}</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Type&#34;</span>: <span style="color:#0a3069">&#34;bind&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Source&#34;</span>: <span style="color:#0a3069">&#34;/Users/Downloads/Docker/mysql/log&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Destination&#34;</span>: <span style="color:#0a3069">&#34;/logs&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Mode&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;RW&#34;</span>: true,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Propagation&#34;</span>: <span style="color:#0a3069">&#34;rprivate&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">}</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Type&#34;</span>: <span style="color:#0a3069">&#34;bind&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Source&#34;</span>: <span style="color:#0a3069">&#34;/Users/Downloads/Docker/mysql/data&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Destination&#34;</span>: <span style="color:#0a3069">&#34;/usr/data&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Mode&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;RW&#34;</span>: true,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Propagation&#34;</span>: <span style="color:#0a3069">&#34;rprivate&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">}</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Type&#34;</span>: <span style="color:#0a3069">&#34;volume&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Name&#34;</span>: <span style="color:#0a3069">&#34;eda1141a1129e17676fc14b6cfedc975c01b8cef030d3042df9543ae0c133ba6&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Source&#34;</span>: <span style="color:#0a3069">&#34;/var/lib/docker/volumes/eda1141a1129e17676fc14b6cfedc975c01b8cef030d3042df9543ae0c133ba6/_data&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Destination&#34;</span>: <span style="color:#0a3069">&#34;/var/lib/mysql&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Driver&#34;</span>: <span style="color:#0a3069">&#34;local&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Mode&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;RW&#34;</span>: true,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;Propagation&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">]</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;Config&#34;</span>: <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Hostname&#34;</span>: <span style="color:#0a3069">&#34;b055811ce23c&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Domainname&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;User&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;AttachStdin&#34;</span>: false,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;AttachStdout&#34;</span>: false,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;AttachStderr&#34;</span>: false,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;ExposedPorts&#34;</span>: <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;3306/tcp&#34;</span>: <span style="color:#0550ae">{}</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;33060/tcp&#34;</span>: <span style="color:#0550ae">{}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">}</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Tty&#34;</span>: false,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;OpenStdin&#34;</span>: false,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;StdinOnce&#34;</span>: false,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Env&#34;</span>: <span style="color:#0550ae">[</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;MYSQL_PASSWORD=test123456&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;character-set-server=utf8&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;collation-server=utf8_general_ci&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;MYSQL_ROOT_PASSWORD=root123456&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;MYSQL_USER=mysql&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;GOSU_VERSION=1.14&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;MYSQL_MAJOR=8.0&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;MYSQL_VERSION=8.0.30-1.el8&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;MYSQL_SHELL_VERSION=8.0.30-1.el8&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">]</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Cmd&#34;</span>: <span style="color:#0550ae">[</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;mysqld&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">]</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Image&#34;</span>: <span style="color:#0a3069">&#34;mysql:8.0&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Volumes&#34;</span>: <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;/var/lib/mysql&#34;</span>: <span style="color:#0550ae">{}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">}</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;WorkingDir&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Entrypoint&#34;</span>: <span style="color:#0550ae">[</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;docker-entrypoint.sh&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">]</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;OnBuild&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Labels&#34;</span>: <span style="color:#0550ae">{}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">}</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;NetworkSettings&#34;</span>: <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Bridge&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;SandboxID&#34;</span>: <span style="color:#0a3069">&#34;c6b894c6e93f77d1373c596b7e0b739e9077496ae8fd0f9ac4a0e332cd9ff64b&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;HairpinMode&#34;</span>: false,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;LinkLocalIPv6Address&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;LinkLocalIPv6PrefixLen&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Ports&#34;</span>: <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;3306/tcp&#34;</span>: <span style="color:#0550ae">[</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#0a3069">&#34;HostIp&#34;</span>: <span style="color:#0a3069">&#34;0.0.0.0&#34;</span>,
+</span></span><span style="display:flex;"><span>                        <span style="color:#0a3069">&#34;HostPort&#34;</span>: <span style="color:#0a3069">&#34;3306&#34;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#0550ae">}</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0550ae">]</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;33060/tcp&#34;</span>: null
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">}</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;SandboxKey&#34;</span>: <span style="color:#0a3069">&#34;/var/run/docker/netns/c6b894c6e93f&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;SecondaryIPAddresses&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;SecondaryIPv6Addresses&#34;</span>: null,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;EndpointID&#34;</span>: <span style="color:#0a3069">&#34;632055c898d3becb5e76e5216cd471daed266f115ab84c18dd4f64da4adbf189&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Gateway&#34;</span>: <span style="color:#0a3069">&#34;172.17.0.1&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;GlobalIPv6Address&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;GlobalIPv6PrefixLen&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;IPAddress&#34;</span>: <span style="color:#0a3069">&#34;172.17.0.8&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;IPPrefixLen&#34;</span>: 16,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;IPv6Gateway&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;MacAddress&#34;</span>: <span style="color:#0a3069">&#34;02:42:ac:11:00:08&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#0a3069">&#34;Networks&#34;</span>: <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0a3069">&#34;bridge&#34;</span>: <span style="color:#0550ae">{</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#0a3069">&#34;IPAMConfig&#34;</span>: null,
+</span></span><span style="display:flex;"><span>                    <span style="color:#0a3069">&#34;Links&#34;</span>: null,
+</span></span><span style="display:flex;"><span>                    <span style="color:#0a3069">&#34;Aliases&#34;</span>: null,
+</span></span><span style="display:flex;"><span>                    <span style="color:#0a3069">&#34;NetworkID&#34;</span>: <span style="color:#0a3069">&#34;df04e694c73a176ccca94ab55253f9ac8937658faf87c4a23a1215e98c114e28&#34;</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#0a3069">&#34;EndpointID&#34;</span>: <span style="color:#0a3069">&#34;632055c898d3becb5e76e5216cd471daed266f115ab84c18dd4f64da4adbf189&#34;</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#0a3069">&#34;Gateway&#34;</span>: <span style="color:#0a3069">&#34;172.17.0.1&#34;</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#0a3069">&#34;IPAddress&#34;</span>: <span style="color:#0a3069">&#34;172.17.0.8&#34;</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#0a3069">&#34;IPPrefixLen&#34;</span>: 16,
+</span></span><span style="display:flex;"><span>                    <span style="color:#0a3069">&#34;IPv6Gateway&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#0a3069">&#34;GlobalIPv6Address&#34;</span>: <span style="color:#0a3069">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#0a3069">&#34;GlobalIPv6PrefixLen&#34;</span>: 0,
+</span></span><span style="display:flex;"><span>                    <span style="color:#0a3069">&#34;MacAddress&#34;</span>: <span style="color:#0a3069">&#34;02:42:ac:11:00:08&#34;</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#0a3069">&#34;DriverOpts&#34;</span>: null
+</span></span><span style="display:flex;"><span>                <span style="color:#0550ae">}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">]</span>
+</span></span><span style="display:flex;"><span>$
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="3查看容器的ip">3、查看容器的ip</h2>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker <span style="color:#0086b3">exec</span> -it containerId ip addr
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker <span style="color:#6639ba">exec</span> -it containerId ip addr
+</span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</div><div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># 类似ip addr命令执行，需要带ip 命令才可以执行，否则会报错，下面样例仅供参考</span>
-$ ip addr
-1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span style="color:#099">65536</span> qdisc noqueue state UNKNOWN qlen <span style="color:#099">1</span>
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
-    inet6 ::1/128 scope host 
-       valid_lft forever preferred_lft forever
-2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#099">1500</span> qdisc mq state UP qlen <span style="color:#099">1000</span>
-    link/ether 00:50:56:87:3e:b8 brd ff:ff:ff:ff:ff:ff
-    inet 10.10.235.111/24 brd 10.10.235.255 scope global eth0
-       valid_lft forever preferred_lft forever
-    inet6 fe80::250:56ff:fe87:3eb8/64 scope link 
-       valid_lft forever preferred_lft forever
-3: docker0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#099">1500</span> qdisc noqueue state UP 
-    link/ether 02:42:b2:e3:13:75 brd ff:ff:ff:ff:ff:ff
-    inet 192.168.0.1/24 scope global docker0
-       valid_lft forever preferred_lft forever
-    inet6 fe80::42:b2ff:fee3:1375/64 scope link 
-       valid_lft forever preferred_lft forever
-7: vethaaab889@if6: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#099">1500</span> qdisc noqueue master docker0 state UP 
-    link/ether 8e:8e:10:a1:a0:92 brd ff:ff:ff:ff:ff:ff link-netnsid <span style="color:#099">1</span>
-    inet6 fe80::8c8e:10ff:fea1:a092/64 scope link 
-       valid_lft forever preferred_lft forever
-9: veth56dcf1b@if8: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#099">1500</span> qdisc noqueue master docker0 state UP 
-    link/ether 6e:ac:31:5f:68:32 brd ff:ff:ff:ff:ff:ff link-netnsid <span style="color:#099">2</span>
-    inet6 fe80::6cac:31ff:fe5f:6832/64 scope link 
-       valid_lft forever preferred_lft forever
-15: veth6e7ba4f@if14: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#099">1500</span> qdisc noqueue master docker0 state UP 
-    link/ether 22:ba:45:08:19:78 brd ff:ff:ff:ff:ff:ff link-netnsid <span style="color:#099">4</span>
-    inet6 fe80::20ba:45ff:fe08:1978/64 scope link 
-       valid_lft forever preferred_lft forever
-You have new mail in /var/spool/mail/root
-
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># 类似ip addr命令执行，需要带ip 命令才可以执行，否则会报错，下面样例仅供参考</span>
+</span></span><span style="display:flex;"><span>$ ip addr
+</span></span><span style="display:flex;"><span>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span style="color:#0550ae">65536</span> qdisc noqueue state UNKNOWN qlen <span style="color:#0550ae">1</span>
+</span></span><span style="display:flex;"><span>    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span><span style="display:flex;"><span>    inet 127.0.0.1/8 scope host lo
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>    inet6 ::1/128 scope host 
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#0550ae">1500</span> qdisc mq state UP qlen <span style="color:#0550ae">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 00:50:56:87:3e:b8 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>    inet 10.10.235.111/24 brd 10.10.235.255 scope global eth0
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>    inet6 fe80::250:56ff:fe87:3eb8/64 scope link 
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>3: docker0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#0550ae">1500</span> qdisc noqueue state UP 
+</span></span><span style="display:flex;"><span>    link/ether 02:42:b2:e3:13:75 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>    inet 192.168.0.1/24 scope global docker0
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>    inet6 fe80::42:b2ff:fee3:1375/64 scope link 
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>7: vethaaab889@if6: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#0550ae">1500</span> qdisc noqueue master docker0 state UP 
+</span></span><span style="display:flex;"><span>    link/ether 8e:8e:10:a1:a0:92 brd ff:ff:ff:ff:ff:ff link-netnsid <span style="color:#0550ae">1</span>
+</span></span><span style="display:flex;"><span>    inet6 fe80::8c8e:10ff:fea1:a092/64 scope link 
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>9: veth56dcf1b@if8: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#0550ae">1500</span> qdisc noqueue master docker0 state UP 
+</span></span><span style="display:flex;"><span>    link/ether 6e:ac:31:5f:68:32 brd ff:ff:ff:ff:ff:ff link-netnsid <span style="color:#0550ae">2</span>
+</span></span><span style="display:flex;"><span>    inet6 fe80::6cac:31ff:fe5f:6832/64 scope link 
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>15: veth6e7ba4f@if14: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#0550ae">1500</span> qdisc noqueue master docker0 state UP 
+</span></span><span style="display:flex;"><span>    link/ether 22:ba:45:08:19:78 brd ff:ff:ff:ff:ff:ff link-netnsid <span style="color:#0550ae">4</span>
+</span></span><span style="display:flex;"><span>    inet6 fe80::20ba:45ff:fe08:1978/64 scope link 
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>You have new mail in /var/spool/mail/root
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="4docker-的网络模式及区别">4、docker 的网络模式及区别</h2>
 <h3 id="41-docker的四种网络模式">4.1 docker的四种网络模式</h3>
@@ -894,38 +892,38 @@ You have new mail in /var/spool/mail/root
 <p>Host &mdash; 与主机共享网络。</p>
 <p>Bridge &mdash; 默认网络模式，通过主机和容器的端口映射（iptable转发）来通信。桥接是在主机上，一般叫docker0。</p>
 <h3 id="42-查看存在的网络配置">4.2 查看存在的网络配置</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker network ls
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker network ls
+</span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</div><div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker network ls
-NETWORK ID     NAME      DRIVER    SCOPE
-df04e694c73a   bridge    bridge    <span style="color:#0086b3">local</span>
-6fed755b2279   host      host      <span style="color:#0086b3">local</span>
-6528a1017fc2   none      null      <span style="color:#0086b3">local</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ docker network ls
+</span></span><span style="display:flex;"><span>NETWORK ID     NAME      DRIVER    SCOPE
+</span></span><span style="display:flex;"><span>df04e694c73a   bridge    bridge    <span style="color:#6639ba">local</span>
+</span></span><span style="display:flex;"><span>6fed755b2279   host      host      <span style="color:#6639ba">local</span>
+</span></span><span style="display:flex;"><span>6528a1017fc2   none      null      <span style="color:#6639ba">local</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="43-docker容器启动时可通过--network--指定网络配置">4.3 docker容器启动时可通过&ndash;network  指定网络配置</h3>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</div><h3 id="43-docker容器启动时可通过network--指定网络配置">4.3 docker容器启动时可通过&ndash;network  指定网络配置</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker run --name elasticsearch -it --network host elasticsearch:7.6.1
-</code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run --name elasticsearch -it --network host elasticsearch:7.6.1
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
         </div>
@@ -943,23 +941,6 @@ df04e694c73a   bridge    bridge    <span style="color:#0086b3">local</span>
 
 
         
-
-<div class="post-archive">
-    <h2>See Also</h2>
-    <ul class="listing">
-        
-        <li><a href="/post/2022-09-13-dockerfile/">dockerfile</a></li>
-        
-        <li><a href="/post/2022-09-06-mac_docker_dev/">Mac配置docker开发工具</a></li>
-        
-        <li><a href="/post/2022-08-11-arthas/">转载-arthas常见用法</a></li>
-        
-        <li><a href="/post/2022-07-11-id_discuss/">几种id浅谈</a></li>
-        
-        <li><a href="/post/2022-06-17-python_req/">python打包-只依赖自己项目引用的module</a></li>
-        
-    </ul>
-</div>
 
 
         <div class="post-meta meta-tags">
@@ -1102,6 +1083,7 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
 
     <script src='/js/asciinema-player.js'></script>
 
+
                 </div>
 
                 <div id="secondary">
@@ -1117,6 +1099,10 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <section class="widget">
         <h3 class="widget-title">最近文章</h3>
 <ul class="widget-list">
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-10-docker_images/" title="日常研究备用的一些镜像记录" target="_blank">日常研究备用的一些镜像记录</a>
+    </li>
     
     <li>
         <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
@@ -1154,10 +1140,6 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
         <a href="https://anTtutu.github.io/post/2022-12-26-covid-19/" title="羊了" target="_blank">羊了</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-12-19-git_delete_history/" title="git删除历史提交记录" target="_blank">git删除历史提交记录</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -1167,225 +1149,229 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://anTtutu.github.io/categories/about/">about (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/android/">android (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/app/">app (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/app/">App (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/aria2/">aria2 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/aria2/">Aria2 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/arm64/">Arm64 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/arthas/">arthas (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/arthas/">Arthas (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/awr/">Awr (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">Backend_execute (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/backup/">Backup (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/blog/">Blog (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/bug/">Bug (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/build/">build (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/build/">Build (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cache/">cache (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cache/">Cache (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/caffeine/">caffeine (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/caffeine/">Caffeine (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/captcha/">captcha (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/captcha/">Captcha (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/check/">check (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/check/">Check (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/claude-code/">claude code (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/claude-code/">Claude Code (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/clean/">Clean (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cli/">cli (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cli/">Cli (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cluster/">Cluster (4)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/covid-19/">covid-19 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/covid-19/">Covid-19 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cve/">Cve (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cygwin/">Cygwin (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">Dataguard (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/db/">db (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/db/">Db (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">Deepfacelab (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/devops/">devops (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/docker/">docker (6)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/docker/">Docker (7)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dockerfile/">dockerfile (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dockerfile/">Dockerfile (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dos/">Dos (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/drawio/">drawio (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/drawio/">Drawio (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dump/">Dump (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">Eclipse (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/explain/">Explain (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/faker/">faker (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/faker/">Faker (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/gcc/">gcc (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/gcc/">Gcc (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/git/">git (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/git/">Git (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/github/">github (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/github/">Github (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/gitment/">Gitment (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">Gitpages (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/go/">go (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/go/">Go (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/h2/">H2 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/h5/">H5 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/ha/">Ha (4)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/http/">Http (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/hugo/">Hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/id/">id (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/id/">Id (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/idea/">idea (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/idea/">Idea (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/images/">images (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/image/">Image (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/images/">Images (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">Java (24)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jenkins/">jenkins (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">Jekyll (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jenkins/">Jenkins (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">Jrebel (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jsr/">jsr (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/js/">Js (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jvm/">jvm (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jsr/">Jsr (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/k8s/">K8s (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/kafka/">Kafka (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (22)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/kali/">Kali (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/kenlm/">Kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (22)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/lombok/">lombok (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/log/">Log (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mac/">mac (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/log4j/">Log4j (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/matplotlib/">matplotlib (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/lombok/">Lombok (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/maven/">maven (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mac/">Mac (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mcp/">mcp (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/matplotlib/">Matplotlib (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mine/">mine (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/maven/">Maven (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mcp/">Mcp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mvnd/">mvnd (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mine/">Mine (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mysql/">mysql (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mongodb/">Mongodb (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/nginx/">nginx (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mvnd/">Mvnd (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/nginx/">Nginx (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/nmap/">Nmap (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/oom/">Oom (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/oss/">oss (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/oracle/">Oracle (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/package/">package (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/orangePi/">OrangePi (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/pages/">pages (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/oss/">Oss (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/pandas/">pandas (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/package/">Package (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/pg/">pg (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/pages/">Pages (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/pandas/">Pandas (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/postgresql/">postgresql (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/pg/">Pg (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">python (9)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/port/">Port (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/postgresql/">Postgresql (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/redis/">redis (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">Python (9)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/rec/">Rec (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/safe/">safe (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/sdk/">sdk (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/regexp/">Regexp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/shell/">shell (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/safe/">Safe (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/skill/">skill (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/sdk/">Sdk (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/skill/">Skill (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/split/">Split (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/spy/">spy (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (4)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/ssd/">ssd (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/spy/">Spy (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/tcp/">tcp (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/sqlmap/">Sqlmap (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/termux/">termux (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/ssd/">Ssd (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/tcp/">Tcp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/testing/">testing (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/termux/">Termux (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/test/">Test (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/testing/">Testing (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/virus/">virus (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (7)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/virus/">Virus (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">Vxvm (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/win10/">Win10 (6)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/zk/">zk (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">Xrebel (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/zookeeper/">zookeeper (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/ynote/">Ynote (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zk/">Zk (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zookeeper/">Zookeeper (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
     
@@ -1398,135 +1384,135 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
-    <a href="https://anTtutu.github.io/tags/about/">about</a>
+    <a href="https://anTtutu.github.io/tags/about/">About</a>
     
-    <a href="https://anTtutu.github.io/tags/android/">android</a>
+    <a href="https://anTtutu.github.io/tags/android/">Android</a>
     
-    <a href="https://anTtutu.github.io/tags/app/">app</a>
+    <a href="https://anTtutu.github.io/tags/app/">App</a>
     
-    <a href="https://anTtutu.github.io/tags/aria2/">aria2</a>
+    <a href="https://anTtutu.github.io/tags/aria2/">Aria2</a>
     
-    <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
+    <a href="https://anTtutu.github.io/tags/arm64/">Arm64</a>
     
-    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    <a href="https://anTtutu.github.io/tags/awr/">Awr</a>
     
-    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    <a href="https://anTtutu.github.io/tags/backup/">Backup</a>
     
-    <a href="https://anTtutu.github.io/tags/blog/">blog</a>
+    <a href="https://anTtutu.github.io/tags/blog/">Blog</a>
     
-    <a href="https://anTtutu.github.io/tags/bug/">bug</a>
+    <a href="https://anTtutu.github.io/tags/bug/">Bug</a>
     
-    <a href="https://anTtutu.github.io/tags/build/">build</a>
+    <a href="https://anTtutu.github.io/tags/build/">Build</a>
     
-    <a href="https://anTtutu.github.io/tags/captcha/">captcha</a>
+    <a href="https://anTtutu.github.io/tags/captcha/">Captcha</a>
     
-    <a href="https://anTtutu.github.io/tags/check/">check</a>
+    <a href="https://anTtutu.github.io/tags/check/">Check</a>
     
-    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    <a href="https://anTtutu.github.io/tags/cluster/">Cluster</a>
     
-    <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    <a href="https://anTtutu.github.io/tags/cygwin/">Cygwin</a>
     
-    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
+    <a href="https://anTtutu.github.io/tags/dataguard/">Dataguard</a>
     
-    <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
+    <a href="https://anTtutu.github.io/tags/deepfacelab/">Deepfacelab</a>
     
-    <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    <a href="https://anTtutu.github.io/tags/dos/">Dos</a>
     
-    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
+    <a href="https://anTtutu.github.io/tags/eclipse/">Eclipse</a>
     
-    <a href="https://anTtutu.github.io/tags/explain/">explain</a>
+    <a href="https://anTtutu.github.io/tags/explain/">Explain</a>
     
-    <a href="https://anTtutu.github.io/tags/gcc/">gcc</a>
+    <a href="https://anTtutu.github.io/tags/gcc/">Gcc</a>
     
-    <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
+    <a href="https://anTtutu.github.io/tags/gitment/">Gitment</a>
     
-    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    <a href="https://anTtutu.github.io/tags/gitpages/">Gitpages</a>
     
-    <a href="https://anTtutu.github.io/tags/go/">go</a>
+    <a href="https://anTtutu.github.io/tags/go/">Go</a>
     
-    <a href="https://anTtutu.github.io/tags/h2/">h2</a>
+    <a href="https://anTtutu.github.io/tags/h2/">H2</a>
     
-    <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    <a href="https://anTtutu.github.io/tags/h5/">H5</a>
     
-    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
+    <a href="https://anTtutu.github.io/tags/ha/">Ha</a>
     
-    <a href="https://anTtutu.github.io/tags/http/">http</a>
+    <a href="https://anTtutu.github.io/tags/http/">Http</a>
     
-    <a href="https://anTtutu.github.io/tags/hugo/">hugo</a>
+    <a href="https://anTtutu.github.io/tags/hugo/">Hugo</a>
     
-    <a href="https://anTtutu.github.io/tags/java/">java</a>
+    <a href="https://anTtutu.github.io/tags/java/">Java</a>
     
-    <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
+    <a href="https://anTtutu.github.io/tags/jekyll/">Jekyll</a>
     
-    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    <a href="https://anTtutu.github.io/tags/jrebel/">Jrebel</a>
     
-    <a href="https://anTtutu.github.io/tags/js/">js</a>
+    <a href="https://anTtutu.github.io/tags/js/">Js</a>
     
-    <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
+    <a href="https://anTtutu.github.io/tags/jsr/">Jsr</a>
     
-    <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    <a href="https://anTtutu.github.io/tags/kafka/">Kafka</a>
     
-    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
+    <a href="https://anTtutu.github.io/tags/kali/">Kali</a>
     
-    <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
+    <a href="https://anTtutu.github.io/tags/kenlm/">Kenlm</a>
     
-    <a href="https://anTtutu.github.io/tags/linux/">linux</a>
+    <a href="https://anTtutu.github.io/tags/linux/">Linux</a>
     
-    <a href="https://anTtutu.github.io/tags/log4j/">log4j</a>
+    <a href="https://anTtutu.github.io/tags/log4j/">Log4j</a>
     
-    <a href="https://anTtutu.github.io/tags/mac/">mac</a>
+    <a href="https://anTtutu.github.io/tags/mac/">Mac</a>
     
-    <a href="https://anTtutu.github.io/tags/mine/">mine</a>
+    <a href="https://anTtutu.github.io/tags/mine/">Mine</a>
     
-    <a href="https://anTtutu.github.io/tags/mongodb/">mongodb</a>
+    <a href="https://anTtutu.github.io/tags/mongodb/">Mongodb</a>
     
-    <a href="https://anTtutu.github.io/tags/mysql/">mysql</a>
+    <a href="https://anTtutu.github.io/tags/mysql/">Mysql</a>
     
-    <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
+    <a href="https://anTtutu.github.io/tags/nginx/">Nginx</a>
     
-    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    <a href="https://anTtutu.github.io/tags/oom/">Oom</a>
     
-    <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
+    <a href="https://anTtutu.github.io/tags/oracle/">Oracle</a>
     
-    <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
+    <a href="https://anTtutu.github.io/tags/orangePi/">OrangePi</a>
     
-    <a href="https://anTtutu.github.io/tags/python/">python</a>
+    <a href="https://anTtutu.github.io/tags/python/">Python</a>
     
-    <a href="https://anTtutu.github.io/tags/rec/">rec</a>
+    <a href="https://anTtutu.github.io/tags/rec/">Rec</a>
     
-    <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    <a href="https://anTtutu.github.io/tags/redis/">Redis</a>
     
-    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
+    <a href="https://anTtutu.github.io/tags/safe/">Safe</a>
     
-    <a href="https://anTtutu.github.io/tags/shell/">shell</a>
+    <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
     
-    <a href="https://anTtutu.github.io/tags/springboot/">springboot</a>
+    <a href="https://anTtutu.github.io/tags/springboot/">Springboot</a>
     
-    <a href="https://anTtutu.github.io/tags/sqlmap/">sqlmap</a>
+    <a href="https://anTtutu.github.io/tags/sqlmap/">Sqlmap</a>
     
-    <a href="https://anTtutu.github.io/tags/ssd/">ssd</a>
+    <a href="https://anTtutu.github.io/tags/ssd/">Ssd</a>
     
-    <a href="https://anTtutu.github.io/tags/tcp/">tcp</a>
+    <a href="https://anTtutu.github.io/tags/tcp/">Tcp</a>
     
-    <a href="https://anTtutu.github.io/tags/termux/">termux</a>
+    <a href="https://anTtutu.github.io/tags/termux/">Termux</a>
     
-    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
     
-    <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
+    <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
     
-    <a href="https://anTtutu.github.io/tags/virus/">virus</a>
+    <a href="https://anTtutu.github.io/tags/virus/">Virus</a>
     
-    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    <a href="https://anTtutu.github.io/tags/vxvm/">Vxvm</a>
     
-    <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    <a href="https://anTtutu.github.io/tags/win10/">Win10</a>
     
-    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
+    <a href="https://anTtutu.github.io/tags/xrebel/">Xrebel</a>
     
-    <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
+    <a href="https://anTtutu.github.io/tags/ynote/">Ynote</a>
     
-    <a href="https://anTtutu.github.io/tags/zk/">zk</a>
+    <a href="https://anTtutu.github.io/tags/zk/">Zk</a>
     
-    <a href="https://anTtutu.github.io/tags/zookeeper/">zookeeper</a>
+    <a href="https://anTtutu.github.io/tags/zookeeper/">Zookeeper</a>
     
     <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
     

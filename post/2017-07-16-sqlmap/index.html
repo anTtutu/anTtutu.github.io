@@ -143,23 +143,23 @@
   <ul>
     <li><a href="#前言">前言</a></li>
     <li><a href="#参数">参数</a></li>
-    <li><a href="#1-u或--url">1、-u或&ndash;url</a></li>
-    <li><a href="#2--level">2、&ndash;level</a></li>
-    <li><a href="#3--risk">3、&ndash;risk</a></li>
-    <li><a href="#4--tamper">4、&ndash;tamper</a></li>
-    <li><a href="#5--dbms">5、&ndash;dbms</a></li>
-    <li><a href="#6--os">6、&ndash;os</a></li>
+    <li><a href="#1-u或url">1、-u或&ndash;url</a></li>
+    <li><a href="#2level">2、&ndash;level</a></li>
+    <li><a href="#3risk">3、&ndash;risk</a></li>
+    <li><a href="#4tamper">4、&ndash;tamper</a></li>
+    <li><a href="#5dbms">5、&ndash;dbms</a></li>
+    <li><a href="#6os">6、&ndash;os</a></li>
     <li><a href="#7-current-user">7、-current-user</a></li>
-    <li><a href="#8--current-db">8、&ndash;current-db</a></li>
-    <li><a href="#9--is-dba">9、&ndash;is-dba</a></li>
-    <li><a href="#10--users">10、&ndash;users</a></li>
-    <li><a href="#11--tables--exclude-sysdbs-d">11、&ndash;tables,&ndash;exclude-sysdbs,-D</a></li>
-    <li><a href="#12--columns-c-t-d">12、&ndash;columns,-C,-T,-D</a></li>
-    <li><a href="#13--dump-c-t-d--start--stop--first--last">13、&ndash;dump,-C,-T,-D,&ndash;start,&ndash;stop,&ndash;first,&ndash;last</a></li>
-    <li><a href="#14--sql-query--sql-shell">14、&ndash;sql-query,&ndash;sql-shell</a></li>
-    <li><a href="#15--cookie--load-cookies--drop-set-cookie">15、&ndash;cookie,&ndash;load-cookies,&ndash;drop-set-cookie</a></li>
-    <li><a href="#16--user-agent--random-agent">16、&ndash;user-agent,&ndash;random-agent</a></li>
-    <li><a href="#17--os-cmd--os-shell">17、&ndash;os-cmd,&ndash;os-shell</a></li>
+    <li><a href="#8current-db">8、&ndash;current-db</a></li>
+    <li><a href="#9is-dba">9、&ndash;is-dba</a></li>
+    <li><a href="#10users">10、&ndash;users</a></li>
+    <li><a href="#11tablesexclude-sysdbs-d">11、&ndash;tables,&ndash;exclude-sysdbs,-D</a></li>
+    <li><a href="#12columns-c-t-d">12、&ndash;columns,-C,-T,-D</a></li>
+    <li><a href="#13dump-c-t-dstartstopfirstlast">13、&ndash;dump,-C,-T,-D,&ndash;start,&ndash;stop,&ndash;first,&ndash;last</a></li>
+    <li><a href="#14sql-querysql-shell">14、&ndash;sql-query,&ndash;sql-shell</a></li>
+    <li><a href="#15cookieload-cookiesdrop-set-cookie">15、&ndash;cookie,&ndash;load-cookies,&ndash;drop-set-cookie</a></li>
+    <li><a href="#16user-agentrandom-agent">16、&ndash;user-agent,&ndash;random-agent</a></li>
+    <li><a href="#17os-cmdos-shell">17、&ndash;os-cmd,&ndash;os-shell</a></li>
   </ul>
 </nav>
     </div>
@@ -240,47 +240,47 @@ Git地址：<a href="https://github.com/sqlmapproject/sqlmap">https://github.com
 前提条件设置好python2.7和环境变量，python3.6也支持只是2.7当前工具更多</p>
 <h2 id="参数">参数</h2>
 <p>以某自己搭建的注入点为例：记录下加搜集的参数含义</p>
-<h2 id="1-u或--url">1、-u或&ndash;url</h2>
+<h2 id="1-u或url">1、-u或&ndash;url</h2>
 <p>格式：http(s)://targeturl[:port]/[…]<br>
 例如：Python sqlmap.py -u &ldquo;<a href="http://www.target.com/vuln.PHP?id=1%22">http://www.target.com/vuln.PHP?id=1&quot;</a> -f &ndash;banner &ndash;dbs &ndash;users</p>
-<h2 id="2--level">2、&ndash;level</h2>
+<h2 id="2level">2、&ndash;level</h2>
 <p>共有五个等级，默认为1，sqlmap使用的payload可以在xml/payloads.xml中看到，你也可以根据相应的格式添加自己的payload。<br>
 这个参数不仅影响使用哪些payload同时也会影响测试的注入点，GET和POST的数据都会测试，HTTP Cookie在level为2的时候就会测试，HTTP User-Agent/Referer头在level为3的时候就会测试。<br>
 总之在你不确定哪个payload或者参数为注入点的时候，为了保证全面性，建议使用高的level值。</p>
-<h2 id="3--risk">3、&ndash;risk</h2>
+<h2 id="3risk">3、&ndash;risk</h2>
 <p>共有四个风险等级，默认是1会测试大部分的测试语句，2会增加基于事件的测试语句，3会增加OR语句的SQL注入测试。<br>
 在有些时候，例如在UPDATE的语句中，注入一个OR的测试语句，可能导致更新的整个表，可能造成很大的风险。<br>
 测试的语句同样可以在xml/payloads.xml中找到，你也可以自行添加payload。</p>
-<h2 id="4--tamper">4、&ndash;tamper</h2>
+<h2 id="4tamper">4、&ndash;tamper</h2>
 <p>sqlmap除了使用CHAR()函数来防止出现单引号之外没有对注入的数据修改，你可以使用&ndash;tamper参数对数据做修改来绕过WAF等设备。</p>
-<h2 id="5--dbms">5、&ndash;dbms</h2>
+<h2 id="5dbms">5、&ndash;dbms</h2>
 <p>默认情况系sqlmap会自动的探测web应用后端的数据库是什么，sqlmap支持的数据库有：<br>
 MySQL、Oracle、PostgreSQL、Microsoft SQL Server、Microsoft Access、SQLite、Firebird、Sybase、SAP MaxDB、DB2</p>
-<h2 id="6--os">6、&ndash;os</h2>
+<h2 id="6os">6、&ndash;os</h2>
 <p>默认情况下sqlmap会自动的探测数据库服务器系统，支持的系统有：Linux、Windows。</p>
 <h2 id="7-current-user">7、-current-user</h2>
 <p>在大多数据库中可以获取到管理数据的用户。</p>
-<h2 id="8--current-db">8、&ndash;current-db</h2>
+<h2 id="8current-db">8、&ndash;current-db</h2>
 <p>返还当前连接的数据库。</p>
-<h2 id="9--is-dba">9、&ndash;is-dba</h2>
+<h2 id="9is-dba">9、&ndash;is-dba</h2>
 <p>判断当前的用户是否为管理，是的话会返回True。</p>
-<h2 id="10--users">10、&ndash;users</h2>
+<h2 id="10users">10、&ndash;users</h2>
 <p>当前用户有权限读取包含所有用户的表的权限时，就可以列出所有管理用户。</p>
-<h2 id="11--tables--exclude-sysdbs-d">11、&ndash;tables,&ndash;exclude-sysdbs,-D</h2>
+<h2 id="11tablesexclude-sysdbs-d">11、&ndash;tables,&ndash;exclude-sysdbs,-D</h2>
 <p>当前用户有权限读取包含所有数据库表信息的表中的时候，即可列出一个特定数据的所有表。<br>
 如果你不提供-D参数来列指定的一个数据的时候，sqlmap会列出数据库所有库的所有表。<br>
 &ndash;exclude-sysdbs参数是指包含了所有的系统数据库。<br>
 需要注意的是在Oracle中你需要提供的是TABLESPACE_NAME而不是数据库名称</p>
-<h2 id="12--columns-c-t-d">12、&ndash;columns,-C,-T,-D</h2>
+<h2 id="12columns-c-t-d">12、&ndash;columns,-C,-T,-D</h2>
 <p>当前用户有权限读取包含所有数据库表信息的表中的时候，即可列出指定数据库表中的字段，同时也会列出字段的数据类型。<br>
 如果没有使用-D参数指定数据库时，默认会使用当前数据库。</p>
-<h2 id="13--dump-c-t-d--start--stop--first--last">13、&ndash;dump,-C,-T,-D,&ndash;start,&ndash;stop,&ndash;first,&ndash;last</h2>
+<h2 id="13dump-c-t-dstartstopfirstlast">13、&ndash;dump,-C,-T,-D,&ndash;start,&ndash;stop,&ndash;first,&ndash;last</h2>
 <p>如果当前管理员有权限读取数据库其中的一个表的话，那么就能获取真个表的所有内容。<br>
 使用-D,-T参数指定想要获取哪个库的哪个表，不适用-D参数时，默认使用当前库。</p>
-<h2 id="14--sql-query--sql-shell">14、&ndash;sql-query,&ndash;sql-shell</h2>
+<h2 id="14sql-querysql-shell">14、&ndash;sql-query,&ndash;sql-shell</h2>
 <p>sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语句。<br>
 如果是SELECT查询语句，sqlap将会输出结果。如果是通过SQL注入执行其他语句，需要测试是否支持多语句执行SQL语句。</p>
-<h2 id="15--cookie--load-cookies--drop-set-cookie">15、&ndash;cookie,&ndash;load-cookies,&ndash;drop-set-cookie</h2>
+<h2 id="15cookieload-cookiesdrop-set-cookie">15、&ndash;cookie,&ndash;load-cookies,&ndash;drop-set-cookie</h2>
 <p>这个参数在以下两个方面很有用：<br>
 1、web应用需要登陆的时候。<br>
 2、你想要在这些头参数中测试SQL注入时。</p>
@@ -288,12 +288,12 @@ MySQL、Oracle、PostgreSQL、Microsoft SQL Server、Microsoft Access、SQLite�
 在HTTP请求中，遇到Set-Cookie的话，sqlmap会自动获取并且在以后的请求中加入，并且会尝试SQL注入。<br>
 如果你不想接受Set-Cookie可以使用&ndash;drop-set-cookie参数来拒接。</p>
 <p>当你使用&ndash;cookie参数时，当返回一个Set-Cookie头的时候，sqlmap会询问你用哪个cookie来继续接下来的请求。当&ndash;level的参数设定为2或者2以上的时候，sqlmap会尝试注入Cookie参数。</p>
-<h2 id="16--user-agent--random-agent">16、&ndash;user-agent,&ndash;random-agent</h2>
+<h2 id="16user-agentrandom-agent">16、&ndash;user-agent,&ndash;random-agent</h2>
 <p>默认情况下sqlmap的HTTP请求头中User-Agent值是：<br>
 sqlmap/1.0-dev-xxxxxxx <a href="http://sqlmap.org">http://sqlmap.org</a><br>
 可以使用&ndash;user-anget参数来修改，同时也可以使用&ndash;random-agnet参数来随机的从./txt/user-agents.txt中获取。<br>
 当&ndash;level参数设定为3或者3以上的时候，会尝试对User-Angent进行注入</p>
-<h2 id="17--os-cmd--os-shell">17、&ndash;os-cmd,&ndash;os-shell</h2>
+<h2 id="17os-cmdos-shell">17、&ndash;os-cmd,&ndash;os-shell</h2>
 <p>当数据库为MySQL，PostgreSQL或Microsoft SQL Server，并且当前用户有权限使用特定的函数。<br>
 在mysql、PostgreSQL，sqlmap上传一个二进制库，包含用户自定义的函数，sys_exec()和sys_eval()。<br>
 那么他创建的这两个函数可以执行系统命令。在Microsoft SQL Server，sqlmap将会使用xp_cmdshell存储过程，如果被禁（在Microsoft SQL Server 2005及以上版本默认禁制），sqlmap会重新启用它，如果不存在，会自动创建</p>
@@ -319,14 +319,6 @@ sqlmap/1.0-dev-xxxxxxx <a href="http://sqlmap.org">http://sqlmap.org</a><br>
     <ul class="listing">
         
         <li><a href="/post/2017-07-15-kali/">初识Kali-linux及其工具</a></li>
-        
-        <li><a href="/post/2017-06-07-shell_use/">linux日常小细节注意说明</a></li>
-        
-        <li><a href="/post/2017-06-06-redis_cli/">Redis日常命令整理</a></li>
-        
-        <li><a href="/post/2017-06-05-jrebel/">eclipse之jrebel热部署插件</a></li>
-        
-        <li><a href="/post/2017-06-04-browser/">市面上所有浏览器内核或UserAgent参数</a></li>
         
     </ul>
 </div>
@@ -480,6 +472,7 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
 
     <script src='/js/asciinema-player.js'></script>
 
+
                 </div>
 
                 <div id="secondary">
@@ -495,6 +488,10 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <section class="widget">
         <h3 class="widget-title">最近文章</h3>
 <ul class="widget-list">
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-10-docker_images/" title="日常研究备用的一些镜像记录" target="_blank">日常研究备用的一些镜像记录</a>
+    </li>
     
     <li>
         <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
@@ -532,10 +529,6 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
         <a href="https://anTtutu.github.io/post/2022-12-26-covid-19/" title="羊了" target="_blank">羊了</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2022-12-19-git_delete_history/" title="git删除历史提交记录" target="_blank">git删除历史提交记录</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -545,225 +538,229 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://anTtutu.github.io/categories/about/">about (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/android/">android (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/app/">app (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/app/">App (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/aria2/">aria2 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/aria2/">Aria2 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/arm64/">arm64 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/arm64/">Arm64 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/arthas/">arthas (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/arthas/">Arthas (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/awr/">awr (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/awr/">Awr (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/backend_execute/">backend_execute (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">Backend_execute (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/backup/">backup (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/backup/">Backup (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/blog/">blog (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/blog/">Blog (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/bug/">bug (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/bug/">Bug (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/build/">build (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/build/">Build (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cache/">cache (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cache/">Cache (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/caffeine/">caffeine (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/caffeine/">Caffeine (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/captcha/">captcha (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/captcha/">Captcha (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/check/">check (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/check/">Check (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/claude-code/">claude code (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/claude-code/">Claude Code (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/clean/">clean (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/clean/">Clean (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cli/">cli (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cli/">Cli (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cluster/">cluster (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cluster/">Cluster (4)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/covid-19/">covid-19 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/covid-19/">Covid-19 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cve/">cve (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cve/">Cve (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/cygwin/">cygwin (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/cygwin/">Cygwin (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dataguard/">dataguard (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">Dataguard (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/db/">db (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/db/">Db (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">deepfacelab (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">Deepfacelab (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/devops/">devops (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/docker/">docker (6)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/docker/">Docker (7)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dockerfile/">dockerfile (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dockerfile/">Dockerfile (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dos/">dos (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dos/">Dos (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/drawio/">drawio (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/drawio/">Drawio (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/dump/">dump (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/dump/">Dump (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/eclipse/">eclipse (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">Eclipse (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/explain/">explain (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/explain/">Explain (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/faker/">faker (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/faker/">Faker (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/gcc/">gcc (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/gcc/">Gcc (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/git/">git (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/git/">Git (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/github/">github (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/github/">Github (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/gitment/">gitment (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/gitment/">Gitment (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/gitpages/">gitpages (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">Gitpages (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/go/">go (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/go/">Go (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/h2/">h2 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/h2/">H2 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/h5/">h5 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/h5/">H5 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/ha/">ha (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/ha/">Ha (4)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/http/">http (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/http/">Http (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/hugo/">hugo (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/hugo/">Hugo (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/id/">id (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/id/">Id (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/idea/">idea (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/idea/">Idea (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/images/">images (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/image/">Image (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">java (24)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/images/">Images (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jekyll/">jekyll (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">Java (24)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jenkins/">jenkins (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">Jekyll (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jrebel/">jrebel (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jenkins/">Jenkins (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/js/">js (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">Jrebel (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jsr/">jsr (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/js/">Js (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jvm/">jvm (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jsr/">Jsr (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/kafka/">kafka (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/kali/">kali (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/k8s/">K8s (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/kenlm/">kenlm (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/kafka/">Kafka (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">linux (22)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/kali/">Kali (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/log/">log (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/kenlm/">Kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/log4j/">log4j (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (22)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/lombok/">lombok (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/log/">Log (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mac/">mac (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/log4j/">Log4j (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/matplotlib/">matplotlib (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/lombok/">Lombok (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/maven/">maven (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mac/">Mac (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mcp/">mcp (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/matplotlib/">Matplotlib (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mine/">mine (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/maven/">Maven (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mongodb/">mongodb (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mcp/">Mcp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mvnd/">mvnd (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mine/">Mine (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mysql/">mysql (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mongodb/">Mongodb (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/nginx/">nginx (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mvnd/">Mvnd (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/nmap/">nmap (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/oom/">oom (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/nginx/">Nginx (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/oracle/">oracle (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/nmap/">Nmap (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/orangePi/">orangePi (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/oom/">Oom (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/oss/">oss (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/oracle/">Oracle (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/package/">package (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/orangePi/">OrangePi (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/pages/">pages (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/oss/">Oss (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/pandas/">pandas (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/package/">Package (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/pg/">pg (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/pages/">Pages (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/port/">port (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/pandas/">Pandas (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/postgresql/">postgresql (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/pg/">Pg (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">python (9)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/port/">Port (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/rec/">rec (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/postgresql/">Postgresql (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/redis/">redis (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">Python (9)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/regexp/">regexp (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/rec/">Rec (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/safe/">safe (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/sdk/">sdk (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/regexp/">Regexp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/shell/">shell (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/safe/">Safe (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/skill/">skill (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/sdk/">Sdk (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/split/">split (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springboot/">springboot (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/skill/">Skill (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springcloud/">springcloud (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/split/">Split (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/spy/">spy (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (4)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/sqlmap/">sqlmap (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/ssd/">ssd (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/spy/">Spy (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/tcp/">tcp (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/sqlmap/">Sqlmap (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/termux/">termux (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/ssd/">Ssd (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/test/">test (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/tcp/">Tcp (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/testing/">testing (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/termux/">Termux (2)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/union_id/">union_id (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/test/">Test (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/vcs/">vcs (7)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/testing/">Testing (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/virus/">virus (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/vxvm/">vxvm (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (7)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/win10/">win10 (6)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/virus/">Virus (5)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/xrebel/">xrebel (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">Vxvm (3)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/ynote/">ynote (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/win10/">Win10 (6)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/zk/">zk (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">Xrebel (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/zookeeper/">zookeeper (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/ynote/">Ynote (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zk/">Zk (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zookeeper/">Zookeeper (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
     
@@ -776,135 +773,135 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
-    <a href="https://anTtutu.github.io/tags/about/">about</a>
+    <a href="https://anTtutu.github.io/tags/about/">About</a>
     
-    <a href="https://anTtutu.github.io/tags/android/">android</a>
+    <a href="https://anTtutu.github.io/tags/android/">Android</a>
     
-    <a href="https://anTtutu.github.io/tags/app/">app</a>
+    <a href="https://anTtutu.github.io/tags/app/">App</a>
     
-    <a href="https://anTtutu.github.io/tags/aria2/">aria2</a>
+    <a href="https://anTtutu.github.io/tags/aria2/">Aria2</a>
     
-    <a href="https://anTtutu.github.io/tags/arm64/">arm64</a>
+    <a href="https://anTtutu.github.io/tags/arm64/">Arm64</a>
     
-    <a href="https://anTtutu.github.io/tags/awr/">awr</a>
+    <a href="https://anTtutu.github.io/tags/awr/">Awr</a>
     
-    <a href="https://anTtutu.github.io/tags/backup/">backup</a>
+    <a href="https://anTtutu.github.io/tags/backup/">Backup</a>
     
-    <a href="https://anTtutu.github.io/tags/blog/">blog</a>
+    <a href="https://anTtutu.github.io/tags/blog/">Blog</a>
     
-    <a href="https://anTtutu.github.io/tags/bug/">bug</a>
+    <a href="https://anTtutu.github.io/tags/bug/">Bug</a>
     
-    <a href="https://anTtutu.github.io/tags/build/">build</a>
+    <a href="https://anTtutu.github.io/tags/build/">Build</a>
     
-    <a href="https://anTtutu.github.io/tags/captcha/">captcha</a>
+    <a href="https://anTtutu.github.io/tags/captcha/">Captcha</a>
     
-    <a href="https://anTtutu.github.io/tags/check/">check</a>
+    <a href="https://anTtutu.github.io/tags/check/">Check</a>
     
-    <a href="https://anTtutu.github.io/tags/cluster/">cluster</a>
+    <a href="https://anTtutu.github.io/tags/cluster/">Cluster</a>
     
-    <a href="https://anTtutu.github.io/tags/cygwin/">cygwin</a>
+    <a href="https://anTtutu.github.io/tags/cygwin/">Cygwin</a>
     
-    <a href="https://anTtutu.github.io/tags/dataguard/">dataguard</a>
+    <a href="https://anTtutu.github.io/tags/dataguard/">Dataguard</a>
     
-    <a href="https://anTtutu.github.io/tags/deepfacelab/">deepfacelab</a>
+    <a href="https://anTtutu.github.io/tags/deepfacelab/">Deepfacelab</a>
     
-    <a href="https://anTtutu.github.io/tags/dos/">dos</a>
+    <a href="https://anTtutu.github.io/tags/dos/">Dos</a>
     
-    <a href="https://anTtutu.github.io/tags/eclipse/">eclipse</a>
+    <a href="https://anTtutu.github.io/tags/eclipse/">Eclipse</a>
     
-    <a href="https://anTtutu.github.io/tags/explain/">explain</a>
+    <a href="https://anTtutu.github.io/tags/explain/">Explain</a>
     
-    <a href="https://anTtutu.github.io/tags/gcc/">gcc</a>
+    <a href="https://anTtutu.github.io/tags/gcc/">Gcc</a>
     
-    <a href="https://anTtutu.github.io/tags/gitment/">gitment</a>
+    <a href="https://anTtutu.github.io/tags/gitment/">Gitment</a>
     
-    <a href="https://anTtutu.github.io/tags/gitpages/">gitpages</a>
+    <a href="https://anTtutu.github.io/tags/gitpages/">Gitpages</a>
     
-    <a href="https://anTtutu.github.io/tags/go/">go</a>
+    <a href="https://anTtutu.github.io/tags/go/">Go</a>
     
-    <a href="https://anTtutu.github.io/tags/h2/">h2</a>
+    <a href="https://anTtutu.github.io/tags/h2/">H2</a>
     
-    <a href="https://anTtutu.github.io/tags/h5/">h5</a>
+    <a href="https://anTtutu.github.io/tags/h5/">H5</a>
     
-    <a href="https://anTtutu.github.io/tags/ha/">ha</a>
+    <a href="https://anTtutu.github.io/tags/ha/">Ha</a>
     
-    <a href="https://anTtutu.github.io/tags/http/">http</a>
+    <a href="https://anTtutu.github.io/tags/http/">Http</a>
     
-    <a href="https://anTtutu.github.io/tags/hugo/">hugo</a>
+    <a href="https://anTtutu.github.io/tags/hugo/">Hugo</a>
     
-    <a href="https://anTtutu.github.io/tags/java/">java</a>
+    <a href="https://anTtutu.github.io/tags/java/">Java</a>
     
-    <a href="https://anTtutu.github.io/tags/jekyll/">jekyll</a>
+    <a href="https://anTtutu.github.io/tags/jekyll/">Jekyll</a>
     
-    <a href="https://anTtutu.github.io/tags/jrebel/">jrebel</a>
+    <a href="https://anTtutu.github.io/tags/jrebel/">Jrebel</a>
     
-    <a href="https://anTtutu.github.io/tags/js/">js</a>
+    <a href="https://anTtutu.github.io/tags/js/">Js</a>
     
-    <a href="https://anTtutu.github.io/tags/jsr/">jsr</a>
+    <a href="https://anTtutu.github.io/tags/jsr/">Jsr</a>
     
-    <a href="https://anTtutu.github.io/tags/kafka/">kafka</a>
+    <a href="https://anTtutu.github.io/tags/kafka/">Kafka</a>
     
-    <a href="https://anTtutu.github.io/tags/kali/">kali</a>
+    <a href="https://anTtutu.github.io/tags/kali/">Kali</a>
     
-    <a href="https://anTtutu.github.io/tags/kenlm/">kenlm</a>
+    <a href="https://anTtutu.github.io/tags/kenlm/">Kenlm</a>
     
-    <a href="https://anTtutu.github.io/tags/linux/">linux</a>
+    <a href="https://anTtutu.github.io/tags/linux/">Linux</a>
     
-    <a href="https://anTtutu.github.io/tags/log4j/">log4j</a>
+    <a href="https://anTtutu.github.io/tags/log4j/">Log4j</a>
     
-    <a href="https://anTtutu.github.io/tags/mac/">mac</a>
+    <a href="https://anTtutu.github.io/tags/mac/">Mac</a>
     
-    <a href="https://anTtutu.github.io/tags/mine/">mine</a>
+    <a href="https://anTtutu.github.io/tags/mine/">Mine</a>
     
-    <a href="https://anTtutu.github.io/tags/mongodb/">mongodb</a>
+    <a href="https://anTtutu.github.io/tags/mongodb/">Mongodb</a>
     
-    <a href="https://anTtutu.github.io/tags/mysql/">mysql</a>
+    <a href="https://anTtutu.github.io/tags/mysql/">Mysql</a>
     
-    <a href="https://anTtutu.github.io/tags/nginx/">nginx</a>
+    <a href="https://anTtutu.github.io/tags/nginx/">Nginx</a>
     
-    <a href="https://anTtutu.github.io/tags/oom/">oom</a>
+    <a href="https://anTtutu.github.io/tags/oom/">Oom</a>
     
-    <a href="https://anTtutu.github.io/tags/oracle/">oracle</a>
+    <a href="https://anTtutu.github.io/tags/oracle/">Oracle</a>
     
-    <a href="https://anTtutu.github.io/tags/orangePi/">orangePi</a>
+    <a href="https://anTtutu.github.io/tags/orangePi/">OrangePi</a>
     
-    <a href="https://anTtutu.github.io/tags/python/">python</a>
+    <a href="https://anTtutu.github.io/tags/python/">Python</a>
     
-    <a href="https://anTtutu.github.io/tags/rec/">rec</a>
+    <a href="https://anTtutu.github.io/tags/rec/">Rec</a>
     
-    <a href="https://anTtutu.github.io/tags/redis/">redis</a>
+    <a href="https://anTtutu.github.io/tags/redis/">Redis</a>
     
-    <a href="https://anTtutu.github.io/tags/safe/">safe</a>
+    <a href="https://anTtutu.github.io/tags/safe/">Safe</a>
     
-    <a href="https://anTtutu.github.io/tags/shell/">shell</a>
+    <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
     
-    <a href="https://anTtutu.github.io/tags/springboot/">springboot</a>
+    <a href="https://anTtutu.github.io/tags/springboot/">Springboot</a>
     
-    <a href="https://anTtutu.github.io/tags/sqlmap/">sqlmap</a>
+    <a href="https://anTtutu.github.io/tags/sqlmap/">Sqlmap</a>
     
-    <a href="https://anTtutu.github.io/tags/ssd/">ssd</a>
+    <a href="https://anTtutu.github.io/tags/ssd/">Ssd</a>
     
-    <a href="https://anTtutu.github.io/tags/tcp/">tcp</a>
+    <a href="https://anTtutu.github.io/tags/tcp/">Tcp</a>
     
-    <a href="https://anTtutu.github.io/tags/termux/">termux</a>
+    <a href="https://anTtutu.github.io/tags/termux/">Termux</a>
     
-    <a href="https://anTtutu.github.io/tags/union_id/">union_id</a>
+    <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
     
-    <a href="https://anTtutu.github.io/tags/vcs/">vcs</a>
+    <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
     
-    <a href="https://anTtutu.github.io/tags/virus/">virus</a>
+    <a href="https://anTtutu.github.io/tags/virus/">Virus</a>
     
-    <a href="https://anTtutu.github.io/tags/vxvm/">vxvm</a>
+    <a href="https://anTtutu.github.io/tags/vxvm/">Vxvm</a>
     
-    <a href="https://anTtutu.github.io/tags/win10/">win10</a>
+    <a href="https://anTtutu.github.io/tags/win10/">Win10</a>
     
-    <a href="https://anTtutu.github.io/tags/xrebel/">xrebel</a>
+    <a href="https://anTtutu.github.io/tags/xrebel/">Xrebel</a>
     
-    <a href="https://anTtutu.github.io/tags/ynote/">ynote</a>
+    <a href="https://anTtutu.github.io/tags/ynote/">Ynote</a>
     
-    <a href="https://anTtutu.github.io/tags/zk/">zk</a>
+    <a href="https://anTtutu.github.io/tags/zk/">Zk</a>
     
-    <a href="https://anTtutu.github.io/tags/zookeeper/">zookeeper</a>
+    <a href="https://anTtutu.github.io/tags/zookeeper/">Zookeeper</a>
     
     <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
     

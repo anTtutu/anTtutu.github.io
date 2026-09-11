@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>zk on Anttu&#39;s Blog</title>
-    <link>https://anTtutu.github.io/tags/zk/</link>
-    <description>Recent content in zk on Anttu&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <lastBuildDate>Sat, 10 Apr 2021 00:29:47 +0800</lastBuildDate><atom:link href="https://anTtutu.github.io/tags/zk/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>kafka集群和zk集群搭建</title>
-      <link>https://anTtutu.github.io/post/2021-04-10-kafka_zookeeper_cluster_install/</link>
-      <pubDate>Sat, 10 Apr 2021 00:29:47 +0800</pubDate>
-      
-      <guid>https://anTtutu.github.io/post/2021-04-10-kafka_zookeeper_cluster_install/</guid>
-      <description>前言 一台应用的第三方服务器的kafka只有3个分区，测试一直存在积压的消息，搭建了一套最简单集群测试下，记录中间的参数。 1、准备工作 1.1 环境准备 环境 版本 说明 centos 7.0 操作系统服务器，3台 JDK 1.8.261 安装好jdk并设置好环境变量 zookeeper 3.4.9 zk官方安装包 kafka 2.2.0_2.12 kafka官方安装包 1.2 服务器 IP 端口 说明 192.168.211.125 zk:2181 zk he</description>
-    </item>
-    
-  </channel>
+	<channel>
+		<title>Zk on Anttu&#39;s Blog</title>
+		<link>https://anTtutu.github.io/tags/zk/</link>
+		<description>Recent content in Zk on Anttu&#39;s Blog</description>
+		<generator>Hugo</generator>
+		<language>zh-CN</language>
+		
+		
+		
+		
+			<lastBuildDate>Sat, 10 Apr 2021 00:29:47 +0800</lastBuildDate>
+		
+			<atom:link href="https://anTtutu.github.io/tags/zk/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>kafka集群和zk集群搭建</title>
+				<link>https://anTtutu.github.io/post/2021-04-10-kafka_zookeeper_cluster_install/</link>
+				<pubDate>Sat, 10 Apr 2021 00:29:47 +0800</pubDate>
+				<guid>https://anTtutu.github.io/post/2021-04-10-kafka_zookeeper_cluster_install/</guid>
+				<description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;一台应用的第三方服务器的kafka只有3个分区，测试一直存在积压的消息，搭建了一套最简单集群测试下，记录中间的参数。&lt;/p&gt;&#xA;&lt;h2 id=&#34;1准备工作&#34;&gt;1、准备工作&lt;/h2&gt;&#xA;&lt;h3 id=&#34;11-环境准备&#34;&gt;1.1 环境准备&lt;/h3&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;环境&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;版本&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;说明&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;centos&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;7.0&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;操作系统服务器，3台&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;JDK&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1.8.261&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;安装好jdk并设置好环境变量&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;zookeeper&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3.4.9&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;zk官方安装包&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;kafka&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2.2.0_2.12&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;kafka官方安装包&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h3 id=&#34;12-服务器&#34;&gt;1.2 服务器&lt;/h3&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;IP&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;端口&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;说明&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;192.168.211.125&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;zk:2181&lt;br&gt;zk heartbeat:2888、3888&lt;br&gt;kafka:9092&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;zk默认端口&lt;br&gt;zk心跳默认端口&lt;br&gt;kafka默认监听端口&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;192.168.211.126&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;zk:2181&lt;br&gt;zk heartbeat:2888、3888&lt;br&gt;kafka:9092&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;zk默认端口&lt;br&gt;zk心跳默认端口&lt;br&gt;kafka默认监听端口&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;192.168.211.127&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;zk:2181&lt;br&gt;zk heartbeat:2888、3888&lt;br&gt;kafka:9092&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;zk默认端口&lt;br&gt;zk心跳默认端口&lt;br&gt;kafka默认监听端口&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h3 id=&#34;13-目录规划&#34;&gt;1.3 目录规划&lt;/h3&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;中间件&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;安装目录&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;数据目录&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;日志目录&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;说明&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;jdk&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;/home/jdk_version&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;-&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;-&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Oracle jdk是直接tgz解压的，只需要安装目录&lt;br&gt;openjdk不需要这个目录规划&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;zk&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;/home/zookeeper_version&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;/opt/data/zookeeper&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;/opt/data/zookeeper/zkdata&lt;br&gt;/opt/data/zookeeper/zklogs&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;zkdata是zk的数据目录，zklogs是日志目录&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;kafka&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;/home/kafaka_version&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;/opt/data/kafka&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;/opt/data/kafka/kafka_logs&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;kafka_logs是日志目录&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;2下载zk&#34;&gt;2、下载zk&lt;/h2&gt;&#xA;&lt;p&gt;官网：&lt;a href=&#34;https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/&#34;&gt;https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/&lt;/a&gt;&lt;br&gt;&#xA;下载地址：&lt;a href=&#34;https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/zookeeper-3.4.9.tar.gz&#34;&gt;https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/zookeeper-3.4.9.tar.gz&lt;/a&gt;&lt;/p&gt;</description>
+			</item>
+	</channel>
 </rss>
