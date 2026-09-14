@@ -76,6 +76,126 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-09-06-mac_docker_dev/" title="Mac配置docker开发工具" target="_blank">Mac配置docker开发工具</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年9月6日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/docker' target="_blank">docker</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/mac' target="_blank">mac</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>2020年整了一套android下的termux开发环境，今天继续配置一套docker下的开发环境。<a href="/post/2020-09-28-android_termux">termux搭建参考</a></p>
+<p>开发电脑环境准备如下：</p>
+<table>
+	<thead>
+			<tr>
+					<th>系统</th>
+					<th>版本</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>MacOS</td>
+					<td>10.14.6</td>
+			</tr>
+			<tr>
+					<td>docker</td>
+					<td>20.10.12</td>
+			</tr>
+	</tbody>
+</table>
+<p>待安装的开发工具环境如下：</p>
+<table>
+	<thead>
+			<tr>
+					<th>镜像</th>
+					<th>版本</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>mongo</td>
+					<td>6.0</td>
+			</tr>
+			<tr>
+					<td>redis</td>
+					<td>7.0</td>
+			</tr>
+			<tr>
+					<td>mysql</td>
+					<td>8.0</td>
+			</tr>
+			<tr>
+					<td>nginx</td>
+					<td>1.22.0</td>
+			</tr>
+			<tr>
+					<td>minio</td>
+					<td>latest</td>
+			</tr>
+			<tr>
+					<td>etcd</td>
+					<td>latest</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="1查询docker进程">1、查询docker进程</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>launchctl list <span style="color:#1f2328">|</span> grep docker
+</span></span><span style="display:flex;"><span>-	0	com.docker.helper
+</span></span><span style="display:flex;"><span>14047	0	com.docker.docker.47840
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2停止启动docker进程">2、停止、启动docker进程</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>launchctl stop com.docker.docker.47840 <span style="color:#0550ae">&amp;&amp;</span> launchctl start com.docker.docker.47840
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3启动docker">3、启动docker</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>open /Applications/Docker.app
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="ps">PS:</h4>
+<blockquote>
+<p>目前通过 open /Applications/Docker.app 可以启动，通过 launchctl start com.docker.docker.xxx 方式不能启动了。</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-09-06-mac_docker_dev/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2022-08-11-arthas/" title="转载-arthas常见用法" target="_blank">转载-arthas常见用法</a>
             </h1>
         </header>
@@ -567,47 +687,6 @@
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-02-07-spring_cli/" title="springboot cli&amp;springcloud cli简单介绍" target="_blank">springboot cli&amp;springcloud cli简单介绍</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年2月7日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/java' target="_blank">java</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/springboot' target="_blank">springboot</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/cli' target="_blank">cli</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>尝试了下springboot cli和spring cloud cli 命令，整理了下参数和创建项目的介绍</p>
-<h2 id="1下载">1、下载</h2>
-<h3 id="11-下载springboot-cli安装包">1.1 下载springboot cli安装包</h3>
-<p>官方介绍：<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started.html#getting-started.system-requirements">https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started.html#getting-started.system-requirements</a></p>
-<h4 id="注意">注意：</h4>
-<p>需要核对版本支持的jdk、maven、gradle、springboot版本，不能过于追求最新版本，比如springboot3.0.0.M1就只支持jdk17</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-02-07-spring_cli/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -737,6 +816,10 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-09-14-sdkman_issue/" title="sdkman与conda冲突问题解决" target="_blank">sdkman与conda冲突问题解决</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-09-10-docker_images/" title="日常研究备用的一些镜像记录" target="_blank">日常研究备用的一些镜像记录</a>
     </li>
     
@@ -770,10 +853,6 @@
     
     <li>
         <a href="https://anTtutu.github.io/post/2024-04-15-postgresql/" title="postgresql数据库常用记录" target="_blank">postgresql数据库常用记录</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2023-06-16-miner_virus_5/" title="挖矿病毒5-私有云机房挖矿病毒定位" target="_blank">挖矿病毒5-私有云机房挖矿病毒定位</a>
     </li>
     
 </ul>
@@ -824,6 +903,8 @@
     <li><a href="https://anTtutu.github.io/categories/cli/">Cli (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cluster/">Cluster (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/conda/">Conda (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/covid-19/">Covid-19 (1)</a></li>
     
@@ -970,6 +1051,8 @@
     <li><a href="https://anTtutu.github.io/categories/safe/">Safe (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sdk/">Sdk (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdkman/">Sdkman (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/shell/">Shell (3)</a></li>
     

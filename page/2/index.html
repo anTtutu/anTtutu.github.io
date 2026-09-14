@@ -76,6 +76,57 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2023-06-16-miner_virus_5/" title="挖矿病毒5-私有云机房挖矿病毒定位" target="_blank">挖矿病毒5-私有云机房挖矿病毒定位</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2023年6月16日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/mine' target="_blank">mine</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/virus' target="_blank">virus</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/linux' target="_blank">linux</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/check' target="_blank">check</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>6月16日晚，一位朋友咨询說私有云机房服务器有占用cpu比较高的进程无法kill，我通过向日葵远程跳板机分析了下，发现一些不同于以往挖矿病毒有趣的现象，总结下</p>
+<h2 id="1初查">1、初查</h2>
+<p>初步筛查，发现crontab、top如其他挖矿病毒差不多</p>
+<h3 id="11-进程名称模仿系统进程">1.1 进程名称模仿系统进程</h3>
+<p>
+        <img class="mx-auto" alt="" src="/posts/virus/top5.png" />   
+    
+初步看进程名kthreaddk，这个挖矿的进程名挺像内核进程kthreadd，但是系统内核进程不太可能cpu占用异常，就继续往下检查
+
+        <img class="mx-auto" alt="" src="/posts/virus/crontab5.png" />   
+    
+查看crontab，发现异常，结果多次执行，发现路径会变。。。，总结下规律，发现一直在/dev/cpu/、/dev/mapper/、/dev/disk/、/dev/一直出现在这几层跳跃</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2023-06-16-miner_virus_5/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2022-12-26-covid-19/" title="羊了" target="_blank">羊了</a>
             </h1>
         </header>
@@ -1327,126 +1378,6 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-09-06-mac_docker_dev/" title="Mac配置docker开发工具" target="_blank">Mac配置docker开发工具</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年9月6日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/docker' target="_blank">docker</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/mac' target="_blank">mac</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>2020年整了一套android下的termux开发环境，今天继续配置一套docker下的开发环境。<a href="/post/2020-09-28-android_termux">termux搭建参考</a></p>
-<p>开发电脑环境准备如下：</p>
-<table>
-	<thead>
-			<tr>
-					<th>系统</th>
-					<th>版本</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>MacOS</td>
-					<td>10.14.6</td>
-			</tr>
-			<tr>
-					<td>docker</td>
-					<td>20.10.12</td>
-			</tr>
-	</tbody>
-</table>
-<p>待安装的开发工具环境如下：</p>
-<table>
-	<thead>
-			<tr>
-					<th>镜像</th>
-					<th>版本</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>mongo</td>
-					<td>6.0</td>
-			</tr>
-			<tr>
-					<td>redis</td>
-					<td>7.0</td>
-			</tr>
-			<tr>
-					<td>mysql</td>
-					<td>8.0</td>
-			</tr>
-			<tr>
-					<td>nginx</td>
-					<td>1.22.0</td>
-			</tr>
-			<tr>
-					<td>minio</td>
-					<td>latest</td>
-			</tr>
-			<tr>
-					<td>etcd</td>
-					<td>latest</td>
-			</tr>
-	</tbody>
-</table>
-<h2 id="1查询docker进程">1、查询docker进程</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>launchctl list <span style="color:#1f2328">|</span> grep docker
-</span></span><span style="display:flex;"><span>-	0	com.docker.helper
-</span></span><span style="display:flex;"><span>14047	0	com.docker.docker.47840
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="2停止启动docker进程">2、停止、启动docker进程</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>launchctl stop com.docker.docker.47840 <span style="color:#0550ae">&amp;&amp;</span> launchctl start com.docker.docker.47840
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="3启动docker">3、启动docker</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>open /Applications/Docker.app
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="ps">PS:</h4>
-<blockquote>
-<p>目前通过 open /Applications/Docker.app 可以启动，通过 launchctl start com.docker.docker.xxx 方式不能启动了。</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-09-06-mac_docker_dev/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -1569,6 +1500,10 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-09-14-sdkman_issue/" title="sdkman与conda冲突问题解决" target="_blank">sdkman与conda冲突问题解决</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-09-10-docker_images/" title="日常研究备用的一些镜像记录" target="_blank">日常研究备用的一些镜像记录</a>
     </li>
     
@@ -1602,10 +1537,6 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     
     <li>
         <a href="https://anTtutu.github.io/post/2024-04-15-postgresql/" title="postgresql数据库常用记录" target="_blank">postgresql数据库常用记录</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2023-06-16-miner_virus_5/" title="挖矿病毒5-私有云机房挖矿病毒定位" target="_blank">挖矿病毒5-私有云机房挖矿病毒定位</a>
     </li>
     
 </ul>
@@ -1656,6 +1587,8 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     <li><a href="https://anTtutu.github.io/categories/cli/">Cli (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cluster/">Cluster (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/conda/">Conda (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/covid-19/">Covid-19 (1)</a></li>
     
@@ -1802,6 +1735,8 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     <li><a href="https://anTtutu.github.io/categories/safe/">Safe (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sdk/">Sdk (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdkman/">Sdkman (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/shell/">Shell (3)</a></li>
     

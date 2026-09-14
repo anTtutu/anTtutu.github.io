@@ -77,6 +77,144 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-04-10-kafka_zookeeper_cluster_install/" title="kafka集群和zk集群搭建" target="_blank">kafka集群和zk集群搭建</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年4月10日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/kafka' target="_blank">kafka</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/zookeeper' target="_blank">zookeeper</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/zk' target="_blank">zk</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/java' target="_blank">java</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>一台应用的第三方服务器的kafka只有3个分区，测试一直存在积压的消息，搭建了一套最简单集群测试下，记录中间的参数。</p>
+<h2 id="1准备工作">1、准备工作</h2>
+<h3 id="11-环境准备">1.1 环境准备</h3>
+<table>
+	<thead>
+			<tr>
+					<th>环境</th>
+					<th>版本</th>
+					<th>说明</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>centos</td>
+					<td>7.0</td>
+					<td>操作系统服务器，3台</td>
+			</tr>
+			<tr>
+					<td>JDK</td>
+					<td>1.8.261</td>
+					<td>安装好jdk并设置好环境变量</td>
+			</tr>
+			<tr>
+					<td>zookeeper</td>
+					<td>3.4.9</td>
+					<td>zk官方安装包</td>
+			</tr>
+			<tr>
+					<td>kafka</td>
+					<td>2.2.0_2.12</td>
+					<td>kafka官方安装包</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="12-服务器">1.2 服务器</h3>
+<table>
+	<thead>
+			<tr>
+					<th>IP</th>
+					<th>端口</th>
+					<th>说明</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>192.168.211.125</td>
+					<td>zk:2181<br>zk heartbeat:2888、3888<br>kafka:9092</td>
+					<td>zk默认端口<br>zk心跳默认端口<br>kafka默认监听端口</td>
+			</tr>
+			<tr>
+					<td>192.168.211.126</td>
+					<td>zk:2181<br>zk heartbeat:2888、3888<br>kafka:9092</td>
+					<td>zk默认端口<br>zk心跳默认端口<br>kafka默认监听端口</td>
+			</tr>
+			<tr>
+					<td>192.168.211.127</td>
+					<td>zk:2181<br>zk heartbeat:2888、3888<br>kafka:9092</td>
+					<td>zk默认端口<br>zk心跳默认端口<br>kafka默认监听端口</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="13-目录规划">1.3 目录规划</h3>
+<table>
+	<thead>
+			<tr>
+					<th>中间件</th>
+					<th>安装目录</th>
+					<th>数据目录</th>
+					<th>日志目录</th>
+					<th>说明</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>jdk</td>
+					<td>/home/jdk_version</td>
+					<td>-</td>
+					<td>-</td>
+					<td>Oracle jdk是直接tgz解压的，只需要安装目录<br>openjdk不需要这个目录规划</td>
+			</tr>
+			<tr>
+					<td>zk</td>
+					<td>/home/zookeeper_version</td>
+					<td>/opt/data/zookeeper</td>
+					<td>/opt/data/zookeeper/zkdata<br>/opt/data/zookeeper/zklogs</td>
+					<td>zkdata是zk的数据目录，zklogs是日志目录</td>
+			</tr>
+			<tr>
+					<td>kafka</td>
+					<td>/home/kafaka_version</td>
+					<td>/opt/data/kafka</td>
+					<td>/opt/data/kafka/kafka_logs</td>
+					<td>kafka_logs是日志目录</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="2下载zk">2、下载zk</h2>
+<p>官网：<a href="https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/">https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/</a><br>
+下载地址：<a href="https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/zookeeper-3.4.9.tar.gz">https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/zookeeper-3.4.9.tar.gz</a></p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2021-04-10-kafka_zookeeper_cluster_install/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2021-03-29-change_face/" title="deepfacelab使用介绍" target="_blank">deepfacelab使用介绍</a>
             </h1>
         </header>
@@ -472,62 +610,6 @@ rc文件命名test.exe.rc</p>
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2020-09-28-android_termux/" title="android下安装termux模拟器-超便携linux" target="_blank">android下安装termux模拟器-超便携linux</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2020年9月28日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/android' target="_blank">android</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/termux' target="_blank">termux</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>临近2020年国庆8天长假，因需要安装信息安全管理软件，由自带mbp更换公司的matebook新笔记本，想着还是用android机配置一套服务器环境更加便携，便试试找下不需要root的android模拟器，没想到还真找到了。</p>
-<p>有2套方案：</p>
-<table>
-	<thead>
-			<tr>
-					<th>序号</th>
-					<th>App</th>
-					<th>备注</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>1</td>
-					<td>linux deploy</td>
-					<td>android下完美运行linux神器，需要root</td>
-			</tr>
-			<tr>
-					<td>2</td>
-					<td>termux</td>
-					<td>另外一个android下的linux模拟器神器，不需root</td>
-			</tr>
-	</tbody>
-</table>
-<h2 id="1准备">1、准备</h2>
-<p>android手机一部，建议用吃灰的手机，不需要太新也不需要太旧，建议android版本5.0或者以上，android版本7.0比较好。</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2020-09-28-android_termux/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -671,6 +753,10 @@ rc文件命名test.exe.rc</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-09-14-sdkman_issue/" title="sdkman与conda冲突问题解决" target="_blank">sdkman与conda冲突问题解决</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-09-10-docker_images/" title="日常研究备用的一些镜像记录" target="_blank">日常研究备用的一些镜像记录</a>
     </li>
     
@@ -704,10 +790,6 @@ rc文件命名test.exe.rc</p>
     
     <li>
         <a href="https://anTtutu.github.io/post/2024-04-15-postgresql/" title="postgresql数据库常用记录" target="_blank">postgresql数据库常用记录</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2023-06-16-miner_virus_5/" title="挖矿病毒5-私有云机房挖矿病毒定位" target="_blank">挖矿病毒5-私有云机房挖矿病毒定位</a>
     </li>
     
 </ul>
@@ -758,6 +840,8 @@ rc文件命名test.exe.rc</p>
     <li><a href="https://anTtutu.github.io/categories/cli/">Cli (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cluster/">Cluster (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/conda/">Conda (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/covid-19/">Covid-19 (1)</a></li>
     
@@ -904,6 +988,8 @@ rc文件命名test.exe.rc</p>
     <li><a href="https://anTtutu.github.io/categories/safe/">Safe (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sdk/">Sdk (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdkman/">Sdkman (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/shell/">Shell (3)</a></li>
     

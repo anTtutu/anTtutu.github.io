@@ -76,6 +76,354 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2026-09-14-sdkman_issue/" title="sdkman与conda冲突问题解决" target="_blank">sdkman与conda冲突问题解决</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2026年9月14日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/sdkman' target="_blank">sdkman</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/conda' target="_blank">conda</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>最近发现sdkman使用有点异常，执行sdk list的时候显示离线状态，无法查看支持的软件清单</p>
+<h2 id="1分析">1、分析</h2>
+<p>如何是发现问题经过：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">129
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">130
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">131
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">132
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">133
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">134
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">135
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">136
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">137
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">138
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">139
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">140
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">141
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">142
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">143
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">144
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">145
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">146
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">147
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">148
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">149
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">150
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">151
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">152
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">153
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0550ae">(</span>base<span style="color:#0550ae">)</span> ➜  **** git:<span style="color:#0550ae">(</span>dev-ui<span style="color:#0550ae">)</span> sdk current
+</span></span><span style="display:flex;"><span>Current default versions:
+</span></span><span style="display:flex;"><span>ant 1.10.5-apache
+</span></span><span style="display:flex;"><span>gradle 9.4-apache
+</span></span><span style="display:flex;"><span>java 21-oracle-local
+</span></span><span style="display:flex;"><span>jmeter 5.1-apache
+</span></span><span style="display:flex;"><span>kotlin 2.3.20-local
+</span></span><span style="display:flex;"><span>maven 3.9.14-apache
+</span></span><span style="display:flex;"><span>mvnd 1.0.4-apache
+</span></span><span style="display:flex;"><span>tomcat 7-apache
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">(</span>base<span style="color:#0550ae">)</span> ➜  **** git:<span style="color:#0550ae">(</span>dev-ui<span style="color:#0550ae">)</span> sdk <span style="color:#953800">list</span>
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">====</span> INTERNET NOT REACHABLE! <span style="color:#0550ae">===================================================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> Some functionality is disabled or only partially available.
+</span></span><span style="display:flex;"><span> If this persists, please <span style="color:#6639ba">enable</span> the offline mode:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   $ sdk <span style="color:#953800">offline</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">================================================================================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>This <span style="color:#6639ba">command</span> is not available <span style="color:#cf222e">while</span> offline.
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">(</span>base<span style="color:#0550ae">)</span> ➜  **** git:<span style="color:#0550ae">(</span>dev-ui<span style="color:#0550ae">)</span> sdk --help
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">====</span> INTERNET NOT REACHABLE! <span style="color:#0550ae">===================================================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> Some functionality is disabled or only partially available.
+</span></span><span style="display:flex;"><span> If this persists, please <span style="color:#6639ba">enable</span> the offline mode:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   $ sdk <span style="color:#953800">offline</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">================================================================================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Invalid command: --help
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NAME
+</span></span><span style="display:flex;"><span>    sdk - The <span style="color:#6639ba">command</span> line interface <span style="color:#0550ae">(</span>CLI<span style="color:#0550ae">)</span> <span style="color:#cf222e">for</span> SDKMAN!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SYNOPSIS
+</span></span><span style="display:flex;"><span>    sdk &lt;subcommand&gt; <span style="color:#0550ae">[</span>candidate<span style="color:#0550ae">]</span> <span style="color:#0550ae">[</span>version<span style="color:#0550ae">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>DESCRIPTION
+</span></span><span style="display:flex;"><span>    SDKMAN! is a tool <span style="color:#cf222e">for</span> managing parallel versions of multiple JVM related
+</span></span><span style="display:flex;"><span>    Software Development Kits on most Unix based systems. It provides a
+</span></span><span style="display:flex;"><span>    convenient Command Line Interface <span style="color:#0550ae">(</span>CLI<span style="color:#0550ae">)</span> and API <span style="color:#cf222e">for</span> installing, switching,
+</span></span><span style="display:flex;"><span>    removing and listing Candidates.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SUBCOMMANDS <span style="color:#1f2328">&amp;</span> QUALIFIERS
+</span></span><span style="display:flex;"><span>    <span style="color:#6639ba">help</span>         <span style="color:#0550ae">[</span>subcommand<span style="color:#0550ae">]</span>
+</span></span><span style="display:flex;"><span>    install      &lt;candidate&gt; <span style="color:#0550ae">[</span>version<span style="color:#0550ae">]</span> <span style="color:#0550ae">[</span>path<span style="color:#0550ae">]</span>
+</span></span><span style="display:flex;"><span>    uninstall    &lt;candidate&gt; &lt;version&gt;
+</span></span><span style="display:flex;"><span>    list         <span style="color:#0550ae">[</span>candidate<span style="color:#0550ae">]</span>
+</span></span><span style="display:flex;"><span>    use          &lt;candidate&gt; &lt;version&gt;
+</span></span><span style="display:flex;"><span>    config       no qualifier
+</span></span><span style="display:flex;"><span>    default      &lt;candidate&gt; <span style="color:#0550ae">[</span>version<span style="color:#0550ae">]</span>
+</span></span><span style="display:flex;"><span>    home         &lt;candidate&gt; &lt;version&gt;
+</span></span><span style="display:flex;"><span>    env          <span style="color:#0550ae">[</span>init<span style="color:#1f2328">|</span>install<span style="color:#1f2328">|</span>clear<span style="color:#0550ae">]</span>
+</span></span><span style="display:flex;"><span>    current      <span style="color:#0550ae">[</span>candidate<span style="color:#0550ae">]</span>
+</span></span><span style="display:flex;"><span>    upgrade      <span style="color:#0550ae">[</span>candidate<span style="color:#0550ae">]</span>
+</span></span><span style="display:flex;"><span>    version      no qualifier
+</span></span><span style="display:flex;"><span>    offline      <span style="color:#0550ae">[</span>enable<span style="color:#1f2328">|</span>disable<span style="color:#0550ae">]</span>
+</span></span><span style="display:flex;"><span>    selfupdate   <span style="color:#0550ae">[</span>force<span style="color:#0550ae">]</span>
+</span></span><span style="display:flex;"><span>    update       no qualifier
+</span></span><span style="display:flex;"><span>    flush        <span style="color:#0550ae">[</span>tmp<span style="color:#1f2328">|</span>metadata<span style="color:#1f2328">|</span>version<span style="color:#0550ae">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>EXAMPLES
+</span></span><span style="display:flex;"><span>    sdk install java 17.0.0-tem
+</span></span><span style="display:flex;"><span>    sdk <span style="color:#6639ba">help</span> install
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">(</span>base<span style="color:#0550ae">)</span> ➜  **** git:<span style="color:#0550ae">(</span>dev-ui<span style="color:#0550ae">)</span> sdk <span style="color:#953800">update</span>
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">====</span> INTERNET NOT REACHABLE! <span style="color:#0550ae">===================================================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> Some functionality is disabled or only partially available.
+</span></span><span style="display:flex;"><span> If this persists, please <span style="color:#6639ba">enable</span> the offline mode:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   $ sdk <span style="color:#953800">offline</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">================================================================================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">(</span>base<span style="color:#0550ae">)</span> ➜  **** git:<span style="color:#0550ae">(</span>dev-ui<span style="color:#0550ae">)</span> sdk version
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SDKMAN!
+</span></span><span style="display:flex;"><span>script: 5.21.0
+</span></span><span style="display:flex;"><span>native: 0.7.21 <span style="color:#0550ae">(</span>macos x86_64<span style="color:#0550ae">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">(</span>base<span style="color:#0550ae">)</span> ➜  **** git:<span style="color:#0550ae">(</span>dev-ui<span style="color:#0550ae">)</span> curl -vvv https://api.sdkman.io/2
+</span></span><span style="display:flex;"><span>* Host api.sdkman.io:443 was resolved.
+</span></span><span style="display:flex;"><span>* IPv6: <span style="color:#0550ae">(</span>none<span style="color:#0550ae">)</span>
+</span></span><span style="display:flex;"><span>* IPv4: 45.55.42.78
+</span></span><span style="display:flex;"><span>*   Trying 45.55.42.78:443...
+</span></span><span style="display:flex;"><span>* Connected to api.sdkman.io <span style="color:#0550ae">(</span>45.55.42.78<span style="color:#0550ae">)</span> port <span style="color:#0550ae">443</span>
+</span></span><span style="display:flex;"><span>* ALPN: curl offers h2,http/1.1
+</span></span><span style="display:flex;"><span>* <span style="color:#0550ae">(</span>304<span style="color:#0550ae">)</span> <span style="color:#0550ae">(</span>OUT<span style="color:#0550ae">)</span>, TLS handshake, Client hello <span style="color:#0550ae">(</span>1<span style="color:#0550ae">)</span>:
+</span></span><span style="display:flex;"><span>*  CAfile: /etc/ssl/cert.pem
+</span></span><span style="display:flex;"><span>*  CApath: none
+</span></span><span style="display:flex;"><span>* <span style="color:#0550ae">(</span>304<span style="color:#0550ae">)</span> <span style="color:#0550ae">(</span>IN<span style="color:#0550ae">)</span>, TLS handshake, Server hello <span style="color:#0550ae">(</span>2<span style="color:#0550ae">)</span>:
+</span></span><span style="display:flex;"><span>* <span style="color:#0550ae">(</span>304<span style="color:#0550ae">)</span> <span style="color:#0550ae">(</span>IN<span style="color:#0550ae">)</span>, TLS handshake, Unknown <span style="color:#0550ae">(</span>8<span style="color:#0550ae">)</span>:
+</span></span><span style="display:flex;"><span>* <span style="color:#0550ae">(</span>304<span style="color:#0550ae">)</span> <span style="color:#0550ae">(</span>IN<span style="color:#0550ae">)</span>, TLS handshake, Certificate <span style="color:#0550ae">(</span>11<span style="color:#0550ae">)</span>:
+</span></span><span style="display:flex;"><span>* <span style="color:#0550ae">(</span>304<span style="color:#0550ae">)</span> <span style="color:#0550ae">(</span>IN<span style="color:#0550ae">)</span>, TLS handshake, CERT verify <span style="color:#0550ae">(</span>15<span style="color:#0550ae">)</span>:
+</span></span><span style="display:flex;"><span>* <span style="color:#0550ae">(</span>304<span style="color:#0550ae">)</span> <span style="color:#0550ae">(</span>IN<span style="color:#0550ae">)</span>, TLS handshake, Finished <span style="color:#0550ae">(</span>20<span style="color:#0550ae">)</span>:
+</span></span><span style="display:flex;"><span>* <span style="color:#0550ae">(</span>304<span style="color:#0550ae">)</span> <span style="color:#0550ae">(</span>OUT<span style="color:#0550ae">)</span>, TLS handshake, Finished <span style="color:#0550ae">(</span>20<span style="color:#0550ae">)</span>:
+</span></span><span style="display:flex;"><span>* SSL connection using TLSv1.3 / AEAD-AES256-GCM-SHA384 / <span style="color:#0550ae">[</span>blank<span style="color:#0550ae">]</span> / UNDEF
+</span></span><span style="display:flex;"><span>* ALPN: server accepted http/1.1
+</span></span><span style="display:flex;"><span>* Server certificate:
+</span></span><span style="display:flex;"><span>*  subject: <span style="color:#953800">CN</span><span style="color:#0550ae">=</span>*.sdkman.io
+</span></span><span style="display:flex;"><span>*  start date: Mar <span style="color:#0550ae">28</span> 00:00:00 <span style="color:#0550ae">2026</span> GMT
+</span></span><span style="display:flex;"><span>*  expire date: Oct <span style="color:#0550ae">12</span> 23:59:59 <span style="color:#0550ae">2026</span> GMT
+</span></span><span style="display:flex;"><span>*  subjectAltName: host <span style="color:#0a3069">&#34;api.sdkman.io&#34;</span> matched cert<span style="color:#f6f8fa;background-color:#82071e">&#39;</span>s <span style="color:#0a3069">&#34;*.sdkman.io&#34;</span>
+</span></span><span style="display:flex;"><span>*  issuer: <span style="color:#953800">C</span><span style="color:#0550ae">=</span>GB<span style="color:#1f2328">;</span> <span style="color:#953800">O</span><span style="color:#0550ae">=</span>Sectigo Limited<span style="color:#1f2328">;</span> <span style="color:#953800">CN</span><span style="color:#0550ae">=</span>Sectigo Public Server Authentication CA DV R36
+</span></span><span style="display:flex;"><span>*  SSL certificate verify ok.
+</span></span><span style="display:flex;"><span>* using HTTP/1.x
+</span></span><span style="display:flex;"><span>&gt; GET /2 HTTP/1.1
+</span></span><span style="display:flex;"><span>&gt; Host: api.sdkman.io
+</span></span><span style="display:flex;"><span>&gt; User-Agent: curl/8.7.1
+</span></span><span style="display:flex;"><span>&gt; Accept: */*
+</span></span><span style="display:flex;"><span>&gt;
+</span></span><span style="display:flex;"><span>* Request completely sent off
+</span></span><span style="display:flex;"><span>&lt; HTTP/1.1 <span style="color:#0550ae">404</span> Not Found
+</span></span><span style="display:flex;"><span>&lt; Server: nginx/1.19.10
+</span></span><span style="display:flex;"><span>&lt; Date: Sun, <span style="color:#0550ae">13</span> Sep <span style="color:#0550ae">2026</span> 10:05:16 GMT
+</span></span><span style="display:flex;"><span>&lt; Content-Type: text/html
+</span></span><span style="display:flex;"><span>&lt; Content-Length: <span style="color:#0550ae">154</span>
+</span></span><span style="display:flex;"><span>&lt; Connection: keep-alive
+</span></span><span style="display:flex;"><span>&lt;
+</span></span><span style="display:flex;"><span>&lt;html&gt;
+</span></span><span style="display:flex;"><span>&lt;head&gt;&lt;title&gt;404 Not Found&lt;/title&gt;&lt;/head&gt;
+</span></span><span style="display:flex;"><span>&lt;body&gt;
+</span></span><span style="display:flex;"><span>&lt;center&gt;&lt;h1&gt;404 Not Found&lt;/h1&gt;&lt;/center&gt;
+</span></span><span style="display:flex;"><span>&lt;hr&gt;&lt;center&gt;nginx/1.19.10&lt;/center&gt;
+</span></span><span style="display:flex;"><span>&lt;/body&gt;
+</span></span><span style="display:flex;"><span>&lt;/html&gt;
+</span></span><span style="display:flex;"><span>* Connection <span style="color:#57606a">#0 to host api.sdkman.io left intact</span>
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">(</span>base<span style="color:#0550ae">)</span> ➜  **** git:<span style="color:#0550ae">(</span>dev-ui<span style="color:#0550ae">)</span> sdk offline disable
+</span></span><span style="display:flex;"><span>Online mode re-enabled!
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">(</span>base<span style="color:#0550ae">)</span> ➜  **** git:<span style="color:#0550ae">(</span>dev-ui<span style="color:#0550ae">)</span> sdk <span style="color:#953800">list</span>
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">====</span> INTERNET NOT REACHABLE! <span style="color:#0550ae">===================================================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> Some functionality is disabled or only partially available.
+</span></span><span style="display:flex;"><span> If this persists, please <span style="color:#6639ba">enable</span> the offline mode:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   $ sdk <span style="color:#953800">offline</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">================================================================================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>This <span style="color:#6639ba">command</span> is not available <span style="color:#cf222e">while</span> offline.
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">(</span>base<span style="color:#0550ae">)</span> ➜  **** git:<span style="color:#0550ae">(</span>dev-ui<span style="color:#0550ae">)</span> which -a curl
+</span></span><span style="display:flex;"><span>/usr/bin/curl
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">(</span>base<span style="color:#0550ae">)</span> ➜  **** git:<span style="color:#0550ae">(</span>dev-ui<span style="color:#0550ae">)</span> conda deactivate
+</span></span><span style="display:flex;"><span>➜  **** git:<span style="color:#0550ae">(</span>dev-ui<span style="color:#0550ae">)</span> sdk offline disable
+</span></span><span style="display:flex;"><span>Online mode re-enabled!
+</span></span><span style="display:flex;"><span>➜  **** git:<span style="color:#0550ae">(</span>dev-ui<span style="color:#0550ae">)</span> sdk list
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">[</span>1<span style="color:#0550ae">]</span>  + <span style="color:#0550ae">25118</span> suspended
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2找问题">2、找问题</h2>
+<p>测试curl找需要联网才能访问的网页正常</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2026-09-14-sdkman_issue/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2026-09-10-docker_images/" title="日常研究备用的一些镜像记录" target="_blank">日常研究备用的一些镜像记录</a>
             </h1>
         </header>
@@ -1473,57 +1821,6 @@
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2023-06-16-miner_virus_5/" title="挖矿病毒5-私有云机房挖矿病毒定位" target="_blank">挖矿病毒5-私有云机房挖矿病毒定位</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2023年6月16日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/mine' target="_blank">mine</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/virus' target="_blank">virus</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/linux' target="_blank">linux</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/check' target="_blank">check</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>6月16日晚，一位朋友咨询說私有云机房服务器有占用cpu比较高的进程无法kill，我通过向日葵远程跳板机分析了下，发现一些不同于以往挖矿病毒有趣的现象，总结下</p>
-<h2 id="1初查">1、初查</h2>
-<p>初步筛查，发现crontab、top如其他挖矿病毒差不多</p>
-<h3 id="11-进程名称模仿系统进程">1.1 进程名称模仿系统进程</h3>
-<p>
-        <img class="mx-auto" alt="" src="/posts/virus/top5.png" />   
-    
-初步看进程名kthreaddk，这个挖矿的进程名挺像内核进程kthreadd，但是系统内核进程不太可能cpu占用异常，就继续往下检查
-
-        <img class="mx-auto" alt="" src="/posts/virus/crontab5.png" />   
-    
-查看crontab，发现异常，结果多次执行，发现路径会变。。。，总结下规律，发现一直在/dev/cpu/、/dev/mapper/、/dev/disk/、/dev/一直出现在这几层跳跃</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2023-06-16-miner_virus_5/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -1635,6 +1932,10 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-09-14-sdkman_issue/" title="sdkman与conda冲突问题解决" target="_blank">sdkman与conda冲突问题解决</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-09-10-docker_images/" title="日常研究备用的一些镜像记录" target="_blank">日常研究备用的一些镜像记录</a>
     </li>
     
@@ -1668,10 +1969,6 @@
     
     <li>
         <a href="https://anTtutu.github.io/post/2024-04-15-postgresql/" title="postgresql数据库常用记录" target="_blank">postgresql数据库常用记录</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2023-06-16-miner_virus_5/" title="挖矿病毒5-私有云机房挖矿病毒定位" target="_blank">挖矿病毒5-私有云机房挖矿病毒定位</a>
     </li>
     
 </ul>
@@ -1722,6 +2019,8 @@
     <li><a href="https://anTtutu.github.io/categories/cli/">Cli (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/cluster/">Cluster (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/conda/">Conda (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/covid-19/">Covid-19 (1)</a></li>
     
@@ -1868,6 +2167,8 @@
     <li><a href="https://anTtutu.github.io/categories/safe/">Safe (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/sdk/">Sdk (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdkman/">Sdkman (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/shell/">Shell (3)</a></li>
     
