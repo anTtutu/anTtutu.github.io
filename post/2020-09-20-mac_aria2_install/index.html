@@ -157,7 +157,11 @@
     <li><a href="#4编译">4、编译</a></li>
     <li><a href="#5设置aria2的配置文件可选">5、设置aria2的配置文件(可选)</a></li>
     <li><a href="#6测试下载">6、测试下载</a></li>
-    <li><a href="#7注意">7、注意</a></li>
+    <li><a href="#7注意">7、注意</a>
+      <ul>
+        <li><a href="#issue参考">issue参考</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
     </div>
@@ -237,7 +241,7 @@
 <pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/aria2/aria2.git
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone --depth<span style="color:#0550ae">=</span><span style="color:#0550ae">1</span> https://github.com/aria2/aria2.git
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="2提前准备mac的编译环境">2、提前准备Mac的编译环境</h2>
@@ -382,42 +386,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>好的，到这里为止我们全部修改完成，保存退出。</p>
-<h2 id="4编译">4、编译</h2>
-<p>每一步都没ERROR，注意查看控制台信息并排错，如果前面编译环境准备到位，应该不会编译环节报错的</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>autoreconf -i
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>autoconf configure.ac
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>autoconf -i
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>./configure
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>make check
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>sudo make
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>sudo make install
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>make install执行完没有任何报错表示安装成功</p>
-<p>检测aria2c命令，可以出现参数介绍</p>
+<p>修改参数解读，实际上就是让aria2更加激进，分包多线程下载</p>
 <div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -444,6 +413,194 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#1f2328">1.</span> <span style="color:#0a3069">PREF_MAX_CONNECTION_PER_SERVER（-x）</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">修改内容：默认值从</span> <span style="color:#0a3069">&#34;1&#34; 改成 &#34;128&#34;，最大值从 16 改成 -1（表示无上限）。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">参数含义：--max-connection-per-server，同一台服务器最多允许几个连接。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">aria2</span> <span style="color:#0a3069">把文件分成多块，每块可以从同一个服务器用不同连接并行下载。默认只允许 1 个连接，意味着即使服务器支持多连接，aria2 也不会用。改成 128 后，单服务器可以开最多 128 个连接并行拉取，对支持多连接的高速服务器提速明显。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">2.</span> <span style="color:#0a3069">PREF_MIN_SPLIT_SIZE（-k）</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">修改内容：默认值从</span> <span style="color:#0a3069">&#34;20M&#34; 改成 &#34;4K&#34;，最小值从 1_m 改成 1_k。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">参数含义：--min-split-size，文件分片的最小大小。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">aria2</span> <span style="color:#0a3069">决定“要不要把文件拆成多块并行下载”时，会看文件大小是否超过这个阈值。默认 20M 意味着小于 20M 的文件不拆分，只用一个连接。改成 4K 后，几乎任何文件都会被拆成多块，从而触发多连接并行下载。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">3.</span> <span style="color:#0a3069">PREF_CONNECT_TIMEOUT</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">修改内容：默认值从</span> <span style="color:#0a3069">&#34;60&#34; 改成 &#34;30&#34;。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">参数含义：--connect-timeout，建立连接的超时时间（秒）。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">默认</span> <span style="color:#0a3069">60 秒意味着如果一个服务器 60 秒内没连上，aria2 才会放弃并重试。改成 30 秒后，连接失败能更快被发现，从而更快切换到备用连接或重试，减少等待时间。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">4.</span> <span style="color:#0a3069">PREF_PIECE_LENGTH（--piece-length）</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">修改内容：默认值从</span> <span style="color:#0a3069">&#34;1M&#34; 改成 &#34;4k&#34;，最小值从 1_m 改成 1_k。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">参数含义：--piece-length，分片长度。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">这个参数和</span> <span style="color:#0a3069">BitTorrent 的“piece”概念类似，它决定每个分片有多大。分片越小，理论上并行粒度越细，但元数据开销也越大。改成 4K 是为了让小文件也能被拆得更细，配合前面的 min-split-size，让更多文件走多连接下载。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">5.</span> <span style="color:#0a3069">PREF_RETRY_WAIT（--retry-wait）</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">修改内容：默认值从</span> <span style="color:#0a3069">&#34;0&#34; 改成 &#34;2&#34;。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">参数含义：--retry-wait，重试前的等待秒数。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">默认</span> <span style="color:#0a3069">0 表示失败后立刻重试，容易在服务器短暂抖动时反复撞墙。改成 2 秒后，每次重试前先等 2 秒，给服务器一点恢复时间，降低无效重试。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">6.</span> <span style="color:#0a3069">PREF_SPLIT（-s）</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">修改内容：默认值从</span> <span style="color:#0a3069">&#34;5&#34; 改成 &#34;8&#34;。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">参数含义：--split，单个文件最多分成几块并行下载。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">默认</span> <span style="color:#0a3069">5 表示一个文件最多拆成 5 块同时下。改成 8 后，并行度更高，配合前面的 max-connection-per-server=128，可以同时开更多连接抢带宽。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">提醒</span><span style="color:#0550ae">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">这些改动是把</span> <span style="color:#0a3069">aria2 的默认行为推向“激进多连接”。对支持多连接的高速服务器效果很好，但如果遇到限速严格或对连接数敏感的服务器，反而可能触发风控、被限流甚至封 IP。建议在 aria2.conf 里按需覆盖</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4编译">4、编译</h2>
+<p>每一步都没ERROR，注意查看控制台信息并排错，如果前面编译环境准备到位，应该不会编译环节报错的</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># 下载github依赖包</span>
+</span></span><span style="display:flex;"><span>autoreconf -i
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># mac下可以用macos的TLS</span>
+</span></span><span style="display:flex;"><span>./configure --without-openssl --without-gnutls --with-appletls
+</span></span><span style="display:flex;"><span>或
+</span></span><span style="display:flex;"><span>./configure
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 测试可以忽略，一般会报错，如果报错可以忽略直接make &amp;&amp; make install，底下会展示报错样例</span>
+</span></span><span style="display:flex;"><span>make check
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 多线程编译</span>
+</span></span><span style="display:flex;"><span>sudo make -j<span style="color:#cf222e">$(</span>sysctl -n hw.ncpu<span style="color:#cf222e">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sudo make install
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>make install执行完没有任何报错表示安装成功</p>
+<p>make check我个人碰到下面错，可以忽略</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ld: warning: -bind_at_load is deprecated on macOS
+</span></span><span style="display:flex;"><span>/Library/Developer/CommandLineTools/usr/bin/make  check-TESTS
+</span></span><span style="display:flex;"><span>FAIL: <span style="color:#953800">aria2c</span>
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">============================================================================</span>
+</span></span><span style="display:flex;"><span>Testsuite summary <span style="color:#cf222e">for</span> aria2 1.37.0
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">============================================================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># TOTAL: 1</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># PASS:  0</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># SKIP:  0</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># XFAIL: 0</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># FAIL:  1</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># XPASS: 0</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># ERROR: 0</span>
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">============================================================================</span>
+</span></span><span style="display:flex;"><span>See test/test-suite.log <span style="color:#cf222e">for</span> debugging.
+</span></span><span style="display:flex;"><span>Some test<span style="color:#0550ae">(</span>s<span style="color:#0550ae">)</span> failed.  Please report this to https://github.com/aria2/aria2/issues,
+</span></span><span style="display:flex;"><span>together with the test-suite.log file <span style="color:#0550ae">(</span>gzipped<span style="color:#0550ae">)</span> and your system
+</span></span><span style="display:flex;"><span>information.  Thanks.
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">============================================================================</span>
+</span></span><span style="display:flex;"><span>make<span style="color:#0550ae">[</span>3<span style="color:#0550ae">]</span>: *** <span style="color:#0550ae">[</span>test-suite.log<span style="color:#0550ae">]</span> Error <span style="color:#0550ae">1</span>
+</span></span><span style="display:flex;"><span>make<span style="color:#0550ae">[</span>2<span style="color:#0550ae">]</span>: *** <span style="color:#0550ae">[</span>check-TESTS<span style="color:#0550ae">]</span> Error <span style="color:#0550ae">2</span>
+</span></span><span style="display:flex;"><span>make<span style="color:#0550ae">[</span>1<span style="color:#0550ae">]</span>: *** <span style="color:#0550ae">[</span>check-am<span style="color:#0550ae">]</span> Error <span style="color:#0550ae">2</span>
+</span></span><span style="display:flex;"><span>make: *** <span style="color:#0550ae">[</span>check-recursive<span style="color:#0550ae">]</span> Error <span style="color:#0550ae">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>检测aria2c命令，可以出现参数介绍</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt; aria2c -h
@@ -464,7 +621,8 @@
 </span></span><span style="display:flex;"><span>                              <span style="color:#0a3069">&#34;#http&#34;</span>. If non-tag word is given, print the usage
 </span></span><span style="display:flex;"><span>                              <span style="color:#cf222e">for</span> the options whose name includes that word.
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>                              Possible Values: <span style="color:#57606a">#basic, #advanced, #http, #https, #ftp, #metalink, #bittorrent, #cookie, #hook, #file, #rpc, #checksum, #experimental, #deprecated, #help, #all</span>
+</span></span><span style="display:flex;"><span>                              Possible Values: <span style="color:#57606a">#basic, #advanced, #http, #https, #ftp,#metalink, #bittorrent,</span>
+</span></span><span style="display:flex;"><span>                              <span style="color:#57606a">#cookie, #hook, #file, #rpc, #checksum, #experimental, #deprecated, #help, #all</span>
 </span></span><span style="display:flex;"><span>                              Default: <span style="color:#57606a">#basic</span>
 </span></span><span style="display:flex;"><span>                              Tags: <span style="color:#57606a">#basic, #help</span>
 </span></span><span style="display:flex;"><span>
@@ -764,7 +922,8 @@
 </span></span><span style="display:flex;"><span><span style="color:#1f2328">enable-rpc</span><span style="color:#0550ae">=</span><span style="color:#0a3069">true</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>issue：<a href="https://github.com/aria2/aria2/issues/1379">https://github.com/aria2/aria2/issues/1379</a></p>
+</div><h3 id="issue参考">issue参考</h3>
+<p>issue参考：<a href="https://github.com/aria2/aria2/issues/1379">https://github.com/aria2/aria2/issues/1379</a></p>
 
         </div>
 
