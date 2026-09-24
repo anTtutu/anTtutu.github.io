@@ -355,6 +355,11 @@ textarea {
     line-height: 1.7;
     color:#444;
     padding-top:27px;
+    /* 长URL、长英文单词允许断行，避免撑破内容栏挤占右侧边栏（中文不受影响） */
+    overflow-wrap: break-word;
+    /* 正文内容栏整体横向滚动兜底：Markdown表格单元格里的长命令/异常、
+       无语言标注的裸pre等未受.highlight保护的超宽内容，都在栏内滚动不再压穿侧栏 */
+    overflow-x: auto;
 }
 .post-content h2,.post-content h3,.post-content h4,.post-content h5,.post-content h6 {
     color: #ba3925;
@@ -366,6 +371,12 @@ textarea {
     margin: 1.4em 0 1.1em;
     border-bottom: 1px solid #eee;
     overflow: hidden;
+}
+/* Chroma代码高亮（lineNos=true时生成 行号+代码 的双列table）：
+   table最小宽度由最长代码行决定，超宽时会溢出内容栏。这里让超宽代码块
+   在自身容器内横向滚动，不再挤占右侧边栏（Hugo 0.64时代起就存在的老问题） */
+.post-content .highlight {
+    overflow-x: auto;
 }
 .post-content pre{
     padding: 1em;
@@ -388,6 +399,8 @@ textarea {
     padding:1em 0;
     margin: auto;
     display: block;
+    /* 大图不超出内容栏（原先仅窄屏媒体查询内有此约束，桌面端大图会溢出） */
+    max-width: 100%;
 }
 .post-content ul {
     overflow: auto;
