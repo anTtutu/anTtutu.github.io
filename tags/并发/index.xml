@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>并发 on Anttu&#39;s Blog</title>
+		<link>https://anTtutu.github.io/tags/%E5%B9%B6%E5%8F%91/</link>
+		<description>Recent content in 并发 on Anttu&#39;s Blog</description>
+		<generator>Hugo</generator>
+		<language>zh-CN</language>
+		
+		
+		
+		
+			<lastBuildDate>Mon, 18 Jul 2022 08:00:00 +0800</lastBuildDate>
+		
+			<atom:link href="https://anTtutu.github.io/tags/%E5%B9%B6%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>java锁体系与ReentrantLock详解</title>
+				<link>https://anTtutu.github.io/post/2022-07-18-java-lock-reentrantlock/</link>
+				<pubDate>Mon, 18 Jul 2022 08:00:00 +0800</pubDate>
+				<guid>https://anTtutu.github.io/post/2022-07-18-java-lock-reentrantlock/</guid>
+				<description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;面试和实际编码里 java 锁都是绕不开的话题。这篇先按维度把常见锁的分类理清楚，再聚焦 ReentrantLock：它的四个高级特性分别解决 synchronized 的什么短板，配可运行的验证代码，最后是核心方法与注意事项。&lt;/p&gt;&#xA;&lt;h2 id=&#34;一java-常见锁的七种分类&#34;&gt;一、java 常见锁的七种分类&lt;/h2&gt;&#xA;&lt;p&gt;按不同维度，锁可以分成下面几组——同一把锁在不同维度下有不同名字：&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;维度&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;分类&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;说明&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;竞争是否排队&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;公平锁 / 非公平锁&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;synchronized 和 ReentrantLock 默认都是非公平锁，非公平可以避免线程唤醒的空档期、提高吞吐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;同线程能否重复获取&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;可重入锁 / 不可重入锁&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;ReentrantLock 对同一线程可重入，不会自己锁死自己&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;能否被多线程共享&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;共享锁 / 独占锁&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;ReentrantReadWriteLock 中读锁是共享锁、写锁是排他锁&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;等待期能否被中断&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;可中断锁 / 不可中断锁&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;ReentrantLock 的 &lt;code&gt;lockInterruptibly()&lt;/code&gt; 支持中断&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;是否锁住资源&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;悲观锁 / 乐观锁&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;synchronized 是悲观；CAS（如 Atomic 系列）是乐观&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;等待方式&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;自旋锁 / 阻塞锁&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;自旋避免上下文切换，但空耗 CPU&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;-&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;偏向锁/轻量级锁/重量级锁&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;synchronized 的锁升级路径（JDK 15 起偏向锁已废弃）&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;二reentrantlock-的四个高级特性&#34;&gt;二、ReentrantLock 的四个高级特性&lt;/h2&gt;&#xA;&lt;p&gt;ReentrantLock 实现了 Lock 接口，作用与 synchronized 一样是线程安全，但多了四个 synchronized 没有的能力。&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

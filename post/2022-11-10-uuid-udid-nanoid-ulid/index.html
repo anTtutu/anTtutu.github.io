@@ -1,0 +1,1226 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+
+    <title>ID生成方案对比：UUID、UDID、NanoID与ULID | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="ID生成方案对比：UUID、UDID、NanoID与ULID - Anttu&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2022-11-10T08:00:00&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2022-11-10T08:00:00&#43;08:00'>
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
+    <meta name="description" content="四种 ID 生成方案横向对比：UDID 设备标识、UUID 五个版本的演进、ULID 的字典序可排序特性、NanoID 的更短更快，选型建议">
+        
+    <meta name="author" content="Anttu">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2022-11-10-uuid-udid-nanoid-ulid/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/asciinema-player.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://anTtutu.github.io/">
+                        Anttu&#39;s Blog
+                    </a>
+                
+                <p class="description">一位Java开发者，喜欢研究技术，同时也在学习Golang和Python中，对服务器、Linux使用比较熟悉。欢迎添加技术交流QQ群：655158296</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://anTtutu.github.io/">首页</a>
+                    
+                    <a  href="https://anTtutu.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://anTtutu.github.io/tags/" title="分类">分类</a>
+                    
+                    <a  href="https://anTtutu.github.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#一udid设备的身份证">一、UDID：设备的身份证</a></li>
+    <li><a href="#二uuid五个版本的演进">二、UUID：五个版本的演进</a></li>
+    <li><a href="#三ulid可排序的-uuid-替代品">三、ULID：可排序的 UUID 替代品</a></li>
+    <li><a href="#四nanoid更短更快的现代选择">四、NanoID：更短更快的现代选择</a></li>
+    <li><a href="#五怎么选">五、怎么选</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">ID生成方案对比：UUID、UDID、NanoID与ULID</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年11月10日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/java' target="_blank">java</a>
+            </span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>做分布式系统或设计表主键时总要面对「用什么生成唯一 ID」的问题。UUID 不是唯一选项——ULID、NanoID 都在特定场景下更有优势。这篇把四个常见方案放在一起对比。</p>
+<h2 id="一udid设备的身份证">一、UDID：设备的身份证</h2>
+<p>UDID（Unique Device Identifier，设备唯一标识符）只和设备有关，类似 MAC 地址。iOS 真机调试时需要把 UDID 加进 Provisioning Profile 授权文件来识别设备。UDID 是一个 40 位十六进制序列，可以通过 iTunes 和 Xcode 获取。</p>
+<blockquote>
+<p>因为隐私问题，Apple 从 iOS 7 起禁止 APP 直接获取 UDID，后来陆续用 IDFA、IDFV 替代——但「设备唯一标识」这个需求形态就是 UDID 定义的。</p>
+</blockquote>
+<h2 id="二uuid五个版本的演进">二、UUID：五个版本的演进</h2>
+<p>UUID（Universally Unique Identifier，通用唯一标识符）目前有 5 个版本：</p>
+<table>
+	<thead>
+			<tr>
+					<th>版本</th>
+					<th>生成方式</th>
+					<th>问题</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>v1</td>
+					<td>时间戳 + MAC 地址</td>
+					<td>需要访问唯一稳定的 MAC 地址，容易被攻击</td>
+			</tr>
+			<tr>
+					<td>v2</td>
+					<td>把 v1 的时间戳前四位换成 POSIX UID/GID</td>
+					<td>问题同 v1</td>
+			</tr>
+			<tr>
+					<td>v3</td>
+					<td>MD5 哈希 + 唯一种子</td>
+					<td>随机分布的 ID 导致数据结构碎片化</td>
+			</tr>
+			<tr>
+					<td>v4</td>
+					<td>随机数 / 伪随机数</td>
+					<td>除随机性外不含任何信息；仍有（极小的）冲突风险</td>
+			</tr>
+			<tr>
+					<td>v5</td>
+					<td>SHA-1 哈希 + 唯一种子</td>
+					<td>问题同 v3</td>
+			</tr>
+	</tbody>
+</table>
+<p>实际使用最多的是 <strong>UUID v4</strong>。它简单可靠，但有两个天生短板：36 个字符太长，且完全随机——<strong>无法排序</strong>，做数据库主键或聚集索引时写入性能差（页分裂严重）。</p>
+<h2 id="三ulid可排序的-uuid-替代品">三、ULID：可排序的 UUID 替代品</h2>
+<p>ULID（Universally Unique Lexicographically Sortable Identifier，通用唯一字典序可排序标识符）的思路是<strong>时间戳 + 随机数</strong>：时间戳精确到毫秒，毫秒内有 1.21e+24 个随机数，不存在实用意义上的冲突。</p>
+<p>特性清单：</p>
+<ul>
+<li>与 UUID 的 128 位兼容</li>
+<li>每毫秒 1.21e+24 个唯一 ULID</li>
+<li><strong>按字典序（字母顺序）排序</strong>——这是和 UUID v4 的本质区别</li>
+<li>规范编码为 26 个字符（UUID 是 36 个）</li>
+<li>使用 Crockford&rsquo;s base32，效率和可读性更好（每字符 5 位）</li>
+<li>不区分大小写</li>
+<li>没有特殊字符，URL 安全</li>
+<li>同一毫秒内单调递增（正确处理时钟相同的情况）</li>
+</ul>
+<p>按时间有序意味着做主键时新记录总是追加在 B+ 树右侧，写入性能友好，还天然带创建时间信息。</p>
+<h2 id="四nanoid更短更快的现代选择">四、NanoID：更短更快的现代选择</h2>
+<p>NanoID 与 UUID v4 相当，随机位数相近（NanoID 126 位 vs UUID 122 位），冲突概率相似——要有十亿分之一的重复机会，得产生 103 万亿个 ID。</p>
+<p>和 UUID v4 的主要区别：</p>
+<table>
+	<thead>
+			<tr>
+					<th>对比项</th>
+					<th>NanoID</th>
+					<th>UUID v4</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>长度</td>
+					<td><strong>21 个字符</strong></td>
+					<td>36 个字符</td>
+			</tr>
+			<tr>
+					<td>代码体积</td>
+					<td>130 字节</td>
+					<td>483 字节（uuid/v4 包的 1/4）</td>
+			</tr>
+			<tr>
+					<td>生成速度</td>
+					<td>快约 60%（内存分配技巧）</td>
+					<td>基准</td>
+			</tr>
+			<tr>
+					<td>随机源</td>
+					<td>Node.js crypto / Web Crypto API（硬件级不可预测）</td>
+					<td>依赖实现，常见不安全的 Math.random()</td>
+			</tr>
+			<tr>
+					<td>分布均匀性</td>
+					<td>自研统一算法，不用 <code>random % alphabet</code></td>
+					<td>-</td>
+			</tr>
+			<tr>
+					<td>语言支持</td>
+					<td>14+ 种语言（Java/Go/Python/Rust/Swift…）</td>
+					<td>所有语言内置</td>
+			</tr>
+			<tr>
+					<td>自定义</td>
+					<td>支持自定义字母表和长度</td>
+					<td>不支持</td>
+			</tr>
+			<tr>
+					<td>依赖</td>
+					<td>零第三方依赖</td>
+					<td>-</td>
+			</tr>
+	</tbody>
+</table>
+<p>局限：非人类可读（调试略难，但比 UUID 短）；做表主键且该列是聚集索引时，与 UUID 一样存在随机写入的问题（它无序）。</p>
+<h2 id="五怎么选">五、怎么选</h2>
+<ul>
+<li><strong>分布式唯一性优先、不关心排序</strong>：UUID v4 或 NanoID（更短更快选 NanoID）</li>
+<li><strong>要当数据库主键 / 需要按时间排序</strong>：ULID（或雪花算法 Snowflake——趋势递增但依赖时钟回拨处理）</li>
+<li><strong>标识物理设备</strong>：这是 UDID 的领域，与另外三个不是一类问题</li>
+</ul>
+<h2 id="总结">总结</h2>
+<p>四个名字里，UDID 是设备标识、UUID 是通用唯一、ULID 补上了「有序」、NanoID 补上了「更短更快」。没有银弹：随机 ID 别做聚集索引主键，有序需求交给 ULID/Snowflake，前端展示和 URL 场景 NanoID 最舒服。</p>
+
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2022-11-10-uuid-udid-nanoid-ulid/">https://anTtutu.github.io/post/2022-11-10-uuid-udid-nanoid-ulid/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/2022-07-18-java-lock-reentrantlock/">java锁体系与ReentrantLock详解</a></li>
+        
+        <li><a href="/post/2022-04-02-spring_cloud_gateway/">spring cloud gateway的一些细节注意</a></li>
+        
+        <li><a href="/post/2022-02-07-spring_cli/">springboot cli&amp;springcloud cli简单介绍</a></li>
+        
+        <li><a href="/post/2022-01-10-otp-one-time-password/">OTP动态口令：原理与java实现</a></li>
+        
+        <li><a href="/post/2022-01-07-regexp/">一些正则小细节-不定期补充</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/java' target="_blank">java</a></li>
+                
+                <li><a href='/tags/%E6%9E%B6%E6%9E%84' target="_blank">架构</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "anTtutu/anTtutu.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+    
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2026 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://anTtutu.github.io/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">Anttu</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/anTtutu/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+<style type="text/css">
+div.highlight {
+    position: relative;
+    margin: 1em 0px;
+}
+
+.copy-code {
+    display: none;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(78, 78, 78, 0.8);
+    border-radius: var(--radius);
+    padding: 0 5px;
+    font: inherit;
+    user-select: none;
+    cursor: pointer;
+    border: 0;
+    --radius: 8px;
+}
+
+div.highlight:hover .copy-code,pre:hover .copy-code {
+    display: block;
+}
+
+</style>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/asciinema-player.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://anTtutu.github.io/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://anTtutu.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-elk-mcp-ai-workflow/" title="结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证" target="_blank">结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-agent-database-cli/" title="agent-database-cli：让Claude Code安全操作多种数据库的CLI工具" target="_blank">agent-database-cli：让Claude Code安全操作多种数据库的CLI工具</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-14-sdkman_issue/" title="sdkman与conda冲突问题解决" target="_blank">sdkman与conda冲突问题解决</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-10-docker_images/" title="日常研究备用的一些镜像记录" target="_blank">日常研究备用的一些镜像记录</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-07-ydnotes-obsidian/" title="有道云笔记迁移到obsidian" target="_blank">有道云笔记迁移到obsidian</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-07-02-claude-code-cli-cheatsheet/" title="Claude Code常用命令速查" target="_blank">Claude Code常用命令速查</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/app/">App (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/aria2/">Aria2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/arm64/">Arm64 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/arthas/">Arthas (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/awr/">Awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">Backend_execute (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">Backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">Blog (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/bug/">Bug (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/build/">Build (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cache/">Cache (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/caffeine/">Caffeine (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/captcha/">Captcha (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/check/">Check (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/claude-code/">Claude Code (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/clean/">Clean (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cli/">Cli (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cluster/">Cluster (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/conda/">Conda (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/covid-19/">Covid-19 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cve/">Cve (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cygwin/">Cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">Dataguard (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/db/">Db (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">Deepfacelab (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/docker/">Docker (7)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dockerfile/">Dockerfile (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dos/">Dos (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/drawio/">Drawio (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dump/">Dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">Eclipse (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/explain/">Explain (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/faker/">Faker (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gcc/">Gcc (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/git/">Git (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/github/">Github (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitment/">Gitment (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">Gitpages (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/go/">Go (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h2/">H2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h5/">H5 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ha/">Ha (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/http/">Http (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/hugo/">Hugo (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/id/">Id (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/idea/">Idea (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/image/">Image (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/images/">Images (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/java/">Java (38)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">Jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jenkins/">Jenkins (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">Jrebel (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/js/">Js (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jsr/">Jsr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/k8s/">K8s (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kafka/">Kafka (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kali/">Kali (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kenlm/">Kenlm (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (28)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log/">Log (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log4j/">Log4j (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/lombok/">Lombok (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mac/">Mac (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/matplotlib/">Matplotlib (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/maven/">Maven (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mcp/">Mcp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mine/">Mine (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mongodb/">Mongodb (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mvnd/">Mvnd (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (10)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/nginx/">Nginx (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/nmap/">Nmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/notes/">Notes (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/obsidian/">Obsidian (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oom/">Oom (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oracle/">Oracle (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/orangePi/">OrangePi (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oss/">Oss (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/package/">Package (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pages/">Pages (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pandas/">Pandas (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pg/">Pg (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/port/">Port (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/postgresql/">Postgresql (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/python/">Python (11)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/rec/">Rec (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/regexp/">Regexp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/safe/">Safe (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdk/">Sdk (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdkman/">Sdkman (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/skill/">Skill (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/split/">Split (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/spring/">Spring (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/spy/">Spy (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sqlmap/">Sqlmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ssd/">Ssd (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tcp/">Tcp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/termux/">Termux (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/test/">Test (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/testing/">Testing (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tomcat/">Tomcat (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (7)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/virus/">Virus (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">Vxvm (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/win10/">Win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">Xrebel (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ydnotes/">Ydnotes (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ynote/">Ynote (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zk/">Zk (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zookeeper/">Zookeeper (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E4%BA%92%E8%81%94%E7%BD%91/">互联网 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E5%99%A8/">容器 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%8E%92%E6%9F%A5/">排查 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%9E%B6%E6%9E%84/">架构 (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E8%BF%90%E7%BB%B4/">运维 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://anTtutu.github.io/tags/-devops/"> Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/-dockerfile/"> Dockerfile</a>
+    
+    <a href="https://anTtutu.github.io/tags/-nmap/"> Nmap</a>
+    
+    <a href="https://anTtutu.github.io/tags/about/">About</a>
+    
+    <a href="https://anTtutu.github.io/tags/agent/">Agent</a>
+    
+    <a href="https://anTtutu.github.io/tags/AI/">AI</a>
+    
+    <a href="https://anTtutu.github.io/tags/android/">Android</a>
+    
+    <a href="https://anTtutu.github.io/tags/app/">App</a>
+    
+    <a href="https://anTtutu.github.io/tags/aria2/">Aria2</a>
+    
+    <a href="https://anTtutu.github.io/tags/arm64/">Arm64</a>
+    
+    <a href="https://anTtutu.github.io/tags/arthas/">Arthas</a>
+    
+    <a href="https://anTtutu.github.io/tags/awr/">Awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backend_execute/">Backend_execute</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">Backup</a>
+    
+    <a href="https://anTtutu.github.io/tags/binlog/">Binlog</a>
+    
+    <a href="https://anTtutu.github.io/tags/blog/">Blog</a>
+    
+    <a href="https://anTtutu.github.io/tags/bug/">Bug</a>
+    
+    <a href="https://anTtutu.github.io/tags/build/">Build</a>
+    
+    <a href="https://anTtutu.github.io/tags/cache/">Cache</a>
+    
+    <a href="https://anTtutu.github.io/tags/caffeine/">Caffeine</a>
+    
+    <a href="https://anTtutu.github.io/tags/captcha/">Captcha</a>
+    
+    <a href="https://anTtutu.github.io/tags/check/">Check</a>
+    
+    <a href="https://anTtutu.github.io/tags/claude/">Claude</a>
+    
+    <a href="https://anTtutu.github.io/tags/claude-code/">Claude Code</a>
+    
+    <a href="https://anTtutu.github.io/tags/clean/">Clean</a>
+    
+    <a href="https://anTtutu.github.io/tags/cli/">Cli</a>
+    
+    <a href="https://anTtutu.github.io/tags/cluster/">Cluster</a>
+    
+    <a href="https://anTtutu.github.io/tags/conda/">Conda</a>
+    
+    <a href="https://anTtutu.github.io/tags/covid-19/">Covid-19</a>
+    
+    <a href="https://anTtutu.github.io/tags/cve/">Cve</a>
+    
+    <a href="https://anTtutu.github.io/tags/cygwin/">Cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">Dataguard</a>
+    
+    <a href="https://anTtutu.github.io/tags/db/">Db</a>
+    
+    <a href="https://anTtutu.github.io/tags/deepfacelab/">Deepfacelab</a>
+    
+    <a href="https://anTtutu.github.io/tags/devops/">Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/docker/">Docker</a>
+    
+    <a href="https://anTtutu.github.io/tags/dos/">Dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/drawio/">Drawio</a>
+    
+    <a href="https://anTtutu.github.io/tags/dump/">Dump</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">Eclipse</a>
+    
+    <a href="https://anTtutu.github.io/tags/ELK/">ELK</a>
+    
+    <a href="https://anTtutu.github.io/tags/explain/">Explain</a>
+    
+    <a href="https://anTtutu.github.io/tags/faker/">Faker</a>
+    
+    <a href="https://anTtutu.github.io/tags/feign/">Feign</a>
+    
+    <a href="https://anTtutu.github.io/tags/freemarker/">Freemarker</a>
+    
+    <a href="https://anTtutu.github.io/tags/gcc/">Gcc</a>
+    
+    <a href="https://anTtutu.github.io/tags/git/">Git</a>
+    
+    <a href="https://anTtutu.github.io/tags/github/">Github</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitment/">Gitment</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitpages/">Gitpages</a>
+    
+    <a href="https://anTtutu.github.io/tags/go/">Go</a>
+    
+    <a href="https://anTtutu.github.io/tags/golang/">Golang</a>
+    
+    <a href="https://anTtutu.github.io/tags/graalvm/">Graalvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/h2/">H2</a>
+    
+    <a href="https://anTtutu.github.io/tags/h5/">H5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">Ha</a>
+    
+    <a href="https://anTtutu.github.io/tags/http/">Http</a>
+    
+    <a href="https://anTtutu.github.io/tags/https/">Https</a>
+    
+    <a href="https://anTtutu.github.io/tags/hugo/">Hugo</a>
+    
+    <a href="https://anTtutu.github.io/tags/id/">Id</a>
+    
+    <a href="https://anTtutu.github.io/tags/idea/">Idea</a>
+    
+    <a href="https://anTtutu.github.io/tags/image/">Image</a>
+    
+    <a href="https://anTtutu.github.io/tags/images/">Images</a>
+    
+    <a href="https://anTtutu.github.io/tags/java/">Java</a>
+    
+    <a href="https://anTtutu.github.io/tags/JDK21/">JDK21</a>
+    
+    <a href="https://anTtutu.github.io/tags/jekyll/">Jekyll</a>
+    
+    <a href="https://anTtutu.github.io/tags/jenkins/">Jenkins</a>
+    
+    <a href="https://anTtutu.github.io/tags/jrebel/">Jrebel</a>
+    
+    <a href="https://anTtutu.github.io/tags/js/">Js</a>
+    
+    <a href="https://anTtutu.github.io/tags/jsr/">Jsr</a>
+    
+    <a href="https://anTtutu.github.io/tags/jvm/">Jvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/k8s/">K8s</a>
+    
+    <a href="https://anTtutu.github.io/tags/kafka/">Kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">Kali</a>
+    
+    <a href="https://anTtutu.github.io/tags/keepalived/">Keepalived</a>
+    
+    <a href="https://anTtutu.github.io/tags/kenlm/">Kenlm</a>
+    
+    <a href="https://anTtutu.github.io/tags/linux/">Linux</a>
+    
+    <a href="https://anTtutu.github.io/tags/log/">Log</a>
+    
+    <a href="https://anTtutu.github.io/tags/log4j/">Log4j</a>
+    
+    <a href="https://anTtutu.github.io/tags/lombok/">Lombok</a>
+    
+    <a href="https://anTtutu.github.io/tags/lvs/">Lvs</a>
+    
+    <a href="https://anTtutu.github.io/tags/mac/">Mac</a>
+    
+    <a href="https://anTtutu.github.io/tags/matplotlib/">Matplotlib</a>
+    
+    <a href="https://anTtutu.github.io/tags/maven/">Maven</a>
+    
+    <a href="https://anTtutu.github.io/tags/mcp/">Mcp</a>
+    
+    <a href="https://anTtutu.github.io/tags/mine/">Mine</a>
+    
+    <a href="https://anTtutu.github.io/tags/mongodb/">Mongodb</a>
+    
+    <a href="https://anTtutu.github.io/tags/mvnd/">Mvnd</a>
+    
+    <a href="https://anTtutu.github.io/tags/mysql/">Mysql</a>
+    
+    <a href="https://anTtutu.github.io/tags/native-image/">Native Image</a>
+    
+    <a href="https://anTtutu.github.io/tags/nginx/">Nginx</a>
+    
+    <a href="https://anTtutu.github.io/tags/notes/">Notes</a>
+    
+    <a href="https://anTtutu.github.io/tags/obsidian/">Obsidian</a>
+    
+    <a href="https://anTtutu.github.io/tags/oom/">Oom</a>
+    
+    <a href="https://anTtutu.github.io/tags/openjdk/">Openjdk</a>
+    
+    <a href="https://anTtutu.github.io/tags/oracle/">Oracle</a>
+    
+    <a href="https://anTtutu.github.io/tags/orangePi/">OrangePi</a>
+    
+    <a href="https://anTtutu.github.io/tags/oss/">Oss</a>
+    
+    <a href="https://anTtutu.github.io/tags/package/">Package</a>
+    
+    <a href="https://anTtutu.github.io/tags/pages/">Pages</a>
+    
+    <a href="https://anTtutu.github.io/tags/pandas/">Pandas</a>
+    
+    <a href="https://anTtutu.github.io/tags/pg/">Pg</a>
+    
+    <a href="https://anTtutu.github.io/tags/port/">Port</a>
+    
+    <a href="https://anTtutu.github.io/tags/postgresql/">Postgresql</a>
+    
+    <a href="https://anTtutu.github.io/tags/python/">Python</a>
+    
+    <a href="https://anTtutu.github.io/tags/rec/">Rec</a>
+    
+    <a href="https://anTtutu.github.io/tags/redis/">Redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/regexp/">Regexp</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">Safe</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdk/">Sdk</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdkman/">Sdkman</a>
+    
+    <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
+    
+    <a href="https://anTtutu.github.io/tags/skill/">Skill</a>
+    
+    <a href="https://anTtutu.github.io/tags/split/">Split</a>
+    
+    <a href="https://anTtutu.github.io/tags/springboot/">Springboot</a>
+    
+    <a href="https://anTtutu.github.io/tags/springcloud/">Springcloud</a>
+    
+    <a href="https://anTtutu.github.io/tags/springmvc/">Springmvc</a>
+    
+    <a href="https://anTtutu.github.io/tags/spy/">Spy</a>
+    
+    <a href="https://anTtutu.github.io/tags/sqlmap/">Sqlmap</a>
+    
+    <a href="https://anTtutu.github.io/tags/ssd/">Ssd</a>
+    
+    <a href="https://anTtutu.github.io/tags/tcp/">Tcp</a>
+    
+    <a href="https://anTtutu.github.io/tags/termux/">Termux</a>
+    
+    <a href="https://anTtutu.github.io/tags/test/">Test</a>
+    
+    <a href="https://anTtutu.github.io/tags/testing/">Testing</a>
+    
+    <a href="https://anTtutu.github.io/tags/thymeleaf/">Thymeleaf</a>
+    
+    <a href="https://anTtutu.github.io/tags/tomcat/">Tomcat</a>
+    
+    <a href="https://anTtutu.github.io/tags/uniapp/">Uniapp</a>
+    
+    <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
+    
+    <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
+    
+    <a href="https://anTtutu.github.io/tags/virus/">Virus</a>
+    
+    <a href="https://anTtutu.github.io/tags/vue/">Vue</a>
+    
+    <a href="https://anTtutu.github.io/tags/vxvm/">Vxvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/win10/">Win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">Xrebel</a>
+    
+    <a href="https://anTtutu.github.io/tags/ydnotes/">Ydnotes</a>
+    
+    <a href="https://anTtutu.github.io/tags/ynote/">Ynote</a>
+    
+    <a href="https://anTtutu.github.io/tags/zk/">Zk</a>
+    
+    <a href="https://anTtutu.github.io/tags/zookeeper/">Zookeeper</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">主从复制</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1/">云服务</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%89%8D%E7%AB%AF/">前端</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8D%87%E7%BA%A7%E8%BF%81%E7%A7%BB/">升级迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8E%8B%E6%B5%8B/">压测</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%9F%BA%E7%A1%80/">基础</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%89%E5%85%A8/">安全</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E5%99%A8/">容器</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%B6%E5%8F%91/">并发</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%BF%E5%91%8A/">广告</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8C%87%E6%A0%87/">指标</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8E%92%E6%9F%A5/">排查</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">效率工具</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/">日志分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9E%B6%E6%9E%84/">架构</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%A7%91%E6%99%AE/">科普</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%AE%A4%E8%AF%81/">认证</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B0%83%E8%AF%95/">调试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">负载均衡</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%81%E7%A7%BB/">迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%80%89%E5%9E%8B/">选型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/">防重复提交</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://anTtutu.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

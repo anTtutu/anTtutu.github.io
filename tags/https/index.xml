@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Https on Anttu&#39;s Blog</title>
+		<link>https://anTtutu.github.io/tags/https/</link>
+		<description>Recent content in Https on Anttu&#39;s Blog</description>
+		<generator>Hugo</generator>
+		<language>zh-CN</language>
+		
+		
+		
+		
+			<lastBuildDate>Mon, 10 May 2021 08:30:00 +0800</lastBuildDate>
+		
+			<atom:link href="https://anTtutu.github.io/tags/https/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>tomcat配置https：keytool生成证书与server.xml配置</title>
+				<link>https://anTtutu.github.io/post/2021-05-10-tomcat-https-ssl/</link>
+				<pubDate>Mon, 10 May 2021 08:30:00 +0800</pubDate>
+				<guid>https://anTtutu.github.io/post/2021-05-10-tomcat-https-ssl/</guid>
+				<description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;内部系统要上 https，当时没有 CA 签发的证书，就用 keytool 做了自签名证书给 tomcat 配上。流程整理下，最后补上新版 JDK/tomcat 的差异说明——老环境照旧，新环境看最后一段。&lt;/p&gt;&#xA;&lt;h2 id=&#34;1生成安全证书&#34;&gt;1、生成安全证书&lt;/h2&gt;&#xA;&lt;p&gt;JDK 1.4 以后都自带 keytool，在 &lt;code&gt;&amp;lt;JAVA_HOME&amp;gt;\bin&lt;/code&gt; 下：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&#xA;&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1&#xA;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&#xA;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;keytool -genkeypair -alias &lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;tomcat&amp;#34;&lt;/span&gt; -keyalg &lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;RSA&amp;#34;&lt;/span&gt; -keystore &lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;f:\tomcat.keystore&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&#xA;&lt;/div&gt;&#xA;&lt;/div&gt;&lt;p&gt;参数说明：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;-alias&lt;/code&gt;：证书别名，之后引用都用它&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;-keyalg&lt;/code&gt;：密钥算法，RSA&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;-keystore&lt;/code&gt;：keystore 文件的存放位置&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;命令会交互式问一串信息，其中**「名字与姓氏」必须填域名**（比如 &lt;a href=&#34;https://www.example.com&#34;&gt;www.example.com&lt;/a&gt;），这是最容易踩的坑——填成自己的姓名，之后运行时证书的域名和实际访问的域名对不上，浏览器照样报证书警告。密码我输的是 tomcat（测试环境），其余按实际情况填。&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

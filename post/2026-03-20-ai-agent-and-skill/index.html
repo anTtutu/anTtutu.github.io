@@ -1,0 +1,1353 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+
+    <title>AI开发入门：Agent与Skill体系详解，附可复制的自定义样例 | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例 - Anttu&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2026-03-20T08:00:00&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2026-03-20T08:00:00&#43;08:00'>
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
+    <meta name="description" content="AI 编码 Agent 与 Skill 详解：Agent 的感知-规划-行动循环、Claude Code 的 subagent 与 Skill 机制原理、SKILL.md 结构与触发逻辑，附自定义代码审查 Agent 与 SQL 优化 Skill 完整样例">
+        
+    <meta name="author" content="Anttu">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/asciinema-player.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://anTtutu.github.io/">
+                        Anttu&#39;s Blog
+                    </a>
+                
+                <p class="description">一位Java开发者，喜欢研究技术，同时也在学习Golang和Python中，对服务器、Linux使用比较熟悉。欢迎添加技术交流QQ群：655158296</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://anTtutu.github.io/">首页</a>
+                    
+                    <a  href="https://anTtutu.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://anTtutu.github.io/tags/" title="分类">分类</a>
+                    
+                    <a  href="https://anTtutu.github.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1先分清三个词">1、先分清三个词</a></li>
+    <li><a href="#2agent-是怎么干活的">2、Agent 是怎么干活的</a></li>
+    <li><a href="#3skill-机制">3、Skill 机制</a></li>
+    <li><a href="#4样例一代码审查-agent">4、样例一：代码审查 Agent</a></li>
+    <li><a href="#5样例二sql-优化-skill">5、样例二：SQL 优化 Skill</a></li>
+    <li><a href="#6agentskillmcp-什么关系">6、Agent、Skill、MCP 什么关系</a></li>
+    <li><a href="#7几点建议">7、几点建议</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#相关阅读">相关阅读</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2026年3月20日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/AI' target="_blank">AI</a>
+            </span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>用 Claude Code 干活一段时间之后，慢慢摸清了 Agent 和 Skill 这两个概念的门道。Agent 解决「谁来干、怎么干」，Skill 解决「会不会这一行」。这篇整理两者的原理，配上两个我自己在用的自定义样例，可以直接抄走改。</p>
+<h2 id="1先分清三个词">1、先分清三个词</h2>
+<table>
+	<thead>
+			<tr>
+					<th>概念</th>
+					<th>本质</th>
+					<th>打个比方</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>模型（LLM）</td>
+					<td>会推理的「大脑」，只能输入文本输出文本</td>
+					<td>一个聪明但没有手脚的顾问</td>
+			</tr>
+			<tr>
+					<td><strong>Agent</strong></td>
+					<td>模型 + 工具调用 + 自主循环：能读文件、执行命令、改代码、自己验收</td>
+					<td>授权完整的员工：自己查资料、自己动手、自己检查</td>
+			</tr>
+			<tr>
+					<td><strong>Skill</strong></td>
+					<td>预先打包的领域知识和流程，按需加载</td>
+					<td>员工手册里的 SOP：平时不占脑子，干到对应活时翻出来照做</td>
+			</tr>
+	</tbody>
+</table>
+<p>Agent 是干活的，Skill 是干活的技能包，就这么简单。</p>
+<h2 id="2agent-是怎么干活的">2、Agent 是怎么干活的</h2>
+<p>每次回合都在跑这个循环：</p>
+<pre tabindex="0"><code>目标 → [感知] 读代码/终端输出 → [规划] 决定下一步 → [行动] 调工具执行
+         ↑                                              │
+         └────────────── 观察结果，修正计划 ←────────────┘
+                          直到完成或需要用户输入
+</code></pre><p>两个边界要心里有数：工具层决定能力边界（能读、能写、能执行、能搜索哪些），权限系统决定安全边界（哪些操作要人确认）。</p>
+<p><strong>子 Agent（subagent）</strong> 是隔离上下文的执行单元。主 Agent 把独立的子任务（比如全局搜一遍用法、跑测试分析失败原因）派给子 Agent，子 Agent 有自己的上下文窗口，干完只把结论带回来，中间过程不会把主对话撑爆。</p>
+<h2 id="3skill-机制">3、Skill 机制</h2>
+<p>传统 prompt 库有两个毛病：要么全量塞进上下文浪费 token，要么靠人手动复制粘贴。Skill 把这两个都解决了：</p>
+<ol>
+<li><strong>结构</strong>：一个 Skill 就是一个目录，核心是 <code>SKILL.md</code>（YAML 头 + 正文指令），可以挂脚本和模板文件</li>
+<li><strong>触发</strong>：YAML 头里的 <code>description</code> 参与语义匹配，用户请求跟描述相关时，正文才被加载进上下文。平时不占地方</li>
+<li><strong>可执行</strong>：正文可以让 Agent 调用目录下的脚本，知识和工具打包在一起</li>
+</ol>
+<p>目录结构：</p>
+<pre tabindex="0"><code>.claude/
+├── agents/                    # 自定义子 Agent
+│   └── code-reviewer.md
+└── skills/                    # 自定义 Skill
+    └── sql-optimizer/
+        ├── SKILL.md           # 核心：元数据+指令
+        └── scripts/
+            └── explain.sh     # 配套脚本（可选）
+</code></pre><p>项目级放 <code>.claude/</code>（进 git 随仓库共享），个人全局的放 <code>~/.claude/</code>。</p>
+<h2 id="4样例一代码审查-agent">4、样例一：代码审查 Agent</h2>
+<p><code>.claude/agents/code-reviewer.md</code>：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span><span style="color:#24292e">---</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">name</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>code-reviewer<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">description</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>资深代码审查员。对本次改动做安全性/性能/可维护性审查，输出分级问题清单。触发词：审查代码、review、帮我看看这次改动<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">tools</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>Read, Grep, Glob, Bash<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">model</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>sonnet<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#24292e">---</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>你是资深 Java/全栈代码审查员，审查标准：
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 审查清单（按优先级）
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">1.</span> 安全：SQL 注入（拼接 SQL）、反序列化、敏感信息硬编码（密码/密钥/token）
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">2.</span> 正确性：空指针风险、事务边界（<span style="color:#6639ba">@Transactional</span> 失效场景）、并发安全
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">3.</span> 性能：N+1 查询、循环内远程调用、大集合全量加载
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">4.</span> 规范：命名语义、异常处理（禁止吞异常）、日志规范
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 工作流程
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">1.</span> 用 git diff 或用户指定的文件范围获取改动
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">2.</span> 逐文件审查，引用具体 file:line
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">3.</span> 输出格式：
+</span></span><span style="display:flex;"><span>   <span style="color:#cf222e">-</span> 【严重】必须修：问题 + 位置 + 修复建议代码
+</span></span><span style="display:flex;"><span>   <span style="color:#cf222e">-</span> 【建议】应该改：问题 + 理由
+</span></span><span style="display:flex;"><span>   <span style="color:#cf222e">-</span> 【可选】可以更好
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">4.</span> 不评价与本次改动无关的历史代码
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 输出约束
+</span></span><span style="display:flex;"><span>中文回复；每个问题必须给出可直接采用的修复代码片段。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>几个设计点：</p>
+<ul>
+<li><code>description</code> 里的触发词决定主 Agent 什么时候把任务派给它</li>
+<li><code>tools</code> 只给了读类工具，不给写权限，审查员就不该改代码</li>
+<li>正文就是岗位说明书，清单化、规定输出格式，输出质量会稳定很多</li>
+</ul>
+<p>对话里说一句「帮我 review 这次改动」，主 Agent 就会派它出场。</p>
+<h2 id="5样例二sql-优化-skill">5、样例二：SQL 优化 Skill</h2>
+<p><code>.claude/skills/sql-optimizer/SKILL.md</code>：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span><span style="color:#24292e">---</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">name</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>sql-optimizer<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">description</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>MySQL SQL 优化助手。当用户提供慢 SQL 需要分析执行计划、加索引建议或改写优化时使用。触发词：SQL优化、慢SQL、执行计划、加索引<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#24292e">---</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># MySQL SQL 优化 SOP
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>用户给出 SQL 后，严格按以下流程执行：
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 1. 先要上下文
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">-</span> 表结构：<span style="color:#0a3069">`SHOW CREATE TABLE 表名`</span>（没有索引信息一切白搭）
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">-</span> 数据量级：<span style="color:#0a3069">`SELECT COUNT(*)`</span> 或业务方提供的量级
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 2. 看执行计划
+</span></span><span style="display:flex;"><span>对 SQL 执行 EXPLAIN（有 PMM/慢日志平台则引用真实执行计划），逐列解读：
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">-</span> type：至少到 range，出现 ALL 即全表扫描（小表除外）
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">-</span> key/rows：实际走的索引与预估扫描行数
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">-</span> Extra：出现 filesort/temporary 必须说明原因
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 3. 输出三件套
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">1.</span> 诊断：哪一步慢、为什么
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">2.</span> 索引建议：给出 <span style="color:#0a3069">`ALTER TABLE ... ADD INDEX ...`</span> 完整语句，
+</span></span><span style="display:flex;"><span>   遵循最左前缀；区分「必须/建议」两级
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">3.</span> 改写建议：如分页深翻页改延迟关联、select * 改覆盖索引
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 4. 约束
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">-</span> MySQL 8.0 语法；字符集 utf8mb4 排序 utf8mb4_general_ci（用户环境 utf8_bin 时按实际）
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">-</span> 索引建议必须评估写入放大，单表索引不超过 5 个的提醒
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">-</span> 禁止凭感觉给结论，一切以 EXPLAIN 输出为准
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>配套脚本 <code>scripts/explain.sh</code>（可选，固定动作脚本化更稳）：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a"># 用法: ./explain.sh &#34;SELECT ...&#34;  从环境变量读连接信息</span>
+</span></span><span style="display:flex;"><span>mysql -h <span style="color:#0a3069">&#34;</span><span style="color:#0a3069">${</span><span style="color:#953800">DB_HOST</span><span style="color:#0a3069">}</span><span style="color:#0a3069">&#34;</span> -u<span style="color:#0a3069">&#34;</span><span style="color:#0a3069">${</span><span style="color:#953800">DB_USER</span><span style="color:#0a3069">}</span><span style="color:#0a3069">&#34;</span> -p<span style="color:#0a3069">&#34;</span><span style="color:#0a3069">${</span><span style="color:#953800">DB_PASS</span><span style="color:#0a3069">}</span><span style="color:#0a3069">&#34;</span> <span style="color:#0a3069">&#34;</span><span style="color:#0a3069">${</span><span style="color:#953800">DB_NAME</span><span style="color:#0a3069">}</span><span style="color:#0a3069">&#34;</span> <span style="color:#0a3069">\
+</span></span></span><span style="display:flex;"><span>  -e <span style="color:#0a3069">&#34;EXPLAIN FORMAT=TRADITIONAL </span><span style="color:#953800">$1</span><span style="color:#0a3069">\G&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Skill 真正的价值在把 SOP 固化下来：团队里最会调 SQL 的人把经验写成流程，其他人的 Agent 都按同一套水准执行。「先要上下文再下结论」「一切以 EXPLAIN 为准」这种约束，专治 AI 张口就来。</p>
+<h2 id="6agentskillmcp-什么关系">6、Agent、Skill、MCP 什么关系</h2>
+<table>
+	<thead>
+			<tr>
+					<th>维度</th>
+					<th>Skill</th>
+					<th>MCP（Model Context Protocol）</th>
+					<th>子 Agent</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>解决什么</td>
+					<td>知识/流程注入</td>
+					<td>标准化的外部工具接入协议</td>
+					<td>上下文隔离的并行执行</td>
+			</tr>
+			<tr>
+					<td>形态</td>
+					<td>Markdown + 脚本</td>
+					<td>JSON-RPC 服务（数据库/浏览器/Jira…）</td>
+					<td>Markdown 定义 + 工具白名单</td>
+			</tr>
+			<tr>
+					<td>打个比方</td>
+					<td>员工的 SOP 手册</td>
+					<td>USB 接口标准</td>
+					<td>外聘专家</td>
+			</tr>
+	</tbody>
+</table>
+<p>串起来用：主 Agent 派出 SQL 优化子 Agent → 子 Agent 按 sql-optimizer 的 SOP 干活 → 通过 MCP 的数据库工具真连库跑 EXPLAIN → 回传诊断报告。</p>
+<h2 id="7几点建议">7、几点建议</h2>
+<ol>
+<li>从 Skill 起步，把团队里反复被问的活（发布流程、SQL 规范、日志排查路径）写成 Skill，见效最快</li>
+<li>子 Agent 按「最小工具集」给权限，审查类只读、生成类才给写</li>
+<li><code>description</code> 写清楚「什么时候用我 + 触发词」，匹配不上等于白写</li>
+<li>SKILL.md 进 git 仓库，跟代码一起评审、一起版本化，这是团队资产，不是个人本地配置</li>
+<li>定期用 <code>/skills</code>、<code>/agents</code> 盘点（命令见 <a href="/post/2026-07-02-claude-code-cli-cheatsheet/">Claude Code常用命令速查</a>），不用的删掉</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>Agent 把「目标到结果」的执行交给 AI，Skill 把「怎么干才专业」固化下来给它随取随用。从一份 SKILL.md 开始写起，把团队里重复的活慢慢沉淀进去，比一次性搞一套大而全的体系实际得多。</p>
+<h2 id="相关阅读">相关阅读</h2>
+<ul>
+<li><a href="/post/2026-04-30-claude-skills/">Claude技能体系实战：claude-skills</a></li>
+<li><a href="/post/2026-07-02-claude-code-cli-cheatsheet/">Claude Code常用命令速查</a></li>
+</ul>
+
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/">https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/2024-04-19-llm-terms-plain-words/">大模型术语人话版：把LLM当成一个打工人</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/AI' target="_blank">AI</a></li>
+                
+                <li><a href='/tags/agent' target="_blank">agent</a></li>
+                
+                <li><a href='/tags/claude' target="_blank">claude</a></li>
+                
+                <li><a href='/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7' target="_blank">效率工具</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "anTtutu/anTtutu.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+    
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2026 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://anTtutu.github.io/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">Anttu</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/anTtutu/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+<style type="text/css">
+div.highlight {
+    position: relative;
+    margin: 1em 0px;
+}
+
+.copy-code {
+    display: none;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(78, 78, 78, 0.8);
+    border-radius: var(--radius);
+    padding: 0 5px;
+    font: inherit;
+    user-select: none;
+    cursor: pointer;
+    border: 0;
+    --radius: 8px;
+}
+
+div.highlight:hover .copy-code,pre:hover .copy-code {
+    display: block;
+}
+
+</style>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/asciinema-player.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://anTtutu.github.io/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://anTtutu.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-elk-mcp-ai-workflow/" title="结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证" target="_blank">结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-agent-database-cli/" title="agent-database-cli：让Claude Code安全操作多种数据库的CLI工具" target="_blank">agent-database-cli：让Claude Code安全操作多种数据库的CLI工具</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-14-sdkman_issue/" title="sdkman与conda冲突问题解决" target="_blank">sdkman与conda冲突问题解决</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-10-docker_images/" title="日常研究备用的一些镜像记录" target="_blank">日常研究备用的一些镜像记录</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-07-ydnotes-obsidian/" title="有道云笔记迁移到obsidian" target="_blank">有道云笔记迁移到obsidian</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-07-02-claude-code-cli-cheatsheet/" title="Claude Code常用命令速查" target="_blank">Claude Code常用命令速查</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/app/">App (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/aria2/">Aria2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/arm64/">Arm64 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/arthas/">Arthas (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/awr/">Awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">Backend_execute (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">Backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">Blog (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/bug/">Bug (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/build/">Build (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cache/">Cache (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/caffeine/">Caffeine (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/captcha/">Captcha (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/check/">Check (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/claude-code/">Claude Code (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/clean/">Clean (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cli/">Cli (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cluster/">Cluster (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/conda/">Conda (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/covid-19/">Covid-19 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cve/">Cve (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cygwin/">Cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">Dataguard (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/db/">Db (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">Deepfacelab (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/docker/">Docker (7)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dockerfile/">Dockerfile (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dos/">Dos (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/drawio/">Drawio (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dump/">Dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">Eclipse (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/explain/">Explain (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/faker/">Faker (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gcc/">Gcc (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/git/">Git (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/github/">Github (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitment/">Gitment (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">Gitpages (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/go/">Go (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h2/">H2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h5/">H5 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ha/">Ha (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/http/">Http (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/hugo/">Hugo (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/id/">Id (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/idea/">Idea (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/image/">Image (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/images/">Images (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/java/">Java (38)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">Jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jenkins/">Jenkins (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">Jrebel (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/js/">Js (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jsr/">Jsr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/k8s/">K8s (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kafka/">Kafka (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kali/">Kali (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kenlm/">Kenlm (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (28)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log/">Log (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log4j/">Log4j (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/lombok/">Lombok (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mac/">Mac (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/matplotlib/">Matplotlib (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/maven/">Maven (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mcp/">Mcp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mine/">Mine (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mongodb/">Mongodb (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mvnd/">Mvnd (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (10)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/nginx/">Nginx (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/nmap/">Nmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/notes/">Notes (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/obsidian/">Obsidian (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oom/">Oom (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oracle/">Oracle (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/orangePi/">OrangePi (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oss/">Oss (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/package/">Package (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pages/">Pages (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pandas/">Pandas (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pg/">Pg (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/port/">Port (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/postgresql/">Postgresql (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/python/">Python (11)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/rec/">Rec (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/regexp/">Regexp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/safe/">Safe (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdk/">Sdk (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdkman/">Sdkman (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/skill/">Skill (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/split/">Split (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/spring/">Spring (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/spy/">Spy (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sqlmap/">Sqlmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ssd/">Ssd (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tcp/">Tcp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/termux/">Termux (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/test/">Test (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/testing/">Testing (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tomcat/">Tomcat (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (7)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/virus/">Virus (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">Vxvm (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/win10/">Win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">Xrebel (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ydnotes/">Ydnotes (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ynote/">Ynote (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zk/">Zk (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zookeeper/">Zookeeper (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E4%BA%92%E8%81%94%E7%BD%91/">互联网 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E5%99%A8/">容器 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%8E%92%E6%9F%A5/">排查 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%9E%B6%E6%9E%84/">架构 (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E8%BF%90%E7%BB%B4/">运维 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://anTtutu.github.io/tags/-devops/"> Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/-dockerfile/"> Dockerfile</a>
+    
+    <a href="https://anTtutu.github.io/tags/-nmap/"> Nmap</a>
+    
+    <a href="https://anTtutu.github.io/tags/about/">About</a>
+    
+    <a href="https://anTtutu.github.io/tags/agent/">Agent</a>
+    
+    <a href="https://anTtutu.github.io/tags/AI/">AI</a>
+    
+    <a href="https://anTtutu.github.io/tags/android/">Android</a>
+    
+    <a href="https://anTtutu.github.io/tags/app/">App</a>
+    
+    <a href="https://anTtutu.github.io/tags/aria2/">Aria2</a>
+    
+    <a href="https://anTtutu.github.io/tags/arm64/">Arm64</a>
+    
+    <a href="https://anTtutu.github.io/tags/arthas/">Arthas</a>
+    
+    <a href="https://anTtutu.github.io/tags/awr/">Awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backend_execute/">Backend_execute</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">Backup</a>
+    
+    <a href="https://anTtutu.github.io/tags/binlog/">Binlog</a>
+    
+    <a href="https://anTtutu.github.io/tags/blog/">Blog</a>
+    
+    <a href="https://anTtutu.github.io/tags/bug/">Bug</a>
+    
+    <a href="https://anTtutu.github.io/tags/build/">Build</a>
+    
+    <a href="https://anTtutu.github.io/tags/cache/">Cache</a>
+    
+    <a href="https://anTtutu.github.io/tags/caffeine/">Caffeine</a>
+    
+    <a href="https://anTtutu.github.io/tags/captcha/">Captcha</a>
+    
+    <a href="https://anTtutu.github.io/tags/check/">Check</a>
+    
+    <a href="https://anTtutu.github.io/tags/claude/">Claude</a>
+    
+    <a href="https://anTtutu.github.io/tags/claude-code/">Claude Code</a>
+    
+    <a href="https://anTtutu.github.io/tags/clean/">Clean</a>
+    
+    <a href="https://anTtutu.github.io/tags/cli/">Cli</a>
+    
+    <a href="https://anTtutu.github.io/tags/cluster/">Cluster</a>
+    
+    <a href="https://anTtutu.github.io/tags/conda/">Conda</a>
+    
+    <a href="https://anTtutu.github.io/tags/covid-19/">Covid-19</a>
+    
+    <a href="https://anTtutu.github.io/tags/cve/">Cve</a>
+    
+    <a href="https://anTtutu.github.io/tags/cygwin/">Cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">Dataguard</a>
+    
+    <a href="https://anTtutu.github.io/tags/db/">Db</a>
+    
+    <a href="https://anTtutu.github.io/tags/deepfacelab/">Deepfacelab</a>
+    
+    <a href="https://anTtutu.github.io/tags/devops/">Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/docker/">Docker</a>
+    
+    <a href="https://anTtutu.github.io/tags/dos/">Dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/drawio/">Drawio</a>
+    
+    <a href="https://anTtutu.github.io/tags/dump/">Dump</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">Eclipse</a>
+    
+    <a href="https://anTtutu.github.io/tags/ELK/">ELK</a>
+    
+    <a href="https://anTtutu.github.io/tags/explain/">Explain</a>
+    
+    <a href="https://anTtutu.github.io/tags/faker/">Faker</a>
+    
+    <a href="https://anTtutu.github.io/tags/feign/">Feign</a>
+    
+    <a href="https://anTtutu.github.io/tags/freemarker/">Freemarker</a>
+    
+    <a href="https://anTtutu.github.io/tags/gcc/">Gcc</a>
+    
+    <a href="https://anTtutu.github.io/tags/git/">Git</a>
+    
+    <a href="https://anTtutu.github.io/tags/github/">Github</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitment/">Gitment</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitpages/">Gitpages</a>
+    
+    <a href="https://anTtutu.github.io/tags/go/">Go</a>
+    
+    <a href="https://anTtutu.github.io/tags/golang/">Golang</a>
+    
+    <a href="https://anTtutu.github.io/tags/graalvm/">Graalvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/h2/">H2</a>
+    
+    <a href="https://anTtutu.github.io/tags/h5/">H5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">Ha</a>
+    
+    <a href="https://anTtutu.github.io/tags/http/">Http</a>
+    
+    <a href="https://anTtutu.github.io/tags/https/">Https</a>
+    
+    <a href="https://anTtutu.github.io/tags/hugo/">Hugo</a>
+    
+    <a href="https://anTtutu.github.io/tags/id/">Id</a>
+    
+    <a href="https://anTtutu.github.io/tags/idea/">Idea</a>
+    
+    <a href="https://anTtutu.github.io/tags/image/">Image</a>
+    
+    <a href="https://anTtutu.github.io/tags/images/">Images</a>
+    
+    <a href="https://anTtutu.github.io/tags/java/">Java</a>
+    
+    <a href="https://anTtutu.github.io/tags/JDK21/">JDK21</a>
+    
+    <a href="https://anTtutu.github.io/tags/jekyll/">Jekyll</a>
+    
+    <a href="https://anTtutu.github.io/tags/jenkins/">Jenkins</a>
+    
+    <a href="https://anTtutu.github.io/tags/jrebel/">Jrebel</a>
+    
+    <a href="https://anTtutu.github.io/tags/js/">Js</a>
+    
+    <a href="https://anTtutu.github.io/tags/jsr/">Jsr</a>
+    
+    <a href="https://anTtutu.github.io/tags/jvm/">Jvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/k8s/">K8s</a>
+    
+    <a href="https://anTtutu.github.io/tags/kafka/">Kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">Kali</a>
+    
+    <a href="https://anTtutu.github.io/tags/keepalived/">Keepalived</a>
+    
+    <a href="https://anTtutu.github.io/tags/kenlm/">Kenlm</a>
+    
+    <a href="https://anTtutu.github.io/tags/linux/">Linux</a>
+    
+    <a href="https://anTtutu.github.io/tags/log/">Log</a>
+    
+    <a href="https://anTtutu.github.io/tags/log4j/">Log4j</a>
+    
+    <a href="https://anTtutu.github.io/tags/lombok/">Lombok</a>
+    
+    <a href="https://anTtutu.github.io/tags/lvs/">Lvs</a>
+    
+    <a href="https://anTtutu.github.io/tags/mac/">Mac</a>
+    
+    <a href="https://anTtutu.github.io/tags/matplotlib/">Matplotlib</a>
+    
+    <a href="https://anTtutu.github.io/tags/maven/">Maven</a>
+    
+    <a href="https://anTtutu.github.io/tags/mcp/">Mcp</a>
+    
+    <a href="https://anTtutu.github.io/tags/mine/">Mine</a>
+    
+    <a href="https://anTtutu.github.io/tags/mongodb/">Mongodb</a>
+    
+    <a href="https://anTtutu.github.io/tags/mvnd/">Mvnd</a>
+    
+    <a href="https://anTtutu.github.io/tags/mysql/">Mysql</a>
+    
+    <a href="https://anTtutu.github.io/tags/native-image/">Native Image</a>
+    
+    <a href="https://anTtutu.github.io/tags/nginx/">Nginx</a>
+    
+    <a href="https://anTtutu.github.io/tags/notes/">Notes</a>
+    
+    <a href="https://anTtutu.github.io/tags/obsidian/">Obsidian</a>
+    
+    <a href="https://anTtutu.github.io/tags/oom/">Oom</a>
+    
+    <a href="https://anTtutu.github.io/tags/openjdk/">Openjdk</a>
+    
+    <a href="https://anTtutu.github.io/tags/oracle/">Oracle</a>
+    
+    <a href="https://anTtutu.github.io/tags/orangePi/">OrangePi</a>
+    
+    <a href="https://anTtutu.github.io/tags/oss/">Oss</a>
+    
+    <a href="https://anTtutu.github.io/tags/package/">Package</a>
+    
+    <a href="https://anTtutu.github.io/tags/pages/">Pages</a>
+    
+    <a href="https://anTtutu.github.io/tags/pandas/">Pandas</a>
+    
+    <a href="https://anTtutu.github.io/tags/pg/">Pg</a>
+    
+    <a href="https://anTtutu.github.io/tags/port/">Port</a>
+    
+    <a href="https://anTtutu.github.io/tags/postgresql/">Postgresql</a>
+    
+    <a href="https://anTtutu.github.io/tags/python/">Python</a>
+    
+    <a href="https://anTtutu.github.io/tags/rec/">Rec</a>
+    
+    <a href="https://anTtutu.github.io/tags/redis/">Redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/regexp/">Regexp</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">Safe</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdk/">Sdk</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdkman/">Sdkman</a>
+    
+    <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
+    
+    <a href="https://anTtutu.github.io/tags/skill/">Skill</a>
+    
+    <a href="https://anTtutu.github.io/tags/split/">Split</a>
+    
+    <a href="https://anTtutu.github.io/tags/springboot/">Springboot</a>
+    
+    <a href="https://anTtutu.github.io/tags/springcloud/">Springcloud</a>
+    
+    <a href="https://anTtutu.github.io/tags/springmvc/">Springmvc</a>
+    
+    <a href="https://anTtutu.github.io/tags/spy/">Spy</a>
+    
+    <a href="https://anTtutu.github.io/tags/sqlmap/">Sqlmap</a>
+    
+    <a href="https://anTtutu.github.io/tags/ssd/">Ssd</a>
+    
+    <a href="https://anTtutu.github.io/tags/tcp/">Tcp</a>
+    
+    <a href="https://anTtutu.github.io/tags/termux/">Termux</a>
+    
+    <a href="https://anTtutu.github.io/tags/test/">Test</a>
+    
+    <a href="https://anTtutu.github.io/tags/testing/">Testing</a>
+    
+    <a href="https://anTtutu.github.io/tags/thymeleaf/">Thymeleaf</a>
+    
+    <a href="https://anTtutu.github.io/tags/tomcat/">Tomcat</a>
+    
+    <a href="https://anTtutu.github.io/tags/uniapp/">Uniapp</a>
+    
+    <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
+    
+    <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
+    
+    <a href="https://anTtutu.github.io/tags/virus/">Virus</a>
+    
+    <a href="https://anTtutu.github.io/tags/vue/">Vue</a>
+    
+    <a href="https://anTtutu.github.io/tags/vxvm/">Vxvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/win10/">Win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">Xrebel</a>
+    
+    <a href="https://anTtutu.github.io/tags/ydnotes/">Ydnotes</a>
+    
+    <a href="https://anTtutu.github.io/tags/ynote/">Ynote</a>
+    
+    <a href="https://anTtutu.github.io/tags/zk/">Zk</a>
+    
+    <a href="https://anTtutu.github.io/tags/zookeeper/">Zookeeper</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">主从复制</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1/">云服务</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%89%8D%E7%AB%AF/">前端</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8D%87%E7%BA%A7%E8%BF%81%E7%A7%BB/">升级迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8E%8B%E6%B5%8B/">压测</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%9F%BA%E7%A1%80/">基础</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%89%E5%85%A8/">安全</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E5%99%A8/">容器</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%B6%E5%8F%91/">并发</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%BF%E5%91%8A/">广告</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8C%87%E6%A0%87/">指标</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8E%92%E6%9F%A5/">排查</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">效率工具</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/">日志分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9E%B6%E6%9E%84/">架构</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%A7%91%E6%99%AE/">科普</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%AE%A4%E8%AF%81/">认证</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B0%83%E8%AF%95/">调试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">负载均衡</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%81%E7%A7%BB/">迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%80%89%E5%9E%8B/">选型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/">防重复提交</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://anTtutu.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

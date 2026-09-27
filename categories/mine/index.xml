@@ -18,7 +18,7 @@
 				<link>https://anTtutu.github.io/post/2023-06-16-miner_virus_5/</link>
 				<pubDate>Fri, 16 Jun 2023 00:29:47 +0800</pubDate>
 				<guid>https://anTtutu.github.io/post/2023-06-16-miner_virus_5/</guid>
-				<description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;6月16日晚，一位朋友咨询說私有云机房服务器有占用cpu比较高的进程无法kill，我通过向日葵远程跳板机分析了下，发现一些不同于以往挖矿病毒有趣的现象，总结下&lt;/p&gt;&#xA;&lt;h2 id=&#34;1初查&#34;&gt;1、初查&lt;/h2&gt;&#xA;&lt;p&gt;初步筛查，发现crontab、top如其他挖矿病毒差不多&lt;/p&gt;&#xA;&lt;h3 id=&#34;11-进程名称模仿系统进程&#34;&gt;1.1 进程名称模仿系统进程&lt;/h3&gt;&#xA;&lt;p&gt;&#xA;        &lt;img class=&#34;mx-auto&#34; alt=&#34;&#34; src=&#34;https://anTtutu.github.io/posts/virus/top5.png&#34; /&gt;   &#xA;    &#xA;初步看进程名kthreaddk，这个挖矿的进程名挺像内核进程kthreadd，但是系统内核进程不太可能cpu占用异常，就继续往下检查&#xA;&#xA;        &lt;img class=&#34;mx-auto&#34; alt=&#34;&#34; src=&#34;https://anTtutu.github.io/posts/virus/crontab5.png&#34; /&gt;   &#xA;    &#xA;查看crontab，发现异常，结果多次执行，发现路径会变。。。，总结下规律，发现一直在/dev/cpu/、/dev/mapper/、/dev/disk/、/dev/一直出现在这几层跳跃&lt;/p&gt;</description>
+				<description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;6月16日晚，一位朋友咨询说私有云机房服务器有占用cpu比较高的进程无法kill，我通过向日葵远程跳板机分析了下，发现一些不同于以往挖矿病毒有趣的现象，总结下&lt;/p&gt;&#xA;&lt;h2 id=&#34;1初查&#34;&gt;1、初查&lt;/h2&gt;&#xA;&lt;p&gt;初步筛查，发现crontab、top如其他挖矿病毒差不多&lt;/p&gt;&#xA;&lt;h3 id=&#34;11-进程名称模仿系统进程&#34;&gt;1.1 进程名称模仿系统进程&lt;/h3&gt;&#xA;&lt;p&gt;&#xA;        &lt;img class=&#34;mx-auto&#34; alt=&#34;&#34; src=&#34;https://anTtutu.github.io/posts/virus/top5.png&#34; /&gt;   &#xA;    &#xA;初步看进程名kthreaddk，这个挖矿的进程名挺像内核进程kthreadd，但是系统内核进程不太可能cpu占用异常，就继续往下检查&#xA;&#xA;        &lt;img class=&#34;mx-auto&#34; alt=&#34;&#34; src=&#34;https://anTtutu.github.io/posts/virus/crontab5.png&#34; /&gt;   &#xA;    &#xA;查看crontab，发现异常，结果多次执行，发现路径会变……，总结下规律，发现一直在/dev/cpu/、/dev/mapper/、/dev/disk/、/dev/一直出现在这几层跳跃&lt;/p&gt;</description>
 			</item>
 			<item>
 				<title>挖矿病毒4-容器挖矿病毒清理</title>
@@ -32,7 +32,7 @@
 				<link>https://anTtutu.github.io/post/2022-01-24-miner_virus_3/</link>
 				<pubDate>Mon, 24 Jan 2022 00:29:47 +0800</pubDate>
 				<guid>https://anTtutu.github.io/post/2022-01-24-miner_virus_3/</guid>
-				<description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;1月23日，公司邮箱收到说阿里云报了挖矿病毒的警告&lt;/p&gt;&#xA;&lt;h2 id=&#34;1分析&#34;&gt;1、分析&lt;/h2&gt;&#xA;&lt;p&gt;这次思路改进了些，起初有个只是定时任务没被清理，阿里云通过定时任务关键字&amp;quot;pool.minexmr.com:4444&amp;quot;报了蠕虫病毒，但是根据关键字查看，这像挖矿&lt;br&gt;&#xA;然后 top 了半天没看到结果，怀疑是top被篡改了？？？然后进了/usr/bin/核对下 top 的时间，发现没差异呀，但是本着稳妥起见，还是下载 busybox&lt;/p&gt;</description>
+				<description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;1月23日，公司邮箱收到说阿里云报了挖矿病毒的警告&lt;/p&gt;&#xA;&lt;h2 id=&#34;1分析&#34;&gt;1、分析&lt;/h2&gt;&#xA;&lt;p&gt;这次思路改进了些，起初有个只是定时任务没被清理，阿里云通过定时任务关键字&amp;quot;pool.minexmr.com:4444&amp;quot;报了蠕虫病毒，但是根据关键字查看，这像挖矿&lt;br&gt;&#xA;然后 top 了半天没看到结果，怀疑是top被篡改了？然后进了/usr/bin/核对下 top 的时间，发现没差异呀，但是本着稳妥起见，还是下载 busybox&lt;/p&gt;</description>
 			</item>
 			<item>
 				<title>挖矿病毒2-分析和排查思路</title>

@@ -84,6 +84,703 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-01-07-regexp/" target="_blank">一些正则小细节-不定期补充</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年1月7日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/regexp' target="_blank">regexp</a>
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>记录日常工作碰到的一些正则小细节</p>
+<h2 id="1group分组">1、group分组</h2>
+<p>需要通过()把提取的参数圈起来，这样才会产生分组</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#cf222e">private</span><span style="color:#fff"> </span><span style="color:#cf222e">static</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span><span style="color:#6639ba">collectMapperId</span><span style="color:#1f2328">(</span>String<span style="color:#fff"> </span>value<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>String<span style="color:#fff"> </span>result<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;&#34;</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>String<span style="color:#fff"> </span>regId<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;id=\&#34;(.*?)\&#34;&#34;</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>Pattern<span style="color:#fff"> </span>pattern<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>Pattern<span style="color:#1f2328">.</span><span style="color:#1f2328">compile</span><span style="color:#1f2328">(</span>regId<span style="color:#1f2328">);</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>Matcher<span style="color:#fff"> </span>matcher<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>pattern<span style="color:#1f2328">.</span><span style="color:#1f2328">matcher</span><span style="color:#1f2328">(</span>value<span style="color:#1f2328">);</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">if</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>matcher<span style="color:#1f2328">.</span><span style="color:#1f2328">find</span><span style="color:#1f2328">())</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>result<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>matcher<span style="color:#1f2328">.</span><span style="color:#1f2328">group</span><span style="color:#1f2328">(</span>1<span style="color:#1f2328">);</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">return</span><span style="color:#fff"> </span>result<span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>对比如果没有(),是没有分组效果的</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2022-01-07-regexp/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" target="_blank">sdkman的使用</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年1月6日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+            <a href='/categories/sdk' target="_blank">sdk</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>多sdk版本管理工具</p>
+<h2 id="1安装java-jdk">1、安装java jdk</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk install java
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2安装指定版本的-java-jdk">2、安装指定版本的 java jdk</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk install java 8u131
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3安装本地包">3、安装本地包</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk install groovy 3.0.0-SNAPSHOT /path/to/groovy-3.0.0-SNAPSHOT
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4移除-java-jdk">4、移除 java jdk</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk uninstall java 21-graalvm
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="5查看当前生效的-java-jdk">5、查看当前生效的 java jdk</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk current java
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 查看所有本地包的当前版本</span>
+</span></span><span style="display:flex;"><span>sdk current
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="6查看支持的清单">6、查看支持的清单</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk list
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="7查看软件的版本">7、查看软件的版本</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk list java
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="8临时切换版本">8、临时切换版本</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk use java 8.0.232.hs-adpt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="9切换默认版本">9、切换默认版本</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk default java 11.0.5.hs-adpt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="10sdk-版本升级">10、sdk 版本升级</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk upgrade springboot
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 本地所有sdk全部升级</span>
+</span></span><span style="display:flex;"><span>sdk upgrade 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="11sdkman-版本升级">11、sdkman 版本升级</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk selfupdate
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 强制重新安装</span>
+</span></span><span style="display:flex;"><span>sdk selfupdate force
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="12查看-sdkman-的版本">12、查看 sdkman 的版本</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="13离线模式">13、离线模式</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk offline <span style="color:#6639ba">enable</span>
+</span></span><span style="display:flex;"><span>  Forced offline mode enabled.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sdk offline disable
+</span></span><span style="display:flex;"><span>  Online mode re-enabled!
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当电脑没有网的时候,离线模式会进行自动切换.</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-12-15-feign-client-attrs/" target="_blank">@FeignClient属性详解与bean重名冲突处理</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年12月15日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/springcloud' target="_blank">springcloud</a>
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>微服务项目里 OpenFeign 是最常用的声明式 HTTP 客户端，但 <code>@FeignClient</code> 的属性含义很多人只停留在 <code>value</code> 上。这篇整理注解的全属性解读，以及一个常见的坑：<strong>多个 FeignClient 指向同一个服务时的 bean 重名冲突</strong>。</p>
+<h2 id="一feignclient-全属性解读">一、@FeignClient 全属性解读</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#0550ae">@Target</span><span style="color:#1f2328">({</span>ElementType<span style="color:#1f2328">.</span><span style="color:#1f2328">TYPE</span><span style="color:#1f2328">})</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">@Retention</span><span style="color:#1f2328">(</span>RetentionPolicy<span style="color:#1f2328">.</span><span style="color:#1f2328">RUNTIME</span><span style="color:#1f2328">)</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#0550ae">@Documented</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#0550ae">@interface</span><span style="color:#fff"> </span>FeignClient<span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * 1、value 与 name 互为别名，两者二选一即可
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * 2、当 contextId 没有值的时候，会默认获取（value/name）的值
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * 3、当未指定 url 请求地址的时候，最终会通过 ribbon-loadbalancer 工具，
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     *    从注册中心选取 service-id 等于 value 的服务作为请求地址
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     */</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">@AliasFor</span><span style="color:#1f2328">(</span><span style="color:#0a3069">&#34;name&#34;</span><span style="color:#1f2328">)</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>String<span style="color:#fff"> </span><span style="color:#6639ba">value</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#cf222e">default</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;&#34;</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * serviceId 已作废，其目的与 value 一致。如果设置了 serviceId，
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * 则 value/name 皆以 serviceId 为准
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     */</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">@Deprecated</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>String<span style="color:#fff"> </span><span style="color:#6639ba">serviceId</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#cf222e">default</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;&#34;</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * 1、当 contextId 没有值的时候，会默认获取（value/name）的值
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * 2、当 qualifier 没有值的时候，会将 &#39;${contextId}FeignClient&#39; 作为
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     *    feign 的 bean 组件别名
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     */</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>String<span style="color:#fff"> </span><span style="color:#6639ba">contextId</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#cf222e">default</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;&#34;</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">/** 同 value，二选一 */</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">@AliasFor</span><span style="color:#1f2328">(</span><span style="color:#0a3069">&#34;value&#34;</span><span style="color:#1f2328">)</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>String<span style="color:#fff"> </span><span style="color:#6639ba">name</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#cf222e">default</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;&#34;</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * feign 的 bean 组件别名，拥有最高优先级；
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * 当 qualifier 为空时，取 &#39;${contextId}FeignClient&#39; 作为 bean 的名称
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     */</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>String<span style="color:#fff"> </span><span style="color:#6639ba">qualifier</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#cf222e">default</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;&#34;</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * 1、设置 url 以后，后续发起 http 调用时，直接读取该地址作为请求目标；
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * 2、未设置 url 时，借助 ribbon-loadbalancer 组件，根据 (value/name)
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     *    从注册中心的服务列表中选中 service-id 匹配的目标服务
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     */</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>String<span style="color:#fff"> </span><span style="color:#6639ba">url</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#cf222e">default</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;&#34;</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">boolean</span><span style="color:#fff"> </span><span style="color:#6639ba">decode404</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#cf222e">default</span><span style="color:#fff"> </span><span style="color:#cf222e">false</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>Class<span style="color:#0550ae">&lt;?&gt;[]</span><span style="color:#fff"> </span><span style="color:#6639ba">configuration</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#cf222e">default</span><span style="color:#fff"> </span><span style="color:#1f2328">{};</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>Class<span style="color:#0550ae">&lt;?&gt;[]</span><span style="color:#fff"> </span><span style="color:#6639ba">fallback</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#cf222e">default</span><span style="color:#fff"> </span><span style="color:#cf222e">void</span><span style="color:#1f2328">.</span><span style="color:#1f2328">class</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>Class<span style="color:#0550ae">&lt;?&gt;[]</span><span style="color:#fff"> </span><span style="color:#6639ba">fallbackFactory</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#cf222e">default</span><span style="color:#fff"> </span><span style="color:#cf222e">void</span><span style="color:#1f2328">.</span><span style="color:#1f2328">class</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * 目标服务器对应的资源 uri（FeignClient 下所有方法相同的 path 前缀）
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     */</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>String<span style="color:#fff"> </span><span style="color:#6639ba">path</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#cf222e">default</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;&#34;</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">boolean</span><span style="color:#fff"> </span><span style="color:#6639ba">primary</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#cf222e">default</span><span style="color:#fff"> </span><span style="color:#cf222e">true</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>属性速查：</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-12-15-feign-client-attrs/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-12-13-log4j2_cve/" target="_blank">log4j2远程执行漏洞</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年12月13日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/log4j' target="_blank">log4j</a>
+            
+            <a href='/categories/cve' target="_blank">cve</a>
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>12月9日爆出来的log4j2远程执行漏洞，因为影响巨大，网上新闻和介绍特别多，这里不多说，间接使用log4j2的第三方也不少，等官网修复不知道是否赶得上，直接采用暴力删除jndilook.class最简单</p>
+<h2 id="1直接删除漏洞class">1、直接删除漏洞class</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#6639ba">set</span> -eu
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">for</span> JAR_PATH in <span style="color:#0a3069">&#34;</span><span style="color:#953800">$@</span><span style="color:#0a3069">&#34;</span><span style="color:#1f2328">;</span> <span style="color:#cf222e">do</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#cf222e">if</span> <span style="color:#0550ae">[[</span> <span style="color:#953800">$JAR_PATH</span> !<span style="color:#0550ae">=</span> *log4j-core*.jar <span style="color:#0550ae">]]</span> <span style="color:#0550ae">||</span> <span style="color:#0550ae">[</span> -e <span style="color:#0a3069">&#34;</span><span style="color:#953800">$JAR_PATH</span><span style="color:#0a3069">.bak&#34;</span> <span style="color:#0550ae">]</span> <span style="color:#0550ae">||</span> ! <span style="color:#0550ae">[</span> -f <span style="color:#0a3069">&#34;</span><span style="color:#953800">$JAR_PATH</span><span style="color:#0a3069">&#34;</span> <span style="color:#0550ae">]</span><span style="color:#1f2328">;</span> <span style="color:#cf222e">then</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#6639ba">echo</span> <span style="color:#0a3069">&#34;Skipped </span><span style="color:#953800">$JAR_PATH</span><span style="color:#0a3069">&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#cf222e">continue</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#cf222e">fi</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6639ba">echo</span> <span style="color:#0a3069">&#34;Processing </span><span style="color:#953800">$JAR_PATH</span><span style="color:#0a3069">&#34;</span>
+</span></span><span style="display:flex;"><span>	cp -p <span style="color:#0a3069">&#34;</span><span style="color:#953800">$JAR_PATH</span><span style="color:#0a3069">&#34;</span> <span style="color:#0a3069">&#34;</span><span style="color:#953800">$JAR_PATH</span><span style="color:#0a3069">.bak&#34;</span>
+</span></span><span style="display:flex;"><span>	zip -q -d <span style="color:#0a3069">&#34;</span><span style="color:#953800">$JAR_PATH</span><span style="color:#0a3069">&#34;</span> org/apache/logging/log4j/core/lookup/JndiLookup.class
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2apache-log4j2漏洞官方说明">2、Apache log4j2漏洞官方说明</h2>
+<p>官方漏洞说明： <a href="https://logging.apache.org/log4j/2.x/security.html">https://logging.apache.org/log4j/2.x/security.html</a></p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-12-13-log4j2_cve/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-11-19-lombok/" target="_blank">lombok一些注解的含义</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年11月19日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/lombok' target="_blank">lombok</a>
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>lombok一些注解的含义整理</p>
+<h2 id="1accessorschain--true">1、@Accessors(chain = true)</h2>
+<p>链式风格，在调用set方法时，返回这个类的实例对象，比如：a.b.c</p>
+<h2 id="2data">2、@Data</h2>
+<p>在JavaBean或类JavaBean中使用，这个注解包含范围最广，它包含getter、setter、NoArgsConstructor、equals、canEqual、hashCode、toString 注解，即当使用当前注解时，会自动生成包含的所有方法；</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-11-19-lombok/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-10-11-caffeine_springcache/" target="_blank">caffeine和springcache</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年10月11日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/caffeine' target="_blank">caffeine</a>
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+            <a href='/categories/cache' target="_blank">cache</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>说到caffeine，一般会对比 google 家的 guava，这里只做浅析。</p>
+<h3 id="缓存">缓存</h3>
+<p>缓存分为本地缓存和远端缓存。<br>
+常见的远端缓存有Redis，MongoDB；<br>
+本地缓存一般使用map的方式保存在本地内存中。</p>
+<p>一般我们在业务中操作缓存，都会操作缓存和数据源两部分。<br>
+如：put数据时，先插入DB，再删除原来的缓存；get数据时，先查缓存，命中则返回，没有命中时，需要查询DB，再把查询结果放入缓存中。<br>
+如果访问量大，我们还得兼顾本地缓存的线程安全问题。<br>
+必要的时候也要考虑缓存的回收策略。</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-10-11-caffeine_springcache/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-09-30-safe_coding_java/" target="_blank">java编码安全</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年9月30日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+            <a href='/categories/safe' target="_blank">safe</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h5 id="后端java开发---转自腾讯github">后端java开发  &ndash; 转自腾讯github</h5>
+<h2 id="11-数据持久化">1.1 数据持久化</h2>
+<h3 id="111必须sql语句默认使用预编译并绑定变量">1.1.1【必须】SQL语句默认使用预编译并绑定变量</h3>
+<p>Web后台系统应默认使用预编译绑定变量的形式创建sql语句，保持查询语句和数据相分离。以从本质上避免SQL注入风险。</p>
+<p>如使用Mybatis作为持久层框架，应通过#{}语法进行参数绑定，MyBatis 会创建 <code>PreparedStatement</code> 参数占位符，并通过占位符安全地设置参数。</p>
+<p>示例：JDBC</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-09-30-safe_coding_java/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-09-19-maven_verify/" target="_blank">maven校验依赖包CVE漏洞</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年9月19日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/maven' target="_blank">maven</a>
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>maven也可以校验依赖包是有有CVE漏洞</p>
+<h2 id="1maven检测依赖包cve漏洞">1、maven检测依赖包CVE漏洞</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mvn verify -DskipTests<span style="color:#0550ae">=</span><span style="color:#6639ba">true</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#0550ae">&lt;build&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;plugins&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57606a">&lt;!-- owasp check CVE 检查依赖包是否有漏洞  command: mvn verify --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&lt;groupId&gt;</span>org.owasp<span style="color:#0550ae">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&lt;artifactId&gt;</span>dependency-check-maven<span style="color:#0550ae">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&lt;version&gt;</span>6.5.1<span style="color:#0550ae">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&lt;executions&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0550ae">&lt;execution&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#0550ae">&lt;goals&gt;</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#0550ae">&lt;goal&gt;</span>check<span style="color:#0550ae">&lt;/goal&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#0550ae">&lt;/goals&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#0550ae">&lt;/execution&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&lt;/executions&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;/plugins&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#0550ae">&lt;/build&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2检测结果demo">2、检测结果demo</h2>
+<p>第一次执行因下载CVE数据有些慢</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-09-19-maven_verify/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-08-10-jvm_dump_analyse/" target="_blank">jvm的大dump文件分析</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年8月10日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/dump' target="_blank">dump</a>
+            
+            <a href='/categories/jvm' target="_blank">jvm</a>
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>参考dump文件的大小，如果超过6G、8G 一般我们本地电脑无法打开，可以找大容量的linux服务器，配置对应启动的jvm 内存后可以参考下面的步骤</p>
+<h2 id="1下载linux版本的mat">1、下载linux版本的mat</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget http://eclipse.stu.edu.tw/mat/1.9.0/rcp/MemoryAnalyzer-1.9.0.20190605-linux.gtk.x86_64.zip
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2解压zip包">2、解压zip包</h2>
+<pre tabindex="0"><code>unzip MemoryAnalyzer-1.9.0.20190605-linux.gtk.x86_64.zip
+</code></pre><h2 id="3修改linux-mat的堆内存大小看自己下载的堆的大小默认mat的堆支持1g">3、修改linux mat的堆内存大小（看自己下载的堆的大小，默认mat的堆支持1g）</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vi MemoryAnalyzer.ini
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#1f2328">-startup</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">plugins/org.eclipse.equinox.launcher_1.5.0.v20180512-1130.jar</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">--launcher.library</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.1.700.v20180518-1200</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">-vmargs</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">-Xmx10240m</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4执行分析脚本">4、执行分析脚本</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./ParseHeapDump.sh <span style="color:#0550ae">[</span>hprof文件<span style="color:#0550ae">]</span> org.eclipse.mat.api:suspects org.eclipse.mat.api:overview org.eclipse.mat.api:top_components
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="可能因为-jdk-版本不一致导致启动失败可以调整-jdk-为18">可能因为 jdk 版本不一致导致启动失败，可以调整 jdk 为1.8.*</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#6639ba">export</span> <span style="color:#953800">JAVA_HOME</span><span style="color:#0550ae">=</span>/opt/soft/jdk/jdk1.8.0_66/
+</span></span><span style="display:flex;"><span><span style="color:#6639ba">export</span> <span style="color:#953800">PATH</span><span style="color:#0550ae">=</span><span style="color:#953800">$JAVA_HOME</span>/bin:<span style="color:#953800">$PATH</span>
+</span></span><span style="display:flex;"><span><span style="color:#0a3069">&#34;</span><span style="color:#cf222e">$(</span>dirname -- <span style="color:#0a3069">&#34;</span><span style="color:#953800">$0</span><span style="color:#0a3069">&#34;</span><span style="color:#cf222e">)</span><span style="color:#0a3069">&#34;</span>/MemoryAnalyzer -consolelog -application org.eclipse.mat.api.parse <span style="color:#0a3069">&#34;</span><span style="color:#953800">$@</span><span style="color:#0a3069">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="5等待分析结果">5、等待分析结果</h2>
+<p>
+        <img class="mx-auto" alt="" src="/posts/dump/analyse_result.png" />   
+    </p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-08-10-jvm_dump_analyse/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2021-07-15-maven_scope/" target="_blank">maven的scope参数</a>
             </h1>
         </header>
@@ -132,591 +829,6 @@
         </div>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2021-04-10-kafka_zookeeper_cluster_install/" target="_blank">kafka集群和zk集群搭建</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2021年4月10日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/kafka' target="_blank">kafka</a>
-            
-            <a href='/categories/zookeeper' target="_blank">zookeeper</a>
-            
-            <a href='/categories/zk' target="_blank">zk</a>
-            
-            <a href='/categories/java' target="_blank">java</a>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>一台应用的第三方服务器的kafka只有3个分区，测试一直存在积压的消息，搭建了一套最简单集群测试下，记录中间的参数。</p>
-<h2 id="1准备工作">1、准备工作</h2>
-<h3 id="11-环境准备">1.1 环境准备</h3>
-<table>
-	<thead>
-			<tr>
-					<th>环境</th>
-					<th>版本</th>
-					<th>说明</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>centos</td>
-					<td>7.0</td>
-					<td>操作系统服务器，3台</td>
-			</tr>
-			<tr>
-					<td>JDK</td>
-					<td>1.8.261</td>
-					<td>安装好jdk并设置好环境变量</td>
-			</tr>
-			<tr>
-					<td>zookeeper</td>
-					<td>3.4.9</td>
-					<td>zk官方安装包</td>
-			</tr>
-			<tr>
-					<td>kafka</td>
-					<td>2.2.0_2.12</td>
-					<td>kafka官方安装包</td>
-			</tr>
-	</tbody>
-</table>
-<h3 id="12-服务器">1.2 服务器</h3>
-<table>
-	<thead>
-			<tr>
-					<th>IP</th>
-					<th>端口</th>
-					<th>说明</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>192.168.211.125</td>
-					<td>zk:2181<br>zk heartbeat:2888、3888<br>kafka:9092</td>
-					<td>zk默认端口<br>zk心跳默认端口<br>kafka默认监听端口</td>
-			</tr>
-			<tr>
-					<td>192.168.211.126</td>
-					<td>zk:2181<br>zk heartbeat:2888、3888<br>kafka:9092</td>
-					<td>zk默认端口<br>zk心跳默认端口<br>kafka默认监听端口</td>
-			</tr>
-			<tr>
-					<td>192.168.211.127</td>
-					<td>zk:2181<br>zk heartbeat:2888、3888<br>kafka:9092</td>
-					<td>zk默认端口<br>zk心跳默认端口<br>kafka默认监听端口</td>
-			</tr>
-	</tbody>
-</table>
-<h3 id="13-目录规划">1.3 目录规划</h3>
-<table>
-	<thead>
-			<tr>
-					<th>中间件</th>
-					<th>安装目录</th>
-					<th>数据目录</th>
-					<th>日志目录</th>
-					<th>说明</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>jdk</td>
-					<td>/home/jdk_version</td>
-					<td>-</td>
-					<td>-</td>
-					<td>Oracle jdk是直接tgz解压的，只需要安装目录<br>openjdk不需要这个目录规划</td>
-			</tr>
-			<tr>
-					<td>zk</td>
-					<td>/home/zookeeper_version</td>
-					<td>/opt/data/zookeeper</td>
-					<td>/opt/data/zookeeper/zkdata<br>/opt/data/zookeeper/zklogs</td>
-					<td>zkdata是zk的数据目录，zklogs是日志目录</td>
-			</tr>
-			<tr>
-					<td>kafka</td>
-					<td>/home/kafaka_version</td>
-					<td>/opt/data/kafka</td>
-					<td>/opt/data/kafka/kafka_logs</td>
-					<td>kafka_logs是日志目录</td>
-			</tr>
-	</tbody>
-</table>
-<h2 id="2下载zk">2、下载zk</h2>
-<p>官网：<a href="https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/">https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/</a><br>
-下载地址：<a href="https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/zookeeper-3.4.9.tar.gz">https://archive.apache.org/dist/zookeeper/zookeeper-3.4.9/zookeeper-3.4.9.tar.gz</a></p>……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-04-10-kafka_zookeeper_cluster_install/" target="_blank">阅读全文</a></p>
-        </div>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2021-03-10-android_termux_java/" target="_blank">android下的termux模拟器安装openJDK和运行springboot项目</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2021年3月10日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/android' target="_blank">android</a>
-            
-            <a href='/categories/termux' target="_blank">termux</a>
-            
-            <a href='/categories/arm64' target="_blank">arm64</a>
-            
-            <a href='/categories/springboot' target="_blank">springboot</a>
-            
-            <a href='/categories/java' target="_blank">java</a>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>2020年9月份打造好了termux，但是苦于jdk没法安装，只能简单的用ecj(eclipse的java，类似jdk的javac)，但是springboot或者tomcat的项目怎么跑啊?
-今天为了做培训演示，找到了termux下的openJDK资源，记录下安装的经过。termux的安装和工具准备参考前一篇<a href="/post/2020-09-28-android_termux">android下安装termux模拟器-超便携linux</a></p>……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-03-10-android_termux_java/" target="_blank">阅读全文</a></p>
-        </div>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2019-06-08-springboot_hotdeploy/" target="_blank">springboot的devTools热部署</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年6月8日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/springboot' target="_blank">springboot</a>
-            
-            <a href='/categories/java' target="_blank">java</a>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>springboot利用devtools实现热部署</p>
-<h2 id="1applicationyml">1、application.yml</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#0550ae">spring</span><span style="color:#1f2328">:</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">devtools</span><span style="color:#1f2328">:</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#0550ae">restart</span><span style="color:#1f2328">:</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#57606a">#热部署生效</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">          </span><span style="color:#0550ae">enabled</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#cf222e">true</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#57606a">#设置重启的目录</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#57606a">#additional-paths: src/main/java</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#57606a">#classpath目录下的WEB-INF文件夹内容修改不重启</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">          </span><span style="color:#0550ae">exclude</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>WEB-INF/**<span style="color:#fff">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>设置WEB-INF下的jsp修改不需要重启。</p>
-<h2 id="2pomxml">2、pom.xml</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#57606a">&lt;!--devtools热部署--&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#0550ae">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#0550ae">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;artifactId&gt;</span>spring-boot-devtools<span style="color:#0550ae">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;optional&gt;</span>true<span style="color:#0550ae">&lt;/optional&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#57606a">&lt;!-- optional=true,依赖不会传递，该项目依赖devtools；之后依赖该项目的项目如果想要使用devtools，需要重新引入 --&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;scope&gt;</span>true<span style="color:#0550ae">&lt;/scope&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#0550ae">&lt;/dependency&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#0550ae">&lt;plugin&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#0550ae">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span style="color:#0550ae">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;configuration&gt;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&lt;fork&gt;</span>true<span style="color:#0550ae">&lt;/fork&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;/configuration&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;dependencies&gt;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#57606a">&lt;!-- spring热部署--&gt;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#57606a">&lt;!-- https://mvnrepository.com/artifact/org.springframework/springloaded --&gt;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&lt;groupId&gt;</span>org.springframework<span style="color:#0550ae">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&lt;artifactId&gt;</span>springloaded<span style="color:#0550ae">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&lt;version&gt;</span>1.2.6.RELEASE<span style="color:#0550ae">&lt;/version&gt;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&lt;/dependency&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;/dependencies&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#0550ae">&lt;/plugin&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="3idea设置">3、idea设置</h2>
-<p>1、File-Settings-Compiler-Build Project automatically<br>
-2、ctrl + shift + alt + /,选择Registry,勾上 Compiler autoMake allow when app running</p>……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2019-06-08-springboot_hotdeploy/" target="_blank">阅读全文</a></p>
-        </div>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2019-03-11-jdkbug/" target="_blank">JDK1.8.0.161版本bug定位</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年3月8日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/bug' target="_blank">bug</a>
-            
-            <a href='/categories/java' target="_blank">java</a>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>好好运行的系统，突然故障，无意间根据错误信息查找，竟然是jdk的bug，描述下曲折的定位过程。</p>
-<h2 id="1错误日志">1、错误日志</h2>
-<p>有个老系统有使用到soap接口，采用CXF结合接口文件wsdl自动生成的接口开发的，突然在3月2日（后续日志定位才发现真正故障的时间）无法正常工作，但是实际发现时间已经到了3月6日了，直接查看日志文件，报错“组装saop报文头异常:Entity References are not allowed in SOAP documents”</p>……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2019-03-11-jdkbug/" target="_blank">阅读全文</a></p>
-        </div>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2018-05-08-oom/" target="_blank">java OOM的种类整理</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2018年5月8日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/java' target="_blank">java</a>
-            
-            <a href='/categories/oom' target="_blank">oom</a>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>java OOM的种类整理</p>
-<h2 id="1分类">1、分类</h2>
-<h3 id="11情况一">1.1【情况一】：</h3>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>java<span style="color:#1f2328">.</span><span style="color:#1f2328">lang</span><span style="color:#1f2328">.</span><span style="color:#1f2328">OutOfMemoryError</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>Java<span style="color:#fff"> </span>heap<span style="color:#fff"> </span>space<span style="color:#1f2328">:</span><span style="color:#fff">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>这种是java堆内存不够，一个原因是真不够，另一个原因是程序中有死循环<br>
-如果是java堆内存不够的话，可以通过调整JVM下面的配置来解决：</p>
-<pre tabindex="0"><code>-Xms3062m
--Xmx3062m
-</code></pre><p>　　</p>
-<h3 id="12情况二">1.2【情况二】</h3>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>java<span style="color:#1f2328">.</span><span style="color:#1f2328">lang</span><span style="color:#1f2328">.</span><span style="color:#1f2328">OutOfMemoryError</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>GC<span style="color:#fff"> </span>overhead<span style="color:#fff"> </span>limit<span style="color:#fff"> </span>exceeded<span style="color:#fff">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="解释">【解释】</h4>
-<p>JDK6新增错误类型，当GC为释放很小空间占用大量时间时抛出；一般是因为堆太小，导致异常的原因，没有足够的内存。</p>……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2018-05-08-oom/" target="_blank">阅读全文</a></p>
-        </div>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2018-03-19-springmvc/" target="_blank">springmvc的参数校验注解整理</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2018年3月19日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/java' target="_blank">java</a>
-            
-            <a href='/categories/jsr' target="_blank">jsr</a>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="1jsr303注解字段校验">1、JSR303注解字段校验</h2>
-<table>
-	<thead>
-			<tr>
-					<th>注解</th>
-					<th>说明</th>
-					<th>功能</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>@AssertFalse</td>
-					<td>Boolean,boolean</td>
-					<td>验证注解的元素值是false</td>
-			</tr>
-			<tr>
-					<td>@AssertTrue</td>
-					<td>Boolean,boolean</td>
-					<td>验证注解的元素值是true</td>
-			</tr>
-			<tr>
-					<td>@NotNull</td>
-					<td>任意类型</td>
-					<td>验证注解的元素值不是null</td>
-			</tr>
-			<tr>
-					<td>@Null</td>
-					<td>任意类型</td>
-					<td>验证注解的元素值是null</td>
-			</tr>
-			<tr>
-					<td>@Min(value=值)</td>
-					<td>BigDecimal，BigInteger, byte,short, int, long，等任何Number或CharSequence（存储的是数字）子类型</td>
-					<td>验证注解的元素值大于等于@Min指定的value值</td>
-			</tr>
-			<tr>
-					<td>@Max(value=值)</td>
-					<td>和@Min要求一样</td>
-					<td>验证注解的元素值小于等于@Max指定的value值</td>
-			</tr>
-			<tr>
-					<td>@DecimalMin(value=值)</td>
-					<td>和@Min要求一样</td>
-					<td>验证注解的元素值大于等于@ DecimalMin指定的value值</td>
-			</tr>
-			<tr>
-					<td>@DecimalMax(value=值)</td>
-					<td>和@Min要求一样</td>
-					<td>验证注解的元素值小于等于@ DecimalMax指定的value值</td>
-			</tr>
-			<tr>
-					<td>@Digits(integer=整数位数, fraction=小数位数)</td>
-					<td>和@Min要求一样</td>
-					<td>验证注解的元素值的整数位数和小数位数上限</td>
-			</tr>
-			<tr>
-					<td>@Size(min=下限, max=上限)</td>
-					<td>字符串、Collection、Map、数组等</td>
-					<td>验证注解的元素值的在min和max（包含）指定区间之内，如字符长度、集合大小</td>
-			</tr>
-			<tr>
-					<td>@Past</td>
-					<td>java.util.Date,java.util.Calendar;Joda Time类库的日期类型</td>
-					<td>验证注解的元素值（日期类型）比当前时间早</td>
-			</tr>
-			<tr>
-					<td>@Future</td>
-					<td>与@Past要求一样</td>
-					<td>验证注解的元素值（日期类型）比当前时间晚</td>
-			</tr>
-			<tr>
-					<td>@NotBlank</td>
-					<td>CharSequence子类型</td>
-					<td>验证注解的元素值不为空（不为null、去除首位空格后长度为0），不同于@NotEmpty，@NotBlank只应用于字符串且在比较时会去除字符串的首位空格</td>
-			</tr>
-			<tr>
-					<td>@Length(min=下限, max=上限)</td>
-					<td>CharSequence子类型</td>
-					<td>验证注解的元素值长度在min和max区间内</td>
-			</tr>
-			<tr>
-					<td>@NotEmpty</td>
-					<td>CharSequence子类型、Collection、Map、数组</td>
-					<td>验证注解的元素值不为null且不为空（字符串长度不为0、集合大小不为0）</td>
-			</tr>
-			<tr>
-					<td>@Range(min=最小值, max=最大值)</td>
-					<td>BigDecimal,BigInteger,CharSequence, byte, short, int, long等原子类型和包装类型</td>
-					<td>验证注解的元素值在最小值和最大值之间</td>
-			</tr>
-			<tr>
-					<td>@Email(regexp=正则表达式,flag=标志的模式)</td>
-					<td>CharSequence子类型（如String）</td>
-					<td>验证注解的元素值是Email，也可以通过regexp和flag指定自定义的email格式</td>
-			</tr>
-			<tr>
-					<td>@Pattern(regexp=正则表达式,flag=标志的模式)</td>
-					<td>String，任何CharSequence的子类型</td>
-					<td>验证注解的元素值与指定的正则表达式匹配</td>
-			</tr>
-			<tr>
-					<td>@Valid</td>
-					<td>任何非原子类型	指定递归验证关联的对象；如用户对象中有个地址对象属性，如果想在验证用户对象时一起验证地址对象的话，在地址对象上加@Valid注解即可级联验证</td>
-					<td></td>
-			</tr>
-	</tbody>
-</table>……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2018-03-19-springmvc/" target="_blank">阅读全文</a></p>
-        </div>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2017-08-27-java_use_note/" target="_blank">java小日常记录-不定期更新</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2017年8月27日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/java' target="_blank">java</a>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>记录工作中碰到的一些 java 小日常积累</p>
-<h2 id="1远程debug调测">1、远程debug调测</h2>
-<p>web项目远程调测 - 仅用于测试环境或者上线前的调测</p>
-<h3 id="注意">注意：</h3>
-<p>仅限测试环境或者上线前的调测，如果用于生产环境，你的开发工具再debug模式起着的话，会拦截所有的请求。</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># linux增加以下这段就可以远程连接服务器的5888端口了</span>
-</span></span><span style="display:flex;"><span><span style="color:#953800">CATALINA_OPTS</span><span style="color:#0550ae">=</span><span style="color:#0a3069">&#34;-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5888&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="11-关闭的问题">1.1 关闭的问题</h3>
-<p>添加了debug端口以后好像会出现./shutdown.sh 无法关闭tomcat，需要手动kill</p>……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-08-27-java_use_note/" target="_blank">阅读全文</a></p>
-        </div>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2017-08-23-xrebel/" target="_blank">web应用分析利器-xrebel</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2017年8月23日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/java' target="_blank">java</a>
-            
-            <a href='/categories/xrebel' target="_blank">xrebel</a>
-            
-            <a href='/categories/eclipse' target="_blank">eclipse</a>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>XRebel 是不间断运行在 web 应用的交互式分析器，当发现问题会在浏览器中显示警告信息。XRebel 会实时监测应用代码的性能指标和可能会发生的问题。</p>
-<p>看名称跟之前的jrebel有点相像，对了，是同一家公司的产品，jrebel解决java项目动态部署，xrebel解决j2ee应用的交互式分析（甚至sql都能分析到，强悍得不要不要的）。</p>……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-08-23-xrebel/" target="_blank">阅读全文</a></p>
-        </div>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2017-06-05-jrebel/" target="_blank">eclipse之jrebel热部署插件</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2017年6月5日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/java' target="_blank">java</a>
-            
-            <a href='/categories/eclipse' target="_blank">eclipse</a>
-            
-            <a href='/categories/jrebel' target="_blank">jrebel</a>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>JRebel是一个J2EE热部署的工具。使用它可以减少浪费8-18％的开发时间在项目的构建和部署上。虽然Java也提供了HotSpot的JVM，但是如果你修改的类中有方法名称变动的话，HotSpot就无能为力了，必须要重要启动应用服务器。JRebel则可以动态监视class文件及配置文件，如果有文件更新，被调用时就会被JRebel重新加载，达到热部署的目的。</p>……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-06-05-jrebel/" target="_blank">阅读全文</a></p>
-        </div>
-    </article>
-    
 
     
 
@@ -742,6 +854,10 @@
         <a href="https://anTtutu.github.io/categories/java/page/3/">3</a>
     </li>
     
+    <li >
+        <a href="https://anTtutu.github.io/categories/java/page/4/">4</a>
+    </li>
+    
 
     
     <li class="next">
@@ -764,9 +880,11 @@
         <div class="github-badge">
             <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
         </div>
-        
         <div class="github-badge">
-            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+            <a href="https://anTtutu.github.io/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">Anttu</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/anTtutu/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
         </div>
     </div>
 </footer>
@@ -802,6 +920,14 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-elk-mcp-ai-workflow/" title="结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证" target="_blank">结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-agent-database-cli/" title="agent-database-cli：让Claude Code安全操作多种数据库的CLI工具" target="_blank">agent-database-cli：让Claude Code安全操作多种数据库的CLI工具</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-09-14-sdkman_issue/" title="sdkman与conda冲突问题解决" target="_blank">sdkman与conda冲突问题解决</a>
     </li>
     
@@ -814,6 +940,10 @@
     </li>
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-07-02-claude-code-cli-cheatsheet/" title="Claude Code常用命令速查" target="_blank">Claude Code常用命令速查</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
     </li>
     
@@ -822,23 +952,11 @@
     </li>
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-01-19-spy_video/" title="爬取oss库" target="_blank">爬取oss库</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-01-13-docker-build/" title="docker build的一些问题" target="_blank">docker build的一些问题</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2025-02-13-mvnd/" title="mvnd结合idea使用" target="_blank">mvnd结合idea使用</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2024-04-15-postgresql/" title="postgresql数据库常用记录" target="_blank">postgresql数据库常用记录</a>
     </li>
     
 </ul>
@@ -851,6 +969,8 @@
 <ul class="widget-list">
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     
@@ -904,7 +1024,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/deepfacelab/">Deepfacelab (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/docker/">Docker (7)</a></li>
     
@@ -924,7 +1044,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/gcc/">Gcc (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/git/">Git (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/git/">Git (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/github/">Github (1)</a></li>
     
@@ -952,7 +1072,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/images/">Images (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">Java (24)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">Java (38)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">Jekyll (2)</a></li>
     
@@ -964,7 +1084,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/jsr/">Jsr (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/k8s/">K8s (1)</a></li>
     
@@ -974,7 +1094,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">Kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (22)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (28)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">Log (1)</a></li>
     
@@ -996,7 +1116,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/mvnd/">Mvnd (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (10)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/nginx/">Nginx (1)</a></li>
     
@@ -1026,11 +1146,11 @@
     
     <li><a href="https://anTtutu.github.io/categories/postgresql/">Postgresql (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">Python (9)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">Python (11)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">Rec (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">Regexp (1)</a></li>
     
@@ -1040,15 +1160,17 @@
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">Sdkman (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/skill/">Skill (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/split/">Split (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/spring/">Spring (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/spy/">Spy (1)</a></li>
     
@@ -1063,6 +1185,8 @@
     <li><a href="https://anTtutu.github.io/categories/test/">Test (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/testing/">Testing (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tomcat/">Tomcat (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
     
@@ -1084,9 +1208,29 @@
     
     <li><a href="https://anTtutu.github.io/categories/zookeeper/">Zookeeper (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/%E4%BA%92%E8%81%94%E7%BD%91/">互联网 (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E5%99%A8/">容器 (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%8E%92%E6%9F%A5/">排查 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%9E%B6%E6%9E%84/">架构 (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E8%BF%90%E7%BB%B4/">运维 (1)</a></li>
     
 </ul>
     </section>
@@ -1095,7 +1239,17 @@
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
+    <a href="https://anTtutu.github.io/tags/-devops/"> Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/-dockerfile/"> Dockerfile</a>
+    
+    <a href="https://anTtutu.github.io/tags/-nmap/"> Nmap</a>
+    
     <a href="https://anTtutu.github.io/tags/about/">About</a>
+    
+    <a href="https://anTtutu.github.io/tags/agent/">Agent</a>
+    
+    <a href="https://anTtutu.github.io/tags/AI/">AI</a>
     
     <a href="https://anTtutu.github.io/tags/android/">Android</a>
     
@@ -1105,9 +1259,15 @@
     
     <a href="https://anTtutu.github.io/tags/arm64/">Arm64</a>
     
+    <a href="https://anTtutu.github.io/tags/arthas/">Arthas</a>
+    
     <a href="https://anTtutu.github.io/tags/awr/">Awr</a>
     
+    <a href="https://anTtutu.github.io/tags/backend_execute/">Backend_execute</a>
+    
     <a href="https://anTtutu.github.io/tags/backup/">Backup</a>
+    
+    <a href="https://anTtutu.github.io/tags/binlog/">Binlog</a>
     
     <a href="https://anTtutu.github.io/tags/blog/">Blog</a>
     
@@ -1115,31 +1275,75 @@
     
     <a href="https://anTtutu.github.io/tags/build/">Build</a>
     
+    <a href="https://anTtutu.github.io/tags/cache/">Cache</a>
+    
+    <a href="https://anTtutu.github.io/tags/caffeine/">Caffeine</a>
+    
     <a href="https://anTtutu.github.io/tags/captcha/">Captcha</a>
     
     <a href="https://anTtutu.github.io/tags/check/">Check</a>
     
+    <a href="https://anTtutu.github.io/tags/claude/">Claude</a>
+    
+    <a href="https://anTtutu.github.io/tags/claude-code/">Claude Code</a>
+    
+    <a href="https://anTtutu.github.io/tags/clean/">Clean</a>
+    
+    <a href="https://anTtutu.github.io/tags/cli/">Cli</a>
+    
     <a href="https://anTtutu.github.io/tags/cluster/">Cluster</a>
+    
+    <a href="https://anTtutu.github.io/tags/conda/">Conda</a>
+    
+    <a href="https://anTtutu.github.io/tags/covid-19/">Covid-19</a>
+    
+    <a href="https://anTtutu.github.io/tags/cve/">Cve</a>
     
     <a href="https://anTtutu.github.io/tags/cygwin/">Cygwin</a>
     
     <a href="https://anTtutu.github.io/tags/dataguard/">Dataguard</a>
     
+    <a href="https://anTtutu.github.io/tags/db/">Db</a>
+    
     <a href="https://anTtutu.github.io/tags/deepfacelab/">Deepfacelab</a>
+    
+    <a href="https://anTtutu.github.io/tags/devops/">Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/docker/">Docker</a>
     
     <a href="https://anTtutu.github.io/tags/dos/">Dos</a>
     
+    <a href="https://anTtutu.github.io/tags/drawio/">Drawio</a>
+    
+    <a href="https://anTtutu.github.io/tags/dump/">Dump</a>
+    
     <a href="https://anTtutu.github.io/tags/eclipse/">Eclipse</a>
+    
+    <a href="https://anTtutu.github.io/tags/ELK/">ELK</a>
     
     <a href="https://anTtutu.github.io/tags/explain/">Explain</a>
     
+    <a href="https://anTtutu.github.io/tags/faker/">Faker</a>
+    
+    <a href="https://anTtutu.github.io/tags/feign/">Feign</a>
+    
+    <a href="https://anTtutu.github.io/tags/freemarker/">Freemarker</a>
+    
     <a href="https://anTtutu.github.io/tags/gcc/">Gcc</a>
+    
+    <a href="https://anTtutu.github.io/tags/git/">Git</a>
+    
+    <a href="https://anTtutu.github.io/tags/github/">Github</a>
     
     <a href="https://anTtutu.github.io/tags/gitment/">Gitment</a>
     
     <a href="https://anTtutu.github.io/tags/gitpages/">Gitpages</a>
     
     <a href="https://anTtutu.github.io/tags/go/">Go</a>
+    
+    <a href="https://anTtutu.github.io/tags/golang/">Golang</a>
+    
+    <a href="https://anTtutu.github.io/tags/graalvm/">Graalvm</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">H2</a>
     
@@ -1149,11 +1353,25 @@
     
     <a href="https://anTtutu.github.io/tags/http/">Http</a>
     
+    <a href="https://anTtutu.github.io/tags/https/">Https</a>
+    
     <a href="https://anTtutu.github.io/tags/hugo/">Hugo</a>
+    
+    <a href="https://anTtutu.github.io/tags/id/">Id</a>
+    
+    <a href="https://anTtutu.github.io/tags/idea/">Idea</a>
+    
+    <a href="https://anTtutu.github.io/tags/image/">Image</a>
+    
+    <a href="https://anTtutu.github.io/tags/images/">Images</a>
     
     <a href="https://anTtutu.github.io/tags/java/">Java</a>
     
+    <a href="https://anTtutu.github.io/tags/JDK21/">JDK21</a>
+    
     <a href="https://anTtutu.github.io/tags/jekyll/">Jekyll</a>
+    
+    <a href="https://anTtutu.github.io/tags/jenkins/">Jenkins</a>
     
     <a href="https://anTtutu.github.io/tags/jrebel/">Jrebel</a>
     
@@ -1161,31 +1379,73 @@
     
     <a href="https://anTtutu.github.io/tags/jsr/">Jsr</a>
     
+    <a href="https://anTtutu.github.io/tags/jvm/">Jvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/k8s/">K8s</a>
+    
     <a href="https://anTtutu.github.io/tags/kafka/">Kafka</a>
     
     <a href="https://anTtutu.github.io/tags/kali/">Kali</a>
+    
+    <a href="https://anTtutu.github.io/tags/keepalived/">Keepalived</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">Kenlm</a>
     
     <a href="https://anTtutu.github.io/tags/linux/">Linux</a>
     
+    <a href="https://anTtutu.github.io/tags/log/">Log</a>
+    
     <a href="https://anTtutu.github.io/tags/log4j/">Log4j</a>
     
+    <a href="https://anTtutu.github.io/tags/lombok/">Lombok</a>
+    
+    <a href="https://anTtutu.github.io/tags/lvs/">Lvs</a>
+    
     <a href="https://anTtutu.github.io/tags/mac/">Mac</a>
+    
+    <a href="https://anTtutu.github.io/tags/matplotlib/">Matplotlib</a>
+    
+    <a href="https://anTtutu.github.io/tags/maven/">Maven</a>
+    
+    <a href="https://anTtutu.github.io/tags/mcp/">Mcp</a>
     
     <a href="https://anTtutu.github.io/tags/mine/">Mine</a>
     
     <a href="https://anTtutu.github.io/tags/mongodb/">Mongodb</a>
     
+    <a href="https://anTtutu.github.io/tags/mvnd/">Mvnd</a>
+    
     <a href="https://anTtutu.github.io/tags/mysql/">Mysql</a>
+    
+    <a href="https://anTtutu.github.io/tags/native-image/">Native Image</a>
     
     <a href="https://anTtutu.github.io/tags/nginx/">Nginx</a>
     
+    <a href="https://anTtutu.github.io/tags/notes/">Notes</a>
+    
+    <a href="https://anTtutu.github.io/tags/obsidian/">Obsidian</a>
+    
     <a href="https://anTtutu.github.io/tags/oom/">Oom</a>
+    
+    <a href="https://anTtutu.github.io/tags/openjdk/">Openjdk</a>
     
     <a href="https://anTtutu.github.io/tags/oracle/">Oracle</a>
     
     <a href="https://anTtutu.github.io/tags/orangePi/">OrangePi</a>
+    
+    <a href="https://anTtutu.github.io/tags/oss/">Oss</a>
+    
+    <a href="https://anTtutu.github.io/tags/package/">Package</a>
+    
+    <a href="https://anTtutu.github.io/tags/pages/">Pages</a>
+    
+    <a href="https://anTtutu.github.io/tags/pandas/">Pandas</a>
+    
+    <a href="https://anTtutu.github.io/tags/pg/">Pg</a>
+    
+    <a href="https://anTtutu.github.io/tags/port/">Port</a>
+    
+    <a href="https://anTtutu.github.io/tags/postgresql/">Postgresql</a>
     
     <a href="https://anTtutu.github.io/tags/python/">Python</a>
     
@@ -1193,11 +1453,27 @@
     
     <a href="https://anTtutu.github.io/tags/redis/">Redis</a>
     
+    <a href="https://anTtutu.github.io/tags/regexp/">Regexp</a>
+    
     <a href="https://anTtutu.github.io/tags/safe/">Safe</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdk/">Sdk</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdkman/">Sdkman</a>
     
     <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
     
+    <a href="https://anTtutu.github.io/tags/skill/">Skill</a>
+    
+    <a href="https://anTtutu.github.io/tags/split/">Split</a>
+    
     <a href="https://anTtutu.github.io/tags/springboot/">Springboot</a>
+    
+    <a href="https://anTtutu.github.io/tags/springcloud/">Springcloud</a>
+    
+    <a href="https://anTtutu.github.io/tags/springmvc/">Springmvc</a>
+    
+    <a href="https://anTtutu.github.io/tags/spy/">Spy</a>
     
     <a href="https://anTtutu.github.io/tags/sqlmap/">Sqlmap</a>
     
@@ -1207,11 +1483,23 @@
     
     <a href="https://anTtutu.github.io/tags/termux/">Termux</a>
     
+    <a href="https://anTtutu.github.io/tags/test/">Test</a>
+    
+    <a href="https://anTtutu.github.io/tags/testing/">Testing</a>
+    
+    <a href="https://anTtutu.github.io/tags/thymeleaf/">Thymeleaf</a>
+    
+    <a href="https://anTtutu.github.io/tags/tomcat/">Tomcat</a>
+    
+    <a href="https://anTtutu.github.io/tags/uniapp/">Uniapp</a>
+    
     <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
     
     <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">Virus</a>
+    
+    <a href="https://anTtutu.github.io/tags/vue/">Vue</a>
     
     <a href="https://anTtutu.github.io/tags/vxvm/">Vxvm</a>
     
@@ -1219,13 +1507,87 @@
     
     <a href="https://anTtutu.github.io/tags/xrebel/">Xrebel</a>
     
+    <a href="https://anTtutu.github.io/tags/ydnotes/">Ydnotes</a>
+    
     <a href="https://anTtutu.github.io/tags/ynote/">Ynote</a>
     
     <a href="https://anTtutu.github.io/tags/zk/">Zk</a>
     
     <a href="https://anTtutu.github.io/tags/zookeeper/">Zookeeper</a>
     
+    <a href="https://anTtutu.github.io/tags/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">主从复制</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1/">云服务</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%89%8D%E7%AB%AF/">前端</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8D%87%E7%BA%A7%E8%BF%81%E7%A7%BB/">升级迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8E%8B%E6%B5%8B/">压测</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%9F%BA%E7%A1%80/">基础</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%89%E5%85%A8/">安全</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E5%99%A8/">容器</a>
+    
     <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%B6%E5%8F%91/">并发</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%BF%E5%91%8A/">广告</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8C%87%E6%A0%87/">指标</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8E%92%E6%9F%A5/">排查</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">效率工具</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/">日志分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9E%B6%E6%9E%84/">架构</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%A7%91%E6%99%AE/">科普</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%AE%A4%E8%AF%81/">认证</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B0%83%E8%AF%95/">调试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">负载均衡</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%81%E7%A7%BB/">迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%80%89%E5%9E%8B/">选型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/">防重复提交</a>
     
 </div>
     </section>

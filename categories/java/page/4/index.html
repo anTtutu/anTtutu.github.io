@@ -1,0 +1,1759 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+
+    <title>Java | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="Java - Anttu&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
+    <meta name="description" content="Java">
+        
+    <meta name="author" content="Anttu">
+    <meta property="og:url" content="https://anTtutu.github.io/categories/java/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml" href="https://anTtutu.github.io/categories/java/index.xml" title="Anttu's Blog" />
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/asciinema-player.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://anTtutu.github.io/">
+                        Anttu&#39;s Blog
+                    </a>
+                
+                <p class="description">一位Java开发者，喜欢研究技术，同时也在学习Golang和Python中，对服务器、Linux使用比较熟悉。欢迎添加技术交流QQ群：655158296</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://anTtutu.github.io/">首页</a>
+                    
+                    <a  href="https://anTtutu.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://anTtutu.github.io/tags/" title="分类">分类</a>
+                    
+                    <a  href="https://anTtutu.github.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <h3 class="archive-title">
+        分类
+        <span class="keyword">java</span>
+        中的文章
+    </h3>
+    
+
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2018-03-19-springmvc/" target="_blank">springmvc的参数校验注解整理</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2018年3月19日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+            <a href='/categories/jsr' target="_blank">jsr</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="1jsr303注解字段校验">1、JSR303注解字段校验</h2>
+<table>
+	<thead>
+			<tr>
+					<th>注解</th>
+					<th>说明</th>
+					<th>功能</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>@AssertFalse</td>
+					<td>Boolean,boolean</td>
+					<td>验证注解的元素值是false</td>
+			</tr>
+			<tr>
+					<td>@AssertTrue</td>
+					<td>Boolean,boolean</td>
+					<td>验证注解的元素值是true</td>
+			</tr>
+			<tr>
+					<td>@NotNull</td>
+					<td>任意类型</td>
+					<td>验证注解的元素值不是null</td>
+			</tr>
+			<tr>
+					<td>@Null</td>
+					<td>任意类型</td>
+					<td>验证注解的元素值是null</td>
+			</tr>
+			<tr>
+					<td>@Min(value=值)</td>
+					<td>BigDecimal，BigInteger, byte,short, int, long，等任何Number或CharSequence（存储的是数字）子类型</td>
+					<td>验证注解的元素值大于等于@Min指定的value值</td>
+			</tr>
+			<tr>
+					<td>@Max(value=值)</td>
+					<td>和@Min要求一样</td>
+					<td>验证注解的元素值小于等于@Max指定的value值</td>
+			</tr>
+			<tr>
+					<td>@DecimalMin(value=值)</td>
+					<td>和@Min要求一样</td>
+					<td>验证注解的元素值大于等于@ DecimalMin指定的value值</td>
+			</tr>
+			<tr>
+					<td>@DecimalMax(value=值)</td>
+					<td>和@Min要求一样</td>
+					<td>验证注解的元素值小于等于@ DecimalMax指定的value值</td>
+			</tr>
+			<tr>
+					<td>@Digits(integer=整数位数, fraction=小数位数)</td>
+					<td>和@Min要求一样</td>
+					<td>验证注解的元素值的整数位数和小数位数上限</td>
+			</tr>
+			<tr>
+					<td>@Size(min=下限, max=上限)</td>
+					<td>字符串、Collection、Map、数组等</td>
+					<td>验证注解的元素值的在min和max（包含）指定区间之内，如字符长度、集合大小</td>
+			</tr>
+			<tr>
+					<td>@Past</td>
+					<td>java.util.Date,java.util.Calendar;Joda Time类库的日期类型</td>
+					<td>验证注解的元素值（日期类型）比当前时间早</td>
+			</tr>
+			<tr>
+					<td>@Future</td>
+					<td>与@Past要求一样</td>
+					<td>验证注解的元素值（日期类型）比当前时间晚</td>
+			</tr>
+			<tr>
+					<td>@NotBlank</td>
+					<td>CharSequence子类型</td>
+					<td>验证注解的元素值不为空（不为null、去除首位空格后长度为0），不同于@NotEmpty，@NotBlank只应用于字符串且在比较时会去除字符串的首位空格</td>
+			</tr>
+			<tr>
+					<td>@Length(min=下限, max=上限)</td>
+					<td>CharSequence子类型</td>
+					<td>验证注解的元素值长度在min和max区间内</td>
+			</tr>
+			<tr>
+					<td>@NotEmpty</td>
+					<td>CharSequence子类型、Collection、Map、数组</td>
+					<td>验证注解的元素值不为null且不为空（字符串长度不为0、集合大小不为0）</td>
+			</tr>
+			<tr>
+					<td>@Range(min=最小值, max=最大值)</td>
+					<td>BigDecimal,BigInteger,CharSequence, byte, short, int, long等原子类型和包装类型</td>
+					<td>验证注解的元素值在最小值和最大值之间</td>
+			</tr>
+			<tr>
+					<td>@Email(regexp=正则表达式,flag=标志的模式)</td>
+					<td>CharSequence子类型（如String）</td>
+					<td>验证注解的元素值是Email，也可以通过regexp和flag指定自定义的email格式</td>
+			</tr>
+			<tr>
+					<td>@Pattern(regexp=正则表达式,flag=标志的模式)</td>
+					<td>String，任何CharSequence的子类型</td>
+					<td>验证注解的元素值与指定的正则表达式匹配</td>
+			</tr>
+			<tr>
+					<td>@Valid</td>
+					<td>任何非原子类型	指定递归验证关联的对象；如用户对象中有个地址对象属性，如果想在验证用户对象时一起验证地址对象的话，在地址对象上加@Valid注解即可级联验证</td>
+					<td></td>
+			</tr>
+	</tbody>
+</table>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2018-03-19-springmvc/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2017-08-27-java_use_note/" target="_blank">java小日常记录-不定期更新</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2017年8月27日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>记录工作中碰到的一些 java 小日常积累</p>
+<h2 id="1远程debug调测">1、远程debug调测</h2>
+<p>web项目远程调测 - 仅用于测试环境或者上线前的调测</p>
+<h3 id="注意">注意：</h3>
+<p>仅限测试环境或者上线前的调测，如果用于生产环境，你的开发工具再debug模式起着的话，会拦截所有的请求。</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># linux增加以下这段就可以远程连接服务器的5888端口了</span>
+</span></span><span style="display:flex;"><span><span style="color:#953800">CATALINA_OPTS</span><span style="color:#0550ae">=</span><span style="color:#0a3069">&#34;-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5888&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="11-关闭的问题">1.1 关闭的问题</h3>
+<p>添加了debug端口以后好像会出现./shutdown.sh 无法关闭tomcat，需要手动kill</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-08-27-java_use_note/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2017-08-23-xrebel/" target="_blank">web应用分析利器-xrebel</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2017年8月23日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+            <a href='/categories/xrebel' target="_blank">xrebel</a>
+            
+            <a href='/categories/eclipse' target="_blank">eclipse</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>XRebel 是不间断运行在 web 应用的交互式分析器，当发现问题会在浏览器中显示警告信息。XRebel 会实时监测应用代码的性能指标和可能会发生的问题。</p>
+<p>看名称跟之前的jrebel有点相像，对了，是同一家公司的产品，jrebel解决java项目动态部署，xrebel解决j2ee应用的交互式分析（甚至sql都能分析到，强悍得不要不要的）。</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-08-23-xrebel/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2017-06-05-jrebel/" target="_blank">eclipse之jrebel热部署插件</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2017年6月5日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+            <a href='/categories/eclipse' target="_blank">eclipse</a>
+            
+            <a href='/categories/jrebel' target="_blank">jrebel</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>JRebel是一个J2EE热部署的工具。使用它可以减少浪费8-18％的开发时间在项目的构建和部署上。虽然Java也提供了HotSpot的JVM，但是如果你修改的类中有方法名称变动的话，HotSpot就无能为力了，必须要重要启动应用服务器。JRebel则可以动态监视class文件及配置文件，如果有文件更新，被调用时就会被JRebel重新加载，达到热部署的目的。</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-06-05-jrebel/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2017-05-25-log4j_config/" target="_blank">Log4j参数整理</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2017年5月25日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/log4j' target="_blank">log4j</a>
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>Log4j 1.x的知识点回顾，2015年8月5日，Apache的Logging Services项目管理委员会宣布Log4j 1.x已经结束生命周期，建议升级 Log4j 2.x。</p>
+<h2 id="1-配置文件">1. 配置文件</h2>
+<p>Log4J配置文件的基本格式如下：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#57606a">#配置根Logger</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.rootLogger</span>  <span style="color:#0550ae">=</span>   <span style="color:#0a3069">[ level ]   ,  appenderName1 ,  appenderName2 ,  …</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">#配置日志信息输出目的地Appender</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.appenderName</span>  <span style="color:#0550ae">=</span>  <span style="color:#0a3069">fully.qualified.name.of.appender.class </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　log4j.appender.appenderName.option1  =  value1 </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　… </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　log4j.appender.appenderName.optionN  =  valueN </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">#配置日志信息的格式（布局）</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">log4j.appender.appenderName.layout</span>  <span style="color:#0550ae">=</span>  <span style="color:#0a3069">fully.qualified.name.of.layout.class </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　log4j.appender.appenderName.layout.option1  =  value1 </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　… </span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">　　log4j.appender.appenderName.layout.optionN  =  valueN </span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2日志输出级别">2、日志输出级别</h2>
+<p>其中 [level] 共有5级，如下：</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-05-25-log4j_config/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2017-05-11-h2/" target="_blank">H2内存数据库</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2017年5月11日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/h2' target="_blank">h2</a>
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>H2数据库介绍<br>
+之前项目中用到了H2内存数据库，常用的开源数据库：H2，Derby，HSQLDB，MySQL，PostgreSQL。其中H2，HSQLDB类似，十分适合作为嵌入式数据库使用，其它的数据库大部分都需要安装独立的客户端和服务器端。</p>
+<h3 id="h2的优势">H2的优势</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">1、h2采用纯Java编写，因此不受平台的限制。</span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">2、h2只有一个jar文件，十分适合作为嵌入式数据库试用。</span>
+</span></span><span style="display:flex;"><span><span style="color:#f6f8fa;background-color:#82071e">3、性能和功能的优势</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>H2比HSQLDB的最大的优势就是h2提供了一个十分方便的web控制台用于操作和管理数据库内容，这点比起HSQLDB的swing和awt控制台实在好用多了。</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-05-11-h2/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2017-04-10-caeser/" target="_blank">利用网上的Caeser算法写了一个唯一id生成工具</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2017年4月10日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+            <a href='/categories/union_id' target="_blank">union_id</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>工作中需要用到，不需要用uuid这种太长的，但是需要有自己特色标识的，于是晚上搜集了部分算法和思路，加工出来一个唯一随机id生成类</p>
+<h2 id="思路">思路</h2>
+<p>改造过的Caesar算法，利用随机数加密，生成前12位 + 后4位随机数，经测试大量数据和实际使用验证，无重复值出现，可以放心使用</p>
+<h2 id="1代码">1、代码</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">129
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">130
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">131
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">132
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">133
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">134
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">135
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">136
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">137
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">138
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">139
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">140
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">141
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">142
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">143
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#57606a">// key  </span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">private</span><span style="color:#fff"> </span><span style="color:#cf222e">static</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span>KEYS<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;0123456789qwertyuiopasdfghjklzxcvbnm&#34;</span><span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">/** 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a"> * 唯一id生成工具类，12位字母+数字 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a"> *  
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a"> * @param id 随机整数即可 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a"> */</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#cf222e">static</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span><span style="color:#6639ba">getRandomId</span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>id<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>String<span style="color:#fff"> </span>ret<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">null</span><span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>String<span style="color:#fff"> </span>num<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>String<span style="color:#1f2328">.</span><span style="color:#1f2328">format</span><span style="color:#1f2328">(</span><span style="color:#0a3069">&#34;%09d&#34;</span><span style="color:#1f2328">,</span><span style="color:#fff"> </span>id<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>Random<span style="color:#fff"> </span>random<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>Random<span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>key<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>random<span style="color:#1f2328">.</span><span style="color:#1f2328">nextInt</span><span style="color:#1f2328">(</span>10<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>seed<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>random<span style="color:#1f2328">.</span><span style="color:#1f2328">nextInt</span><span style="color:#1f2328">(</span>100<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>Caesar<span style="color:#fff"> </span>caesar<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>Caesar<span style="color:#1f2328">(</span>KEYS<span style="color:#1f2328">,</span><span style="color:#fff"> </span>seed<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>num<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>caesar<span style="color:#1f2328">.</span><span style="color:#1f2328">encode</span><span style="color:#1f2328">(</span>key<span style="color:#1f2328">,</span><span style="color:#fff"> </span>num<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>ret<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>num<span style="color:#fff"> </span><span style="color:#0550ae">+</span><span style="color:#fff"> </span>String<span style="color:#1f2328">.</span><span style="color:#1f2328">format</span><span style="color:#1f2328">(</span><span style="color:#0a3069">&#34;%01d&#34;</span><span style="color:#1f2328">,</span><span style="color:#fff"> </span>key<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#0550ae">+</span><span style="color:#fff"> </span>String<span style="color:#1f2328">.</span><span style="color:#1f2328">format</span><span style="color:#1f2328">(</span><span style="color:#0a3069">&#34;%02x&#34;</span><span style="color:#1f2328">,</span><span style="color:#fff"> </span>seed<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">return</span><span style="color:#fff"> </span>ret<span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">/** 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a"> * id唯一值生成工具类&lt;br&gt; 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a"> * 格式：test_xxxx，总共21位随机码  
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a"> * @return test_+16位随机码 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a"> */</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#cf222e">static</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span><span style="color:#6639ba">getID</span><span style="color:#1f2328">()</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">// 前缀  </span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>String<span style="color:#fff"> </span>prefix<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;test_&#34;</span><span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">// 随机码  </span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>String<span style="color:#fff"> </span>main<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>TestRandomUUID<span style="color:#1f2328">.</span><span style="color:#1f2328">getRandomId</span><span style="color:#1f2328">(</span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>Random<span style="color:#1f2328">().</span><span style="color:#1f2328">nextInt</span><span style="color:#1f2328">(</span>1000000<span style="color:#1f2328">));</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>String<span style="color:#fff"> </span>end<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>RandomUtils<span style="color:#1f2328">.</span><span style="color:#1f2328">getRandomAlphamericStrNew</span><span style="color:#1f2328">(</span>4<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">return</span><span style="color:#fff"> </span>prefix<span style="color:#fff"> </span><span style="color:#0550ae">+</span><span style="color:#fff"> </span>main<span style="color:#fff"> </span><span style="color:#0550ae">+</span><span style="color:#fff"> </span>end<span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#cf222e">class</span> <span style="color:#1f2328">RandomUtils</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">     </span><span style="color:#57606a">/** 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * 获得特定长度的一串随机数字 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     *  
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * @param length  
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * @return 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     */</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#cf222e">static</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span><span style="color:#6639ba">getRandomNumberStr</span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>length<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>StringBuilder<span style="color:#fff"> </span>builder<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>StringBuilder<span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>Random<span style="color:#fff"> </span>random<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>Random<span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">for</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>0<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">&lt;</span><span style="color:#fff"> </span>length<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#0550ae">++</span><span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>builder<span style="color:#1f2328">.</span><span style="color:#1f2328">append</span><span style="color:#1f2328">(</span>random<span style="color:#1f2328">.</span><span style="color:#1f2328">nextInt</span><span style="color:#1f2328">(</span>10<span style="color:#1f2328">));</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">return</span><span style="color:#fff"> </span>builder<span style="color:#1f2328">.</span><span style="color:#1f2328">toString</span><span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">/** 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * 获得特定长度的一个随机字母数字混编字符串（所包含的字符包括0-9A-Z) 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     *  
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * @param length 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * @return 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     */</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#cf222e">static</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span><span style="color:#6639ba">getRandomAlphamericStr</span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>length<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>StringBuilder<span style="color:#fff"> </span>builder<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>StringBuilder<span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>Random<span style="color:#fff"> </span>random<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>Random<span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">for</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>0<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">&lt;</span><span style="color:#fff"> </span>length<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#0550ae">++</span><span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>n<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>random<span style="color:#1f2328">.</span><span style="color:#1f2328">nextInt</span><span style="color:#1f2328">(</span>36<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">if</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>n<span style="color:#fff"> </span><span style="color:#0550ae">&lt;</span><span style="color:#fff"> </span>10<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>builder<span style="color:#1f2328">.</span><span style="color:#1f2328">append</span><span style="color:#1f2328">(</span>n<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">else</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>builder<span style="color:#1f2328">.</span><span style="color:#1f2328">append</span><span style="color:#1f2328">((</span><span style="color:#cf222e">char</span><span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>n<span style="color:#fff"> </span><span style="color:#0550ae">+</span><span style="color:#fff"> </span>55<span style="color:#1f2328">));</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">return</span><span style="color:#fff"> </span>builder<span style="color:#1f2328">.</span><span style="color:#1f2328">toString</span><span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">/** 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * 获得特定长度的一个随机字母数字混编字符串（所包含的字符包括0-9a-z) 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     *  
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * @param length 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * @return 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     */</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#cf222e">static</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span><span style="color:#6639ba">getRandomAlphamericStrNew</span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>length<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>StringBuilder<span style="color:#fff"> </span>builder<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>StringBuilder<span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>Random<span style="color:#fff"> </span>random<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>Random<span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">for</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>0<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">&lt;</span><span style="color:#fff"> </span>length<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#0550ae">++</span><span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>n<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>random<span style="color:#1f2328">.</span><span style="color:#1f2328">nextInt</span><span style="color:#1f2328">(</span>36<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">if</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>n<span style="color:#fff"> </span><span style="color:#0550ae">&lt;</span><span style="color:#fff"> </span>10<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>builder<span style="color:#1f2328">.</span><span style="color:#1f2328">append</span><span style="color:#1f2328">(</span>n<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">else</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>builder<span style="color:#1f2328">.</span><span style="color:#1f2328">append</span><span style="color:#1f2328">((</span><span style="color:#cf222e">char</span><span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>n<span style="color:#fff"> </span><span style="color:#0550ae">+</span><span style="color:#fff"> </span>87<span style="color:#1f2328">));</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">return</span><span style="color:#fff"> </span>builder<span style="color:#1f2328">.</span><span style="color:#1f2328">toString</span><span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">/** 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * 获得特定长度的一个随机十六进制数字字母混编字符串(所包含的字符包括0-9A-F) 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     *  
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * @param length 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     * @return 
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">     */</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#cf222e">static</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span><span style="color:#6639ba">getRandomHexStr</span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>length<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>StringBuilder<span style="color:#fff"> </span>builder<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>StringBuilder<span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>Random<span style="color:#fff"> </span>random<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>Random<span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">for</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>0<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">&lt;</span><span style="color:#fff"> </span>length<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#0550ae">++</span><span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>n<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>random<span style="color:#1f2328">.</span><span style="color:#1f2328">nextInt</span><span style="color:#1f2328">(</span>16<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">if</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>n<span style="color:#fff"> </span><span style="color:#0550ae">&lt;</span><span style="color:#fff"> </span>10<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>builder<span style="color:#1f2328">.</span><span style="color:#1f2328">append</span><span style="color:#1f2328">(</span>n<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">else</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>builder<span style="color:#1f2328">.</span><span style="color:#1f2328">append</span><span style="color:#1f2328">((</span><span style="color:#cf222e">char</span><span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>n<span style="color:#fff"> </span><span style="color:#0550ae">+</span><span style="color:#fff"> </span>55<span style="color:#1f2328">));</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">return</span><span style="color:#fff"> </span>builder<span style="color:#1f2328">.</span><span style="color:#1f2328">toString</span><span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#cf222e">static</span><span style="color:#fff"> </span><span style="color:#cf222e">void</span><span style="color:#fff"> </span><span style="color:#6639ba">main</span><span style="color:#1f2328">(</span>String<span style="color:#0550ae">[]</span><span style="color:#fff"> </span>args<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">for</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>0<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">&lt;</span><span style="color:#fff"> </span>100<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#0550ae">++</span><span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>System<span style="color:#1f2328">.</span><span style="color:#1f2328">out</span><span style="color:#1f2328">.</span><span style="color:#1f2328">println</span><span style="color:#1f2328">(</span>RandomUtils<span style="color:#1f2328">.</span><span style="color:#1f2328">getRandomAlphamericStrNew</span><span style="color:#1f2328">(</span>4<span style="color:#1f2328">));</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#57606a">// String num = String.format(&#34;%09d&#34;, new Random().nextInt(100000));  </span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#57606a">// System.out.println(num);  </span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2凯撒算法工具类">2、凯撒算法工具类</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#cf222e">class</span> <span style="color:#1f2328">Caesar</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">private</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span>table<span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">private</span><span style="color:#fff"> </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>seedA<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>1103515245<span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">private</span><span style="color:#fff"> </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>seedB<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>12345<span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#6639ba">Caesar</span><span style="color:#1f2328">(</span>String<span style="color:#fff"> </span>table<span style="color:#1f2328">,</span><span style="color:#fff"> </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>seed<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">this</span><span style="color:#1f2328">.</span><span style="color:#1f2328">table</span><span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>chaos<span style="color:#1f2328">(</span>table<span style="color:#1f2328">,</span><span style="color:#fff"> </span>seed<span style="color:#1f2328">,</span><span style="color:#fff"> </span>table<span style="color:#1f2328">.</span><span style="color:#1f2328">length</span><span style="color:#1f2328">());</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#6639ba">Caesar</span><span style="color:#1f2328">(</span>String<span style="color:#fff"> </span>table<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">this</span><span style="color:#1f2328">(</span>table<span style="color:#1f2328">,</span><span style="color:#fff"> </span>11<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#6639ba">Caesar</span><span style="color:#1f2328">()</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">this</span><span style="color:#1f2328">(</span>11<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#6639ba">Caesar</span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>seed<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">this</span><span style="color:#1f2328">(</span><span style="color:#0a3069">&#34;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&#34;</span><span style="color:#1f2328">,</span><span style="color:#fff"> </span>seed<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#cf222e">char</span><span style="color:#fff"> </span><span style="color:#6639ba">dict</span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>i<span style="color:#1f2328">,</span><span style="color:#fff"> </span><span style="color:#cf222e">boolean</span><span style="color:#fff"> </span>reverse<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>s<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>table<span style="color:#1f2328">.</span><span style="color:#1f2328">length</span><span style="color:#1f2328">(),</span><span style="color:#fff"> </span>index<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>reverse<span style="color:#fff"> </span><span style="color:#0550ae">?</span><span style="color:#fff"> </span>s<span style="color:#fff"> </span><span style="color:#0550ae">-</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>i<span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">return</span><span style="color:#fff"> </span>table<span style="color:#1f2328">.</span><span style="color:#1f2328">charAt</span><span style="color:#1f2328">(</span>index<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span><span style="color:#6639ba">dict</span><span style="color:#1f2328">(</span><span style="color:#cf222e">char</span><span style="color:#fff"> </span>c<span style="color:#1f2328">,</span><span style="color:#fff"> </span><span style="color:#cf222e">boolean</span><span style="color:#fff"> </span>reverse<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>s<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>table<span style="color:#1f2328">.</span><span style="color:#1f2328">length</span><span style="color:#1f2328">(),</span><span style="color:#fff"> </span>index<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>table<span style="color:#1f2328">.</span><span style="color:#1f2328">indexOf</span><span style="color:#1f2328">(</span>c<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">return</span><span style="color:#fff"> </span>reverse<span style="color:#fff"> </span><span style="color:#0550ae">?</span><span style="color:#fff"> </span>s<span style="color:#fff"> </span><span style="color:#0550ae">-</span><span style="color:#fff"> </span>index<span style="color:#fff"> </span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>index<span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span><span style="color:#6639ba">seed</span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>seed<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">long</span><span style="color:#fff"> </span>temp<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>seed<span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">return</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">((</span>temp<span style="color:#fff"> </span><span style="color:#0550ae">*</span><span style="color:#fff"> </span>seedA<span style="color:#fff"> </span><span style="color:#0550ae">+</span><span style="color:#fff"> </span>seedB<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#0550ae">&amp;</span><span style="color:#fff"> </span>0x7fffffffL<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span><span style="color:#6639ba">chaos</span><span style="color:#1f2328">(</span>String<span style="color:#fff"> </span>data<span style="color:#1f2328">,</span><span style="color:#fff"> </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>seed<span style="color:#1f2328">,</span><span style="color:#fff"> </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>cnt<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>StringBuffer<span style="color:#fff"> </span>buf<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>StringBuffer<span style="color:#1f2328">(</span>data<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">char</span><span style="color:#fff"> </span>tmp<span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>a<span style="color:#1f2328">,</span><span style="color:#fff"> </span>b<span style="color:#1f2328">,</span><span style="color:#fff"> </span>r<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>data<span style="color:#1f2328">.</span><span style="color:#1f2328">length</span><span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">for</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>0<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">&lt;</span><span style="color:#fff"> </span>cnt<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">+=</span><span style="color:#fff"> </span>1<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>seed<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>seed<span style="color:#1f2328">(</span>seed<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>a<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>seed<span style="color:#fff"> </span><span style="color:#0550ae">%</span><span style="color:#fff"> </span>r<span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>seed<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>seed<span style="color:#1f2328">(</span>seed<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>b<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>seed<span style="color:#fff"> </span><span style="color:#0550ae">%</span><span style="color:#fff"> </span>r<span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>tmp<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>buf<span style="color:#1f2328">.</span><span style="color:#1f2328">charAt</span><span style="color:#1f2328">(</span>a<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>buf<span style="color:#1f2328">.</span><span style="color:#1f2328">setCharAt</span><span style="color:#1f2328">(</span>a<span style="color:#1f2328">,</span><span style="color:#fff"> </span>buf<span style="color:#1f2328">.</span><span style="color:#1f2328">charAt</span><span style="color:#1f2328">(</span>b<span style="color:#1f2328">));</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>buf<span style="color:#1f2328">.</span><span style="color:#1f2328">setCharAt</span><span style="color:#1f2328">(</span>b<span style="color:#1f2328">,</span><span style="color:#fff"> </span>tmp<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">return</span><span style="color:#fff"> </span>buf<span style="color:#1f2328">.</span><span style="color:#1f2328">toString</span><span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span><span style="color:#6639ba">crypto</span><span style="color:#1f2328">(</span><span style="color:#cf222e">boolean</span><span style="color:#fff"> </span>reverse<span style="color:#1f2328">,</span><span style="color:#fff"> </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>key<span style="color:#1f2328">,</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span>text<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>String<span style="color:#fff"> </span>ret<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">null</span><span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>StringBuilder<span style="color:#fff"> </span>buf<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>StringBuilder<span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>m<span style="color:#1f2328">,</span><span style="color:#fff"> </span>s<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>table<span style="color:#1f2328">.</span><span style="color:#1f2328">length</span><span style="color:#1f2328">(),</span><span style="color:#fff"> </span>e<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>text<span style="color:#1f2328">.</span><span style="color:#1f2328">length</span><span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">for</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>0<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">&lt;</span><span style="color:#fff"> </span>e<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">+=</span><span style="color:#fff"> </span>1<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>m<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>dict<span style="color:#1f2328">(</span>text<span style="color:#1f2328">.</span><span style="color:#1f2328">charAt</span><span style="color:#1f2328">(</span>i<span style="color:#1f2328">),</span><span style="color:#fff"> </span>reverse<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">if</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>m<span style="color:#fff"> </span><span style="color:#0550ae">&lt;</span><span style="color:#fff"> </span>0<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span><span style="color:#cf222e">break</span><span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>m<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>m<span style="color:#fff"> </span><span style="color:#0550ae">+</span><span style="color:#fff"> </span>key<span style="color:#fff"> </span><span style="color:#0550ae">+</span><span style="color:#fff"> </span>i<span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>buf<span style="color:#1f2328">.</span><span style="color:#1f2328">append</span><span style="color:#1f2328">(</span>dict<span style="color:#1f2328">(</span>m<span style="color:#fff"> </span><span style="color:#0550ae">%</span><span style="color:#fff"> </span>s<span style="color:#1f2328">,</span><span style="color:#fff"> </span>reverse<span style="color:#1f2328">));</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">if</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>buf<span style="color:#1f2328">.</span><span style="color:#1f2328">length</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#0550ae">==</span><span style="color:#fff"> </span>e<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>ret<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>buf<span style="color:#1f2328">.</span><span style="color:#1f2328">toString</span><span style="color:#1f2328">();</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">return</span><span style="color:#fff"> </span>ret<span style="color:#1f2328">;</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span><span style="color:#6639ba">encode</span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>key<span style="color:#1f2328">,</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span>text<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">return</span><span style="color:#fff"> </span>crypto<span style="color:#1f2328">(</span><span style="color:#cf222e">false</span><span style="color:#1f2328">,</span><span style="color:#fff"> </span>key<span style="color:#1f2328">,</span><span style="color:#fff"> </span>text<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span><span style="color:#6639ba">decode</span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>key<span style="color:#1f2328">,</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span>text<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">return</span><span style="color:#fff"> </span>crypto<span style="color:#1f2328">(</span><span style="color:#cf222e">true</span><span style="color:#1f2328">,</span><span style="color:#fff"> </span>key<span style="color:#1f2328">,</span><span style="color:#fff"> </span>text<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#cf222e">static</span><span style="color:#fff"> </span><span style="color:#cf222e">void</span><span style="color:#fff"> </span><span style="color:#6639ba">main</span><span style="color:#1f2328">(</span>String<span style="color:#0550ae">[]</span><span style="color:#fff"> </span>args<span style="color:#1f2328">)</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">{</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>Caesar<span style="color:#fff"> </span>caesar<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>Caesar<span style="color:#1f2328">(</span><span style="color:#0a3069">&#34;0123456789qwertyuiopasdfghjklzxcvbnm&#34;</span><span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>String<span style="color:#fff"> </span>data<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>caesar<span style="color:#1f2328">.</span><span style="color:#1f2328">encode</span><span style="color:#1f2328">(</span>32<span style="color:#1f2328">,</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;23423&#34;</span><span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>System<span style="color:#1f2328">.</span><span style="color:#1f2328">out</span><span style="color:#1f2328">.</span><span style="color:#1f2328">println</span><span style="color:#1f2328">(</span>data<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>String<span style="color:#fff"> </span>pass<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>caesar<span style="color:#1f2328">.</span><span style="color:#1f2328">decode</span><span style="color:#1f2328">(</span>32<span style="color:#1f2328">,</span><span style="color:#fff"> </span>data<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>System<span style="color:#1f2328">.</span><span style="color:#1f2328">out</span><span style="color:#1f2328">.</span><span style="color:#1f2328">println</span><span style="color:#1f2328">(</span>pass<span style="color:#1f2328">);</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">  
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-04-10-caeser/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2017-03-09-java_captach/" target="_blank">Java高防OCR和机器人图形验证码</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2017年3月9日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/java' target="_blank">java</a>
+            
+            <a href='/categories/captcha' target="_blank">captcha</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>结合网上的图形验证码技术，不依赖第三方包纯java加工了一个比较复杂的图形验证码方案，防OCR、防机器人。 <br>
+网上的图形验证码方案都是零星的，弄了一个随机字体、随机彩色字符、随机字体大小、随机扭曲、随机旋转等技术，能有效的防OCR、描边、深浅色等技术识别。 <br>
+本意是想区分登录、领券、抽奖等一些场景操作的，后来一想，随机拼人品吧，于是就有了下面的工具类。</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-03-09-java_captach/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+
+    
+
+
+
+<ol class="page-navigator">
+    
+    <li class="prev">
+        <a href="https://anTtutu.github.io/categories/java/page/3/">上一页</a>
+    </li>
+    
+
+    
+    <li >
+        <a href="https://anTtutu.github.io/categories/java/">1</a>
+    </li>
+    
+    <li >
+        <a href="https://anTtutu.github.io/categories/java/page/2/">2</a>
+    </li>
+    
+    <li >
+        <a href="https://anTtutu.github.io/categories/java/page/3/">3</a>
+    </li>
+    
+    <li  class="current">
+        <a href="https://anTtutu.github.io/categories/java/page/4/">4</a>
+    </li>
+    
+
+    
+</ol>
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2026 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://anTtutu.github.io/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">Anttu</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/anTtutu/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/asciinema-player.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://anTtutu.github.io/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://anTtutu.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-elk-mcp-ai-workflow/" title="结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证" target="_blank">结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-agent-database-cli/" title="agent-database-cli：让Claude Code安全操作多种数据库的CLI工具" target="_blank">agent-database-cli：让Claude Code安全操作多种数据库的CLI工具</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-14-sdkman_issue/" title="sdkman与conda冲突问题解决" target="_blank">sdkman与conda冲突问题解决</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-10-docker_images/" title="日常研究备用的一些镜像记录" target="_blank">日常研究备用的一些镜像记录</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-07-ydnotes-obsidian/" title="有道云笔记迁移到obsidian" target="_blank">有道云笔记迁移到obsidian</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-07-02-claude-code-cli-cheatsheet/" title="Claude Code常用命令速查" target="_blank">Claude Code常用命令速查</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/app/">App (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/aria2/">Aria2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/arm64/">Arm64 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/arthas/">Arthas (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/awr/">Awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">Backend_execute (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">Backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">Blog (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/bug/">Bug (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/build/">Build (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cache/">Cache (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/caffeine/">Caffeine (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/captcha/">Captcha (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/check/">Check (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/claude-code/">Claude Code (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/clean/">Clean (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cli/">Cli (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cluster/">Cluster (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/conda/">Conda (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/covid-19/">Covid-19 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cve/">Cve (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cygwin/">Cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">Dataguard (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/db/">Db (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">Deepfacelab (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/docker/">Docker (7)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dockerfile/">Dockerfile (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dos/">Dos (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/drawio/">Drawio (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dump/">Dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">Eclipse (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/explain/">Explain (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/faker/">Faker (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gcc/">Gcc (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/git/">Git (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/github/">Github (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitment/">Gitment (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">Gitpages (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/go/">Go (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h2/">H2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h5/">H5 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ha/">Ha (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/http/">Http (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/hugo/">Hugo (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/id/">Id (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/idea/">Idea (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/image/">Image (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/images/">Images (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/java/">Java (38)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">Jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jenkins/">Jenkins (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">Jrebel (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/js/">Js (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jsr/">Jsr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/k8s/">K8s (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kafka/">Kafka (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kali/">Kali (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kenlm/">Kenlm (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (28)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log/">Log (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log4j/">Log4j (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/lombok/">Lombok (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mac/">Mac (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/matplotlib/">Matplotlib (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/maven/">Maven (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mcp/">Mcp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mine/">Mine (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mongodb/">Mongodb (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mvnd/">Mvnd (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (10)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/nginx/">Nginx (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/nmap/">Nmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/notes/">Notes (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/obsidian/">Obsidian (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oom/">Oom (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oracle/">Oracle (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/orangePi/">OrangePi (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oss/">Oss (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/package/">Package (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pages/">Pages (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pandas/">Pandas (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pg/">Pg (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/port/">Port (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/postgresql/">Postgresql (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/python/">Python (11)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/rec/">Rec (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/regexp/">Regexp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/safe/">Safe (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdk/">Sdk (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdkman/">Sdkman (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/skill/">Skill (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/split/">Split (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/spring/">Spring (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/spy/">Spy (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sqlmap/">Sqlmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ssd/">Ssd (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tcp/">Tcp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/termux/">Termux (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/test/">Test (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/testing/">Testing (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tomcat/">Tomcat (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (7)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/virus/">Virus (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">Vxvm (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/win10/">Win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">Xrebel (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ydnotes/">Ydnotes (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ynote/">Ynote (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zk/">Zk (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zookeeper/">Zookeeper (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E4%BA%92%E8%81%94%E7%BD%91/">互联网 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E5%99%A8/">容器 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%8E%92%E6%9F%A5/">排查 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%9E%B6%E6%9E%84/">架构 (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E8%BF%90%E7%BB%B4/">运维 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://anTtutu.github.io/tags/-devops/"> Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/-dockerfile/"> Dockerfile</a>
+    
+    <a href="https://anTtutu.github.io/tags/-nmap/"> Nmap</a>
+    
+    <a href="https://anTtutu.github.io/tags/about/">About</a>
+    
+    <a href="https://anTtutu.github.io/tags/agent/">Agent</a>
+    
+    <a href="https://anTtutu.github.io/tags/AI/">AI</a>
+    
+    <a href="https://anTtutu.github.io/tags/android/">Android</a>
+    
+    <a href="https://anTtutu.github.io/tags/app/">App</a>
+    
+    <a href="https://anTtutu.github.io/tags/aria2/">Aria2</a>
+    
+    <a href="https://anTtutu.github.io/tags/arm64/">Arm64</a>
+    
+    <a href="https://anTtutu.github.io/tags/arthas/">Arthas</a>
+    
+    <a href="https://anTtutu.github.io/tags/awr/">Awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backend_execute/">Backend_execute</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">Backup</a>
+    
+    <a href="https://anTtutu.github.io/tags/binlog/">Binlog</a>
+    
+    <a href="https://anTtutu.github.io/tags/blog/">Blog</a>
+    
+    <a href="https://anTtutu.github.io/tags/bug/">Bug</a>
+    
+    <a href="https://anTtutu.github.io/tags/build/">Build</a>
+    
+    <a href="https://anTtutu.github.io/tags/cache/">Cache</a>
+    
+    <a href="https://anTtutu.github.io/tags/caffeine/">Caffeine</a>
+    
+    <a href="https://anTtutu.github.io/tags/captcha/">Captcha</a>
+    
+    <a href="https://anTtutu.github.io/tags/check/">Check</a>
+    
+    <a href="https://anTtutu.github.io/tags/claude/">Claude</a>
+    
+    <a href="https://anTtutu.github.io/tags/claude-code/">Claude Code</a>
+    
+    <a href="https://anTtutu.github.io/tags/clean/">Clean</a>
+    
+    <a href="https://anTtutu.github.io/tags/cli/">Cli</a>
+    
+    <a href="https://anTtutu.github.io/tags/cluster/">Cluster</a>
+    
+    <a href="https://anTtutu.github.io/tags/conda/">Conda</a>
+    
+    <a href="https://anTtutu.github.io/tags/covid-19/">Covid-19</a>
+    
+    <a href="https://anTtutu.github.io/tags/cve/">Cve</a>
+    
+    <a href="https://anTtutu.github.io/tags/cygwin/">Cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">Dataguard</a>
+    
+    <a href="https://anTtutu.github.io/tags/db/">Db</a>
+    
+    <a href="https://anTtutu.github.io/tags/deepfacelab/">Deepfacelab</a>
+    
+    <a href="https://anTtutu.github.io/tags/devops/">Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/docker/">Docker</a>
+    
+    <a href="https://anTtutu.github.io/tags/dos/">Dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/drawio/">Drawio</a>
+    
+    <a href="https://anTtutu.github.io/tags/dump/">Dump</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">Eclipse</a>
+    
+    <a href="https://anTtutu.github.io/tags/ELK/">ELK</a>
+    
+    <a href="https://anTtutu.github.io/tags/explain/">Explain</a>
+    
+    <a href="https://anTtutu.github.io/tags/faker/">Faker</a>
+    
+    <a href="https://anTtutu.github.io/tags/feign/">Feign</a>
+    
+    <a href="https://anTtutu.github.io/tags/freemarker/">Freemarker</a>
+    
+    <a href="https://anTtutu.github.io/tags/gcc/">Gcc</a>
+    
+    <a href="https://anTtutu.github.io/tags/git/">Git</a>
+    
+    <a href="https://anTtutu.github.io/tags/github/">Github</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitment/">Gitment</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitpages/">Gitpages</a>
+    
+    <a href="https://anTtutu.github.io/tags/go/">Go</a>
+    
+    <a href="https://anTtutu.github.io/tags/golang/">Golang</a>
+    
+    <a href="https://anTtutu.github.io/tags/graalvm/">Graalvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/h2/">H2</a>
+    
+    <a href="https://anTtutu.github.io/tags/h5/">H5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">Ha</a>
+    
+    <a href="https://anTtutu.github.io/tags/http/">Http</a>
+    
+    <a href="https://anTtutu.github.io/tags/https/">Https</a>
+    
+    <a href="https://anTtutu.github.io/tags/hugo/">Hugo</a>
+    
+    <a href="https://anTtutu.github.io/tags/id/">Id</a>
+    
+    <a href="https://anTtutu.github.io/tags/idea/">Idea</a>
+    
+    <a href="https://anTtutu.github.io/tags/image/">Image</a>
+    
+    <a href="https://anTtutu.github.io/tags/images/">Images</a>
+    
+    <a href="https://anTtutu.github.io/tags/java/">Java</a>
+    
+    <a href="https://anTtutu.github.io/tags/JDK21/">JDK21</a>
+    
+    <a href="https://anTtutu.github.io/tags/jekyll/">Jekyll</a>
+    
+    <a href="https://anTtutu.github.io/tags/jenkins/">Jenkins</a>
+    
+    <a href="https://anTtutu.github.io/tags/jrebel/">Jrebel</a>
+    
+    <a href="https://anTtutu.github.io/tags/js/">Js</a>
+    
+    <a href="https://anTtutu.github.io/tags/jsr/">Jsr</a>
+    
+    <a href="https://anTtutu.github.io/tags/jvm/">Jvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/k8s/">K8s</a>
+    
+    <a href="https://anTtutu.github.io/tags/kafka/">Kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">Kali</a>
+    
+    <a href="https://anTtutu.github.io/tags/keepalived/">Keepalived</a>
+    
+    <a href="https://anTtutu.github.io/tags/kenlm/">Kenlm</a>
+    
+    <a href="https://anTtutu.github.io/tags/linux/">Linux</a>
+    
+    <a href="https://anTtutu.github.io/tags/log/">Log</a>
+    
+    <a href="https://anTtutu.github.io/tags/log4j/">Log4j</a>
+    
+    <a href="https://anTtutu.github.io/tags/lombok/">Lombok</a>
+    
+    <a href="https://anTtutu.github.io/tags/lvs/">Lvs</a>
+    
+    <a href="https://anTtutu.github.io/tags/mac/">Mac</a>
+    
+    <a href="https://anTtutu.github.io/tags/matplotlib/">Matplotlib</a>
+    
+    <a href="https://anTtutu.github.io/tags/maven/">Maven</a>
+    
+    <a href="https://anTtutu.github.io/tags/mcp/">Mcp</a>
+    
+    <a href="https://anTtutu.github.io/tags/mine/">Mine</a>
+    
+    <a href="https://anTtutu.github.io/tags/mongodb/">Mongodb</a>
+    
+    <a href="https://anTtutu.github.io/tags/mvnd/">Mvnd</a>
+    
+    <a href="https://anTtutu.github.io/tags/mysql/">Mysql</a>
+    
+    <a href="https://anTtutu.github.io/tags/native-image/">Native Image</a>
+    
+    <a href="https://anTtutu.github.io/tags/nginx/">Nginx</a>
+    
+    <a href="https://anTtutu.github.io/tags/notes/">Notes</a>
+    
+    <a href="https://anTtutu.github.io/tags/obsidian/">Obsidian</a>
+    
+    <a href="https://anTtutu.github.io/tags/oom/">Oom</a>
+    
+    <a href="https://anTtutu.github.io/tags/openjdk/">Openjdk</a>
+    
+    <a href="https://anTtutu.github.io/tags/oracle/">Oracle</a>
+    
+    <a href="https://anTtutu.github.io/tags/orangePi/">OrangePi</a>
+    
+    <a href="https://anTtutu.github.io/tags/oss/">Oss</a>
+    
+    <a href="https://anTtutu.github.io/tags/package/">Package</a>
+    
+    <a href="https://anTtutu.github.io/tags/pages/">Pages</a>
+    
+    <a href="https://anTtutu.github.io/tags/pandas/">Pandas</a>
+    
+    <a href="https://anTtutu.github.io/tags/pg/">Pg</a>
+    
+    <a href="https://anTtutu.github.io/tags/port/">Port</a>
+    
+    <a href="https://anTtutu.github.io/tags/postgresql/">Postgresql</a>
+    
+    <a href="https://anTtutu.github.io/tags/python/">Python</a>
+    
+    <a href="https://anTtutu.github.io/tags/rec/">Rec</a>
+    
+    <a href="https://anTtutu.github.io/tags/redis/">Redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/regexp/">Regexp</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">Safe</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdk/">Sdk</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdkman/">Sdkman</a>
+    
+    <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
+    
+    <a href="https://anTtutu.github.io/tags/skill/">Skill</a>
+    
+    <a href="https://anTtutu.github.io/tags/split/">Split</a>
+    
+    <a href="https://anTtutu.github.io/tags/springboot/">Springboot</a>
+    
+    <a href="https://anTtutu.github.io/tags/springcloud/">Springcloud</a>
+    
+    <a href="https://anTtutu.github.io/tags/springmvc/">Springmvc</a>
+    
+    <a href="https://anTtutu.github.io/tags/spy/">Spy</a>
+    
+    <a href="https://anTtutu.github.io/tags/sqlmap/">Sqlmap</a>
+    
+    <a href="https://anTtutu.github.io/tags/ssd/">Ssd</a>
+    
+    <a href="https://anTtutu.github.io/tags/tcp/">Tcp</a>
+    
+    <a href="https://anTtutu.github.io/tags/termux/">Termux</a>
+    
+    <a href="https://anTtutu.github.io/tags/test/">Test</a>
+    
+    <a href="https://anTtutu.github.io/tags/testing/">Testing</a>
+    
+    <a href="https://anTtutu.github.io/tags/thymeleaf/">Thymeleaf</a>
+    
+    <a href="https://anTtutu.github.io/tags/tomcat/">Tomcat</a>
+    
+    <a href="https://anTtutu.github.io/tags/uniapp/">Uniapp</a>
+    
+    <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
+    
+    <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
+    
+    <a href="https://anTtutu.github.io/tags/virus/">Virus</a>
+    
+    <a href="https://anTtutu.github.io/tags/vue/">Vue</a>
+    
+    <a href="https://anTtutu.github.io/tags/vxvm/">Vxvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/win10/">Win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">Xrebel</a>
+    
+    <a href="https://anTtutu.github.io/tags/ydnotes/">Ydnotes</a>
+    
+    <a href="https://anTtutu.github.io/tags/ynote/">Ynote</a>
+    
+    <a href="https://anTtutu.github.io/tags/zk/">Zk</a>
+    
+    <a href="https://anTtutu.github.io/tags/zookeeper/">Zookeeper</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">主从复制</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1/">云服务</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%89%8D%E7%AB%AF/">前端</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8D%87%E7%BA%A7%E8%BF%81%E7%A7%BB/">升级迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8E%8B%E6%B5%8B/">压测</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%9F%BA%E7%A1%80/">基础</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%89%E5%85%A8/">安全</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E5%99%A8/">容器</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%B6%E5%8F%91/">并发</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%BF%E5%91%8A/">广告</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8C%87%E6%A0%87/">指标</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8E%92%E6%9F%A5/">排查</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">效率工具</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/">日志分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9E%B6%E6%9E%84/">架构</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%A7%91%E6%99%AE/">科普</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%AE%A4%E8%AF%81/">认证</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B0%83%E8%AF%95/">调试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">负载均衡</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%81%E7%A7%BB/">迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%80%89%E5%9E%8B/">选型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/">防重复提交</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://anTtutu.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

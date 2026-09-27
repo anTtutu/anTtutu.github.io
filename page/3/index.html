@@ -76,119 +76,29 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-09-06-mac_docker_dev/" title="Mac配置docker开发工具" target="_blank">Mac配置docker开发工具</a>
+                <a href="https://anTtutu.github.io/post/2024-04-19-llm-terms-plain-words/" title="大模型术语人话版：把LLM当成一个打工人" target="_blank">大模型术语人话版：把LLM当成一个打工人</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            2022年9月6日
+            2024年4月19日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
             <span class="meta-category">
-                <a href='/categories/docker' target="_blank">docker</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/mac' target="_blank">mac</a>
+                <a href='/categories/AI' target="_blank">AI</a>
             </span>
             
         </div>
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>2020年整了一套android下的termux开发环境，今天继续配置一套docker下的开发环境。<a href="/post/2020-09-28-android_termux">termux搭建参考</a></p>
-<p>开发电脑环境准备如下：</p>
-<table>
-	<thead>
-			<tr>
-					<th>系统</th>
-					<th>版本</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>MacOS</td>
-					<td>10.14.6</td>
-			</tr>
-			<tr>
-					<td>docker</td>
-					<td>20.10.12</td>
-			</tr>
-	</tbody>
-</table>
-<p>待安装的开发工具环境如下：</p>
-<table>
-	<thead>
-			<tr>
-					<th>镜像</th>
-					<th>版本</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>mongo</td>
-					<td>6.0</td>
-			</tr>
-			<tr>
-					<td>redis</td>
-					<td>7.0</td>
-			</tr>
-			<tr>
-					<td>mysql</td>
-					<td>8.0</td>
-			</tr>
-			<tr>
-					<td>nginx</td>
-					<td>1.22.0</td>
-			</tr>
-			<tr>
-					<td>minio</td>
-					<td>latest</td>
-			</tr>
-			<tr>
-					<td>etcd</td>
-					<td>latest</td>
-			</tr>
-	</tbody>
-</table>
-<h2 id="1查询docker进程">1、查询docker进程</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>launchctl list <span style="color:#1f2328">|</span> grep docker
-</span></span><span style="display:flex;"><span>-	0	com.docker.helper
-</span></span><span style="display:flex;"><span>14047	0	com.docker.docker.47840
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="2停止启动docker进程">2、停止、启动docker进程</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>launchctl stop com.docker.docker.47840 <span style="color:#0550ae">&amp;&amp;</span> launchctl start com.docker.docker.47840
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="3启动docker">3、启动docker</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>open /Applications/Docker.app
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="ps">PS:</h4>
-<blockquote>
-<p>目前通过 open /Applications/Docker.app 可以启动，通过 launchctl start com.docker.docker.xxx 方式不能启动了。</p>……
+<p>大模型一年之内名词井喷：预训练、SFT、RAG、多模态、Agent……每个词都认识，连起来就看不懂。这篇用一个人话版的比喻把它们串起来——<strong>把大模型当成一个打工人</strong>，你会发现所有概念都顺理成章。</p>
+<h2 id="一模型本体这是个什么样的打工人">一、模型本体：这是个什么样的打工人</h2>
+<p><strong>大模型</strong>：一个替代人来打工的打工人。知识工作者他基本都能替代——设计师、客服、文员，顶多缺点创意；体力活也能干，但需要一副好身体（机器人硬件）。</p>……
         </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-09-06-mac_docker_dev/" target="_blank">阅读全文</a></p>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2024-04-19-llm-terms-plain-words/" target="_blank">阅读全文</a></p>
     </article>
     
     
@@ -196,138 +106,35 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-08-11-arthas/" title="转载-arthas常见用法" target="_blank">转载-arthas常见用法</a>
+                <a href="https://anTtutu.github.io/post/2024-04-15-postgresql/" title="postgresql数据库常用记录" target="_blank">postgresql数据库常用记录</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            2022年8月11日
+            2024年4月15日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
             <span class="meta-category">
-                <a href='/categories/arthas' target="_blank">arthas</a>
+                <a href='/categories/pg' target="_blank">pg</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/postgresql' target="_blank">postgresql</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/db' target="_blank">db</a>
             </span>
             
         </div>
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>Arthas是Alibaba开源的Java诊断工具，动态跟踪Java代码；实时监控JVM状态，可以在不中断程序执行的情况下轻松完成JVM相关问题排查工作 。支持JDK 6+，支持Linux/Mac/Windows。这个工具真的很好用，而且入门超简单，十分推荐。</p>
-<h2 id="1使用场景">1、使用场景</h2>
-<ul>
-<li>1、这个类从哪个 jar 包加载的？为什么会报各种类相关的 Exception？</li>
-<li>2、我改的代码为什么没有执行到？难道是我没 commit？分支搞错了？</li>
-<li>3、遇到问题无法在线上 debug，难道只能通过加日志再重新发布吗？</li>
-<li>4、线上遇到某个用户的数据处理有问题，但线上同样无法 debug，线下无法重现！</li>
-<li>5、是否有一个全局视角来查看系统的运行状况？</li>
-<li>6、有什么办法可以监控到JVM的实时运行状态？接下来，围绕这6个问题，学习下Arthas的基本用法。</li>
-</ul>
-<h2 id="2安装">2、安装</h2>
-<p>执行下面命令下载</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-08-11-arthas/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-07-11-id_discuss/" title="几种id浅谈" target="_blank">几种id浅谈</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年7月11日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/id' target="_blank">id</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>几种 ID 浅谈，UDID、UUID、ULID、NanoID</p>
-<h2 id="1udid">1、UDID</h2>
-<p>Unique Device Identifier（设备唯一标识符）<br>
-从名称上也可以看出，UDID这个东西是和设备有关的，而且是只和设备有关的，有点类似于MAC地址。真机调试，然后需要把UDID这个东西添加到Provisoning Profile授权文件中，也就是把设备唯一标识符添加进去，以此来识别某一台设备。 UDID是一个40位十六进制序列，我们可以使用iTunes和Xcode来获取这个值。</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-07-11-id_discuss/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-06-17-python_req/" title="python打包-只依赖自己项目引用的module" target="_blank">python打包-只依赖自己项目引用的module</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年6月17日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/python' target="_blank">python</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/package' target="_blank">package</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>本地开发python后，需要生成requirements.txt，但是不做处理的话，会把你本地安装的所有module都依赖进来，找到一个根据项目生成依赖的工具</p>
-<h2 id="1安装">1、安装</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install pipreqs
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="2生成项目依赖">2、生成项目依赖</h2>
-<p>进入项目根目录</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pipreqs . --encoding<span style="color:#0550ae">=</span>utf8 --force
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>说明</p>
-<table>
-	<thead>
-			<tr>
-					<th>参数</th>
-					<th>说明</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>&ndash;force</td>
-					<td>会覆盖前一个requirements.txt</td>
-			</tr>
-			<tr>
-					<td>&ndash;encoding=utf8</td>
-					<td>解决编码问题</td>
-			</tr>
-	</tbody>
-</table>
-<h2 id="3参数介绍">3、参数介绍</h2>
+<p>因项目需要，整理下mysql迁移postgresql的常用工具搜集</p>
+<h2 id="1迁移工具">1、迁移工具</h2>
+<p>开发的pgloader是一个mysql迁移到pg的工具，性能和表现都良好，开发和测试环境迁移已经验正，github地址: <a href="https://github.com/dimitri/pgloader">https://github.com/dimitri/pgloader</a></p>
 <div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -349,33 +156,34 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Usage:
-</span></span><span style="display:flex;"><span>    pipreqs <span style="color:#0550ae">[</span>options<span style="color:#0550ae">]</span> &lt;path&gt;
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>LOAD DATABASE
+</span></span><span style="display:flex;"><span> FROM mysql://admin1:***@10.10.214.205:3306/t230530_B
+</span></span><span style="display:flex;"><span> INTO pgsql://admin:***@10.10.216.108:5432/B
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Options:
-</span></span><span style="display:flex;"><span>    --use-local           Use ONLY <span style="color:#6639ba">local</span> package info instead of querying PyPI
-</span></span><span style="display:flex;"><span>    --pypi-server &lt;url&gt;   Use custom PyPi server
-</span></span><span style="display:flex;"><span>    --proxy &lt;url&gt;         Use Proxy, parameter will be passed to requests library. You can also just <span style="color:#6639ba">set</span> the
-</span></span><span style="display:flex;"><span>                          environments parameter in your terminal:
-</span></span><span style="display:flex;"><span>                          $ <span style="color:#6639ba">export</span> <span style="color:#953800">HTTP_PROXY</span><span style="color:#0550ae">=</span><span style="color:#0a3069">&#34;http://10.10.1.10:3128&#34;</span>
-</span></span><span style="display:flex;"><span>                          $ <span style="color:#6639ba">export</span> <span style="color:#953800">HTTPS_PROXY</span><span style="color:#0550ae">=</span><span style="color:#0a3069">&#34;https://10.10.1.10:1080&#34;</span>
-</span></span><span style="display:flex;"><span>    --debug               Print debug information
-</span></span><span style="display:flex;"><span>    --ignore &lt;dirs&gt;...    Ignore extra directories
-</span></span><span style="display:flex;"><span>    --encoding &lt;charset&gt;  Use encoding parameter <span style="color:#cf222e">for</span> file open
-</span></span><span style="display:flex;"><span>    --savepath &lt;file&gt;     Save the list of requirements in the given file
-</span></span><span style="display:flex;"><span>    --print               Output the list of requirements in the standard output
-</span></span><span style="display:flex;"><span>    --force               Overwrite existing requirements.txt
-</span></span><span style="display:flex;"><span>    --diff &lt;file&gt;         Compare modules in requirements.txt to project imports.
-</span></span><span style="display:flex;"><span>    --clean &lt;file&gt;        Clean up requirements.txt by removing modules that are not imported in project.
-</span></span><span style="display:flex;"><span>    --no-pin              Omit version of output packages.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>WITH
+</span></span><span style="display:flex;"><span>     include drop, create tables, no truncate, create indexes, reset sequences, foreign keys
+</span></span><span style="display:flex;"><span> CAST <span style="color:#6639ba">type</span> datetime to timestamp
+</span></span><span style="display:flex;"><span>     drop default drop not null using zero-dates-to-null,
+</span></span><span style="display:flex;"><span>     <span style="color:#6639ba">type</span> date drop not null drop default using zero-dates-to-null
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> ALTER SCHEMA <span style="color:#0a3069">&#39;t230530_B&#39;</span> RENAME TO <span style="color:#0a3069">&#39;public&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SET PostgreSQL PARAMETERS
+</span></span><span style="display:flex;"><span>    maintenance_work_mem to <span style="color:#0a3069">&#39;1GB&#39;</span>,
+</span></span><span style="display:flex;"><span>    work_mem to <span style="color:#0a3069">&#39;1GB&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SET MySQL PARAMETERS
+</span></span><span style="display:flex;"><span>    <span style="color:#953800">net_read_timeout</span>  <span style="color:#0550ae">=</span> <span style="color:#0a3069">&#39;600&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#953800">net_write_timeout</span> <span style="color:#0550ae">=</span> <span style="color:#0a3069">&#39;600&#39;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="4参考">4、参考</h2>
-<p>参考文档：<a href="https://pypi.org/project/pipreqs/">https://pypi.org/project/pipreqs/</a></p>……
+</div><p>执行迁移，观察日志没有报错正常结束即可</p>……
         </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-06-17-python_req/" target="_blank">阅读全文</a></p>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2024-04-15-postgresql/" target="_blank">阅读全文</a></p>
     </article>
     
     
@@ -383,84 +191,11 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-05-25-pen_testing/" title="渗透测试的部分资料" target="_blank">渗透测试的部分资料</a>
+                <a href="https://anTtutu.github.io/post/2023-11-08-jdk8-to-21-migration-guide/" title="JDK 8到21迁移指南：参数变化、GC演进与虚拟线程实战" target="_blank">JDK 8到21迁移指南：参数变化、GC演进与虚拟线程实战</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            2022年5月25日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/testing' target="_blank">testing</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>整理了一些渗透测试的资料，方便查阅。</p>
-<h2 id="1漏洞扫描">1、漏洞扫描</h2>
-<h3 id="11-xray">1.1 xray</h3>
-<p>xray 是一款功能强大的安全评估工具，由多名经验丰富的一线安全从业者呕心打造而成，主要特性有:</p>
-<ul>
-<li><strong>检测速度快</strong>。发包速度快; 漏洞检测算法高效。</li>
-<li><strong>支持范围广</strong>。大至 OWASP Top 10 通用漏洞检测，小至各种 CMS 框架 POC，均可以支持。</li>
-<li><strong>代码质量高</strong>。编写代码的人员素质高, 通过 Code Review、单元测试、集成测试等多层验证来提高代码可靠性。</li>
-<li><strong>高级可定制</strong>。通过配置文件暴露了引擎的各种参数，通过修改配置文件可以极大的客制化功能。</li>
-<li><strong>安全无威胁</strong>。xray 定位为一款安全辅助评估工具，而不是攻击工具，内置的所有 payload 和 poc 均为无害化检查。</li>
-</ul>
-<p>目前支持的漏洞检测类型包括:</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-05-25-pen_testing/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-04-22-shell_question/" title="转载-shell 13问" target="_blank">转载-shell 13问</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年4月22日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/linux' target="_blank">linux</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/shell' target="_blank">shell</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>shell编写入门的时候，有幸看到比较经典的 shell 13问，碰到有大佬整理成 markdown 格式，转载过来</p>
-<h2 id="1为何叫做-shell">1、为何叫做 Shell？</h2>
-<p>我们知道计算机的运作离不开硬件，但却无法直接操作硬件，硬件的驱动只能通过一种称之为“操作系统（OS，Opertating System）的软件来管控。Linux 严格来说是一个操作系统（OS）。</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-04-22-shell_question/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" title="spring cloud gateway的一些细节注意" target="_blank">spring cloud gateway的一些细节注意</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年4月2日
+            2023年11月8日
         </date>
         
         <div class="post-meta">
@@ -471,19 +206,17 @@
             </span>
             
             <span class="meta-category">
-                <a href='/categories/springcloud' target="_blank">springcloud</a>
+                <a href='/categories/jvm' target="_blank">jvm</a>
             </span>
             
         </div>
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>spring cloud 2.* 的路由用的是 gateway 方案，不再是 1.* 时代的 zuul 了，不过也带来了新问题，这里整理下近期优化 gateway 的鉴权带来的爬坑记录</p>
-<h2 id="1理解-gateway-与-zuul-比较">1、理解 gateway 与 zuul 比较</h2>
-<p>SpringCloud Gateway 是 Spring Cloud 的一个全新项目，该项目是基于 Spring 5.0，Spring Boot 2.0 和 Project Reactor 等技术开发的网关，它旨在为微服务架构提供一种简单有效的统一的 API 路由管理方式。</p>
-<p>SpringCloud Gateway 作为 Spring Cloud 生态系统中的网关，目标是替代 Zuul，在Spring Cloud 2.0以上版本中，没有对新版本的Zuul 2.0以上最新高性能版本进行集成，仍然还是使用的Zuul 2.0之前的非Reactor模式的老版本。而为了提升网关的性能，SpringCloud Gateway是基于WebFlux框架实现的，而WebFlux框架底层则使用了高性能的Reactor模式通信框架Netty。</p>……
+<p>手上一批老服务还跑在 JDK 8 上，Oracle 的免费更新早就停了，趁着最近有空把几个服务迁到 21 试了试，过程不算复杂，但坑主要在两个地方：老参数会直接启动失败，还有依赖库的字节码兼容。把迁移过程和注意事项记录下，方便后来者。</p>
+<p>站内 tomcat-jvm 那篇有 JDK21 的参数对照，oom 那篇有 OOM 新旧形态对照，这篇侧重<strong>怎么迁</strong>。</p>……
         </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-04-02-spring_cloud_gateway/" target="_blank">阅读全文</a></p>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2023-11-08-jdk8-to-21-migration-guide/" target="_blank">阅读全文</a></p>
     </article>
     
     
@@ -491,82 +224,79 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理" target="_blank">linux后台执行可用方式整理</a>
+                <a href="https://anTtutu.github.io/post/2023-09-15-python-dunder-magic-methods/" title="Python双下划线详解：__name__与魔术方法/属性全面整理（含版本限制）" target="_blank">Python双下划线详解：__name__与魔术方法/属性全面整理（含版本限制）</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            2022年3月23日
+            2023年9月15日
         </date>
         
         <div class="post-meta">
             <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/python' target="_blank">python</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>Python 里到处都是双下划线：<code>__name__</code>、<code>__init__</code>、<code>__all__</code>、<code>__getattr__</code>……刚学的时候只知道 <code>if __name__ == '__main__'</code> 这么抄，不清楚背后的整套设计。这篇把双下划线家族（俗称 dunder，double underscore 的缩写）按用途全面整理一遍，每个都带小样例，有版本要求的标明版本。</p>
+<p>先给个总原则（PEP 8 的原话）：<strong><code>__xxx__</code> 这种前后双下划线的命名权属于 Python 解释器，自己写类不要发明这种名字</strong>，想表达内部属性用单下划线 <code>_foo</code> 或者双下划线前缀 <code>__foo</code>（后面讲它的改写机制）。</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2023-09-15-python-dunder-magic-methods/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2023-06-16-miner_virus_5/" title="挖矿病毒5-私有云机房挖矿病毒定位" target="_blank">挖矿病毒5-私有云机房挖矿病毒定位</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2023年6月16日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/mine' target="_blank">mine</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/virus' target="_blank">virus</a>
+            </span>
             
             <span class="meta-category">
                 <a href='/categories/linux' target="_blank">linux</a>
             </span>
             
             <span class="meta-category">
-                <a href='/categories/backend_execute' target="_blank">backend_execute</a>
+                <a href='/categories/check' target="_blank">check</a>
             </span>
             
         </div>
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>最近答疑群友如何后台运行 ssh 连接后的操作，整理了下日常常见的后台执行方式，方便知识梳理。</p>
-<h2 id="1nohup方式">1、nohup方式</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># nohup sh shell.sh &amp;</span>
-</span></span><span style="display:flex;"><span>查看日志：tail -f nohup.out
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="2disown方式">2、disown方式</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># sh shell.sh &amp; disown</span>
-</span></span><span style="display:flex;"><span>查看日志：断开终端后，不能再查看日志
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="3screen方式">3、screen方式</h2>
-<p>执行screen，如果命令不存在，需要先安装：</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># yum install screen -y</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>新建一个屏幕：</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># screen -S screen_name</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>执行命令：</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># sh shell.sh</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>依次按 Ctrl+A 与 D (无 Ctrl) 脱离该屏幕，此时程序仍运行在后台。</p>……
+<p>6月16日晚，一位朋友咨询说私有云机房服务器有占用cpu比较高的进程无法kill，我通过向日葵远程跳板机分析了下，发现一些不同于以往挖矿病毒有趣的现象，总结下</p>
+<h2 id="1初查">1、初查</h2>
+<p>初步筛查，发现crontab、top如其他挖矿病毒差不多</p>
+<h3 id="11-进程名称模仿系统进程">1.1 进程名称模仿系统进程</h3>
+<p>
+        <img class="mx-auto" alt="" src="/posts/virus/top5.png" />   
+    
+初步看进程名kthreaddk，这个挖矿的进程名挺像内核进程kthreadd，但是系统内核进程不太可能cpu占用异常，就继续往下检查
+
+        <img class="mx-auto" alt="" src="/posts/virus/crontab5.png" />   
+    
+查看crontab，发现异常，结果多次执行，发现路径会变……，总结下规律，发现一直在/dev/cpu/、/dev/mapper/、/dev/disk/、/dev/一直出现在这几层跳跃</p>……
         </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" target="_blank">阅读全文</a></p>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2023-06-16-miner_virus_5/" target="_blank">阅读全文</a></p>
     </article>
     
     
@@ -574,76 +304,42 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议" target="_blank">redis日常使用的一些建议</a>
+                <a href="https://anTtutu.github.io/post/2023-02-07-git-workflow/" title="git工程化实践：commit规范、emoji、多账号与分支规范" target="_blank">git工程化实践：commit规范、emoji、多账号与分支规范</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            2022年3月5日
+            2023年2月7日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
             <span class="meta-category">
-                <a href='/categories/redis' target="_blank">redis</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/safe' target="_blank">safe</a>
+                <a href='/categories/git' target="_blank">git</a>
             </span>
             
         </div>
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>最近处理了几起redis不安全的阿里云服务器，总结下一些建议</p>
-<h2 id="1安全建议">1、安全建议</h2>
-<h3 id="11设置bind">1.1、设置bind</h3>
-<p>默认bind 0.0.0.0是默认值，相当于不设防</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#6639ba">bind</span> 0.0.0.0
-</span></span><span style="display:flex;"><span>建议修改成链接端的IP，比如
-</span></span><span style="display:flex;"><span><span style="color:#6639ba">bind</span> 192.168.100.101
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="12设置auth">1.2、设置auth</h3>
-<p>默认是不设置密码，相当于不需要密码和鉴权就可以访问</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>requirepass foobared
-</span></span><span style="display:flex;"><span>建议开启密码访问，并且不能设置弱口令密码，比如
-</span></span><span style="display:flex;"><span>requirepass Admin9527#<span style="color:#1f2328">&amp;</span>@ekd452
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="13设置port">1.3、设置port</h3>
-<p>默认是6937，容易被扫描到</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>port <span style="color:#0550ae">6379</span>
-</span></span><span style="display:flex;"><span>建议修改默认端口，比如
-</span></span><span style="display:flex;"><span>port <span style="color:#0550ae">36379</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="14设置config">1.4、设置config</h3>
-<p>检查config这2个文件设置的值是否自己设置的值</p>……
+<p>单人项目里 git 怎么提交都行，团队协作时就需要约定：commit 怎么写、分支怎么建、一台机器上公司账号和个人账号怎么共存。这篇把这几件事一次说清。</p>
+<h2 id="一commit-message-规范">一、commit message 规范</h2>
+<p>commit 一共由五部分组成：</p>
+<p><strong>（1）type：提交类型</strong></p>
+<ul>
+<li><code>feat</code>: 新功能</li>
+<li><code>fix</code>: 修复问题</li>
+<li><code>docs</code>: 修改文档</li>
+<li><code>style</code>: 修改代码格式，不影响代码逻辑</li>
+<li><code>refactor</code>: 重构代码，理论上不影响现有功能</li>
+<li><code>perf</code>: 提升性能</li>
+<li><code>test</code>: 增加修改测试用例</li>
+<li><code>chore</code>: 修改工具相关（包括但不限于文档、代码生成等）</li>
+<li><code>deps</code>: 升级依赖</li>
+</ul>
+<p><strong>（2）scope</strong>：修改文件的范围（包括但不限于 doc、middleware、core、config、plugin）。</p>……
         </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" target="_blank">阅读全文</a></p>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2023-02-07-git-workflow/" target="_blank">阅读全文</a></p>
     </article>
     
     
@@ -651,38 +347,304 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-02-13-logrotate/" title="logrotate日志切割" target="_blank">logrotate日志切割</a>
+                <a href="https://anTtutu.github.io/post/2022-12-26-covid-19/" title="羊了" target="_blank">羊了</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            2022年2月13日
+            2022年12月26日
         </date>
         
         <div class="post-meta">
             <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/covid-19' target="_blank">covid-19</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>因公司项目加班，跟开发、测试同学差点通宵，也不幸羊了，发现周边的人几乎羊了个遍，最后还是没苟住进决赛圈，修整一段时间&hellip;</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-12-26-covid-19/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-12-19-git_delete_history/" title="git删除历史提交记录" target="_blank">git删除历史提交记录</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年12月19日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/git' target="_blank">git</a>
+            </span>
             
             <span class="meta-category">
                 <a href='/categories/linux' target="_blank">linux</a>
             </span>
             
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>git如果碰到敏感信息提交，需要清理历史提交记录，在不删库的前提下，如何亡羊补牢呢？可以用下面的重写分支操作清理提交历史记录</p>
+<h2 id="1重写分支">1、重写分支</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git filter-branch --index-filter <span style="color:#0a3069">&#39;git rm -r --cached --ignore-unmatch src/main/resources/demo.txt&#39;</span> HEAD
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 如果出现冲突要增加-f</span>
+</span></span><span style="display:flex;"><span>git filter-branch  -f --index-filter
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 管理reflog信息</span>
+</span></span><span style="display:flex;"><span>git reflog expire --expire<span style="color:#0550ae">=</span>now --all  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 清理不必要的文件并优化本地存储库</span>
+</span></span><span style="display:flex;"><span>git gc --prune<span style="color:#0550ae">=</span>now  
+</span></span><span style="display:flex;"><span>git gc --aggressive --prune<span style="color:#0550ae">=</span>now
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 强制推送主分支</span>
+</span></span><span style="display:flex;"><span>git push --all --force
+</span></span></code></pre></td></tr></table>
+</div>
+</div>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-12-19-git_delete_history/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-11-28-python_muilt_version/" title="python多版本管理工具" target="_blank">python多版本管理工具</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年11月28日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
             <span class="meta-category">
-                <a href='/categories/log' target="_blank">log</a>
+                <a href='/categories/python' target="_blank">python</a>
             </span>
             
             <span class="meta-category">
-                <a href='/categories/split' target="_blank">split</a>
+                <a href='/categories/sdk' target="_blank">sdk</a>
             </span>
             
         </div>
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>无意间找到nginx下的日志切割组件，比以前用脚本每日备份好多了，研究了一番用法</p>
-<h2 id="1关于日志切割">1、关于日志切割</h2>
-<p>　　日志文件包含了关于系统中发生的事件的有用信息，在排障过程中或者系统性能分析时经常被用到。对于忙碌的服务器，日志文件大小会增长极快，服务器会很快消耗磁盘空间，这成了个问题。除此之外，处理一个单个的庞大日志文件也常常是件十分棘手的事。<br>
-　　logrotate是个十分有用的工具，它可以自动对日志进行截断（或轮循）、压缩以及删除旧的日志文件。例如，你可以设置logrotate，让/var/log/foo日志文件每30天轮循，并删除超过6个月的日志。配置完后，logrotate的运作完全自动化，不必进行任何进一步的人为干预。</p>……
+<p>python多版本管理工具整理介绍</p>
+<table>
+	<thead>
+			<tr>
+					<th>序号</th>
+					<th>工具名称</th>
+					<th>安装方式</th>
+					<th>说明</th>
+					<th>备注</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>pyenv</td>
+					<td>curl -L <a href="https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer">https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer</a> | bash</td>
+					<td>比较早出现的 python 多版本管理工具，目前不太活跃了</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>virtualenv</td>
+					<td>pip install virtualenv</td>
+					<td>通过创建虚拟机方式管理</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>anaconda</td>
+					<td><a href="https://repo.anaconda.com/archive/">https://repo.anaconda.com/archive/</a></td>
+					<td>带了很多科学计算包的发行版，包含conda</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>miniconda</td>
+					<td><a href="https://repo.anaconda.com/miniconda/">https://repo.anaconda.com/miniconda/</a></td>
+					<td>不带科学计算包的mini版本，只有python和conda</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>miniforge</td>
+					<td><a href="https://github.com/conda-forge/miniforge">https://github.com/conda-forge/miniforge</a></td>
+					<td>miniforge是由社区赞助、领导的，并且用GitHub托管所有的包，使用 （而且只用）conda-forge 作为（默认）下载channel，避开了Anaconda的repository</td>
+					<td>-</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="1conda自身管理">1、Conda自身管理</h2>
+<h3 id="11-更新conda">1.1 更新conda</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># 更新anaconda</span>
+</span></span><span style="display:flex;"><span>conda update conda
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="12-更新anaconda元数据包">1.2 更新anaconda元数据包</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># 更新anaconda元数据包</span>
+</span></span><span style="display:flex;"><span>conda update anaconda
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2python环境管理">2、Python环境管理</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># 创建一个新环境，并制定python解释器版本，没有会自动下载</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># python27 是环境名称</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># python=2.7 是要安装的包和版本，默认会为我们寻找2.7.x中的最新版本</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># anaconda 是创建环境时同时要安装的包，这个可以不写</span>
+</span></span><span style="display:flex;"><span>conda create -n python27 <span style="color:#953800">python</span><span style="color:#0550ae">=</span>2.7 anaconda
+</span></span><span style="display:flex;"><span>conda create -n python36 <span style="color:#953800">python</span><span style="color:#0550ae">=</span>3.6
+</span></span><span style="display:flex;"><span>conda create -n python37 <span style="color:#953800">python</span><span style="color:#0550ae">=</span>3.7
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 更新Python，进入某个环境运行下面的命令，将更新当前环境的Python到最新分支版本。比如当前是3.5，更新后将会到最新的3.X</span>
+</span></span><span style="display:flex;"><span>conda update python
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3虚拟环境管理">3、虚拟环境管理</h2>
+<h3 id="31-查看当前托管的所有虚拟环境列表">3.1 查看当前托管的所有虚拟环境列表</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ conda env list
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># conda environments:</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">#</span>
+</span></span><span style="display:flex;"><span>base                  *  /root/anaconda3
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="32-创建虚拟环境">3.2 创建虚拟环境</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># 创建一个名为myvenv 的环境，指定Python版本是3.10</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># （不用管是3.10.x，conda会为我们自动寻找3.10.x中的最新版本）</span>
+</span></span><span style="display:flex;"><span>conda create --name myvenv <span style="color:#953800">python</span><span style="color:#0550ae">=</span>3.10
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>虚拟环境不会在当前环境下创建虚拟环境目录，所有的虚拟环境目录默认放在：/root/anaconda3/envs/</p>……
         </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-02-13-logrotate/" target="_blank">阅读全文</a></p>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-11-28-python_muilt_version/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-11-22-springboot_start_failed/" title="springboot常见兼容性错误" target="_blank">springboot常见兼容性错误</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年11月22日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/springboot' target="_blank">springboot</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>springboot日常使用中有一些兼容性的错误，有时候没遇见过会让人无法摸到头脑，这里记录一些问题，后续不定期补充</p>
+<h2 id="1mysql">1、mysql</h2>
+<h3 id="11-received-fatal-alert-protocol_version">1.1 Received fatal alert: protocol_version</h3>
+<p>因为更换了数据源才发现并记录，之前用的是mariadb8正常，换了docker mysql8就报错，不过为了减少无法定位的错建议采用完整的url连接串。</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Caused<span style="color:#fff"> </span>by<span style="color:#1f2328">:</span><span style="color:#fff"> </span>com<span style="color:#1f2328">.</span><span style="color:#1f2328">mysql</span><span style="color:#1f2328">.</span><span style="color:#1f2328">jdbc</span><span style="color:#1f2328">.</span><span style="color:#1f2328">exceptions</span><span style="color:#1f2328">.</span><span style="color:#1f2328">jdbc4</span><span style="color:#1f2328">.</span><span style="color:#1f2328">CommunicationsException</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>Communications<span style="color:#fff"> </span>link<span style="color:#fff"> </span>failure<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>The<span style="color:#fff"> </span>last<span style="color:#fff"> </span>packet<span style="color:#fff"> </span>successfully<span style="color:#fff"> </span>received<span style="color:#fff"> </span>from<span style="color:#fff"> </span>the<span style="color:#fff"> </span>server<span style="color:#fff"> </span>was<span style="color:#fff"> </span>6<span style="color:#fff"> </span>milliseconds<span style="color:#fff"> </span>ago<span style="color:#1f2328">.</span><span style="color:#fff">  </span>The<span style="color:#fff"> </span>last<span style="color:#fff"> </span>packet<span style="color:#fff"> </span>sent<span style="color:#fff"> </span>successfully<span style="color:#fff"> </span><span style="color:#cf222e">to</span><span style="color:#fff"> </span>the<span style="color:#fff"> </span>server<span style="color:#fff"> </span>was<span style="color:#fff"> </span>5<span style="color:#fff"> </span>milliseconds<span style="color:#fff"> </span>ago<span style="color:#1f2328">.</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>Caused<span style="color:#fff"> </span>by<span style="color:#1f2328">:</span><span style="color:#fff"> </span>javax<span style="color:#1f2328">.</span><span style="color:#1f2328">net</span><span style="color:#1f2328">.</span><span style="color:#1f2328">ssl</span><span style="color:#1f2328">.</span><span style="color:#1f2328">SSLException</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>Received<span style="color:#fff"> </span>fatal<span style="color:#fff"> </span>alert<span style="color:#1f2328">:</span><span style="color:#fff"> </span>protocol_version<span style="color:#fff">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>原因：<br>
+spring.database.url连接串需要增加useSSL=false</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-11-22-springboot_start_failed/" target="_blank">阅读全文</a></p>
     </article>
     
     
@@ -749,7 +711,7 @@
         
         
         <li >
-            <a href="https://anTtutu.github.io/page/12/">12</a>
+            <a href="https://anTtutu.github.io/page/16/">16</a>
         </li>
         
     
@@ -778,9 +740,11 @@
         <div class="github-badge">
             <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
         </div>
-        
         <div class="github-badge">
-            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+            <a href="https://anTtutu.github.io/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">Anttu</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/anTtutu/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
         </div>
     </div>
 </footer>
@@ -816,6 +780,14 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-elk-mcp-ai-workflow/" title="结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证" target="_blank">结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-agent-database-cli/" title="agent-database-cli：让Claude Code安全操作多种数据库的CLI工具" target="_blank">agent-database-cli：让Claude Code安全操作多种数据库的CLI工具</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-09-14-sdkman_issue/" title="sdkman与conda冲突问题解决" target="_blank">sdkman与conda冲突问题解决</a>
     </li>
     
@@ -828,6 +800,10 @@
     </li>
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-07-02-claude-code-cli-cheatsheet/" title="Claude Code常用命令速查" target="_blank">Claude Code常用命令速查</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
     </li>
     
@@ -836,23 +812,11 @@
     </li>
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-01-19-spy_video/" title="爬取oss库" target="_blank">爬取oss库</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-01-13-docker-build/" title="docker build的一些问题" target="_blank">docker build的一些问题</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2025-02-13-mvnd/" title="mvnd结合idea使用" target="_blank">mvnd结合idea使用</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2024-04-15-postgresql/" title="postgresql数据库常用记录" target="_blank">postgresql数据库常用记录</a>
     </li>
     
 </ul>
@@ -865,6 +829,8 @@
 <ul class="widget-list">
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     
@@ -918,7 +884,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/deepfacelab/">Deepfacelab (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/docker/">Docker (7)</a></li>
     
@@ -938,7 +904,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/gcc/">Gcc (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/git/">Git (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/git/">Git (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/github/">Github (1)</a></li>
     
@@ -966,7 +932,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/images/">Images (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">Java (24)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">Java (38)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">Jekyll (2)</a></li>
     
@@ -978,7 +944,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/jsr/">Jsr (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/k8s/">K8s (1)</a></li>
     
@@ -988,7 +954,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">Kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (22)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (28)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">Log (1)</a></li>
     
@@ -1010,7 +976,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/mvnd/">Mvnd (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (10)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/nginx/">Nginx (1)</a></li>
     
@@ -1040,11 +1006,11 @@
     
     <li><a href="https://anTtutu.github.io/categories/postgresql/">Postgresql (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">Python (9)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">Python (11)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">Rec (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">Regexp (1)</a></li>
     
@@ -1054,15 +1020,17 @@
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">Sdkman (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/skill/">Skill (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/split/">Split (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/spring/">Spring (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/spy/">Spy (1)</a></li>
     
@@ -1077,6 +1045,8 @@
     <li><a href="https://anTtutu.github.io/categories/test/">Test (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/testing/">Testing (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tomcat/">Tomcat (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
     
@@ -1098,9 +1068,29 @@
     
     <li><a href="https://anTtutu.github.io/categories/zookeeper/">Zookeeper (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/%E4%BA%92%E8%81%94%E7%BD%91/">互联网 (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E5%99%A8/">容器 (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%8E%92%E6%9F%A5/">排查 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%9E%B6%E6%9E%84/">架构 (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E8%BF%90%E7%BB%B4/">运维 (1)</a></li>
     
 </ul>
     </section>
@@ -1109,7 +1099,17 @@
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
+    <a href="https://anTtutu.github.io/tags/-devops/"> Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/-dockerfile/"> Dockerfile</a>
+    
+    <a href="https://anTtutu.github.io/tags/-nmap/"> Nmap</a>
+    
     <a href="https://anTtutu.github.io/tags/about/">About</a>
+    
+    <a href="https://anTtutu.github.io/tags/agent/">Agent</a>
+    
+    <a href="https://anTtutu.github.io/tags/AI/">AI</a>
     
     <a href="https://anTtutu.github.io/tags/android/">Android</a>
     
@@ -1119,9 +1119,15 @@
     
     <a href="https://anTtutu.github.io/tags/arm64/">Arm64</a>
     
+    <a href="https://anTtutu.github.io/tags/arthas/">Arthas</a>
+    
     <a href="https://anTtutu.github.io/tags/awr/">Awr</a>
     
+    <a href="https://anTtutu.github.io/tags/backend_execute/">Backend_execute</a>
+    
     <a href="https://anTtutu.github.io/tags/backup/">Backup</a>
+    
+    <a href="https://anTtutu.github.io/tags/binlog/">Binlog</a>
     
     <a href="https://anTtutu.github.io/tags/blog/">Blog</a>
     
@@ -1129,31 +1135,75 @@
     
     <a href="https://anTtutu.github.io/tags/build/">Build</a>
     
+    <a href="https://anTtutu.github.io/tags/cache/">Cache</a>
+    
+    <a href="https://anTtutu.github.io/tags/caffeine/">Caffeine</a>
+    
     <a href="https://anTtutu.github.io/tags/captcha/">Captcha</a>
     
     <a href="https://anTtutu.github.io/tags/check/">Check</a>
     
+    <a href="https://anTtutu.github.io/tags/claude/">Claude</a>
+    
+    <a href="https://anTtutu.github.io/tags/claude-code/">Claude Code</a>
+    
+    <a href="https://anTtutu.github.io/tags/clean/">Clean</a>
+    
+    <a href="https://anTtutu.github.io/tags/cli/">Cli</a>
+    
     <a href="https://anTtutu.github.io/tags/cluster/">Cluster</a>
+    
+    <a href="https://anTtutu.github.io/tags/conda/">Conda</a>
+    
+    <a href="https://anTtutu.github.io/tags/covid-19/">Covid-19</a>
+    
+    <a href="https://anTtutu.github.io/tags/cve/">Cve</a>
     
     <a href="https://anTtutu.github.io/tags/cygwin/">Cygwin</a>
     
     <a href="https://anTtutu.github.io/tags/dataguard/">Dataguard</a>
     
+    <a href="https://anTtutu.github.io/tags/db/">Db</a>
+    
     <a href="https://anTtutu.github.io/tags/deepfacelab/">Deepfacelab</a>
+    
+    <a href="https://anTtutu.github.io/tags/devops/">Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/docker/">Docker</a>
     
     <a href="https://anTtutu.github.io/tags/dos/">Dos</a>
     
+    <a href="https://anTtutu.github.io/tags/drawio/">Drawio</a>
+    
+    <a href="https://anTtutu.github.io/tags/dump/">Dump</a>
+    
     <a href="https://anTtutu.github.io/tags/eclipse/">Eclipse</a>
+    
+    <a href="https://anTtutu.github.io/tags/ELK/">ELK</a>
     
     <a href="https://anTtutu.github.io/tags/explain/">Explain</a>
     
+    <a href="https://anTtutu.github.io/tags/faker/">Faker</a>
+    
+    <a href="https://anTtutu.github.io/tags/feign/">Feign</a>
+    
+    <a href="https://anTtutu.github.io/tags/freemarker/">Freemarker</a>
+    
     <a href="https://anTtutu.github.io/tags/gcc/">Gcc</a>
+    
+    <a href="https://anTtutu.github.io/tags/git/">Git</a>
+    
+    <a href="https://anTtutu.github.io/tags/github/">Github</a>
     
     <a href="https://anTtutu.github.io/tags/gitment/">Gitment</a>
     
     <a href="https://anTtutu.github.io/tags/gitpages/">Gitpages</a>
     
     <a href="https://anTtutu.github.io/tags/go/">Go</a>
+    
+    <a href="https://anTtutu.github.io/tags/golang/">Golang</a>
+    
+    <a href="https://anTtutu.github.io/tags/graalvm/">Graalvm</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">H2</a>
     
@@ -1163,11 +1213,25 @@
     
     <a href="https://anTtutu.github.io/tags/http/">Http</a>
     
+    <a href="https://anTtutu.github.io/tags/https/">Https</a>
+    
     <a href="https://anTtutu.github.io/tags/hugo/">Hugo</a>
+    
+    <a href="https://anTtutu.github.io/tags/id/">Id</a>
+    
+    <a href="https://anTtutu.github.io/tags/idea/">Idea</a>
+    
+    <a href="https://anTtutu.github.io/tags/image/">Image</a>
+    
+    <a href="https://anTtutu.github.io/tags/images/">Images</a>
     
     <a href="https://anTtutu.github.io/tags/java/">Java</a>
     
+    <a href="https://anTtutu.github.io/tags/JDK21/">JDK21</a>
+    
     <a href="https://anTtutu.github.io/tags/jekyll/">Jekyll</a>
+    
+    <a href="https://anTtutu.github.io/tags/jenkins/">Jenkins</a>
     
     <a href="https://anTtutu.github.io/tags/jrebel/">Jrebel</a>
     
@@ -1175,31 +1239,73 @@
     
     <a href="https://anTtutu.github.io/tags/jsr/">Jsr</a>
     
+    <a href="https://anTtutu.github.io/tags/jvm/">Jvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/k8s/">K8s</a>
+    
     <a href="https://anTtutu.github.io/tags/kafka/">Kafka</a>
     
     <a href="https://anTtutu.github.io/tags/kali/">Kali</a>
+    
+    <a href="https://anTtutu.github.io/tags/keepalived/">Keepalived</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">Kenlm</a>
     
     <a href="https://anTtutu.github.io/tags/linux/">Linux</a>
     
+    <a href="https://anTtutu.github.io/tags/log/">Log</a>
+    
     <a href="https://anTtutu.github.io/tags/log4j/">Log4j</a>
     
+    <a href="https://anTtutu.github.io/tags/lombok/">Lombok</a>
+    
+    <a href="https://anTtutu.github.io/tags/lvs/">Lvs</a>
+    
     <a href="https://anTtutu.github.io/tags/mac/">Mac</a>
+    
+    <a href="https://anTtutu.github.io/tags/matplotlib/">Matplotlib</a>
+    
+    <a href="https://anTtutu.github.io/tags/maven/">Maven</a>
+    
+    <a href="https://anTtutu.github.io/tags/mcp/">Mcp</a>
     
     <a href="https://anTtutu.github.io/tags/mine/">Mine</a>
     
     <a href="https://anTtutu.github.io/tags/mongodb/">Mongodb</a>
     
+    <a href="https://anTtutu.github.io/tags/mvnd/">Mvnd</a>
+    
     <a href="https://anTtutu.github.io/tags/mysql/">Mysql</a>
+    
+    <a href="https://anTtutu.github.io/tags/native-image/">Native Image</a>
     
     <a href="https://anTtutu.github.io/tags/nginx/">Nginx</a>
     
+    <a href="https://anTtutu.github.io/tags/notes/">Notes</a>
+    
+    <a href="https://anTtutu.github.io/tags/obsidian/">Obsidian</a>
+    
     <a href="https://anTtutu.github.io/tags/oom/">Oom</a>
+    
+    <a href="https://anTtutu.github.io/tags/openjdk/">Openjdk</a>
     
     <a href="https://anTtutu.github.io/tags/oracle/">Oracle</a>
     
     <a href="https://anTtutu.github.io/tags/orangePi/">OrangePi</a>
+    
+    <a href="https://anTtutu.github.io/tags/oss/">Oss</a>
+    
+    <a href="https://anTtutu.github.io/tags/package/">Package</a>
+    
+    <a href="https://anTtutu.github.io/tags/pages/">Pages</a>
+    
+    <a href="https://anTtutu.github.io/tags/pandas/">Pandas</a>
+    
+    <a href="https://anTtutu.github.io/tags/pg/">Pg</a>
+    
+    <a href="https://anTtutu.github.io/tags/port/">Port</a>
+    
+    <a href="https://anTtutu.github.io/tags/postgresql/">Postgresql</a>
     
     <a href="https://anTtutu.github.io/tags/python/">Python</a>
     
@@ -1207,11 +1313,27 @@
     
     <a href="https://anTtutu.github.io/tags/redis/">Redis</a>
     
+    <a href="https://anTtutu.github.io/tags/regexp/">Regexp</a>
+    
     <a href="https://anTtutu.github.io/tags/safe/">Safe</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdk/">Sdk</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdkman/">Sdkman</a>
     
     <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
     
+    <a href="https://anTtutu.github.io/tags/skill/">Skill</a>
+    
+    <a href="https://anTtutu.github.io/tags/split/">Split</a>
+    
     <a href="https://anTtutu.github.io/tags/springboot/">Springboot</a>
+    
+    <a href="https://anTtutu.github.io/tags/springcloud/">Springcloud</a>
+    
+    <a href="https://anTtutu.github.io/tags/springmvc/">Springmvc</a>
+    
+    <a href="https://anTtutu.github.io/tags/spy/">Spy</a>
     
     <a href="https://anTtutu.github.io/tags/sqlmap/">Sqlmap</a>
     
@@ -1221,11 +1343,23 @@
     
     <a href="https://anTtutu.github.io/tags/termux/">Termux</a>
     
+    <a href="https://anTtutu.github.io/tags/test/">Test</a>
+    
+    <a href="https://anTtutu.github.io/tags/testing/">Testing</a>
+    
+    <a href="https://anTtutu.github.io/tags/thymeleaf/">Thymeleaf</a>
+    
+    <a href="https://anTtutu.github.io/tags/tomcat/">Tomcat</a>
+    
+    <a href="https://anTtutu.github.io/tags/uniapp/">Uniapp</a>
+    
     <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
     
     <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">Virus</a>
+    
+    <a href="https://anTtutu.github.io/tags/vue/">Vue</a>
     
     <a href="https://anTtutu.github.io/tags/vxvm/">Vxvm</a>
     
@@ -1233,13 +1367,87 @@
     
     <a href="https://anTtutu.github.io/tags/xrebel/">Xrebel</a>
     
+    <a href="https://anTtutu.github.io/tags/ydnotes/">Ydnotes</a>
+    
     <a href="https://anTtutu.github.io/tags/ynote/">Ynote</a>
     
     <a href="https://anTtutu.github.io/tags/zk/">Zk</a>
     
     <a href="https://anTtutu.github.io/tags/zookeeper/">Zookeeper</a>
     
+    <a href="https://anTtutu.github.io/tags/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">主从复制</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1/">云服务</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%89%8D%E7%AB%AF/">前端</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8D%87%E7%BA%A7%E8%BF%81%E7%A7%BB/">升级迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8E%8B%E6%B5%8B/">压测</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%9F%BA%E7%A1%80/">基础</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%89%E5%85%A8/">安全</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E5%99%A8/">容器</a>
+    
     <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%B6%E5%8F%91/">并发</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%BF%E5%91%8A/">广告</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8C%87%E6%A0%87/">指标</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8E%92%E6%9F%A5/">排查</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">效率工具</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/">日志分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9E%B6%E6%9E%84/">架构</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%A7%91%E6%99%AE/">科普</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%AE%A4%E8%AF%81/">认证</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B0%83%E8%AF%95/">调试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">负载均衡</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%81%E7%A7%BB/">迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%80%89%E5%9E%8B/">选型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/">防重复提交</a>
     
 </div>
     </section>

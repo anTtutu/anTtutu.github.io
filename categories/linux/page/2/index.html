@@ -84,6 +84,734 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-12-17-nmap/" target="_blank">nmap参数详解</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年12月17日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/nmap' target="_blank">nmap</a>
+            
+            <a href='/categories/linux' target="_blank">linux</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>用nmap扫描域名整理下一些细节参数</p>
+<h2 id="1语法">1、语法</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap <span style="color:#0550ae">[</span>扫描类型<span style="color:#0550ae">]</span> <span style="color:#0550ae">[</span>选项<span style="color:#0550ae">]</span> <span style="color:#0550ae">{</span>目标规格<span style="color:#0550ae">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2选项">2、选项</h2>
+<p>目标规格：
+可以通过主机名，IP地址，网络等</p>
+<p>例如：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>scanme.nmap.org，microsoft.com/24，192.168.0.1<span style="color:#1f2328">;</span> 10.0.0-255.1-254
+</span></span><span style="display:flex;"><span>  -iL &lt;inputfilename&gt;：从主机/网络列表输入
+</span></span><span style="display:flex;"><span>  -iR &lt;num hosts&gt;：选择随机目标
+</span></span><span style="display:flex;"><span>  --exclude &lt;host1 <span style="color:#0550ae">[</span>，host2<span style="color:#0550ae">]</span> <span style="color:#0550ae">[</span>，host3<span style="color:#0550ae">]</span>，...&gt;：排除主机/网络
+</span></span><span style="display:flex;"><span>  --excludefile &lt;exclude_file&gt;：从文件中排除列表
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="21-主机发现">2.1 主机发现</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>  -sL：列表扫描 - 只需列出要扫描的目标
+</span></span><span style="display:flex;"><span>  -sn：Ping扫描 - 禁用端口扫描
+</span></span><span style="display:flex;"><span>  -Pn：将所有主机视为在线 - 跳过主机发现
+</span></span><span style="display:flex;"><span>  -PS / PA / PU / PY <span style="color:#0550ae">[</span>portlist<span style="color:#0550ae">]</span>：向给定端口发送TCP SYN / ACK，UDP或SCTP
+</span></span><span style="display:flex;"><span>  -PE / PP / PM：ICMP回显，时间戳和网络掩码请求发现探测
+</span></span><span style="display:flex;"><span>  -PO <span style="color:#0550ae">[</span>协议列表<span style="color:#0550ae">]</span>：IP协议Ping
+</span></span><span style="display:flex;"><span>  -n / -R：不要做DNS解析/总是解决<span style="color:#0550ae">[</span>默认：有时<span style="color:#0550ae">]</span>
+</span></span><span style="display:flex;"><span>  --dns-servers &lt;serv1 <span style="color:#0550ae">[</span>，serv2<span style="color:#0550ae">]</span>，...&gt;：指定自定义DNS服务器
+</span></span><span style="display:flex;"><span>  --system-dns：使用操作系统的DNS解析器
+</span></span><span style="display:flex;"><span>  --traceroute：跟踪每个主机的跳转路径
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="22-扫描技术">2.2 扫描技术</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>  -sS / sT / sA / sW / sM：TCP SYN / Connect（）/ ACK / Window / Maimon扫描
+</span></span><span style="display:flex;"><span>  -sU：UDP扫描
+</span></span><span style="display:flex;"><span>  -sN / sF / sX：TCP Null，FIN和Xmas扫描
+</span></span><span style="display:flex;"><span>  --scanflags &lt;flags&gt;：自定义TCP扫描标志
+</span></span><span style="display:flex;"><span>  -sI &lt;zombie host <span style="color:#0550ae">[</span>：probeport<span style="color:#0550ae">]</span>&gt;：空闲扫描
+</span></span><span style="display:flex;"><span>  -sY / sZ：SCTP INIT / COOKIE-ECHO扫描
+</span></span><span style="display:flex;"><span>  -sO：IP协议扫描
+</span></span><span style="display:flex;"><span>  -b &lt;FTP中继主机&gt;：FTP跳转扫描
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="23-端口规格和扫描订单">2.3 端口规格和扫描订单</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>  -p &lt;端口范围&gt;：仅扫描指定的端口
+</span></span><span style="display:flex;"><span>    例如：-p22<span style="color:#1f2328">;</span> -p1-65535<span style="color:#1f2328">;</span> -p U：53,111,137，T：21-25,80,139,8080，S：9
+</span></span><span style="display:flex;"><span>  -F：快速模式 - 扫描比默认扫描更少的端口
+</span></span><span style="display:flex;"><span>  -r：连续扫描端口 - 不要随机化
+</span></span><span style="display:flex;"><span>  --top-ports &lt;number&gt;：扫描&lt;number&gt;最常用的端口
+</span></span><span style="display:flex;"><span>  --port-ratio &lt;ratio&gt;：扫描端口比&lt;ratio&gt;更常见
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="24-服务版本检测">2.4 服务/版本检测</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>  -sV：探测打开端口以确定服务/版本信息
+</span></span><span style="display:flex;"><span>  --version-intensity &lt;level&gt;：从0（亮）到9（尝试所有探针）
+</span></span><span style="display:flex;"><span>  - 变换光：极限探测器（强度2）
+</span></span><span style="display:flex;"><span>  --version-all：尝试每一个探针（强度9）
+</span></span><span style="display:flex;"><span>  --version-trace：显示详细的版本扫描活动（用于调试）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="25-脚本扫描">2.5 脚本扫描</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>  -sC：相当于--script <span style="color:#0550ae">=</span> default
+</span></span><span style="display:flex;"><span>  --script <span style="color:#0550ae">=</span> &lt;Lua scripts&gt;：&lt;Lua scripts&gt;是逗号分隔的列表目录，脚本文件或脚本类别
+</span></span><span style="display:flex;"><span>  --script-args <span style="color:#0550ae">=</span> &lt;<span style="color:#953800">n1</span> <span style="color:#0550ae">=</span> v1，<span style="color:#0550ae">[</span><span style="color:#953800">n2</span> <span style="color:#0550ae">=</span> v2，...<span style="color:#0550ae">]</span>&gt;：为脚本提供参数
+</span></span><span style="display:flex;"><span>  --script-args-file <span style="color:#0550ae">=</span> filename：在文件中提供NSE脚本参数
+</span></span><span style="display:flex;"><span>  --script-trace：显示发送和接收的所有数据
+</span></span><span style="display:flex;"><span>  --script-updatedb：更新脚本数据库。
+</span></span><span style="display:flex;"><span>  --script-help <span style="color:#0550ae">=</span> &lt;Lua脚本&gt;：显示有关脚本的帮助。
+</span></span><span style="display:flex;"><span>                          &lt;Lua脚本&gt;是一个逗号分隔的脚本文件列表脚本的类别。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="26-操作系统检测">2.6 操作系统检测</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>  -O：启用操作系统检测
+</span></span><span style="display:flex;"><span>  --osscan-limit：将操作系统检测限制为有希望的目标
+</span></span><span style="display:flex;"><span>  - 可以猜测：猜测操作系统更积极
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="27-时间和性能">2.7 时间和性能</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>  采取&lt;time&gt;的选项以秒为单位，或追加“ms”（毫秒）
+</span></span><span style="display:flex;"><span>  <span style="color:#0a3069">&#39;（秒），&#39;</span>m<span style="color:#0a3069">&#39;（分钟）或&#39;</span>h<span style="color:#f6f8fa;background-color:#82071e">&#39;</span>（小时）到该值（例如30m）。
+</span></span><span style="display:flex;"><span>  -T &lt;0-5&gt;：设置时间模板（越高越好）
+</span></span><span style="display:flex;"><span>  --min-hostgroup / max-hostgroup &lt;size&gt;：并行主机扫描组大小
+</span></span><span style="display:flex;"><span>  --min-parallelism / max-parallelism &lt;numprobes&gt;：探针并行化
+</span></span><span style="display:flex;"><span>  --min-rtt-timeout / max-rtt-timeout / initial-rtt-timeout &lt;time&gt;：指定
+</span></span><span style="display:flex;"><span>      探测往返时间。
+</span></span><span style="display:flex;"><span>  --max-retries &lt;attempts&gt;：端口扫描探测重传的Caps number。
+</span></span><span style="display:flex;"><span>  --host-timeout &lt;time&gt;：在此之后放弃目标
+</span></span><span style="display:flex;"><span>  --scan-delay /  -  max-scan-delay &lt;time&gt;：调整探测器之间的延迟
+</span></span><span style="display:flex;"><span>  --min-rate &lt;number&gt;：发送速度慢于&lt;number&gt;每秒
+</span></span><span style="display:flex;"><span>  --max-rate &lt;number&gt;：发送数据包速度不超过每秒的&lt;number&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="28-防火墙ids逃避和spoofing">2.8 防火墙/IDS逃避和SPOOFING</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>  -F<span style="color:#1f2328">;</span> --mtu &lt;val&gt;：片段数据包（可选地，给定MTU）
+</span></span><span style="display:flex;"><span>  -D &lt;decoy1，decoy2 <span style="color:#0550ae">[</span>，ME<span style="color:#0550ae">]</span>，...&gt;：用诱惑遮掩扫描
+</span></span><span style="display:flex;"><span>  -S &lt;IP_Address&gt;：欺骗源地址
+</span></span><span style="display:flex;"><span>  -e &lt;iface&gt;：使用指定的接口
+</span></span><span style="display:flex;"><span>  -g /  -  source-port &lt;portnum&gt;：使用给定的端口号
+</span></span><span style="display:flex;"><span>  --data-length &lt;num&gt;：将随机数据附加到发送的数据包
+</span></span><span style="display:flex;"><span>  --ip-options &lt;options&gt;：使用指定的ip选项发送数据包
+</span></span><span style="display:flex;"><span>  --ttl &lt;val&gt;：设置IP生存时间字段
+</span></span><span style="display:flex;"><span>  --spoof-mac &lt;mac address / prefix / vendor name&gt;：欺骗您的MAC地址
+</span></span><span style="display:flex;"><span>  --badsum：发送具有假TCP / UDP / SCTP校验和的数据包
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="29-output">2.9 OUTPUT</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>  -oN / -oX / -oS / -oG &lt;file&gt;：正常输出扫描，XML，s <span style="color:#1f2328">|</span> &lt;rIpt kIddi3，
+</span></span><span style="display:flex;"><span>     和Grepable格式，分别给给定的文件名。
+</span></span><span style="display:flex;"><span>  -oA &lt;basename&gt;：一次输出三种主要格式
+</span></span><span style="display:flex;"><span>  -v：增加详细程度（使用-vv或更多的效果）
+</span></span><span style="display:flex;"><span>  -d：增加调试级别（使用-dd或更多更大的效果）
+</span></span><span style="display:flex;"><span>  --reason：显示端口处于特定状态的原因
+</span></span><span style="display:flex;"><span>  --open：仅显示打开（或可能打开）的端口
+</span></span><span style="display:flex;"><span>  --packet-trace：显示发送和接收的所有数据包
+</span></span><span style="display:flex;"><span>  --iflist：打印主机接口和路由（用于调试）
+</span></span><span style="display:flex;"><span>  --log错误：将错误/警告记录到正常格式的输出文件中
+</span></span><span style="display:flex;"><span>  --append-output：追加而不是clobber指定的输出文件
+</span></span><span style="display:flex;"><span>  --resume &lt;filename&gt;：恢复中止的扫描
+</span></span><span style="display:flex;"><span>  --stylesheet &lt;path / URL&gt;：将XML输出转换为HTML的XSL样式表
+</span></span><span style="display:flex;"><span>  --webxml：来自Nmap.Org的引用样式表，用于更多的便携式XML
+</span></span><span style="display:flex;"><span>  --no-stylesheet：防止XSL样式表与XML输出关联
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="210-misc">2.10 MISC</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>  -6：启用IPv6扫描
+</span></span><span style="display:flex;"><span>  -A：启用操作系统检测，版本检测，脚本扫描和跟踪路由
+</span></span><span style="display:flex;"><span>  --datadir &lt;dirname&gt;：指定自定义Nmap数据文件位置
+</span></span><span style="display:flex;"><span>  --send-eth /  -  send-ip：使用原始以太网帧或IP数据包发送
+</span></span><span style="display:flex;"><span>  --privileged：假设用户是完全特权的
+</span></span><span style="display:flex;"><span>  --unprivileged：假设用户缺少原始套接字权限
+</span></span><span style="display:flex;"><span>  -V：打印版本号
+</span></span><span style="display:flex;"><span>  -h：打印此帮助摘要页面。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="211-例子">2.11 例子</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>  nmap -v -A scanme.nmap.org
+</span></span><span style="display:flex;"><span>  nmap -v -sn 192.168.0.0/16 10.0.0.0/8
+</span></span><span style="display:flex;"><span>  nmap -v -iR <span style="color:#0550ae">10000</span> -Pn -p80
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3常见的nmap例子">3、常见的nmap例子</h2>
+<h3 id="我们要进行对icmp的扫描我们可以这样写">我们要进行对icmp的扫描,我们可以这样写</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sP ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="我们要对目标半开放式端口扫描不想在留下日志记录怎么整">我们要对目标半开放式端口扫描不想在留下日志记录怎么整</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>namp -sS -p port ipadress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="下面介绍一些nmap的审计脚本">下面介绍一些nmap的审计脚本</h3>
+<h3 id="snmp默认团体名弱口令漏洞及安全加固">snmp默认团体名/弱口令漏洞及安全加固</h3>
+<h3 id="审计snmp弱口令">审计snmp弱口令</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sU -p161 -script<span style="color:#0550ae">=</span>snmp-brute ipaddress 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="iis短文件名泄露">iis短文件名泄露</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -p <span style="color:#0550ae">80</span> --script http-iis-short-name-brute ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="memcached未授权访问漏洞">Memcached未授权访问漏洞</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sV -p <span style="color:#0550ae">11211</span> -script memcached-info ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证httpssys远程代码执行漏洞">验证https.sys远程代码执行漏洞</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sV - <span style="color:#0550ae">(</span>-<span style="color:#0550ae">)</span> script http-vuln-cve2015-1635 ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="心脏出血">心脏出血</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sV --scipt<span style="color:#0550ae">=</span>ssl-heartbleed ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="mongodb未授权访问">mongodb未授权访问</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -p <span style="color:#0550ae">27017</span> --script mongodb-info ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="redis未授权访问">redis未授权访问</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -p <span style="color:#0550ae">6370</span> --script redis-info ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="elastticsearch未授权访问">elastticsearch未授权访问</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap --script<span style="color:#0550ae">=</span>http-vuln-cve2015-1427 --script-args <span style="color:#953800">command</span><span style="color:#0550ae">=</span><span style="color:#0a3069">&#39;ls&#39;</span> ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="rsync未授权漏洞">rsync未授权漏洞</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -p <span style="color:#0550ae">873</span> --script <span style="color:#953800">rsync</span><span style="color:#0550ae">=</span><span style="color:#953800">brute</span> <span style="color:#0550ae">==</span><span style="color:#953800">script</span><span style="color:#0550ae">=</span>args <span style="color:#0a3069">&#39;rsync-brute.module=www&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="http拒绝服务">http拒绝服务</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap --max-paralleism 800-script <span style="color:#953800">http</span><span style="color:#0550ae">=</span>slowloris siteaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="ftp弱口令暴力破解">ftp弱口令暴力破解</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap --script ftp-brute --script-args brute.emptypass<span style="color:#0550ae">=</span>true,ftp-brute.timeout<span style="color:#0550ae">=</span>30,userdb<span style="color:#0550ae">=</span>/root/dirtionary/usernames.txt,brute.useraspass<span style="color:#0550ae">=</span>true,passdb<span style="color:#0550ae">=</span>/root/dirtionary/passwords.txt,brute.threads<span style="color:#0550ae">=</span>3,brute.delay<span style="color:#0550ae">=</span><span style="color:#0550ae">6</span> ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="检测cve-2011-2523中的ftp-vsftpd-backdoor">检测CVE-2011-2523中的ftp-vsftpd-backdoor</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -T2 --script ftp-vsftpd-backdoor ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证http中开启的-methods-方法">验证http中开启的-methods 方法</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -T3 --script http-methods --script-args http.test-all<span style="color:#0550ae">=</span>true,http.url-path<span style="color:#0550ae">=</span>/siteaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证httpsys-远程代码执行">验证HTTP.sys 远程代码执行</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sV --script http-vuln-cve2015-1635 ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证-ssl-poodle-information-leak">验证 SSL POODLE information leak</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sV -p <span style="color:#0550ae">443</span> --version-light --script ssl-poodle ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证http-中开启了put-方法">验证http 中开启了put 方法</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap --script http-put --script-args http-put.url<span style="color:#0550ae">=</span>/uploads/testput.txt,http-put.file<span style="color:#0550ae">=</span>/root/put.txt ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证mysql-匿名访问">验证mysql 匿名访问</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap --script mysql-empty-password ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证cve2015-1427-漏洞">验证cve2015-1427 漏洞</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap --script http-vuln-cve2015-1427 --script-args <span style="color:#953800">command</span><span style="color:#0550ae">=</span>ls ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证cve2014-8877漏洞">验证cve2014-8877漏洞</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -Pn --script http-vuln-cve2014-8877 --script-args http-vuln-cve2014-8877.cmd<span style="color:#0550ae">=</span>dir,http-vuln-cve2014-8877.uri<span style="color:#0550ae">=</span>/wordpress ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证cisco-asa中的cve-2014-2126cve-2014-2127cve-2014-21cve-2014-2129漏洞">验证Cisco ASA中的CVE-2014-2126,CVE-2014-2127,CVE-2014-21,CVE-2014-2129漏洞</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -p <span style="color:#0550ae">443</span> --script http-vuln-cve2014-2126,http-vuln-cve2014-2127,http-vuln-cve2014-2128,http-vuln-cve2014-2129 ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证低安全的-sshv1sslv2协议">验证低安全的 SSHv1，sslv2协议</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap --script sshv1,sslv2 siteadress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证cve-2014-0224-ssl-ccs-injection">验证CVE-2014-0224 ssl-ccs-injection</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -Pn --script ssl-ccs-injection ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证ssl-cert证书问题">验证ssl-cert证书问题</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -v -v --script ssl-cert ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证ssl证书的有限期">验证SSL证书的有限期</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -Pn --script ssl-date siteadress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证-debian-openssl-keys">验证 Debian OpenSSL keys</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -p <span style="color:#0550ae">443</span> --script ssl-known-key ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证弱加密ssl套件">验证弱加密SSL套件</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap --script ssl-enum-ciphers ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证cve-2015-4000">验证CVE 2015-4000</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap --script ssl-dh-params siteadress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证多种ssl漏洞问题">验证多种SSL漏洞问题</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap 203.195.139.153 --vv --script sshv1,ssl-ccs-injection,ssl-cert,ssl-date,ssl-dh-params,ssl-enum-ciphers,ssl-google-cert-catalog,ssl-heartbleed,ssl-known-key,sslv2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="在网络中检测某主机是否存在窃听他人流量">在网络中检测某主机是否存在窃听他人流量</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap --script sniffer-detect ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="暴力破解telnet">暴力破解telnet</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -p <span style="color:#0550ae">23</span> --script telnet-brute --script-args <span style="color:#953800">userdb</span><span style="color:#0550ae">=</span>myusers.lst,passdb<span style="color:#0550ae">=</span>mypwds.lst --script-args telnet-brute.timeout<span style="color:#0550ae">=</span>8s ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证telnet是否支持加密">验证telnet是否支持加密</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap --script telnet-encryption ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="精准地确认端口上运行的服务">精准地确认端口上运行的服务</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sV --script unusual-port ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="收集vnc信息">收集VNC信息</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap --script vnc-info ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="暴力破解vnc">暴力破解VNC</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap --script vnc-brute --script-args brute.guesses<span style="color:#0550ae">=</span>6,brute.emptypass<span style="color:#0550ae">=</span>true,userdb<span style="color:#0550ae">=</span>/root/dictionary/user.txt,brute.useraspass<span style="color:#0550ae">=</span>true,passdb<span style="color:#0550ae">=</span>/root/dictionary/pass.txt,brute.retries<span style="color:#0550ae">=</span>3,brute.threads<span style="color:#0550ae">=</span>2,brute.delay<span style="color:#0550ae">=</span><span style="color:#0550ae">3</span> ipaddress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="web敏感目录扫描">Web敏感目录扫描</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -p <span style="color:#0550ae">80</span> --script<span style="color:#0550ae">=</span>http-enum.nse XXX.XXX.XXX.XXX
+</span></span></code></pre></td></tr></table>
+</div>
+</div>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-12-17-nmap/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-10-19-git/" target="_blank"> git的日常操作命令整理</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年10月19日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/git' target="_blank">git</a>
+            
+            <a href='/categories/linux' target="_blank">linux</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>git的一些常见命令操作整理</p>
+<h2 id="1下载">1、下载</h2>
+<p>depth用于指定克隆深度，为1即表示只克隆最近一次commit，可以减少下载的容量</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git cone --depth<span style="color:#0550ae">=</span><span style="color:#0550ae">1</span> <span style="color:#0550ae">{</span>http://xxx/url<span style="color:#0550ae">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2撤销commit">2、撤销commit</h2>
+<p>默认撤销，不撤销本地代码，撤销commit，并且撤销git add</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git reset --mixed HEAD^
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>不删除工作空间改动代码，撤销commit，不撤销git add</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git reset --soft HEAD^
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>删除工作空间改动代码，撤销commit，撤销git add</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-10-19-git/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-09-18-linux-emergency-response/" target="_blank">Linux应急响应手册：从了解情况到输出报告的完整流程</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年9月18日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/linux' target="_blank">linux</a>
+            
+            <a href='/categories/%E5%AE%89%E5%85%A8' target="_blank">安全</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>整理一份应急响应的完整流程手册，覆盖从接到告警到输出报告的全过程，Linux 为主、Windows 为辅。整体流程为：了解情况 → 遏制传播 → 排查取证 → 恢复业务 → 跟踪总结。</p>
+<p>注意：实际应急情况复杂，需根据现场灵活处置；操作前先征得授权；整个过程中不要被现场人员的描述误导，必要的话亲自检测，不要完全相信听来的东西。</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-09-18-linux-emergency-response/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2021-05-01-system_port/" target="_blank">系统端口速查</a>
             </h1>
         </header>
@@ -5186,7 +5914,7 @@
 			</tr>
 			<tr>
 					<td>3389</td>
-					<td>Win2000 远程登陆端口</td>
+					<td>Win2000 远程登录端口</td>
 			</tr>
 			<tr>
 					<td>3390</td>
@@ -6400,6 +7128,150 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-01-22-cloud-disk-fstab-uuid/" target="_blank">云服务器盘符跳变：fstab用UUID挂载避免启动失败</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年1月22日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/linux' target="_blank">linux</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>2020-03-28 碰到一个云服务器的问题：<code>/dev/sdd</code> 盘符跳变成了 <code>/dev/sde</code>，因为 fstab 里还写着旧设备名还带启动检查，直接导致服务器重启失败。记录下处理过程和以后的挂载规范。</p>
+<h2 id="1事故经过">1、事故经过</h2>
+<p>出问题的 fstab 长这样：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span># /etc/fstab
+</span></span><span style="display:flex;"><span>UUID=adc76f7c-fef6-4075-941e-e7ce50fb3e50  /         ext4  defaults  1 1
+</span></span><span style="display:flex;"><span>tmpfs    /dev/shm    tmpfs    defaults        0 0
+</span></span><span style="display:flex;"><span>devpts   /dev/pts    devpts   gid=5,mode=620  0 0
+</span></span><span style="display:flex;"><span>sysfs    /sys        sysfs    defaults        0 0
+</span></span><span style="display:flex;"><span>proc     /proc       proc     defaults        0 0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>/dev/mapper/VolGroup-lv_mysql  /data      ext4  defaults  1 1
+</span></span><span style="display:flex;"><span>#/dev/sdd                      /dbbackup  ext4  defaults  1 1
+</span></span><span style="display:flex;"><span>UUID=ee7bdf7f-c4b6-4ac0-bbbf-3d7c21d6283b  /dbbackup  ext4  0 0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>问题出在 <code>/dev/sdd</code>：原来这块盘有 1T，fstab 里按设备名挂载到 /dbbackup，而且最后两个参数是 <code>1 1</code>（开机 fsck 检查）。后来扩容新加了一块 500G 的盘，<strong>云平台重新分配设备名时，新盘占了 sdd 的位置，原 sdd 顺移成了 sde</strong>——fstab 里写的 <code>/dev/sdd</code> 现在指向的是新盘，挂载失败、fsck 检查也失败，重启直接卡死进不了系统。</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2021-01-22-cloud-disk-fstab-uuid/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2020-12-05-shell-tips/" target="_blank">shell小技巧：URL转码表与set -euo pipefail</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年12月5日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/shell' target="_blank">shell</a>
+            
+            <a href='/categories/linux' target="_blank">linux</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>日常写 shell 脚本时积攒的小技巧，单拎出来都不长，合在一起记录。这篇是第一批：URL 转码表和 set 选项，后续有新的继续补充。</p>
+<h2 id="一常用符号的-url-转码表">一、常用符号的 URL 转码表</h2>
+<p>写爬虫或拼 URL 时经常碰到符号需要转码，对照表如下：</p>
+<table>
+	<thead>
+			<tr>
+					<th>符号</th>
+					<th>url 转码</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>+</td>
+					<td>%2B</td>
+			</tr>
+			<tr>
+					<td>space（空格）</td>
+					<td>%20</td>
+			</tr>
+			<tr>
+					<td>/</td>
+					<td>%2F</td>
+			</tr>
+			<tr>
+					<td>?</td>
+					<td>%3F</td>
+			</tr>
+			<tr>
+					<td>%</td>
+					<td>%25</td>
+			</tr>
+			<tr>
+					<td>#</td>
+					<td>%23</td>
+			</tr>
+			<tr>
+					<td>&amp;</td>
+					<td>%26</td>
+			</tr>
+			<tr>
+					<td>=</td>
+					<td>%3D</td>
+			</tr>
+	</tbody>
+</table>
+<p>命令行里快速转码/解码：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># 转码</span>
+</span></span><span style="display:flex;"><span><span style="color:#6639ba">echo</span> -n <span style="color:#0a3069">&#34;a=b&amp;c=1&#34;</span> <span style="color:#1f2328">|</span> xxd -plain <span style="color:#1f2328">|</span> tr -d <span style="color:#0a3069">&#39;\n&#39;</span> <span style="color:#1f2328">|</span> sed <span style="color:#0a3069">&#39;s/\(..\)/%\1/g&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># a%3db%26c%3d1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 解码</span>
+</span></span><span style="display:flex;"><span><span style="color:#6639ba">printf</span> <span style="color:#0a3069">&#39;%b&#39;</span> <span style="color:#0a3069">&#39;${a%3db%26c%3d1//%/\\x}&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="二set--eset--u-与-pipefail">二、set -e、set -u 与 pipefail</h2>
+<p>写脚本时经常看到开头一句 <code>set -eu</code> 或 <code>set -euo pipefail</code>，各自的作用：</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2020-12-05-shell-tips/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2020-09-17-xWindows_x11_xQuartz/" target="_blank">Mac下远程运行Linux的GUI程序</a>
             </h1>
         </header>
@@ -6555,439 +7427,6 @@ github: <a href="https://github.com/asciinema">https://github.com/asciinema</a><
         </div>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2019-12-21-mysql_expansion/" target="_blank">mysql集群在线无损扩容</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年12月21日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/mysql' target="_blank">mysql</a>
-            
-            <a href='/categories/linux' target="_blank">linux</a>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>收到数据库磁盘占比告警了<br>
-前提条件，磁盘采用lvm管理方式，做在线无损扩容才方便管理，其他方式没测试过</p>
-<h2 id="1分配一个1t的新盘hddsdd随规划选择">1、分配一个1T的新盘，HDD、SDD随规划选择</h2>
-<p>这个一般在磁阵或者云管理平台操作，不需要什么命令，一般都是图形化操作</p>
-<h2 id="2查找新分配的1t新盘">2、查找新分配的1T新盘</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>fdisk -l     
-</span></span><span style="display:flex;"><span>lvmdiskscan
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>个人建议第二个命令，2个命令都会返回一堆查询值，怎么判断谁是新盘，谁是已使用的盘，这点有运维经验的人还是不成问题的，不详说</p>……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2019-12-21-mysql_expansion/" target="_blank">阅读全文</a></p>
-        </div>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2019-04-21-linux_knoledge/" target="_blank">linux的一些细节点-不定期补充</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年4月21日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/linux' target="_blank">linux</a>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>linux的一些小细节记录</p>
-<h2 id="1tmp目录var目录自动清理">1、tmp目录、var目录自动清理</h2>
-<p>tmp下的文件或目录长时间没有更新或者改动的话会被系统定期时间，配置参考如下:</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vi /usr/lib/tmpfiles.d/tmp.conf
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># Clear tmp directories separately, to make them easier to override  </span>
-</span></span><span style="display:flex;"><span>v /tmp <span style="color:#0550ae">1777</span> root root 90d  
-</span></span><span style="display:flex;"><span>v /var/tmp <span style="color:#0550ae">1777</span> root root 90d  
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Exclude namespace mountpoints created with PrivateTmp=yes  </span>
-</span></span><span style="display:flex;"><span>x /tmp/systemd-private-%b-*  
-</span></span><span style="display:flex;"><span>X /tmp/systemd-private-%b-*/tmp  
-</span></span><span style="display:flex;"><span>x /var/tmp/systemd-private-%b-*  
-</span></span><span style="display:flex;"><span>X /var/tmp/systemd-private-%b-*/tmp
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="2tcp连接数统计">2、tcp连接数统计</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>netstat -ant<span style="color:#1f2328">|</span>awk <span style="color:#0a3069">&#39;/^tcp/ {++S[$NF]} END {for(a in S) print (a,S[a])}&#39;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>TIME_WAIT <span style="color:#0550ae">1</span>
-</span></span><span style="display:flex;"><span>FIN_WAIT2 <span style="color:#0550ae">1</span>
-</span></span><span style="display:flex;"><span>ESTABLISHED <span style="color:#0550ae">34</span>
-</span></span><span style="display:flex;"><span>LAST_ACK <span style="color:#0550ae">1</span>
-</span></span><span style="display:flex;"><span>LISTEN <span style="color:#0550ae">23</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="3wget下载提示ssl错">3、wget下载提示ssl错</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget --no-check-certificate -O brutexss.zip <span style="color:#0a3069">&#34;http://files.cnblogs.com/files/Pitcoft/Brutexss(%E6%B1%89%E5%8C%96%E6%94%B9%E8%BF%9B).zip&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="4wget抓取网站">4、wget抓取网站</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget -m -e <span style="color:#953800">robots</span><span style="color:#0550ae">=</span>off https://www.baidu.com
-</span></span><span style="display:flex;"><span>-m 是克隆整个网站
-</span></span><span style="display:flex;"><span>-e <span style="color:#953800">robots</span><span style="color:#0550ae">=</span>off 是让wget忽视robots.txt
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="5shell批量注释">5、shell批量注释</h2>
-<pre tabindex="0"><code>&lt;&lt;&#39;COMMENT&#39;
-...
-
-COMMENT  
-</code></pre><p>举例如下：</p>……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2019-04-21-linux_knoledge/" target="_blank">阅读全文</a></p>
-        </div>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2018-08-14-mysql_install/" target="_blank">mysql低版本源代码安装</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2018年8月14日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/mysql' target="_blank">mysql</a>
-            
-            <a href='/categories/linux' target="_blank">linux</a>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>如果不使用最新版本的mysql，但是低版本的mysql官方不提供编译好的安装包，只能自己编译安装了。以下步骤和参数针对5.6、5.7生效，新版本有变动请阅读官方文档介绍。</p>
-<h2 id="1环境检测">1、环境检测</h2>
-<p>使用下面的命令检查是否安装有MySQL Server</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rpm -qa <span style="color:#1f2328">|</span> grep mysql
-</span></span><span style="display:flex;"><span>有的话通过下面的命令来卸载掉
-</span></span><span style="display:flex;"><span>rpm -e mysql   //普通删除模式
-</span></span><span style="display:flex;"><span>rpm -e --nodeps mysql    // 强力删除模式，如果使用上面命令删除时，提示有依赖的其它文件，则用该命令可以对其进行强力删除
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="2下载源码">2、下载源码</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget http://cdn.mysql.com/Downloads/MySQL-5.6/mysql-5.6.32.tar.gz
-</span></span><span style="display:flex;"><span>tar xvf mysql-5.6.32.tar.gz
-</span></span><span style="display:flex;"><span><span style="color:#6639ba">cd</span> mysql-5.6.32
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>或者web下载<br>
-历史各版本下载：<a href="https://downloads.mysql.com/archives/community/">https://downloads.mysql.com/archives/community/</a><br>
-Source Code -&gt; Generic Linux 通用tar包</p>……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2018-08-14-mysql_install/" target="_blank">阅读全文</a></p>
-        </div>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2018-04-10-orangepi/" target="_blank">OrangePi</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2018年4月10日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/orangePi' target="_blank">orangePi</a>
-            
-            <a href='/categories/linux' target="_blank">linux</a>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>朋友弄了一批香橙派的板子，给我做测试，拿了板子、CF卡、电源后开启了试玩，通过配置查看，香橙派比草莓派配置还强劲一些，国产的还不错，不过生态没草莓派完善，对新手可能没健全的指导，稍显不友好，但是对于我这种职业开发人员来说，小case，所以这里个人觉得香橙派还是很不错的<br>
-
-        <img class="mx-auto" alt="" src="/posts/orangepi/orangepiplus_info_cn.jpg" />   
-    
-
-        <img class="mx-auto" alt="" src="/posts/orangepi/cf.jpg" />   
-    
-
-        <img class="mx-auto" alt="" src="/posts/orangepi/usb_hub.jpg" />   
-    </p>
-<h2 id="1准备工作">1、准备工作</h2>
-<p>烧录系统镜像<br>
-1、准备一个CF读卡器<br>
-2、安装Win32DiskImager，给CF卡格式化，其实可以免了直接进入下一步，最初以为跟U盘一样要格式化所以多安装了这个@_@，其实下面ethcher更好用<br>
-3、安装ethcher，给CF卡烧录系统的软件<br>
-4、准备网线和hub一个，或者用hdmi网线连显示器，作为输出端，烧录后需要登录板子系统进行一些操作，我选择的是ssh方式登录，所以准备网线和hub，如果路由器网口多不用hub也可以，不过朋友测试的是8套香橙派集群，必须要hub</p>……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2018-04-10-orangepi/" target="_blank">阅读全文</a></p>
-        </div>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2017-07-28-shell_check/" target="_blank">开发技能-shell面试整理</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2017年7月28日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/shell' target="_blank">shell</a>
-            
-            <a href='/categories/linux' target="_blank">linux</a>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="1常规命令">1、常规命令</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#6639ba">cd</span> 切换目录 
-</span></span><span style="display:flex;"><span>ls 查看当前目录下的内容 
-</span></span><span style="display:flex;"><span>cp 复制 
-</span></span><span style="display:flex;"><span>head、tail 显示文件头、尾内容 
-</span></span><span style="display:flex;"><span>cat 查看文件内容 
-</span></span><span style="display:flex;"><span>more、less 分页展示文件内容 
-</span></span><span style="display:flex;"><span>rm 删除 
-</span></span><span style="display:flex;"><span>tar 解、压缩 
-</span></span><span style="display:flex;"><span>touch 创建文本 
-</span></span><span style="display:flex;"><span>mv 移动或重命名 
-</span></span><span style="display:flex;"><span>find 在文件系统中搜索某文件 如find . -name filename 支持正则 
-</span></span><span style="display:flex;"><span>wc 统计 
-</span></span><span style="display:flex;"><span>grep 查找某个字符串 
-</span></span><span style="display:flex;"><span><span style="color:#6639ba">pwd</span> 显示当前目录
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="2系统管理命令">2、系统管理命令</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>su 切换用户 
-</span></span><span style="display:flex;"><span>ps 查看进程 
-</span></span><span style="display:flex;"><span><span style="color:#6639ba">kill</span> 根据pid号杀进程 
-</span></span><span style="display:flex;"><span>who 显示在线账号 
-</span></span><span style="display:flex;"><span>whoami 显示当前操作账号 
-</span></span><span style="display:flex;"><span>hostname 显示主机名 
-</span></span><span style="display:flex;"><span>uname 显示系统信息 
-</span></span><span style="display:flex;"><span>top 动态显示当前资源消耗 
-</span></span><span style="display:flex;"><span>du 查看目录大小 
-</span></span><span style="display:flex;"><span>df 查看磁盘大小 
-</span></span><span style="display:flex;"><span>ping 测试网络是否连通，丢包 
-</span></span><span style="display:flex;"><span>ifocnfig 查看网卡 
-</span></span><span style="display:flex;"><span>man 帮助 
-</span></span><span style="display:flex;"><span>clear 清屏 
-</span></span><span style="display:flex;"><span><span style="color:#6639ba">alias</span> 对命令重命名 如：alias <span style="color:#953800">showmeit</span><span style="color:#0550ae">=</span>”ps -aux” ，另外解除使用unaliax showmeit 
-</span></span><span style="display:flex;"><span>netstat 显示网络状态 
-</span></span><span style="display:flex;"><span>free 显示内存使用情况 
-</span></span><span style="display:flex;"><span>sar <span style="color:#0550ae">1</span> <span style="color:#0550ae">20</span> 以20次显示当前系统资源占用情况，最终显示这20次的平均值 
-</span></span><span style="display:flex;"><span><span style="color:#6639ba">export</span> 设置环境变量
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="3linux管道">3、Linux管道</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>将一个命令的标准输出作为另一个命令的标准输入。也就是把几个命令组合起来使用，后一个命令除以前一个命令的结果。 
-</span></span><span style="display:flex;"><span>例：grep -r “close” /home/* <span style="color:#1f2328">|</span> more 在home目录下所有文件中查找，包括close的文件，并分页输出。
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="4用户及用户组管理">4、用户及用户组管理</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/etc/passwd 存储用户账号 
-</span></span><span style="display:flex;"><span>/etc/group 存储组账号 
-</span></span><span style="display:flex;"><span>/etc/shadow 存储用户账号的密码 
-</span></span><span style="display:flex;"><span>/etc/gshadow 存储用户组账号的密码 
-</span></span><span style="display:flex;"><span>useradd 用户名 
-</span></span><span style="display:flex;"><span>userdel 用户名 
-</span></span><span style="display:flex;"><span>groupadd 组名 
-</span></span><span style="display:flex;"><span>groupdel 组名 
-</span></span><span style="display:flex;"><span>passwd root 给root设置密码 
-</span></span><span style="display:flex;"><span>/etc/profile 系统环境变量 
-</span></span><span style="display:flex;"><span>bash_profile 用户环境变量 
-</span></span><span style="display:flex;"><span>.bashrc 用户环境变量 
-</span></span><span style="display:flex;"><span>su user 切换用户，加载配置文件.bashrc 
-</span></span><span style="display:flex;"><span>su - user 切换用户，加载配置文件/etc/profile ，加载bash_profile
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="5更改文件的用户及用户组">5、更改文件的用户及用户组</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chown <span style="color:#0550ae">[</span>-R<span style="color:#0550ae">]</span> owner<span style="color:#0550ae">[</span>:group<span style="color:#0550ae">]</span> <span style="color:#0550ae">{</span>File<span style="color:#1f2328">|</span>Directory<span style="color:#0550ae">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="6文件权限管理">6、文件权限管理</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>三种基本权限 
-</span></span><span style="display:flex;"><span>R 读 数值表示为4 
-</span></span><span style="display:flex;"><span>W 写 数值表示为2 
-</span></span><span style="display:flex;"><span>X 可执行 数值表示为1
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="7更改权限">7、更改权限</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod <span style="color:#0550ae">[</span>u所属用户 g所属组 o其他用户 a所有用户<span style="color:#0550ae">]</span> <span style="color:#0550ae">[</span>+增加权限 -减少权限<span style="color:#0550ae">]</span> <span style="color:#0550ae">[</span>r w x<span style="color:#0550ae">]</span> 目录/文件名
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="8vim使用">8、vim使用</h2>
-<p>vim三种模式：命令模式、插入模式、编辑模式。使用ESC或i或：来切换模式。
-命令模式下：</p>……
-            <p class="readmore"><a href="https://anTtutu.github.io/post/2017-07-28-shell_check/" target="_blank">阅读全文</a></p>
-        </div>
-    </article>
-    
 
     
 
@@ -7035,9 +7474,11 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
         <div class="github-badge">
             <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
         </div>
-        
         <div class="github-badge">
-            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+            <a href="https://anTtutu.github.io/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">Anttu</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/anTtutu/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
         </div>
     </div>
 </footer>
@@ -7073,6 +7514,14 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-elk-mcp-ai-workflow/" title="结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证" target="_blank">结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-agent-database-cli/" title="agent-database-cli：让Claude Code安全操作多种数据库的CLI工具" target="_blank">agent-database-cli：让Claude Code安全操作多种数据库的CLI工具</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-09-14-sdkman_issue/" title="sdkman与conda冲突问题解决" target="_blank">sdkman与conda冲突问题解决</a>
     </li>
     
@@ -7085,6 +7534,10 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     </li>
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-07-02-claude-code-cli-cheatsheet/" title="Claude Code常用命令速查" target="_blank">Claude Code常用命令速查</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
     </li>
     
@@ -7093,23 +7546,11 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     </li>
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-01-19-spy_video/" title="爬取oss库" target="_blank">爬取oss库</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-01-13-docker-build/" title="docker build的一些问题" target="_blank">docker build的一些问题</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2025-02-13-mvnd/" title="mvnd结合idea使用" target="_blank">mvnd结合idea使用</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2024-04-15-postgresql/" title="postgresql数据库常用记录" target="_blank">postgresql数据库常用记录</a>
     </li>
     
 </ul>
@@ -7122,6 +7563,8 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
 <ul class="widget-list">
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     
@@ -7175,7 +7618,7 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <li><a href="https://anTtutu.github.io/categories/deepfacelab/">Deepfacelab (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/docker/">Docker (7)</a></li>
     
@@ -7195,7 +7638,7 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <li><a href="https://anTtutu.github.io/categories/gcc/">Gcc (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/git/">Git (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/git/">Git (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/github/">Github (1)</a></li>
     
@@ -7223,7 +7666,7 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <li><a href="https://anTtutu.github.io/categories/images/">Images (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">Java (24)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">Java (38)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">Jekyll (2)</a></li>
     
@@ -7235,7 +7678,7 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <li><a href="https://anTtutu.github.io/categories/jsr/">Jsr (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/k8s/">K8s (1)</a></li>
     
@@ -7245,7 +7688,7 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">Kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (22)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (28)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">Log (1)</a></li>
     
@@ -7267,7 +7710,7 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <li><a href="https://anTtutu.github.io/categories/mvnd/">Mvnd (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (10)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/nginx/">Nginx (1)</a></li>
     
@@ -7297,11 +7740,11 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <li><a href="https://anTtutu.github.io/categories/postgresql/">Postgresql (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">Python (9)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">Python (11)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">Rec (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">Regexp (1)</a></li>
     
@@ -7311,15 +7754,17 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">Sdkman (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/skill/">Skill (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/split/">Split (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/spring/">Spring (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/spy/">Spy (1)</a></li>
     
@@ -7334,6 +7779,8 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     <li><a href="https://anTtutu.github.io/categories/test/">Test (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/testing/">Testing (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tomcat/">Tomcat (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
     
@@ -7355,9 +7802,29 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <li><a href="https://anTtutu.github.io/categories/zookeeper/">Zookeeper (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/%E4%BA%92%E8%81%94%E7%BD%91/">互联网 (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E5%99%A8/">容器 (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%8E%92%E6%9F%A5/">排查 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%9E%B6%E6%9E%84/">架构 (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E8%BF%90%E7%BB%B4/">运维 (1)</a></li>
     
 </ul>
     </section>
@@ -7366,7 +7833,17 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
+    <a href="https://anTtutu.github.io/tags/-devops/"> Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/-dockerfile/"> Dockerfile</a>
+    
+    <a href="https://anTtutu.github.io/tags/-nmap/"> Nmap</a>
+    
     <a href="https://anTtutu.github.io/tags/about/">About</a>
+    
+    <a href="https://anTtutu.github.io/tags/agent/">Agent</a>
+    
+    <a href="https://anTtutu.github.io/tags/AI/">AI</a>
     
     <a href="https://anTtutu.github.io/tags/android/">Android</a>
     
@@ -7376,9 +7853,15 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <a href="https://anTtutu.github.io/tags/arm64/">Arm64</a>
     
+    <a href="https://anTtutu.github.io/tags/arthas/">Arthas</a>
+    
     <a href="https://anTtutu.github.io/tags/awr/">Awr</a>
     
+    <a href="https://anTtutu.github.io/tags/backend_execute/">Backend_execute</a>
+    
     <a href="https://anTtutu.github.io/tags/backup/">Backup</a>
+    
+    <a href="https://anTtutu.github.io/tags/binlog/">Binlog</a>
     
     <a href="https://anTtutu.github.io/tags/blog/">Blog</a>
     
@@ -7386,31 +7869,75 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <a href="https://anTtutu.github.io/tags/build/">Build</a>
     
+    <a href="https://anTtutu.github.io/tags/cache/">Cache</a>
+    
+    <a href="https://anTtutu.github.io/tags/caffeine/">Caffeine</a>
+    
     <a href="https://anTtutu.github.io/tags/captcha/">Captcha</a>
     
     <a href="https://anTtutu.github.io/tags/check/">Check</a>
     
+    <a href="https://anTtutu.github.io/tags/claude/">Claude</a>
+    
+    <a href="https://anTtutu.github.io/tags/claude-code/">Claude Code</a>
+    
+    <a href="https://anTtutu.github.io/tags/clean/">Clean</a>
+    
+    <a href="https://anTtutu.github.io/tags/cli/">Cli</a>
+    
     <a href="https://anTtutu.github.io/tags/cluster/">Cluster</a>
+    
+    <a href="https://anTtutu.github.io/tags/conda/">Conda</a>
+    
+    <a href="https://anTtutu.github.io/tags/covid-19/">Covid-19</a>
+    
+    <a href="https://anTtutu.github.io/tags/cve/">Cve</a>
     
     <a href="https://anTtutu.github.io/tags/cygwin/">Cygwin</a>
     
     <a href="https://anTtutu.github.io/tags/dataguard/">Dataguard</a>
     
+    <a href="https://anTtutu.github.io/tags/db/">Db</a>
+    
     <a href="https://anTtutu.github.io/tags/deepfacelab/">Deepfacelab</a>
+    
+    <a href="https://anTtutu.github.io/tags/devops/">Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/docker/">Docker</a>
     
     <a href="https://anTtutu.github.io/tags/dos/">Dos</a>
     
+    <a href="https://anTtutu.github.io/tags/drawio/">Drawio</a>
+    
+    <a href="https://anTtutu.github.io/tags/dump/">Dump</a>
+    
     <a href="https://anTtutu.github.io/tags/eclipse/">Eclipse</a>
+    
+    <a href="https://anTtutu.github.io/tags/ELK/">ELK</a>
     
     <a href="https://anTtutu.github.io/tags/explain/">Explain</a>
     
+    <a href="https://anTtutu.github.io/tags/faker/">Faker</a>
+    
+    <a href="https://anTtutu.github.io/tags/feign/">Feign</a>
+    
+    <a href="https://anTtutu.github.io/tags/freemarker/">Freemarker</a>
+    
     <a href="https://anTtutu.github.io/tags/gcc/">Gcc</a>
+    
+    <a href="https://anTtutu.github.io/tags/git/">Git</a>
+    
+    <a href="https://anTtutu.github.io/tags/github/">Github</a>
     
     <a href="https://anTtutu.github.io/tags/gitment/">Gitment</a>
     
     <a href="https://anTtutu.github.io/tags/gitpages/">Gitpages</a>
     
     <a href="https://anTtutu.github.io/tags/go/">Go</a>
+    
+    <a href="https://anTtutu.github.io/tags/golang/">Golang</a>
+    
+    <a href="https://anTtutu.github.io/tags/graalvm/">Graalvm</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">H2</a>
     
@@ -7420,11 +7947,25 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <a href="https://anTtutu.github.io/tags/http/">Http</a>
     
+    <a href="https://anTtutu.github.io/tags/https/">Https</a>
+    
     <a href="https://anTtutu.github.io/tags/hugo/">Hugo</a>
+    
+    <a href="https://anTtutu.github.io/tags/id/">Id</a>
+    
+    <a href="https://anTtutu.github.io/tags/idea/">Idea</a>
+    
+    <a href="https://anTtutu.github.io/tags/image/">Image</a>
+    
+    <a href="https://anTtutu.github.io/tags/images/">Images</a>
     
     <a href="https://anTtutu.github.io/tags/java/">Java</a>
     
+    <a href="https://anTtutu.github.io/tags/JDK21/">JDK21</a>
+    
     <a href="https://anTtutu.github.io/tags/jekyll/">Jekyll</a>
+    
+    <a href="https://anTtutu.github.io/tags/jenkins/">Jenkins</a>
     
     <a href="https://anTtutu.github.io/tags/jrebel/">Jrebel</a>
     
@@ -7432,31 +7973,73 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <a href="https://anTtutu.github.io/tags/jsr/">Jsr</a>
     
+    <a href="https://anTtutu.github.io/tags/jvm/">Jvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/k8s/">K8s</a>
+    
     <a href="https://anTtutu.github.io/tags/kafka/">Kafka</a>
     
     <a href="https://anTtutu.github.io/tags/kali/">Kali</a>
+    
+    <a href="https://anTtutu.github.io/tags/keepalived/">Keepalived</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">Kenlm</a>
     
     <a href="https://anTtutu.github.io/tags/linux/">Linux</a>
     
+    <a href="https://anTtutu.github.io/tags/log/">Log</a>
+    
     <a href="https://anTtutu.github.io/tags/log4j/">Log4j</a>
     
+    <a href="https://anTtutu.github.io/tags/lombok/">Lombok</a>
+    
+    <a href="https://anTtutu.github.io/tags/lvs/">Lvs</a>
+    
     <a href="https://anTtutu.github.io/tags/mac/">Mac</a>
+    
+    <a href="https://anTtutu.github.io/tags/matplotlib/">Matplotlib</a>
+    
+    <a href="https://anTtutu.github.io/tags/maven/">Maven</a>
+    
+    <a href="https://anTtutu.github.io/tags/mcp/">Mcp</a>
     
     <a href="https://anTtutu.github.io/tags/mine/">Mine</a>
     
     <a href="https://anTtutu.github.io/tags/mongodb/">Mongodb</a>
     
+    <a href="https://anTtutu.github.io/tags/mvnd/">Mvnd</a>
+    
     <a href="https://anTtutu.github.io/tags/mysql/">Mysql</a>
+    
+    <a href="https://anTtutu.github.io/tags/native-image/">Native Image</a>
     
     <a href="https://anTtutu.github.io/tags/nginx/">Nginx</a>
     
+    <a href="https://anTtutu.github.io/tags/notes/">Notes</a>
+    
+    <a href="https://anTtutu.github.io/tags/obsidian/">Obsidian</a>
+    
     <a href="https://anTtutu.github.io/tags/oom/">Oom</a>
+    
+    <a href="https://anTtutu.github.io/tags/openjdk/">Openjdk</a>
     
     <a href="https://anTtutu.github.io/tags/oracle/">Oracle</a>
     
     <a href="https://anTtutu.github.io/tags/orangePi/">OrangePi</a>
+    
+    <a href="https://anTtutu.github.io/tags/oss/">Oss</a>
+    
+    <a href="https://anTtutu.github.io/tags/package/">Package</a>
+    
+    <a href="https://anTtutu.github.io/tags/pages/">Pages</a>
+    
+    <a href="https://anTtutu.github.io/tags/pandas/">Pandas</a>
+    
+    <a href="https://anTtutu.github.io/tags/pg/">Pg</a>
+    
+    <a href="https://anTtutu.github.io/tags/port/">Port</a>
+    
+    <a href="https://anTtutu.github.io/tags/postgresql/">Postgresql</a>
     
     <a href="https://anTtutu.github.io/tags/python/">Python</a>
     
@@ -7464,11 +8047,27 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <a href="https://anTtutu.github.io/tags/redis/">Redis</a>
     
+    <a href="https://anTtutu.github.io/tags/regexp/">Regexp</a>
+    
     <a href="https://anTtutu.github.io/tags/safe/">Safe</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdk/">Sdk</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdkman/">Sdkman</a>
     
     <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
     
+    <a href="https://anTtutu.github.io/tags/skill/">Skill</a>
+    
+    <a href="https://anTtutu.github.io/tags/split/">Split</a>
+    
     <a href="https://anTtutu.github.io/tags/springboot/">Springboot</a>
+    
+    <a href="https://anTtutu.github.io/tags/springcloud/">Springcloud</a>
+    
+    <a href="https://anTtutu.github.io/tags/springmvc/">Springmvc</a>
+    
+    <a href="https://anTtutu.github.io/tags/spy/">Spy</a>
     
     <a href="https://anTtutu.github.io/tags/sqlmap/">Sqlmap</a>
     
@@ -7478,11 +8077,23 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <a href="https://anTtutu.github.io/tags/termux/">Termux</a>
     
+    <a href="https://anTtutu.github.io/tags/test/">Test</a>
+    
+    <a href="https://anTtutu.github.io/tags/testing/">Testing</a>
+    
+    <a href="https://anTtutu.github.io/tags/thymeleaf/">Thymeleaf</a>
+    
+    <a href="https://anTtutu.github.io/tags/tomcat/">Tomcat</a>
+    
+    <a href="https://anTtutu.github.io/tags/uniapp/">Uniapp</a>
+    
     <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
     
     <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">Virus</a>
+    
+    <a href="https://anTtutu.github.io/tags/vue/">Vue</a>
     
     <a href="https://anTtutu.github.io/tags/vxvm/">Vxvm</a>
     
@@ -7490,13 +8101,87 @@ Source Code -&gt; Generic Linux 通用tar包</p>……
     
     <a href="https://anTtutu.github.io/tags/xrebel/">Xrebel</a>
     
+    <a href="https://anTtutu.github.io/tags/ydnotes/">Ydnotes</a>
+    
     <a href="https://anTtutu.github.io/tags/ynote/">Ynote</a>
     
     <a href="https://anTtutu.github.io/tags/zk/">Zk</a>
     
     <a href="https://anTtutu.github.io/tags/zookeeper/">Zookeeper</a>
     
+    <a href="https://anTtutu.github.io/tags/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">主从复制</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1/">云服务</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%89%8D%E7%AB%AF/">前端</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8D%87%E7%BA%A7%E8%BF%81%E7%A7%BB/">升级迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8E%8B%E6%B5%8B/">压测</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%9F%BA%E7%A1%80/">基础</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%89%E5%85%A8/">安全</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E5%99%A8/">容器</a>
+    
     <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%B6%E5%8F%91/">并发</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%BF%E5%91%8A/">广告</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8C%87%E6%A0%87/">指标</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8E%92%E6%9F%A5/">排查</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">效率工具</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/">日志分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9E%B6%E6%9E%84/">架构</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%A7%91%E6%99%AE/">科普</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%AE%A4%E8%AF%81/">认证</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B0%83%E8%AF%95/">调试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">负载均衡</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%81%E7%A7%BB/">迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%80%89%E5%9E%8B/">选型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/">防重复提交</a>
     
 </div>
     </section>

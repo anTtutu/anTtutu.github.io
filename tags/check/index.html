@@ -84,6 +84,131 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2023-06-16-miner_virus_5/" target="_blank">挖矿病毒5-私有云机房挖矿病毒定位</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2023年6月16日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/mine' target="_blank">mine</a>
+            
+            <a href='/categories/virus' target="_blank">virus</a>
+            
+            <a href='/categories/linux' target="_blank">linux</a>
+            
+            <a href='/categories/check' target="_blank">check</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>6月16日晚，一位朋友咨询说私有云机房服务器有占用cpu比较高的进程无法kill，我通过向日葵远程跳板机分析了下，发现一些不同于以往挖矿病毒有趣的现象，总结下</p>
+<h2 id="1初查">1、初查</h2>
+<p>初步筛查，发现crontab、top如其他挖矿病毒差不多</p>
+<h3 id="11-进程名称模仿系统进程">1.1 进程名称模仿系统进程</h3>
+<p>
+        <img class="mx-auto" alt="" src="/posts/virus/top5.png" />   
+    
+初步看进程名kthreaddk，这个挖矿的进程名挺像内核进程kthreadd，但是系统内核进程不太可能cpu占用异常，就继续往下检查
+
+        <img class="mx-auto" alt="" src="/posts/virus/crontab5.png" />   
+    
+查看crontab，发现异常，结果多次执行，发现路径会变……，总结下规律，发现一直在/dev/cpu/、/dev/mapper/、/dev/disk/、/dev/一直出现在这几层跳跃</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2023-06-16-miner_virus_5/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-01-26-miner_virus_4/" target="_blank">挖矿病毒4-容器挖矿病毒清理</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年1月26日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/mine' target="_blank">mine</a>
+            
+            <a href='/categories/virus' target="_blank">virus</a>
+            
+            <a href='/categories/linux' target="_blank">linux</a>
+            
+            <a href='/categories/check' target="_blank">check</a>
+            
+            <a href='/categories/docker' target="_blank">docker</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>1月26日，运维同学收到告警邮件，告诉我某台测试服务器中了挖矿病毒，心想怎么最近挖矿这么猖狂&hellip;</p>
+<h2 id="1分析准备">1、分析准备</h2>
+<p>仍然下载是busybox</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://busybox.net/downloads/binaries/1.30.0-i686/busybox 
+</span></span><span style="display:flex;"><span>chmod +x busybox
+</span></span><span style="display:flex;"><span>cp busybox /usr/bin 
+</span></span><span style="display:flex;"><span>busybox  top
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2按步骤排查">2、按步骤排查</h2>
+<p>剩余步骤跟<a href="/post/2021-01-28-miner_virus_2">挖矿病毒2-分析和排查思路</a>一样，只是所有的命令前面是 busybox command<br>
+不过这次是容器挖矿，ECS 排查步骤仍然走一遍，但是没啥收货，但是恶意进程还是可以找到的</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2022-01-26-miner_virus_4/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-01-24-miner_virus_3/" target="_blank">挖矿病毒3-分析和清理过程</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年1月24日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/mine' target="_blank">mine</a>
+            
+            <a href='/categories/virus' target="_blank">virus</a>
+            
+            <a href='/categories/linux' target="_blank">linux</a>
+            
+            <a href='/categories/check' target="_blank">check</a>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>1月23日，公司邮箱收到说阿里云报了挖矿病毒的警告</p>
+<h2 id="1分析">1、分析</h2>
+<p>这次思路改进了些，起初有个只是定时任务没被清理，阿里云通过定时任务关键字&quot;pool.minexmr.com:4444&quot;报了蠕虫病毒，但是根据关键字查看，这像挖矿<br>
+然后 top 了半天没看到结果，怀疑是top被篡改了？然后进了/usr/bin/核对下 top 的时间，发现没差异呀，但是本着稳妥起见，还是下载 busybox</p>……
+            <p class="readmore"><a href="https://anTtutu.github.io/post/2022-01-24-miner_virus_3/" target="_blank">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2021-01-28-miner_virus_2/" target="_blank">挖矿病毒2-分析和排查思路</a>
             </h1>
         </header>
@@ -186,9 +311,11 @@
         <div class="github-badge">
             <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
         </div>
-        
         <div class="github-badge">
-            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+            <a href="https://anTtutu.github.io/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">Anttu</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/anTtutu/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
         </div>
     </div>
 </footer>
@@ -224,6 +351,14 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-elk-mcp-ai-workflow/" title="结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证" target="_blank">结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-agent-database-cli/" title="agent-database-cli：让Claude Code安全操作多种数据库的CLI工具" target="_blank">agent-database-cli：让Claude Code安全操作多种数据库的CLI工具</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-09-14-sdkman_issue/" title="sdkman与conda冲突问题解决" target="_blank">sdkman与conda冲突问题解决</a>
     </li>
     
@@ -236,6 +371,10 @@
     </li>
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-07-02-claude-code-cli-cheatsheet/" title="Claude Code常用命令速查" target="_blank">Claude Code常用命令速查</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
     </li>
     
@@ -244,23 +383,11 @@
     </li>
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-01-19-spy_video/" title="爬取oss库" target="_blank">爬取oss库</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-01-13-docker-build/" title="docker build的一些问题" target="_blank">docker build的一些问题</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2025-02-13-mvnd/" title="mvnd结合idea使用" target="_blank">mvnd结合idea使用</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2024-04-15-postgresql/" title="postgresql数据库常用记录" target="_blank">postgresql数据库常用记录</a>
     </li>
     
 </ul>
@@ -273,6 +400,8 @@
 <ul class="widget-list">
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     
@@ -326,7 +455,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/deepfacelab/">Deepfacelab (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/docker/">Docker (7)</a></li>
     
@@ -346,7 +475,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/gcc/">Gcc (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/git/">Git (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/git/">Git (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/github/">Github (1)</a></li>
     
@@ -374,7 +503,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/images/">Images (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">Java (24)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">Java (38)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">Jekyll (2)</a></li>
     
@@ -386,7 +515,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/jsr/">Jsr (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/k8s/">K8s (1)</a></li>
     
@@ -396,7 +525,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">Kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (22)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (28)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">Log (1)</a></li>
     
@@ -418,7 +547,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/mvnd/">Mvnd (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (10)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/nginx/">Nginx (1)</a></li>
     
@@ -448,11 +577,11 @@
     
     <li><a href="https://anTtutu.github.io/categories/postgresql/">Postgresql (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">Python (9)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">Python (11)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">Rec (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">Regexp (1)</a></li>
     
@@ -462,15 +591,17 @@
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">Sdkman (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/skill/">Skill (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/split/">Split (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/spring/">Spring (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/spy/">Spy (1)</a></li>
     
@@ -485,6 +616,8 @@
     <li><a href="https://anTtutu.github.io/categories/test/">Test (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/testing/">Testing (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tomcat/">Tomcat (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
     
@@ -506,9 +639,29 @@
     
     <li><a href="https://anTtutu.github.io/categories/zookeeper/">Zookeeper (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/%E4%BA%92%E8%81%94%E7%BD%91/">互联网 (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E5%99%A8/">容器 (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%8E%92%E6%9F%A5/">排查 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%9E%B6%E6%9E%84/">架构 (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E8%BF%90%E7%BB%B4/">运维 (1)</a></li>
     
 </ul>
     </section>
@@ -517,7 +670,17 @@
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
+    <a href="https://anTtutu.github.io/tags/-devops/"> Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/-dockerfile/"> Dockerfile</a>
+    
+    <a href="https://anTtutu.github.io/tags/-nmap/"> Nmap</a>
+    
     <a href="https://anTtutu.github.io/tags/about/">About</a>
+    
+    <a href="https://anTtutu.github.io/tags/agent/">Agent</a>
+    
+    <a href="https://anTtutu.github.io/tags/AI/">AI</a>
     
     <a href="https://anTtutu.github.io/tags/android/">Android</a>
     
@@ -527,9 +690,15 @@
     
     <a href="https://anTtutu.github.io/tags/arm64/">Arm64</a>
     
+    <a href="https://anTtutu.github.io/tags/arthas/">Arthas</a>
+    
     <a href="https://anTtutu.github.io/tags/awr/">Awr</a>
     
+    <a href="https://anTtutu.github.io/tags/backend_execute/">Backend_execute</a>
+    
     <a href="https://anTtutu.github.io/tags/backup/">Backup</a>
+    
+    <a href="https://anTtutu.github.io/tags/binlog/">Binlog</a>
     
     <a href="https://anTtutu.github.io/tags/blog/">Blog</a>
     
@@ -537,31 +706,75 @@
     
     <a href="https://anTtutu.github.io/tags/build/">Build</a>
     
+    <a href="https://anTtutu.github.io/tags/cache/">Cache</a>
+    
+    <a href="https://anTtutu.github.io/tags/caffeine/">Caffeine</a>
+    
     <a href="https://anTtutu.github.io/tags/captcha/">Captcha</a>
     
     <a href="https://anTtutu.github.io/tags/check/">Check</a>
     
+    <a href="https://anTtutu.github.io/tags/claude/">Claude</a>
+    
+    <a href="https://anTtutu.github.io/tags/claude-code/">Claude Code</a>
+    
+    <a href="https://anTtutu.github.io/tags/clean/">Clean</a>
+    
+    <a href="https://anTtutu.github.io/tags/cli/">Cli</a>
+    
     <a href="https://anTtutu.github.io/tags/cluster/">Cluster</a>
+    
+    <a href="https://anTtutu.github.io/tags/conda/">Conda</a>
+    
+    <a href="https://anTtutu.github.io/tags/covid-19/">Covid-19</a>
+    
+    <a href="https://anTtutu.github.io/tags/cve/">Cve</a>
     
     <a href="https://anTtutu.github.io/tags/cygwin/">Cygwin</a>
     
     <a href="https://anTtutu.github.io/tags/dataguard/">Dataguard</a>
     
+    <a href="https://anTtutu.github.io/tags/db/">Db</a>
+    
     <a href="https://anTtutu.github.io/tags/deepfacelab/">Deepfacelab</a>
+    
+    <a href="https://anTtutu.github.io/tags/devops/">Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/docker/">Docker</a>
     
     <a href="https://anTtutu.github.io/tags/dos/">Dos</a>
     
+    <a href="https://anTtutu.github.io/tags/drawio/">Drawio</a>
+    
+    <a href="https://anTtutu.github.io/tags/dump/">Dump</a>
+    
     <a href="https://anTtutu.github.io/tags/eclipse/">Eclipse</a>
+    
+    <a href="https://anTtutu.github.io/tags/ELK/">ELK</a>
     
     <a href="https://anTtutu.github.io/tags/explain/">Explain</a>
     
+    <a href="https://anTtutu.github.io/tags/faker/">Faker</a>
+    
+    <a href="https://anTtutu.github.io/tags/feign/">Feign</a>
+    
+    <a href="https://anTtutu.github.io/tags/freemarker/">Freemarker</a>
+    
     <a href="https://anTtutu.github.io/tags/gcc/">Gcc</a>
+    
+    <a href="https://anTtutu.github.io/tags/git/">Git</a>
+    
+    <a href="https://anTtutu.github.io/tags/github/">Github</a>
     
     <a href="https://anTtutu.github.io/tags/gitment/">Gitment</a>
     
     <a href="https://anTtutu.github.io/tags/gitpages/">Gitpages</a>
     
     <a href="https://anTtutu.github.io/tags/go/">Go</a>
+    
+    <a href="https://anTtutu.github.io/tags/golang/">Golang</a>
+    
+    <a href="https://anTtutu.github.io/tags/graalvm/">Graalvm</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">H2</a>
     
@@ -571,11 +784,25 @@
     
     <a href="https://anTtutu.github.io/tags/http/">Http</a>
     
+    <a href="https://anTtutu.github.io/tags/https/">Https</a>
+    
     <a href="https://anTtutu.github.io/tags/hugo/">Hugo</a>
+    
+    <a href="https://anTtutu.github.io/tags/id/">Id</a>
+    
+    <a href="https://anTtutu.github.io/tags/idea/">Idea</a>
+    
+    <a href="https://anTtutu.github.io/tags/image/">Image</a>
+    
+    <a href="https://anTtutu.github.io/tags/images/">Images</a>
     
     <a href="https://anTtutu.github.io/tags/java/">Java</a>
     
+    <a href="https://anTtutu.github.io/tags/JDK21/">JDK21</a>
+    
     <a href="https://anTtutu.github.io/tags/jekyll/">Jekyll</a>
+    
+    <a href="https://anTtutu.github.io/tags/jenkins/">Jenkins</a>
     
     <a href="https://anTtutu.github.io/tags/jrebel/">Jrebel</a>
     
@@ -583,31 +810,73 @@
     
     <a href="https://anTtutu.github.io/tags/jsr/">Jsr</a>
     
+    <a href="https://anTtutu.github.io/tags/jvm/">Jvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/k8s/">K8s</a>
+    
     <a href="https://anTtutu.github.io/tags/kafka/">Kafka</a>
     
     <a href="https://anTtutu.github.io/tags/kali/">Kali</a>
+    
+    <a href="https://anTtutu.github.io/tags/keepalived/">Keepalived</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">Kenlm</a>
     
     <a href="https://anTtutu.github.io/tags/linux/">Linux</a>
     
+    <a href="https://anTtutu.github.io/tags/log/">Log</a>
+    
     <a href="https://anTtutu.github.io/tags/log4j/">Log4j</a>
     
+    <a href="https://anTtutu.github.io/tags/lombok/">Lombok</a>
+    
+    <a href="https://anTtutu.github.io/tags/lvs/">Lvs</a>
+    
     <a href="https://anTtutu.github.io/tags/mac/">Mac</a>
+    
+    <a href="https://anTtutu.github.io/tags/matplotlib/">Matplotlib</a>
+    
+    <a href="https://anTtutu.github.io/tags/maven/">Maven</a>
+    
+    <a href="https://anTtutu.github.io/tags/mcp/">Mcp</a>
     
     <a href="https://anTtutu.github.io/tags/mine/">Mine</a>
     
     <a href="https://anTtutu.github.io/tags/mongodb/">Mongodb</a>
     
+    <a href="https://anTtutu.github.io/tags/mvnd/">Mvnd</a>
+    
     <a href="https://anTtutu.github.io/tags/mysql/">Mysql</a>
+    
+    <a href="https://anTtutu.github.io/tags/native-image/">Native Image</a>
     
     <a href="https://anTtutu.github.io/tags/nginx/">Nginx</a>
     
+    <a href="https://anTtutu.github.io/tags/notes/">Notes</a>
+    
+    <a href="https://anTtutu.github.io/tags/obsidian/">Obsidian</a>
+    
     <a href="https://anTtutu.github.io/tags/oom/">Oom</a>
+    
+    <a href="https://anTtutu.github.io/tags/openjdk/">Openjdk</a>
     
     <a href="https://anTtutu.github.io/tags/oracle/">Oracle</a>
     
     <a href="https://anTtutu.github.io/tags/orangePi/">OrangePi</a>
+    
+    <a href="https://anTtutu.github.io/tags/oss/">Oss</a>
+    
+    <a href="https://anTtutu.github.io/tags/package/">Package</a>
+    
+    <a href="https://anTtutu.github.io/tags/pages/">Pages</a>
+    
+    <a href="https://anTtutu.github.io/tags/pandas/">Pandas</a>
+    
+    <a href="https://anTtutu.github.io/tags/pg/">Pg</a>
+    
+    <a href="https://anTtutu.github.io/tags/port/">Port</a>
+    
+    <a href="https://anTtutu.github.io/tags/postgresql/">Postgresql</a>
     
     <a href="https://anTtutu.github.io/tags/python/">Python</a>
     
@@ -615,11 +884,27 @@
     
     <a href="https://anTtutu.github.io/tags/redis/">Redis</a>
     
+    <a href="https://anTtutu.github.io/tags/regexp/">Regexp</a>
+    
     <a href="https://anTtutu.github.io/tags/safe/">Safe</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdk/">Sdk</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdkman/">Sdkman</a>
     
     <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
     
+    <a href="https://anTtutu.github.io/tags/skill/">Skill</a>
+    
+    <a href="https://anTtutu.github.io/tags/split/">Split</a>
+    
     <a href="https://anTtutu.github.io/tags/springboot/">Springboot</a>
+    
+    <a href="https://anTtutu.github.io/tags/springcloud/">Springcloud</a>
+    
+    <a href="https://anTtutu.github.io/tags/springmvc/">Springmvc</a>
+    
+    <a href="https://anTtutu.github.io/tags/spy/">Spy</a>
     
     <a href="https://anTtutu.github.io/tags/sqlmap/">Sqlmap</a>
     
@@ -629,11 +914,23 @@
     
     <a href="https://anTtutu.github.io/tags/termux/">Termux</a>
     
+    <a href="https://anTtutu.github.io/tags/test/">Test</a>
+    
+    <a href="https://anTtutu.github.io/tags/testing/">Testing</a>
+    
+    <a href="https://anTtutu.github.io/tags/thymeleaf/">Thymeleaf</a>
+    
+    <a href="https://anTtutu.github.io/tags/tomcat/">Tomcat</a>
+    
+    <a href="https://anTtutu.github.io/tags/uniapp/">Uniapp</a>
+    
     <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
     
     <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">Virus</a>
+    
+    <a href="https://anTtutu.github.io/tags/vue/">Vue</a>
     
     <a href="https://anTtutu.github.io/tags/vxvm/">Vxvm</a>
     
@@ -641,13 +938,87 @@
     
     <a href="https://anTtutu.github.io/tags/xrebel/">Xrebel</a>
     
+    <a href="https://anTtutu.github.io/tags/ydnotes/">Ydnotes</a>
+    
     <a href="https://anTtutu.github.io/tags/ynote/">Ynote</a>
     
     <a href="https://anTtutu.github.io/tags/zk/">Zk</a>
     
     <a href="https://anTtutu.github.io/tags/zookeeper/">Zookeeper</a>
     
+    <a href="https://anTtutu.github.io/tags/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">主从复制</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1/">云服务</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%89%8D%E7%AB%AF/">前端</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8D%87%E7%BA%A7%E8%BF%81%E7%A7%BB/">升级迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8E%8B%E6%B5%8B/">压测</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%9F%BA%E7%A1%80/">基础</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%89%E5%85%A8/">安全</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E5%99%A8/">容器</a>
+    
     <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%B6%E5%8F%91/">并发</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%BF%E5%91%8A/">广告</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8C%87%E6%A0%87/">指标</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8E%92%E6%9F%A5/">排查</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">效率工具</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/">日志分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9E%B6%E6%9E%84/">架构</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%A7%91%E6%99%AE/">科普</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%AE%A4%E8%AF%81/">认证</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B0%83%E8%AF%95/">调试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">负载均衡</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%81%E7%A7%BB/">迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%80%89%E5%9E%8B/">选型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/">防重复提交</a>
     
 </div>
     </section>

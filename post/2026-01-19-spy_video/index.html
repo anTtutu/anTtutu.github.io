@@ -19,7 +19,7 @@
     <meta property="article:modified_time" content='2026-01-19T00:29:47&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
-    <meta name="description" content="爬取oss库">
+    <meta name="description" content="python 爬取阿里云 OSS 素材库实战：几万条记录、单个文件几个G，asyncio 限流并发、流式分块下载、断点续传、m3u8 转 mp4、状态回写数据库，附完整代码思路">
         
     <meta name="author" content="Anttu">
     <meta property="og:url" content="https://anTtutu.github.io/post/2026-01-19-spy_video/">
@@ -126,7 +126,6 @@
 
     .post-toc .post-toc-content ul ul {
         padding-left: 15px;
-        display: none;
     }
 
     @media print,
@@ -142,6 +141,28 @@
         <nav id="TableOfContents">
   <ul>
     <li><a href="#前言">前言</a></li>
+    <li><a href="#1难点在哪">1、难点在哪</a></li>
+    <li><a href="#2整体思路">2、整体思路</a></li>
+    <li><a href="#3配置设计">3、配置设计</a></li>
+    <li><a href="#4大文件的处理">4、大文件的处理</a>
+      <ul>
+        <li><a href="#41-流式分块下载不进内存">4.1 流式分块下载，不进内存</a></li>
+        <li><a href="#42-断点续传两层保险">4.2 断点续传：两层保险</a></li>
+        <li><a href="#43-m3u8-视频流转-mp4">4.3 m3u8 视频流转 mp4</a></li>
+        <li><a href="#44-大文件上传">4.4 大文件上传</a></li>
+      </ul>
+    </li>
+    <li><a href="#5数据量大的处理">5、数据量大的处理</a>
+      <ul>
+        <li><a href="#51-asyncio-并发--semaphore-限流">5.1 asyncio 并发 + Semaphore 限流</a></li>
+        <li><a href="#52-状态账本db--excel-双保险">5.2 状态账本：DB + Excel 双保险</a></li>
+        <li><a href="#53-分批分脚本跑">5.3 分批分脚本跑</a></li>
+      </ul>
+    </li>
+    <li><a href="#6细节处理">6、细节处理</a></li>
+    <li><a href="#7踩坑记录">7、踩坑记录</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#相关阅读">相关阅读</a></li>
   </ul>
 </nav>
     </div>
@@ -217,8 +238,379 @@
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>2025年底因公司需要，编写了一个健壮的爬取oss库的python脚本，后续有空再完善思路和讲解，具体出处可以参考代码：
-<a href="https://github.com/anTtutu/anttu.code.learn.python/tree/master/oss_download">https://github.com/anTtutu/anttu.code.learn.python/tree/master/oss_download</a></p>
+<p>2025年底公司有个老系统要下线，里面攒了几年的培训素材（视频、音频、文档、图片，几万条记录）都躺在 OSS 上，需要全部爬下来再转存到新的 OSS。量不小，单个视频还有好几个G的，直接写个 for 循环 requests 下载肯定歇菜，于是写了一个比较健壮的爬取脚本。完整代码在：</p>
+<p><a href="https://github.com/anTtutu/anttu.code.learn.python/tree/master/oss_download">https://github.com/anTtutu/anttu.code.learn.python/tree/master/oss_download</a></p>
+<p>这篇把思路和关键代码整理下。</p>
+<h2 id="1难点在哪">1、难点在哪</h2>
+<p>先说清楚这个活的难点，也是写脚本时所有设计的出发点：</p>
+<p><strong>数据量大</strong>：</p>
+<ul>
+<li>几万条素材记录，存在 MySQL 的 <code>dim_resource_info</code> 表里，每条记录带一个 resource_path（原 OSS 的 URL）</li>
+<li>一条条串行下载根本跑不完，必须并发，但并发又不能把带宽和 OSS 打爆</li>
+<li>跑到一半挂了不能从头来，几万条重跑一遍谁受得了，必须断点续传</li>
+<li>哪些成功哪些失败得有账可查，不然没法向上交代</li>
+</ul>
+<p><strong>大文件难搞</strong>：</p>
+<ul>
+<li>单个视频文件好几个G，默认超时时间（比如 aiohttp 总超时 5 分钟）跑到一半必断</li>
+<li>大文件不能 <code>response.read()</code> 一把梭进内存，得流式分块写盘</li>
+<li>还有 m3u8 格式的视频流，不是普通文件下载，要 ffmpeg 转封装</li>
+<li>下载完还要转存到新 OSS，大文件上传同样是问题</li>
+</ul>
+<p>另外还有些杂活：文件名没有后缀的要补、m3u8 要转成 mp4、文档要提取页数、图片要拿宽高，全部回写数据库。</p>
+<h2 id="2整体思路">2、整体思路</h2>
+<pre tabindex="0"><code>MySQL（素材清单） → 并发下载到本地 → 上传到新 OSS → 回写状态（DB + Excel）
+</code></pre><p>按文件类型拆了多个脚本（视频、音频、pdf、ppt、xls、图片、zip 各一个），结构一样只差 SQL 条件和后缀处理。为什么拆？因为视频是大文件大户，单独跑方便控制节奏、单独重试，不用被小文件拖着。</p>
+<p>核心依赖：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>aiohttp + asyncio      # 异步并发下载
+</span></span><span style="display:flex;"><span>tenacity               # 失败重试
+</span></span><span style="display:flex;"><span>pymysql                # 读清单、回写状态
+</span></span><span style="display:flex;"><span>alibabacloud_oss_v2    # 阿里云 OSS V2 SDK（上传新 OSS）
+</span></span><span style="display:flex;"><span>m3u8 + ffmpeg          # m3u8 流媒体转 mp4
+</span></span><span style="display:flex;"><span>PyPDF2 / python-docx / python-pptx / PIL   # 文档页数、图片宽高
+</span></span><span style="display:flex;"><span>openpyxl               # Excel 进度账本
+</span></span><span style="display:flex;"><span>tqdm                   # 进度条
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3配置设计">3、配置设计</h2>
+<p>所有参数收在一个 config 字典里，改脚本只动这一块：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>config <span style="color:#0550ae">=</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0a3069">&#34;db&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;host&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;your_db_host&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;user&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;your_user&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;password&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;your_password&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;database&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;enterprise_lesson&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;port&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">3306</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0a3069">&#34;oss&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;enable_upload&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">True</span><span style="color:#1f2328">,</span>          <span style="color:#57606a"># 是否启用上传到 OSS</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;access_key_id&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;your_ak&#34;</span><span style="color:#1f2328">,</span>     <span style="color:#57606a"># 建议走环境变量，别硬编码</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;access_key_secret&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;your_sk&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;bucket_name&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;your-bucket&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;region&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;cn-beijing&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;endpoint&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;oss-cn-beijing.aliyuncs.com&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;base_url&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;https://your-bucket.oss-cn-beijing.aliyuncs.com&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0a3069">&#34;download&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;save_path&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;./downloads&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;concurrent_limit&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">100</span><span style="color:#1f2328">,</span>        <span style="color:#57606a"># 最大并发数</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;retry_attempts&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">3</span><span style="color:#1f2328">,</span>            <span style="color:#57606a"># 失败重试次数</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;retry_interval&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">5</span><span style="color:#1f2328">,</span>            <span style="color:#57606a"># 重试间隔（秒）</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;chunk_size&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">1024</span> <span style="color:#0550ae">*</span> <span style="color:#0550ae">1024</span><span style="color:#1f2328">,</span>      <span style="color:#57606a"># 分块 1MB，流式写盘</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;time_out&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">3600</span> <span style="color:#0550ae">*</span> <span style="color:#0550ae">8</span>            <span style="color:#57606a"># 总超时 8 小时！因为有几个G的文件</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0a3069">&#34;m3u8&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;ffmpeg_path&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;ffmpeg&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0a3069">&#34;temp_path&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;./temp_m3u8&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>重点说 <code>time_out: 3600 * 8</code>：一开始用默认超时，大视频下到一半就断，排半天才发现是超时的事。几个G的文件按家宽上传带宽算，8 小时是留了充足余量的。</p>
+<p>OSS 凭证走环境变量（SDK 的 <code>EnvironmentVariableCredentialsProvider</code> 自动读取），比硬编码在代码里安全，代码还要开源，AK 写进去就是事故：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>os<span style="color:#0550ae">.</span>environ<span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;OSS_ACCESS_KEY_ID&#34;</span><span style="color:#1f2328">]</span> <span style="color:#0550ae">=</span> config<span style="color:#1f2328">[</span><span style="color:#0a3069">&#39;oss&#39;</span><span style="color:#1f2328">][</span><span style="color:#0a3069">&#39;access_key_id&#39;</span><span style="color:#1f2328">]</span>
+</span></span><span style="display:flex;"><span>os<span style="color:#0550ae">.</span>environ<span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;OSS_ACCESS_KEY_SECRET&#34;</span><span style="color:#1f2328">]</span> <span style="color:#0550ae">=</span> config<span style="color:#1f2328">[</span><span style="color:#0a3069">&#39;oss&#39;</span><span style="color:#1f2328">][</span><span style="color:#0a3069">&#39;access_key_secret&#39;</span><span style="color:#1f2328">]</span>
+</span></span><span style="display:flex;"><span>credentials_provider <span style="color:#0550ae">=</span> oss<span style="color:#0550ae">.</span>credentials<span style="color:#0550ae">.</span>EnvironmentVariableCredentialsProvider<span style="color:#1f2328">()</span>
+</span></span><span style="display:flex;"><span>cfg <span style="color:#0550ae">=</span> oss<span style="color:#0550ae">.</span>config<span style="color:#0550ae">.</span>load_default<span style="color:#1f2328">()</span>
+</span></span><span style="display:flex;"><span>cfg<span style="color:#0550ae">.</span>credentials_provider <span style="color:#0550ae">=</span> credentials_provider
+</span></span><span style="display:flex;"><span>cfg<span style="color:#0550ae">.</span>region <span style="color:#0550ae">=</span> config<span style="color:#1f2328">[</span><span style="color:#0a3069">&#39;oss&#39;</span><span style="color:#1f2328">][</span><span style="color:#0a3069">&#39;region&#39;</span><span style="color:#1f2328">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">return</span> oss<span style="color:#0550ae">.</span>Client<span style="color:#1f2328">(</span>cfg<span style="color:#1f2328">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4大文件的处理">4、大文件的处理</h2>
+<h3 id="41-流式分块下载不进内存">4.1 流式分块下载，不进内存</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#0550ae">@retry</span><span style="color:#1f2328">(</span>stop<span style="color:#0550ae">=</span>stop_after_attempt<span style="color:#1f2328">(</span>config<span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;download&#34;</span><span style="color:#1f2328">][</span><span style="color:#0a3069">&#34;retry_attempts&#34;</span><span style="color:#1f2328">]),</span>
+</span></span><span style="display:flex;"><span>       wait<span style="color:#0550ae">=</span>wait_fixed<span style="color:#1f2328">(</span>config<span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;download&#34;</span><span style="color:#1f2328">][</span><span style="color:#0a3069">&#34;retry_interval&#34;</span><span style="color:#1f2328">]))</span>
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">async</span> <span style="color:#cf222e">def</span> <span style="color:#6639ba">download_file</span><span style="color:#1f2328">(</span>session<span style="color:#1f2328">,</span> url<span style="color:#1f2328">,</span> save_path<span style="color:#1f2328">):</span>
+</span></span><span style="display:flex;"><span>    os<span style="color:#0550ae">.</span>makedirs<span style="color:#1f2328">(</span>os<span style="color:#0550ae">.</span>path<span style="color:#0550ae">.</span>dirname<span style="color:#1f2328">(</span>save_path<span style="color:#1f2328">),</span> exist_ok<span style="color:#0550ae">=</span><span style="color:#cf222e">True</span><span style="color:#1f2328">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#57606a"># 断点续传第一层：本地已有就跳过</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#cf222e">if</span> os<span style="color:#0550ae">.</span>path<span style="color:#0550ae">.</span>exists<span style="color:#1f2328">(</span>save_path<span style="color:#1f2328">):</span>
+</span></span><span style="display:flex;"><span>        logger<span style="color:#0550ae">.</span>info<span style="color:#1f2328">(</span><span style="color:#0a3069">f</span><span style="color:#0a3069">&#34;文件已存在，跳过下载：</span><span style="color:#0a3069">{</span>save_path<span style="color:#0a3069">}</span><span style="color:#0a3069">&#34;</span><span style="color:#1f2328">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#cf222e">return</span> save_path
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#cf222e">async</span> <span style="color:#cf222e">with</span> session<span style="color:#0550ae">.</span>get<span style="color:#1f2328">(</span>url<span style="color:#1f2328">,</span> timeout<span style="color:#0550ae">=</span>aiohttp<span style="color:#0550ae">.</span>ClientTimeout<span style="color:#1f2328">(</span>
+</span></span><span style="display:flex;"><span>            total<span style="color:#0550ae">=</span>config<span style="color:#1f2328">[</span><span style="color:#0a3069">&#39;download&#39;</span><span style="color:#1f2328">][</span><span style="color:#0a3069">&#39;time_out&#39;</span><span style="color:#1f2328">]))</span> <span style="color:#cf222e">as</span> response<span style="color:#1f2328">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#cf222e">if</span> response<span style="color:#0550ae">.</span>status <span style="color:#0550ae">!=</span> <span style="color:#0550ae">200</span><span style="color:#1f2328">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#cf222e">raise</span> Exception<span style="color:#1f2328">(</span><span style="color:#0a3069">f</span><span style="color:#0a3069">&#34;下载失败，状态码：</span><span style="color:#0a3069">{</span>response<span style="color:#0550ae">.</span>status<span style="color:#0a3069">}</span><span style="color:#0a3069">, URL: </span><span style="color:#0a3069">{</span>url<span style="color:#0a3069">}</span><span style="color:#0a3069">&#34;</span><span style="color:#1f2328">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#cf222e">with</span> <span style="color:#6639ba">open</span><span style="color:#1f2328">(</span>save_path<span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;wb&#34;</span><span style="color:#1f2328">)</span> <span style="color:#cf222e">as</span> f<span style="color:#1f2328">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#cf222e">while</span> <span style="color:#cf222e">True</span><span style="color:#1f2328">:</span>
+</span></span><span style="display:flex;"><span>                chunk <span style="color:#0550ae">=</span> <span style="color:#cf222e">await</span> response<span style="color:#0550ae">.</span>content<span style="color:#0550ae">.</span>read<span style="color:#1f2328">(</span>config<span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;download&#34;</span><span style="color:#1f2328">][</span><span style="color:#0a3069">&#34;chunk_size&#34;</span><span style="color:#1f2328">])</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#cf222e">if</span> <span style="color:#0550ae">not</span> chunk<span style="color:#1f2328">:</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#cf222e">break</span>
+</span></span><span style="display:flex;"><span>                f<span style="color:#0550ae">.</span>write<span style="color:#1f2328">(</span>chunk<span style="color:#1f2328">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#cf222e">return</span> save_path
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>三个要点：</p>
+<ol>
+<li><strong>1MB 一块循环写盘</strong>，内存占用恒定，几个G的文件也吃得消</li>
+<li><strong>tenacity 装饰器</strong>：网络抖动失败自动重试 3 次、间隔 5 秒，重试还带着断点判断（文件存在就跳过），不会重复下载</li>
+<li><strong>超时给到 8 小时</strong>，这最坑，默认超时大文件必挂</li>
+</ol>
+<h3 id="42-断点续传两层保险">4.2 断点续传：两层保险</h3>
+<ul>
+<li><strong>第一层</strong>：SQL 里带 <code>where is_downloaded = 0</code>，下载成功回写 <code>is_downloaded = 1</code>，重跑脚本自动跳过已完成的</li>
+<li><strong>第二层</strong>：本地文件存在直接跳过下载（防止 DB 状态没写成功但文件其实下完了的情况）</li>
+</ul>
+<p>失败的任务会把错误信息写进 <code>error_message</code> 字段：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>sql <span style="color:#0550ae">=</span> <span style="color:#0a3069">&#34;UPDATE dim_resource_info SET is_downloaded=</span><span style="color:#0a3069">%s</span><span style="color:#0a3069">, download_time=</span><span style="color:#0a3069">%s</span><span style="color:#0a3069">, </span><span style="color:#0a3069">\
+</span></span></span><span style="display:flex;"><span><span style="color:#0a3069">       is_upload_oss=</span><span style="color:#0a3069">%s</span><span style="color:#0a3069">, upload_time=</span><span style="color:#0a3069">%s</span><span style="color:#0a3069">, oss_path=</span><span style="color:#0a3069">%s</span><span style="color:#0a3069">, error_message=</span><span style="color:#0a3069">%s</span><span style="color:#0a3069"> WHERE resource_id=</span><span style="color:#0a3069">%s</span><span style="color:#0a3069">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>重跑的时候把报错的 resource_id 挑出来单独处理，或者按 error_message 分类批量重试。</p>
+<h3 id="43-m3u8-视频流转-mp4">4.3 m3u8 视频流转 mp4</h3>
+<p>m3u8 不是完整文件，是一堆 ts 分片的索引，普通下载下来没法播，用 ffmpeg 转封装：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#0550ae">@retry</span><span style="color:#1f2328">(</span>stop<span style="color:#0550ae">=</span>stop_after_attempt<span style="color:#1f2328">(</span>config<span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;download&#34;</span><span style="color:#1f2328">][</span><span style="color:#0a3069">&#34;retry_attempts&#34;</span><span style="color:#1f2328">]),</span>
+</span></span><span style="display:flex;"><span>       wait<span style="color:#0550ae">=</span>wait_fixed<span style="color:#1f2328">(</span>config<span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;download&#34;</span><span style="color:#1f2328">][</span><span style="color:#0a3069">&#34;retry_interval&#34;</span><span style="color:#1f2328">]))</span>
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">async</span> <span style="color:#cf222e">def</span> <span style="color:#6639ba">download_m3u8</span><span style="color:#1f2328">(</span>session<span style="color:#1f2328">,</span> url<span style="color:#1f2328">,</span> save_path<span style="color:#1f2328">):</span>
+</span></span><span style="display:flex;"><span>    temp_file <span style="color:#0550ae">=</span> os<span style="color:#0550ae">.</span>path<span style="color:#0550ae">.</span>join<span style="color:#1f2328">(</span>config<span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;m3u8&#34;</span><span style="color:#1f2328">][</span><span style="color:#0a3069">&#34;temp_path&#34;</span><span style="color:#1f2328">],</span>
+</span></span><span style="display:flex;"><span>                             <span style="color:#0a3069">f</span><span style="color:#0a3069">&#34;</span><span style="color:#0a3069">{</span>Path<span style="color:#1f2328">(</span>save_path<span style="color:#1f2328">)</span><span style="color:#0550ae">.</span>stem<span style="color:#0a3069">}</span><span style="color:#0a3069">.m3u8&#34;</span><span style="color:#1f2328">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#cf222e">async</span> <span style="color:#cf222e">with</span> session<span style="color:#0550ae">.</span>get<span style="color:#1f2328">(</span>url<span style="color:#1f2328">,</span> <span style="color:#0550ae">...</span><span style="color:#1f2328">)</span> <span style="color:#cf222e">as</span> response<span style="color:#1f2328">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">...</span>
+</span></span><span style="display:flex;"><span>        f<span style="color:#0550ae">.</span>write<span style="color:#1f2328">(</span><span style="color:#cf222e">await</span> response<span style="color:#0550ae">.</span>read<span style="color:#1f2328">())</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#57606a"># ffmpeg 拉流合并，-c copy 不转码，速度飞快</span>
+</span></span><span style="display:flex;"><span>    command <span style="color:#0550ae">=</span> <span style="color:#0a3069">f</span><span style="color:#0a3069">&#34;</span><span style="color:#0a3069">{</span>config<span style="color:#1f2328">[</span><span style="color:#0a3069">&#39;m3u8&#39;</span><span style="color:#1f2328">][</span><span style="color:#0a3069">&#39;ffmpeg_path&#39;</span><span style="color:#1f2328">]</span><span style="color:#0a3069">}</span><span style="color:#0a3069"> -i </span><span style="color:#0a3069">{</span>url<span style="color:#0a3069">}</span><span style="color:#0a3069"> -c copy </span><span style="color:#0a3069">{</span>save_path<span style="color:#0a3069">}</span><span style="color:#0a3069">&#34;</span>
+</span></span><span style="display:flex;"><span>    subprocess<span style="color:#0550ae">.</span>run<span style="color:#1f2328">(</span>command<span style="color:#1f2328">,</span> shell<span style="color:#0550ae">=</span><span style="color:#cf222e">True</span><span style="color:#1f2328">,</span> check<span style="color:#0550ae">=</span><span style="color:#cf222e">True</span><span style="color:#1f2328">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>-c copy</code> 是关键：只做转封装不转码，几个G的视频几分钟搞定；如果转码，那就是小时级了。</p>
+<h3 id="44-大文件上传">4.4 大文件上传</h3>
+<p>下载完了要转存到新 OSS，用 V2 SDK 的文件上传接口：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#cf222e">with</span> <span style="color:#6639ba">open</span><span style="color:#1f2328">(</span>local_file_path<span style="color:#1f2328">,</span> <span style="color:#0a3069">&#39;rb&#39;</span><span style="color:#1f2328">)</span> <span style="color:#cf222e">as</span> file<span style="color:#1f2328">:</span>
+</span></span><span style="display:flex;"><span>    result <span style="color:#0550ae">=</span> client<span style="color:#0550ae">.</span>put_object_from_file<span style="color:#1f2328">(</span>
+</span></span><span style="display:flex;"><span>        PutObjectRequest<span style="color:#1f2328">(</span>bucket<span style="color:#0550ae">=</span>bucket<span style="color:#1f2328">,</span> key<span style="color:#0550ae">=</span>object_name<span style="color:#1f2328">,</span> body<span style="color:#0550ae">=</span>file<span style="color:#1f2328">),</span>
+</span></span><span style="display:flex;"><span>        local_file_path<span style="color:#1f2328">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码里预留了 <code>upload_big_file_to_oss</code> 的分片上传接口——这次的单文件几个G简单上传扛住了，如果以后有几十G的，就要换分片上传（resumable upload），支持并发分片和断点续传。</p>
+<h2 id="5数据量大的处理">5、数据量大的处理</h2>
+<h3 id="51-asyncio-并发--semaphore-限流">5.1 asyncio 并发 + Semaphore 限流</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#cf222e">async</span> <span style="color:#cf222e">def</span> <span style="color:#6639ba">main</span><span style="color:#1f2328">():</span>
+</span></span><span style="display:flex;"><span>    materials <span style="color:#0550ae">=</span> fetch_material_data<span style="color:#1f2328">()</span>          <span style="color:#57606a"># 一次性拉出几万条清单</span>
+</span></span><span style="display:flex;"><span>    semaphore <span style="color:#0550ae">=</span> asyncio<span style="color:#0550ae">.</span>Semaphore<span style="color:#1f2328">(</span>config<span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;download&#34;</span><span style="color:#1f2328">][</span><span style="color:#0a3069">&#34;concurrent_limit&#34;</span><span style="color:#1f2328">])</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#cf222e">with</span> tqdm<span style="color:#1f2328">(</span>total<span style="color:#0550ae">=</span><span style="color:#6639ba">len</span><span style="color:#1f2328">(</span>materials<span style="color:#1f2328">),</span> desc<span style="color:#0550ae">=</span><span style="color:#0a3069">&#34;下载进度&#34;</span><span style="color:#1f2328">,</span> unit<span style="color:#0550ae">=</span><span style="color:#0a3069">&#34;文件&#34;</span><span style="color:#1f2328">)</span> <span style="color:#cf222e">as</span> progress_bar<span style="color:#1f2328">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#cf222e">async</span> <span style="color:#cf222e">with</span> aiohttp<span style="color:#0550ae">.</span>ClientSession<span style="color:#1f2328">()</span> <span style="color:#cf222e">as</span> session<span style="color:#1f2328">:</span>
+</span></span><span style="display:flex;"><span>            tasks <span style="color:#0550ae">=</span> <span style="color:#1f2328">[</span>process_material_with_semaphore<span style="color:#1f2328">(</span>m<span style="color:#1f2328">,</span> session<span style="color:#1f2328">,</span> semaphore<span style="color:#1f2328">,</span> progress_bar<span style="color:#1f2328">)</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#cf222e">for</span> m <span style="color:#0550ae">in</span> materials<span style="color:#1f2328">]</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#cf222e">await</span> asyncio<span style="color:#0550ae">.</span>gather<span style="color:#1f2328">(</span><span style="color:#0550ae">*</span>tasks<span style="color:#1f2328">)</span>       <span style="color:#57606a"># 几万个任务一次挂上去</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">async</span> <span style="color:#cf222e">def</span> <span style="color:#6639ba">process_material_with_semaphore</span><span style="color:#1f2328">(</span>material<span style="color:#1f2328">,</span> session<span style="color:#1f2328">,</span> semaphore<span style="color:#1f2328">,</span> progress_bar<span style="color:#1f2328">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#cf222e">async</span> <span style="color:#cf222e">with</span> semaphore<span style="color:#1f2328">:</span>                      <span style="color:#57606a"># 同时最多 100 个在跑</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#cf222e">await</span> process_material<span style="color:#1f2328">(</span>material<span style="color:#1f2328">,</span> session<span style="color:#1f2328">,</span> progress_bar<span style="color:#1f2328">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>任务全部挂上去，但信号量保证<strong>同时只有 100 个</strong>在实际跑。为什么是 100？小文件可以更高，但这批里混着几个G的视频，并发太高带宽打满、每个都慢，还容易触发 OSS 限流，100 是试出来的平衡点。</p>
+<h3 id="52-状态账本db--excel-双保险">5.2 状态账本：DB + Excel 双保险</h3>
+<ul>
+<li><strong>DB 回写</strong>：成功回写 <code>is_downloaded=1</code>、<code>oss_path</code>；失败写 <code>error_message</code>，重试有依据</li>
+<li><strong>Excel 进度文件</strong>：每条任务（成功或失败）都往 <code>progress.xlsx</code> 追加一行，给不懂数据库的同事看的账本，出问题了打开表格就能对</li>
+</ul>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#cf222e">def</span> <span style="color:#6639ba">update_excel_progress</span><span style="color:#1f2328">(</span>data<span style="color:#1f2328">):</span>
+</span></span><span style="display:flex;"><span>    progress_file <span style="color:#0550ae">=</span> config<span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;excel&#34;</span><span style="color:#1f2328">][</span><span style="color:#0a3069">&#34;progress_file&#34;</span><span style="color:#1f2328">]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#cf222e">if</span> <span style="color:#0550ae">not</span> os<span style="color:#0550ae">.</span>path<span style="color:#0550ae">.</span>exists<span style="color:#1f2328">(</span>progress_file<span style="color:#1f2328">):</span>
+</span></span><span style="display:flex;"><span>        wb <span style="color:#0550ae">=</span> Workbook<span style="color:#1f2328">()</span>
+</span></span><span style="display:flex;"><span>        ws <span style="color:#0550ae">=</span> wb<span style="color:#0550ae">.</span>active
+</span></span><span style="display:flex;"><span>        ws<span style="color:#0550ae">.</span>append<span style="color:#1f2328">([</span><span style="color:#0a3069">&#34;ID&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;资源ID&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;资源名称&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;文件名&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;资源路径&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#0a3069">&#34;资源类型&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;创建时间&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;状态&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;OSS完整路径&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;备注&#34;</span><span style="color:#1f2328">])</span>
+</span></span><span style="display:flex;"><span>        wb<span style="color:#0550ae">.</span>save<span style="color:#1f2328">(</span>progress_file<span style="color:#1f2328">)</span>
+</span></span><span style="display:flex;"><span>    wb <span style="color:#0550ae">=</span> load_workbook<span style="color:#1f2328">(</span>progress_file<span style="color:#1f2328">)</span>
+</span></span><span style="display:flex;"><span>    ws <span style="color:#0550ae">=</span> wb<span style="color:#0550ae">.</span>active
+</span></span><span style="display:flex;"><span>    <span style="color:#cf222e">for</span> row <span style="color:#0550ae">in</span> data<span style="color:#1f2328">:</span>
+</span></span><span style="display:flex;"><span>        ws<span style="color:#0550ae">.</span>append<span style="color:#1f2328">(</span>row<span style="color:#1f2328">)</span>
+</span></span><span style="display:flex;"><span>    wb<span style="color:#0550ae">.</span>save<span style="color:#1f2328">(</span>progress_file<span style="color:#1f2328">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="53-分批分脚本跑">5.3 分批分脚本跑</h3>
+<p>按类型拆脚本还有个好处：先跑文档图片这种小文件（几小时清完一大批，快速验证脚本没问题），最后跑视频大文件（挂机跑几天）。重试也是同理，SQL 条件改一改就能只跑失败的那批：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#57606a">-- 正常批次
+</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">select</span><span style="color:#fff"> </span><span style="color:#1f2328">...</span><span style="color:#fff"> </span><span style="color:#cf222e">from</span><span style="color:#fff"> </span>dim_resource_info<span style="color:#fff"> </span><span style="color:#cf222e">where</span><span style="color:#fff"> </span>resource_type_tag<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#0a3069">&#39;视频&#39;</span><span style="color:#fff"> </span><span style="color:#cf222e">and</span><span style="color:#fff"> </span>is_downloaded<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#0550ae">0</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">-- 失败重试批次：按 resource_id 挑着跑
+</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">select</span><span style="color:#fff"> </span><span style="color:#1f2328">...</span><span style="color:#fff"> </span><span style="color:#cf222e">from</span><span style="color:#fff"> </span>dim_resource_info<span style="color:#fff"> </span><span style="color:#cf222e">where</span><span style="color:#fff"> </span>resource_id<span style="color:#fff"> </span><span style="color:#cf222e">in</span><span style="color:#fff"> </span><span style="color:#1f2328">(...,</span><span style="color:#fff"> </span><span style="color:#1f2328">...)</span><span style="color:#fff"> </span><span style="color:#cf222e">and</span><span style="color:#fff"> </span>is_downloaded<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#0550ae">0</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="6细节处理">6、细节处理</h2>
+<p>这些不起眼但少一个都会出问题：</p>
+<p><strong>URL 合法性校验</strong>：表里混着第三方外链（不在我们 OSS 上），不校验直接下会报一堆没用的错：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#cf222e">def</span> <span style="color:#6639ba">is_valid_resourcepath</span><span style="color:#1f2328">(</span>resourcepath<span style="color:#1f2328">):</span>
+</span></span><span style="display:flex;"><span>    parsed <span style="color:#0550ae">=</span> urlparse<span style="color:#1f2328">(</span>resourcepath<span style="color:#1f2328">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#cf222e">return</span> parsed<span style="color:#0550ae">.</span>scheme <span style="color:#0550ae">in</span> <span style="color:#1f2328">(</span><span style="color:#0a3069">&#39;http&#39;</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#39;https&#39;</span><span style="color:#1f2328">)</span> <span style="color:#0550ae">and</span> parsed<span style="color:#0550ae">.</span>netloc <span style="color:#0550ae">!=</span> <span style="color:#0a3069">&#39;&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>后缀补全规则</strong>：resource_name 有后缀而 resource_path 没有的，用 resource_name 的补；m3u8 的转成 <code>.mp4</code> 或按 resource_name 的音视频后缀；下载成功后把文档页数（PyPDF2/docx/pptx 按类型解析）、图片宽高（PIL）也回写到库里，一次搬家顺便把数据治理也做了。</p>
+<p><strong>日志双写</strong>：文件 + 控制台，挂机跑几天回来只看 <code>download.log</code> 就能复盘全程。</p>
+<h2 id="7踩坑记录">7、踩坑记录</h2>
+<ol>
+<li><strong>默认超时下大文件必挂</strong>：aiohttp 默认总超时 5 分钟，几个G的视频下到 4 分多钟准时断，一开始还以为是网络问题，白查半天</li>
+<li><strong>全量 read 进内存</strong>：一开始图省事 <code>response.read()</code>，大文件直接把进程内存撑爆，改成 1MB 分块循环写</li>
+<li><strong>几万个任务直接 gather</strong>：一次性创建几万个协程任务，内存和句柄都有压力，用 Semaphore 限流后平稳</li>
+<li><strong>DB 状态和实际文件不一致</strong>：下载成功但回写 DB 失败的情况存在，所以加了本地文件存在即跳过的第二层判断</li>
+<li><strong>AK 千万别硬编码进开源仓库</strong>：凭证走环境变量，代码里只留 your_ak 占位</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>整个活下来最大的体会：<strong>爬虫脚本的健壮性不在于代码多花哨，而在于把「必然会失败的」都提前想好</strong>——超时按最坏情况给、失败自动重试、状态随时可查、断了能接着跑。几万条记录、TB 级的数据就是靠这些朴素手段平稳搬完的。脚本已开源，遇到类似的 OSS 搬家、素材库迁移的活可以直接参考改改。</p>
+<h2 id="相关阅读">相关阅读</h2>
+<ul>
+<li><a href="/post/2025-12-15-k8s-learning-and-tools/">Kubernetes学习路径与实用工具箱</a></li>
+<li><a href="/post/2026-09-10-docker_images/">docker镜像清单与梳理</a></li>
+</ul>
 
         </div>
 
@@ -236,10 +628,35 @@
 
         
 
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/2025-03-15-tech-stack-selection/">技术选型详解：Go、Python、Node&#43;Vue、UniApp、Java 各自的适用场景与侧重点</a></li>
+        
+        <li><a href="/post/2023-09-15-python-dunder-magic-methods/">Python双下划线详解：__name__与魔术方法/属性全面整理（含版本限制）</a></li>
+        
+        <li><a href="/post/2022-11-28-python_muilt_version/">python多版本管理工具</a></li>
+        
+        <li><a href="/post/2022-06-17-python_req/">python打包-只依赖自己项目引用的module</a></li>
+        
+        <li><a href="/post/2021-06-05-python_faker/">python工具-faker测试数据生成器</a></li>
+        
+    </ul>
+</div>
+
 
         <div class="post-meta meta-tags">
             
-            没有标签
+            <ul class="clearfix">
+                
+                <li><a href='/tags/python' target="_blank">python</a></li>
+                
+                <li><a href='/tags/oss' target="_blank">oss</a></li>
+                
+                <li><a href='/tags/spy' target="_blank">spy</a></li>
+                
+            </ul>
             
         </div>
     </article>
@@ -272,9 +689,11 @@
         <div class="github-badge">
             <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
         </div>
-        
         <div class="github-badge">
-            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+            <a href="https://anTtutu.github.io/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">Anttu</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/anTtutu/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
         </div>
     </div>
 </footer>
@@ -395,6 +814,14 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-elk-mcp-ai-workflow/" title="结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证" target="_blank">结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-agent-database-cli/" title="agent-database-cli：让Claude Code安全操作多种数据库的CLI工具" target="_blank">agent-database-cli：让Claude Code安全操作多种数据库的CLI工具</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-09-14-sdkman_issue/" title="sdkman与conda冲突问题解决" target="_blank">sdkman与conda冲突问题解决</a>
     </li>
     
@@ -407,6 +834,10 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     </li>
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-07-02-claude-code-cli-cheatsheet/" title="Claude Code常用命令速查" target="_blank">Claude Code常用命令速查</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
     </li>
     
@@ -415,23 +846,11 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     </li>
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-01-19-spy_video/" title="爬取oss库" target="_blank">爬取oss库</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-01-13-docker-build/" title="docker build的一些问题" target="_blank">docker build的一些问题</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2025-02-13-mvnd/" title="mvnd结合idea使用" target="_blank">mvnd结合idea使用</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2024-04-15-postgresql/" title="postgresql数据库常用记录" target="_blank">postgresql数据库常用记录</a>
     </li>
     
 </ul>
@@ -444,6 +863,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
 <ul class="widget-list">
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     
@@ -497,7 +918,7 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/deepfacelab/">Deepfacelab (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/docker/">Docker (7)</a></li>
     
@@ -517,7 +938,7 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/gcc/">Gcc (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/git/">Git (2)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/git/">Git (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/github/">Github (1)</a></li>
     
@@ -545,7 +966,7 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/images/">Images (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/java/">Java (24)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/java/">Java (38)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/jekyll/">Jekyll (2)</a></li>
     
@@ -557,7 +978,7 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/jsr/">Jsr (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/k8s/">K8s (1)</a></li>
     
@@ -567,7 +988,7 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/kenlm/">Kenlm (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (22)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (28)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/log/">Log (1)</a></li>
     
@@ -589,7 +1010,7 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/mvnd/">Mvnd (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (10)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/nginx/">Nginx (1)</a></li>
     
@@ -619,11 +1040,11 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/postgresql/">Postgresql (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/python/">Python (9)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/python/">Python (11)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/rec/">Rec (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (5)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/regexp/">Regexp (1)</a></li>
     
@@ -633,15 +1054,17 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/sdkman/">Sdkman (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (3)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (4)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/skill/">Skill (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/split/">Split (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (4)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/spring/">Spring (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/spy/">Spy (1)</a></li>
     
@@ -656,6 +1079,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <li><a href="https://anTtutu.github.io/categories/test/">Test (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/testing/">Testing (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tomcat/">Tomcat (3)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
     
@@ -677,9 +1102,29 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/zookeeper/">Zookeeper (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/%E4%BA%92%E8%81%94%E7%BD%91/">互联网 (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
     
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E5%99%A8/">容器 (1)</a></li>
+    
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%8E%92%E6%9F%A5/">排查 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%9E%B6%E6%9E%84/">架构 (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E8%BF%90%E7%BB%B4/">运维 (1)</a></li>
     
 </ul>
     </section>
@@ -688,7 +1133,17 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
+    <a href="https://anTtutu.github.io/tags/-devops/"> Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/-dockerfile/"> Dockerfile</a>
+    
+    <a href="https://anTtutu.github.io/tags/-nmap/"> Nmap</a>
+    
     <a href="https://anTtutu.github.io/tags/about/">About</a>
+    
+    <a href="https://anTtutu.github.io/tags/agent/">Agent</a>
+    
+    <a href="https://anTtutu.github.io/tags/AI/">AI</a>
     
     <a href="https://anTtutu.github.io/tags/android/">Android</a>
     
@@ -698,9 +1153,15 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <a href="https://anTtutu.github.io/tags/arm64/">Arm64</a>
     
+    <a href="https://anTtutu.github.io/tags/arthas/">Arthas</a>
+    
     <a href="https://anTtutu.github.io/tags/awr/">Awr</a>
     
+    <a href="https://anTtutu.github.io/tags/backend_execute/">Backend_execute</a>
+    
     <a href="https://anTtutu.github.io/tags/backup/">Backup</a>
+    
+    <a href="https://anTtutu.github.io/tags/binlog/">Binlog</a>
     
     <a href="https://anTtutu.github.io/tags/blog/">Blog</a>
     
@@ -708,31 +1169,75 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <a href="https://anTtutu.github.io/tags/build/">Build</a>
     
+    <a href="https://anTtutu.github.io/tags/cache/">Cache</a>
+    
+    <a href="https://anTtutu.github.io/tags/caffeine/">Caffeine</a>
+    
     <a href="https://anTtutu.github.io/tags/captcha/">Captcha</a>
     
     <a href="https://anTtutu.github.io/tags/check/">Check</a>
     
+    <a href="https://anTtutu.github.io/tags/claude/">Claude</a>
+    
+    <a href="https://anTtutu.github.io/tags/claude-code/">Claude Code</a>
+    
+    <a href="https://anTtutu.github.io/tags/clean/">Clean</a>
+    
+    <a href="https://anTtutu.github.io/tags/cli/">Cli</a>
+    
     <a href="https://anTtutu.github.io/tags/cluster/">Cluster</a>
+    
+    <a href="https://anTtutu.github.io/tags/conda/">Conda</a>
+    
+    <a href="https://anTtutu.github.io/tags/covid-19/">Covid-19</a>
+    
+    <a href="https://anTtutu.github.io/tags/cve/">Cve</a>
     
     <a href="https://anTtutu.github.io/tags/cygwin/">Cygwin</a>
     
     <a href="https://anTtutu.github.io/tags/dataguard/">Dataguard</a>
     
+    <a href="https://anTtutu.github.io/tags/db/">Db</a>
+    
     <a href="https://anTtutu.github.io/tags/deepfacelab/">Deepfacelab</a>
+    
+    <a href="https://anTtutu.github.io/tags/devops/">Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/docker/">Docker</a>
     
     <a href="https://anTtutu.github.io/tags/dos/">Dos</a>
     
+    <a href="https://anTtutu.github.io/tags/drawio/">Drawio</a>
+    
+    <a href="https://anTtutu.github.io/tags/dump/">Dump</a>
+    
     <a href="https://anTtutu.github.io/tags/eclipse/">Eclipse</a>
+    
+    <a href="https://anTtutu.github.io/tags/ELK/">ELK</a>
     
     <a href="https://anTtutu.github.io/tags/explain/">Explain</a>
     
+    <a href="https://anTtutu.github.io/tags/faker/">Faker</a>
+    
+    <a href="https://anTtutu.github.io/tags/feign/">Feign</a>
+    
+    <a href="https://anTtutu.github.io/tags/freemarker/">Freemarker</a>
+    
     <a href="https://anTtutu.github.io/tags/gcc/">Gcc</a>
+    
+    <a href="https://anTtutu.github.io/tags/git/">Git</a>
+    
+    <a href="https://anTtutu.github.io/tags/github/">Github</a>
     
     <a href="https://anTtutu.github.io/tags/gitment/">Gitment</a>
     
     <a href="https://anTtutu.github.io/tags/gitpages/">Gitpages</a>
     
     <a href="https://anTtutu.github.io/tags/go/">Go</a>
+    
+    <a href="https://anTtutu.github.io/tags/golang/">Golang</a>
+    
+    <a href="https://anTtutu.github.io/tags/graalvm/">Graalvm</a>
     
     <a href="https://anTtutu.github.io/tags/h2/">H2</a>
     
@@ -742,11 +1247,25 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <a href="https://anTtutu.github.io/tags/http/">Http</a>
     
+    <a href="https://anTtutu.github.io/tags/https/">Https</a>
+    
     <a href="https://anTtutu.github.io/tags/hugo/">Hugo</a>
+    
+    <a href="https://anTtutu.github.io/tags/id/">Id</a>
+    
+    <a href="https://anTtutu.github.io/tags/idea/">Idea</a>
+    
+    <a href="https://anTtutu.github.io/tags/image/">Image</a>
+    
+    <a href="https://anTtutu.github.io/tags/images/">Images</a>
     
     <a href="https://anTtutu.github.io/tags/java/">Java</a>
     
+    <a href="https://anTtutu.github.io/tags/JDK21/">JDK21</a>
+    
     <a href="https://anTtutu.github.io/tags/jekyll/">Jekyll</a>
+    
+    <a href="https://anTtutu.github.io/tags/jenkins/">Jenkins</a>
     
     <a href="https://anTtutu.github.io/tags/jrebel/">Jrebel</a>
     
@@ -754,31 +1273,73 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <a href="https://anTtutu.github.io/tags/jsr/">Jsr</a>
     
+    <a href="https://anTtutu.github.io/tags/jvm/">Jvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/k8s/">K8s</a>
+    
     <a href="https://anTtutu.github.io/tags/kafka/">Kafka</a>
     
     <a href="https://anTtutu.github.io/tags/kali/">Kali</a>
+    
+    <a href="https://anTtutu.github.io/tags/keepalived/">Keepalived</a>
     
     <a href="https://anTtutu.github.io/tags/kenlm/">Kenlm</a>
     
     <a href="https://anTtutu.github.io/tags/linux/">Linux</a>
     
+    <a href="https://anTtutu.github.io/tags/log/">Log</a>
+    
     <a href="https://anTtutu.github.io/tags/log4j/">Log4j</a>
     
+    <a href="https://anTtutu.github.io/tags/lombok/">Lombok</a>
+    
+    <a href="https://anTtutu.github.io/tags/lvs/">Lvs</a>
+    
     <a href="https://anTtutu.github.io/tags/mac/">Mac</a>
+    
+    <a href="https://anTtutu.github.io/tags/matplotlib/">Matplotlib</a>
+    
+    <a href="https://anTtutu.github.io/tags/maven/">Maven</a>
+    
+    <a href="https://anTtutu.github.io/tags/mcp/">Mcp</a>
     
     <a href="https://anTtutu.github.io/tags/mine/">Mine</a>
     
     <a href="https://anTtutu.github.io/tags/mongodb/">Mongodb</a>
     
+    <a href="https://anTtutu.github.io/tags/mvnd/">Mvnd</a>
+    
     <a href="https://anTtutu.github.io/tags/mysql/">Mysql</a>
+    
+    <a href="https://anTtutu.github.io/tags/native-image/">Native Image</a>
     
     <a href="https://anTtutu.github.io/tags/nginx/">Nginx</a>
     
+    <a href="https://anTtutu.github.io/tags/notes/">Notes</a>
+    
+    <a href="https://anTtutu.github.io/tags/obsidian/">Obsidian</a>
+    
     <a href="https://anTtutu.github.io/tags/oom/">Oom</a>
+    
+    <a href="https://anTtutu.github.io/tags/openjdk/">Openjdk</a>
     
     <a href="https://anTtutu.github.io/tags/oracle/">Oracle</a>
     
     <a href="https://anTtutu.github.io/tags/orangePi/">OrangePi</a>
+    
+    <a href="https://anTtutu.github.io/tags/oss/">Oss</a>
+    
+    <a href="https://anTtutu.github.io/tags/package/">Package</a>
+    
+    <a href="https://anTtutu.github.io/tags/pages/">Pages</a>
+    
+    <a href="https://anTtutu.github.io/tags/pandas/">Pandas</a>
+    
+    <a href="https://anTtutu.github.io/tags/pg/">Pg</a>
+    
+    <a href="https://anTtutu.github.io/tags/port/">Port</a>
+    
+    <a href="https://anTtutu.github.io/tags/postgresql/">Postgresql</a>
     
     <a href="https://anTtutu.github.io/tags/python/">Python</a>
     
@@ -786,11 +1347,27 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <a href="https://anTtutu.github.io/tags/redis/">Redis</a>
     
+    <a href="https://anTtutu.github.io/tags/regexp/">Regexp</a>
+    
     <a href="https://anTtutu.github.io/tags/safe/">Safe</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdk/">Sdk</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdkman/">Sdkman</a>
     
     <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
     
+    <a href="https://anTtutu.github.io/tags/skill/">Skill</a>
+    
+    <a href="https://anTtutu.github.io/tags/split/">Split</a>
+    
     <a href="https://anTtutu.github.io/tags/springboot/">Springboot</a>
+    
+    <a href="https://anTtutu.github.io/tags/springcloud/">Springcloud</a>
+    
+    <a href="https://anTtutu.github.io/tags/springmvc/">Springmvc</a>
+    
+    <a href="https://anTtutu.github.io/tags/spy/">Spy</a>
     
     <a href="https://anTtutu.github.io/tags/sqlmap/">Sqlmap</a>
     
@@ -800,11 +1377,23 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <a href="https://anTtutu.github.io/tags/termux/">Termux</a>
     
+    <a href="https://anTtutu.github.io/tags/test/">Test</a>
+    
+    <a href="https://anTtutu.github.io/tags/testing/">Testing</a>
+    
+    <a href="https://anTtutu.github.io/tags/thymeleaf/">Thymeleaf</a>
+    
+    <a href="https://anTtutu.github.io/tags/tomcat/">Tomcat</a>
+    
+    <a href="https://anTtutu.github.io/tags/uniapp/">Uniapp</a>
+    
     <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
     
     <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
     
     <a href="https://anTtutu.github.io/tags/virus/">Virus</a>
+    
+    <a href="https://anTtutu.github.io/tags/vue/">Vue</a>
     
     <a href="https://anTtutu.github.io/tags/vxvm/">Vxvm</a>
     
@@ -812,13 +1401,87 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <a href="https://anTtutu.github.io/tags/xrebel/">Xrebel</a>
     
+    <a href="https://anTtutu.github.io/tags/ydnotes/">Ydnotes</a>
+    
     <a href="https://anTtutu.github.io/tags/ynote/">Ynote</a>
     
     <a href="https://anTtutu.github.io/tags/zk/">Zk</a>
     
     <a href="https://anTtutu.github.io/tags/zookeeper/">Zookeeper</a>
     
+    <a href="https://anTtutu.github.io/tags/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">主从复制</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1/">云服务</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%89%8D%E7%AB%AF/">前端</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8D%87%E7%BA%A7%E8%BF%81%E7%A7%BB/">升级迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8E%8B%E6%B5%8B/">压测</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%9F%BA%E7%A1%80/">基础</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%89%E5%85%A8/">安全</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E5%99%A8/">容器</a>
+    
     <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%B6%E5%8F%91/">并发</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%BF%E5%91%8A/">广告</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8C%87%E6%A0%87/">指标</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8E%92%E6%9F%A5/">排查</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">效率工具</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/">日志分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9E%B6%E6%9E%84/">架构</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%A7%91%E6%99%AE/">科普</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%AE%A4%E8%AF%81/">认证</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B0%83%E8%AF%95/">调试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">负载均衡</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%81%E7%A7%BB/">迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%80%89%E5%9E%8B/">选型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/">防重复提交</a>
     
 </div>
     </section>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Claude on Anttu&#39;s Blog</title>
+		<link>https://anTtutu.github.io/tags/claude/</link>
+		<description>Recent content in Claude on Anttu&#39;s Blog</description>
+		<generator>Hugo</generator>
+		<language>zh-CN</language>
+		
+		
+		
+		
+			<lastBuildDate>Sun, 27 Sep 2026 10:00:00 +0800</lastBuildDate>
+		
+			<atom:link href="https://anTtutu.github.io/tags/claude/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证</title>
+				<link>https://anTtutu.github.io/post/2026-09-27-elk-mcp-ai-workflow/</link>
+				<pubDate>Sun, 27 Sep 2026 10:00:00 +0800</pubDate>
+				<guid>https://anTtutu.github.io/post/2026-09-27-elk-mcp-ai-workflow/</guid>
+				<description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;前后端融合的工程里，排查一个「页面保存失败」的问题要横跨好几层：前端控制台、网关、后端多个服务、中间件、数据库。以前的处理路径是：找前端看请求 → 找后端捞日志 → 对 traceId → 查库验证，几个人来回扯半天。现在把这些能力都接成 MCP 工具给 AI（ELK 日志查询 MCP + 数据库 CLI，数据库那篇见 &lt;a href=&#34;https://anTtutu.github.io/post/2026-09-27-agent-database-cli/&#34;&gt;agent-database-cli&lt;/a&gt;），一句话描述问题，AI 按固定工作流自己跑完全程。这篇整理这套工作流。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>agent-database-cli：让Claude Code安全操作多种数据库的CLI工具</title>
+				<link>https://anTtutu.github.io/post/2026-09-27-agent-database-cli/</link>
+				<pubDate>Sun, 27 Sep 2026 09:30:00 +0800</pubDate>
+				<guid>https://anTtutu.github.io/post/2026-09-27-agent-database-cli/</guid>
+				<description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;让 AI 直接连数据库干活（查表结构、验证数据、排查问题），最大的顾虑是安全和连接管理：密码放哪、怎么防止 AI 手滑删库、十来个环境怎么统一管理。我为此写了一个本地 CLI 工具 &lt;strong&gt;agent-database-cli&lt;/strong&gt;（Rust 实现，npm 发包），把 MySQL、PostgreSQL、Redis（单机/集群）、Oracle、MongoDB 的连接、查询、元信息读取统一封装，配合 Claude Code 的 Skill 机制使用。这篇记录安装、配置和接入 Claude Code 的完整过程。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Claude Code常用命令速查</title>
+				<link>https://anTtutu.github.io/post/2026-07-02-claude-code-cli-cheatsheet/</link>
+				<pubDate>Thu, 02 Jul 2026 08:00:00 +0800</pubDate>
+				<guid>https://anTtutu.github.io/post/2026-07-02-claude-code-cli-cheatsheet/</guid>
+				<description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;用 Claude Code 做日常开发，四类可扩展资源（skill、agent、plugin、mcp）装多了之后经常要盘点「我到底装了什么」。这篇汇总最常用的查看命令和一个高频启动参数。&lt;/p&gt;&#xA;&lt;h2 id=&#34;一查看四类已安装资源&#34;&gt;一、查看四类已安装资源&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;1. 查看已安装的 skill&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&#xA;&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1&#xA;&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2&#xA;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&#xA;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/skills              &lt;span style=&#34;color:#57606a&#34;&gt;# 会话内命令&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;claude skills list   &lt;span style=&#34;color:#57606a&#34;&gt;# 终端命令&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&#xA;&lt;/div&gt;&#xA;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;2. 查看已安装的 agent&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&#xA;&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1&#xA;&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2&#xA;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&#xA;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/agents&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;claude agents list&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&#xA;&lt;/div&gt;&#xA;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;3. 查看已安装的 plugin&lt;/strong&gt;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</title>
+				<link>https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/</link>
+				<pubDate>Fri, 20 Mar 2026 08:00:00 +0800</pubDate>
+				<guid>https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/</guid>
+				<description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;用 Claude Code 干活一段时间之后，慢慢摸清了 Agent 和 Skill 这两个概念的门道。Agent 解决「谁来干、怎么干」，Skill 解决「会不会这一行」。这篇整理两者的原理，配上两个我自己在用的自定义样例，可以直接抄走改。&lt;/p&gt;&#xA;&lt;h2 id=&#34;1先分清三个词&#34;&gt;1、先分清三个词&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;概念&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;本质&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;打个比方&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;模型（LLM）&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;会推理的「大脑」，只能输入文本输出文本&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;一个聪明但没有手脚的顾问&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;strong&gt;Agent&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;模型 + 工具调用 + 自主循环：能读文件、执行命令、改代码、自己验收&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;授权完整的员工：自己查资料、自己动手、自己检查&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;strong&gt;Skill&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;预先打包的领域知识和流程，按需加载&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;员工手册里的 SOP：平时不占脑子，干到对应活时翻出来照做&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;Agent 是干活的，Skill 是干活的技能包，就这么简单。&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>
