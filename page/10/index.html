@@ -76,6 +76,103 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2020-12-05-shell-tips/" title="shell小技巧：URL转码表与set -euo pipefail" target="_blank">shell小技巧：URL转码表与set -euo pipefail</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年12月5日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/shell' target="_blank">shell</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/linux' target="_blank">linux</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>日常写 shell 脚本时积攒的小技巧，单拎出来都不长，合在一起记录。这篇是第一批：URL 转码表和 set 选项，后续有新的继续补充。</p>
+<h2 id="一常用符号的-url-转码表">一、常用符号的 URL 转码表</h2>
+<p>写爬虫或拼 URL 时经常碰到符号需要转码，对照表如下：</p>
+<table>
+	<thead>
+			<tr>
+					<th>符号</th>
+					<th>url 转码</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>+</td>
+					<td>%2B</td>
+			</tr>
+			<tr>
+					<td>space（空格）</td>
+					<td>%20</td>
+			</tr>
+			<tr>
+					<td>/</td>
+					<td>%2F</td>
+			</tr>
+			<tr>
+					<td>?</td>
+					<td>%3F</td>
+			</tr>
+			<tr>
+					<td>%</td>
+					<td>%25</td>
+			</tr>
+			<tr>
+					<td>#</td>
+					<td>%23</td>
+			</tr>
+			<tr>
+					<td>&amp;</td>
+					<td>%26</td>
+			</tr>
+			<tr>
+					<td>=</td>
+					<td>%3D</td>
+			</tr>
+	</tbody>
+</table>
+<p>命令行里快速转码/解码：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># 转码</span>
+</span></span><span style="display:flex;"><span><span style="color:#6639ba">echo</span> -n <span style="color:#0a3069">&#34;a=b&amp;c=1&#34;</span> <span style="color:#1f2328">|</span> xxd -plain <span style="color:#1f2328">|</span> tr -d <span style="color:#0a3069">&#39;\n&#39;</span> <span style="color:#1f2328">|</span> sed <span style="color:#0a3069">&#39;s/\(..\)/%\1/g&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># a%3db%26c%3d1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 解码</span>
+</span></span><span style="display:flex;"><span><span style="color:#6639ba">printf</span> <span style="color:#0a3069">&#39;%b&#39;</span> <span style="color:#0a3069">&#39;${a%3db%26c%3d1//%/\\x}&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="二set--eset--u-与-pipefail">二、set -e、set -u 与 pipefail</h2>
+<p>写脚本时经常看到开头一句 <code>set -eu</code> 或 <code>set -euo pipefail</code>，各自的作用：</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2020-12-05-shell-tips/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2020-12-05-win10_gcc_build_tools/" title="Win10下新的gcc工具" target="_blank">Win10下新的gcc工具</a>
             </h1>
         </header>
@@ -537,87 +634,6 @@
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2020-09-20-mac_aria2_install/" title="Mac下安装aria2下载工具" target="_blank">Mac下安装aria2下载工具</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2020年9月20日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/mac' target="_blank">mac</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/aria2' target="_blank">aria2</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>尝试在自己的Mac上源码方式安装aria2，根据教程修改了下限制的线程数，然后总结下经验</p>
-<h2 id="1下载aria2源码">1、下载aria2源码</h2>
-<p>下载地址：<a href="https://github.com/aria2/aria2">https://github.com/aria2/aria2</a></p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone --depth<span style="color:#0550ae">=</span><span style="color:#0550ae">1</span> https://github.com/aria2/aria2.git
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="2提前准备mac的编译环境">2、提前准备Mac的编译环境</h2>
-<p>因aria2是C++的，需要C++的环境，可以通过brew安装</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>xcode-select --install
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>brew install autoconf automake cppunit libtool libxml2 gettext openssl pkg-config sqlite zlib
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="3参考前人总结的源码修改经验修改aria2的源码">3、参考前人总结的源码修改经验修改aria2的源码</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#6639ba">cd</span> aria2/src
-</span></span><span style="display:flex;"><span>vim OptionHandlerFactory.cc
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="31-将">3.1 将</h3>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>OptionHandler<span style="color:#0550ae">*</span> <span style="color:#6639ba">op</span><span style="color:#1f2328">(</span><span style="color:#cf222e">new</span> NumberOptionHandler<span style="color:#1f2328">(</span>PREF_MAX_CONNECTION_PER_SERVER<span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>                                               TEXT_MAX_CONNECTION_PER_SERVER<span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>                                               <span style="color:#0a3069">&#34;1&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0550ae">1</span><span style="color:#1f2328">,</span> <span style="color:#0550ae">16</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#39;x&#39;</span><span style="color:#1f2328">));</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>修改为</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2020-09-20-mac_aria2_install/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -763,6 +779,10 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-10-14-claude-code-subagent-system/" title="Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸" target="_blank">Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-09-27-elk-mcp-ai-workflow/" title="结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证" target="_blank">结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证</a>
     </li>
     
@@ -798,10 +818,6 @@
         <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -813,7 +829,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/AI/">AI (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (6)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     

@@ -76,6 +76,55 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-11-22-springboot_start_failed/" title="springboot常见兼容性错误" target="_blank">springboot常见兼容性错误</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年11月22日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/springboot' target="_blank">springboot</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>springboot日常使用中有一些兼容性的错误，有时候没遇见过会让人无法摸到头脑，这里记录一些问题，后续不定期补充</p>
+<h2 id="1mysql">1、mysql</h2>
+<h3 id="11-received-fatal-alert-protocol_version">1.1 Received fatal alert: protocol_version</h3>
+<p>因为更换了数据源才发现并记录，之前用的是mariadb8正常，换了docker mysql8就报错，不过为了减少无法定位的错建议采用完整的url连接串。</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Caused<span style="color:#fff"> </span>by<span style="color:#1f2328">:</span><span style="color:#fff"> </span>com<span style="color:#1f2328">.</span><span style="color:#1f2328">mysql</span><span style="color:#1f2328">.</span><span style="color:#1f2328">jdbc</span><span style="color:#1f2328">.</span><span style="color:#1f2328">exceptions</span><span style="color:#1f2328">.</span><span style="color:#1f2328">jdbc4</span><span style="color:#1f2328">.</span><span style="color:#1f2328">CommunicationsException</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>Communications<span style="color:#fff"> </span>link<span style="color:#fff"> </span>failure<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>The<span style="color:#fff"> </span>last<span style="color:#fff"> </span>packet<span style="color:#fff"> </span>successfully<span style="color:#fff"> </span>received<span style="color:#fff"> </span>from<span style="color:#fff"> </span>the<span style="color:#fff"> </span>server<span style="color:#fff"> </span>was<span style="color:#fff"> </span>6<span style="color:#fff"> </span>milliseconds<span style="color:#fff"> </span>ago<span style="color:#1f2328">.</span><span style="color:#fff">  </span>The<span style="color:#fff"> </span>last<span style="color:#fff"> </span>packet<span style="color:#fff"> </span>sent<span style="color:#fff"> </span>successfully<span style="color:#fff"> </span><span style="color:#cf222e">to</span><span style="color:#fff"> </span>the<span style="color:#fff"> </span>server<span style="color:#fff"> </span>was<span style="color:#fff"> </span>5<span style="color:#fff"> </span>milliseconds<span style="color:#fff"> </span>ago<span style="color:#1f2328">.</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>Caused<span style="color:#fff"> </span>by<span style="color:#1f2328">:</span><span style="color:#fff"> </span>javax<span style="color:#1f2328">.</span><span style="color:#1f2328">net</span><span style="color:#1f2328">.</span><span style="color:#1f2328">ssl</span><span style="color:#1f2328">.</span><span style="color:#1f2328">SSLException</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>Received<span style="color:#fff"> </span>fatal<span style="color:#fff"> </span>alert<span style="color:#1f2328">:</span><span style="color:#fff"> </span>protocol_version<span style="color:#fff">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>原因：<br>
+spring.database.url连接串需要增加useSSL=false</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-11-22-springboot_start_failed/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2022-11-14-docker_port/" title="docker修改运行的容器端口" target="_blank">docker修改运行的容器端口</a>
             </h1>
         </header>
@@ -1289,37 +1338,6 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-07-11-id_discuss/" title="几种id浅谈" target="_blank">几种id浅谈</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年7月11日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/id' target="_blank">id</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>几种 ID 浅谈，UDID、UUID、ULID、NanoID</p>
-<h2 id="1udid">1、UDID</h2>
-<p>Unique Device Identifier（设备唯一标识符）<br>
-从名称上也可以看出，UDID这个东西是和设备有关的，而且是只和设备有关的，有点类似于MAC地址。真机调试，然后需要把UDID这个东西添加到Provisoning Profile授权文件中，也就是把设备唯一标识符添加进去，以此来识别某一台设备。 UDID是一个40位十六进制序列，我们可以使用iTunes和Xcode来获取这个值。</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-07-11-id_discuss/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -1465,6 +1483,10 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-10-14-claude-code-subagent-system/" title="Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸" target="_blank">Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-09-27-elk-mcp-ai-workflow/" title="结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证" target="_blank">结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证</a>
     </li>
     
@@ -1500,10 +1522,6 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
         <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -1515,7 +1533,7 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/AI/">AI (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (6)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     

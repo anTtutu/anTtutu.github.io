@@ -76,6 +76,88 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-12-19-google-hack-syntax/" title="Google Hacking：搜索引擎语法的信息收集技巧" target="_blank">Google Hacking：搜索引擎语法的信息收集技巧</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年12月19日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/%E5%AE%89%E5%85%A8' target="_blank">安全</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>Google Hacking 指用搜索引擎的高级语法发现互联网上意外暴露的敏感信息——登录页、密码表格、备份文件、目录列表。对渗透测试者它是信息收集的第一步；对运维和开发，它的价值在于<strong>自查</strong>：用同样的语法搜自己域名，看看有没有不该暴露的东西。</p>
+<h2 id="一常用操作符">一、常用操作符</h2>
+<table>
+	<thead>
+			<tr>
+					<th>操作符</th>
+					<th>作用</th>
+					<th>示例</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>site:</code></td>
+					<td>限定站点</td>
+					<td><code>site:example.com admin</code></td>
+			</tr>
+			<tr>
+					<td><code>filetype:</code> / <code>ext:</code></td>
+					<td>限定文件类型</td>
+					<td><code>filetype:xls 密码</code></td>
+			</tr>
+			<tr>
+					<td><code>intitle:</code></td>
+					<td>标题包含关键词</td>
+					<td><code>intitle:&quot;index of&quot;</code></td>
+			</tr>
+			<tr>
+					<td><code>inurl:</code></td>
+					<td>URL 包含关键词</td>
+					<td><code>inurl:admin login</code></td>
+			</tr>
+			<tr>
+					<td><code>allinurl:</code></td>
+					<td>URL 包含全部关键词</td>
+					<td><code>allinurl:auth_user_file.txt</code></td>
+			</tr>
+			<tr>
+					<td><code>intext:</code></td>
+					<td>正文包含关键词</td>
+					<td><code>intext:&quot;password&quot;</code></td>
+			</tr>
+			<tr>
+					<td><code>&quot;&quot;</code></td>
+					<td>精确短语</td>
+					<td><code>&quot;Login:&quot; &quot;password=&quot;</code></td>
+			</tr>
+			<tr>
+					<td><code>-</code></td>
+					<td>排除</td>
+					<td><code>filetype:xls -site:example.com</code></td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="二典型用法">二、典型用法</h2>
+<p><strong>搜暴露的账号密码文件</strong>：</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2021-12-19-google-hack-syntax/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2021-12-18-mysql-lock-deadlock-troubleshooting/" title="mysql锁与死锁排查：从锁查询到表空间回收" target="_blank">mysql锁与死锁排查：从锁查询到表空间回收</a>
             </h1>
         </header>
@@ -1218,104 +1300,6 @@
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2021-10-07-safe_coding_js/" title="前端编码安全" target="_blank">前端编码安全</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2021年10月7日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/%E5%89%8D%E7%AB%AF' target="_blank">前端</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/safe' target="_blank">safe</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h5 id="前端js开发------转自腾讯github">前端js开发     &ndash; 转自腾讯github</h5>
-<p><a id="1.1"></a></p>
-<h1 id="i-代码实现">I. 代码实现</h1>
-<p><a id="1.1.1"></a></p>
-<h2 id="11-原生dom-api的安全操作">1.1 原生DOM API的安全操作</h2>
-<p><strong>1.1.1【必须】HTML标签操作，限定/过滤传入变量值</strong></p>
-<ul>
-<li>使用<code>innerHTML=</code>、<code>outerHTML=</code>、<code>document.write()</code>、<code>document.writeln()</code>时，如变量值外部可控，应对特殊字符（<code>&amp;, &lt;, &gt;, &quot;, '</code>）做编码转义，或使用安全的DOM API替代，包括：<code>innerText=</code></li>
-</ul>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#57606a">// 假设 params 为用户输入， text 为 DOM 节点
-</span></span></span><span style="display:flex;"><span><span style="color:#57606a">// bad：将不可信内容带入HTML标签操作
-</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">const</span> <span style="color:#1f2328">{</span> <span style="color:#1f2328">user</span> <span style="color:#1f2328">}</span> <span style="color:#0550ae">=</span> <span style="color:#1f2328">params</span><span style="color:#1f2328">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a">// ...
-</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">text</span><span style="color:#1f2328">.</span><span style="color:#1f2328">innerHTML</span> <span style="color:#0550ae">=</span> <span style="color:#0a3069">`Follow @</span><span style="color:#0a3069">${</span><span style="color:#1f2328">user</span><span style="color:#0a3069">}</span><span style="color:#0a3069">`</span><span style="color:#1f2328">;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a">// good: innerHTML操作前，对特殊字符编码转义
-</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">function</span> <span style="color:#1f2328">htmlEncode</span><span style="color:#1f2328">(</span><span style="color:#1f2328">iStr</span><span style="color:#1f2328">)</span> <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#cf222e">let</span> <span style="color:#1f2328">sStr</span> <span style="color:#0550ae">=</span> <span style="color:#1f2328">iStr</span><span style="color:#1f2328">;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#1f2328">sStr</span> <span style="color:#0550ae">=</span> <span style="color:#1f2328">sStr</span><span style="color:#1f2328">.</span><span style="color:#1f2328">replace</span><span style="color:#1f2328">(</span><span style="color:#0a3069">/&amp;/g</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;&amp;amp;&#34;</span><span style="color:#1f2328">);</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#1f2328">sStr</span> <span style="color:#0550ae">=</span> <span style="color:#1f2328">sStr</span><span style="color:#1f2328">.</span><span style="color:#1f2328">replace</span><span style="color:#1f2328">(</span><span style="color:#0a3069">/&gt;/g</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;&amp;gt;&#34;</span><span style="color:#1f2328">);</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#1f2328">sStr</span> <span style="color:#0550ae">=</span> <span style="color:#1f2328">sStr</span><span style="color:#1f2328">.</span><span style="color:#1f2328">replace</span><span style="color:#1f2328">(</span><span style="color:#0a3069">/&lt;/g</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;&amp;lt;&#34;</span><span style="color:#1f2328">);</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#1f2328">sStr</span> <span style="color:#0550ae">=</span> <span style="color:#1f2328">sStr</span><span style="color:#1f2328">.</span><span style="color:#1f2328">replace</span><span style="color:#1f2328">(</span><span style="color:#0a3069">/&#34;/g</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;&amp;quot;&#34;</span><span style="color:#1f2328">);</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#1f2328">sStr</span> <span style="color:#0550ae">=</span> <span style="color:#1f2328">sStr</span><span style="color:#1f2328">.</span><span style="color:#1f2328">replace</span><span style="color:#1f2328">(</span><span style="color:#0a3069">/&#39;/g</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;&amp;#39;&#34;</span><span style="color:#1f2328">);</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#cf222e">return</span> <span style="color:#1f2328">sStr</span><span style="color:#1f2328">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#cf222e">let</span> <span style="color:#1f2328">{</span> <span style="color:#1f2328">user</span> <span style="color:#1f2328">}</span> <span style="color:#0550ae">=</span> <span style="color:#1f2328">params</span><span style="color:#1f2328">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#1f2328">user</span> <span style="color:#0550ae">=</span> <span style="color:#1f2328">htmlEncode</span><span style="color:#1f2328">(</span><span style="color:#1f2328">user</span><span style="color:#1f2328">);</span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a">// ...
-</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">text</span><span style="color:#1f2328">.</span><span style="color:#1f2328">innerHTML</span> <span style="color:#0550ae">=</span> <span style="color:#0a3069">`Follow @</span><span style="color:#0a3069">${</span><span style="color:#1f2328">user</span><span style="color:#0a3069">}</span><span style="color:#0a3069">`</span><span style="color:#1f2328">;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a">// good: 使用安全的DOM API替代innerHTML
-</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">const</span> <span style="color:#1f2328">{</span> <span style="color:#1f2328">user</span> <span style="color:#1f2328">}</span> <span style="color:#0550ae">=</span> <span style="color:#1f2328">params</span><span style="color:#1f2328">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a">// ...
-</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">text</span><span style="color:#1f2328">.</span><span style="color:#1f2328">innerText</span> <span style="color:#0550ae">=</span> <span style="color:#0a3069">`Follow @</span><span style="color:#0a3069">${</span><span style="color:#1f2328">user</span><span style="color:#0a3069">}</span><span style="color:#0a3069">`</span><span style="color:#1f2328">;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><strong>1.1.2【必须】HTML属性操作，限定/过滤传入变量值</strong></p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2021-10-07-safe_coding_js/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -1461,6 +1445,10 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-10-14-claude-code-subagent-system/" title="Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸" target="_blank">Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-09-27-elk-mcp-ai-workflow/" title="结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证" target="_blank">结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证</a>
     </li>
     
@@ -1496,10 +1484,6 @@
         <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -1511,7 +1495,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/AI/">AI (5)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (6)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     
