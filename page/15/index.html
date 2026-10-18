@@ -76,6 +76,56 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2017-06-06-redis_cli/" title="Redis日常命令整理" target="_blank">Redis日常命令整理</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2017年6月6日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/redis' target="_blank">redis</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>整理下在linux中操作redis中的一些命令</p>
+<h2 id="1统计个数">1、统计个数</h2>
+<p>redis中名称含有OMP_OFFLINE的key的个数；</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>src/redis-cli keys <span style="color:#0a3069">&#34;*OMP_OFFLINE*&#34;</span> <span style="color:#1f2328">|</span> wc -l
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2批量删除">2、批量删除</h2>
+<p>批量删除 0号数据库中名称含有OMP_OFFLINE的key：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>src/redis-cli -n <span style="color:#0550ae">0</span> keys <span style="color:#0a3069">&#34;*OMP_OFFLINE*&#34;</span> <span style="color:#1f2328">|</span> xargs src/redis-cli -n <span style="color:#0550ae">0</span> del
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在redis的客户端环境中并不支持批量删除。</p>
+<p>可以把某个keys的结果全部输出到文件中，比如keys.log</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2017-06-06-redis_cli/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2017-06-05-jrebel/" title="eclipse之jrebel热部署插件" target="_blank">eclipse之jrebel热部署插件</a>
             </h1>
         </header>
@@ -1013,55 +1063,6 @@
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2017-05-14-vcs3/" title="VCS第三波-VCS的模块工作原理" target="_blank">VCS第三波-VCS的模块工作原理</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2017年5月14日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/vcs' target="_blank">vcs</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/ha' target="_blank">ha</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/cluster' target="_blank">cluster</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>既然VCS用得多了，原理还是要了解下的，不然定位问题还是很吃力的，知道了集群知识和VCS的工作原理，对日常管理有很大的帮助
-转自<a href="http://down.51cto.com/data/316764">http://down.51cto.com/data/316764</a></p>
-<h3 id="小结">小结</h3>
-<pre tabindex="0"><code>HAD用于是配合Agent做状态同步的工作进程
-LLT用于心跳通讯
-GAB用于Cluster内节点的广播，相互协同工作
-Fencing用于Cluster管理，相当于脑部，搜集其他部件返回的信息作出决策判断
-</code></pre><h2 id="1vcs模块简介">1、VCS模块简介</h2>
-<pre tabindex="0"><code>HAD: HighAvailability Daemon，是一个后台程序，VCS用来管理Cluster配置信息，响应用户命令，跟踪VCS AGENT传来的各种resource状态变化。
-LLT: 是VCS底层的传输协议，同时也负责监控Cluster节点的心跳信息。
-GAB: Groupmembership / Atomic Broadcast。 是一个用于管理Cluster成员组成，并在Cluster节点间进行原子广播的内核模块。
-I/O Fencing: I/O Fencing 使用一种类似投票的机制，来防止Cluster分裂成两个或多个子群集，它保证在网络异常时，只有一个Cluster可以幸存下来。另外，I/O Fencing还利用SCSI-3协议的persistent reservation来保护共享磁盘上的数据。 
-</code></pre><h2 id="2had">2、HAD</h2>
-<p>High Availability Daemon，是一个后台程序，VCS用来管理Cluster配置信息，响应用户命令，跟踪VCS AGENT传来的各种resource状态变化。并保持每个Node的状态同步，关于状态同步，有个专门的名称，叫做：“replicatedstate machine”，HAD就是这样一个machine。在每个Node上，都有一个HAD进程在运行。</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2017-05-14-vcs3/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -1187,6 +1188,10 @@ I/O Fencing: I/O Fencing 使用一种类似投票的机制，来防止Cluster分
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-10-17-vcs-simulator-web/" title="我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了" target="_blank">我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-10-14-claude-code-subagent-system/" title="Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸" target="_blank">Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸</a>
     </li>
     
@@ -1220,10 +1225,6 @@ I/O Fencing: I/O Fencing 使用一种类似投票的机制，来防止Cluster分
     
     <li>
         <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
     </li>
     
 </ul>
@@ -1457,7 +1458,7 @@ I/O Fencing: I/O Fencing 使用一种类似投票的机制，来防止Cluster分
     
     <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (7)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (8)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">Virus (5)</a></li>
     
@@ -1484,6 +1485,8 @@ I/O Fencing: I/O Fencing 使用一种类似投票的机制，来防止Cluster分
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E5%99%A8/">容器 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%BC%80%E6%BA%90/">开源 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试 (1)</a></li>
     
@@ -1730,6 +1733,8 @@ I/O Fencing: I/O Fencing 使用一种类似投票的机制，来防止Cluster分
     
     <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
     
+    <a href="https://anTtutu.github.io/tags/simulator/">Simulator</a>
+    
     <a href="https://anTtutu.github.io/tags/skill/">Skill</a>
     
     <a href="https://anTtutu.github.io/tags/split/">Split</a>
@@ -1815,6 +1820,8 @@ I/O Fencing: I/O Fencing 使用一种类似投票的机制，来防止Cluster分
     <a href="https://anTtutu.github.io/tags/%E5%B9%BF%E5%91%8A/">广告</a>
     
     <a href="https://anTtutu.github.io/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BC%80%E6%BA%90/">开源</a>
     
     <a href="https://anTtutu.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试</a>
     

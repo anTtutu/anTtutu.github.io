@@ -76,6 +76,83 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议" target="_blank">redis日常使用的一些建议</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年3月5日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/redis' target="_blank">redis</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/safe' target="_blank">safe</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>最近处理了几起redis不安全的阿里云服务器，总结下一些建议</p>
+<h2 id="1安全建议">1、安全建议</h2>
+<h3 id="11设置bind">1.1、设置bind</h3>
+<p>默认bind 0.0.0.0是默认值，相当于不设防</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#6639ba">bind</span> 0.0.0.0
+</span></span><span style="display:flex;"><span>建议修改成链接端的IP，比如
+</span></span><span style="display:flex;"><span><span style="color:#6639ba">bind</span> 192.168.100.101
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="12设置auth">1.2、设置auth</h3>
+<p>默认是不设置密码，相当于不需要密码和鉴权就可以访问</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>requirepass foobared
+</span></span><span style="display:flex;"><span>建议开启密码访问，并且不能设置弱口令密码，比如
+</span></span><span style="display:flex;"><span>requirepass Admin9527#<span style="color:#1f2328">&amp;</span>@ekd452
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="13设置port">1.3、设置port</h3>
+<p>默认是6937，容易被扫描到</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>port <span style="color:#0550ae">6379</span>
+</span></span><span style="display:flex;"><span>建议修改默认端口，比如
+</span></span><span style="display:flex;"><span>port <span style="color:#0550ae">36379</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="14设置config">1.4、设置config</h3>
+<p>检查config这2个文件设置的值是否自己设置的值</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2022-02-13-logrotate/" title="logrotate日志切割" target="_blank">logrotate日志切割</a>
             </h1>
         </header>
@@ -613,40 +690,6 @@ count 表示输出次数，如果没有指定该值，但是指定了 delay 的�
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理" target="_blank">mysql大表的数据清理</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2021年12月23日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/mysql' target="_blank">mysql</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/clean' target="_blank">clean</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>mysql的表日积月累也会出现过千万的大表，有些历史数据可以定期归档清理的，保留最近的数据即可。但是delete table_name where id = &lsquo;&rsquo;;这种方式只是逻辑上的删除，不会释放表空间和索引的。因此需要在历史数据归档后做表分析才行</p>
-<h2 id="1大表归档大量数据">1、大表归档大量数据</h2>
-<p>先远程备份，可以开发成shell脚本，设置crontab定期备份</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -792,6 +835,10 @@ count 表示输出次数，如果没有指定该值，但是指定了 delay 的�
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-10-17-vcs-simulator-web/" title="我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了" target="_blank">我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-10-14-claude-code-subagent-system/" title="Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸" target="_blank">Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸</a>
     </li>
     
@@ -825,10 +872,6 @@ count 表示输出次数，如果没有指定该值，但是指定了 delay 的�
     
     <li>
         <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
     </li>
     
 </ul>
@@ -1062,7 +1105,7 @@ count 表示输出次数，如果没有指定该值，但是指定了 delay 的�
     
     <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (7)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (8)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">Virus (5)</a></li>
     
@@ -1089,6 +1132,8 @@ count 表示输出次数，如果没有指定该值，但是指定了 delay 的�
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E5%99%A8/">容器 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%BC%80%E6%BA%90/">开源 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试 (1)</a></li>
     
@@ -1335,6 +1380,8 @@ count 表示输出次数，如果没有指定该值，但是指定了 delay 的�
     
     <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
     
+    <a href="https://anTtutu.github.io/tags/simulator/">Simulator</a>
+    
     <a href="https://anTtutu.github.io/tags/skill/">Skill</a>
     
     <a href="https://anTtutu.github.io/tags/split/">Split</a>
@@ -1420,6 +1467,8 @@ count 表示输出次数，如果没有指定该值，但是指定了 delay 的�
     <a href="https://anTtutu.github.io/tags/%E5%B9%BF%E5%91%8A/">广告</a>
     
     <a href="https://anTtutu.github.io/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BC%80%E6%BA%90/">开源</a>
     
     <a href="https://anTtutu.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试</a>
     

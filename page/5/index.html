@@ -76,6 +76,84 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-07-18-java-lock-reentrantlock/" title="java锁体系与ReentrantLock详解" target="_blank">java锁体系与ReentrantLock详解</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年7月18日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/java' target="_blank">java</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>面试和实际编码里 java 锁都是绕不开的话题。这篇先按维度把常见锁的分类理清楚，再聚焦 ReentrantLock：它的四个高级特性分别解决 synchronized 的什么短板，配可运行的验证代码，最后是核心方法与注意事项。</p>
+<h2 id="一java-常见锁的七种分类">一、java 常见锁的七种分类</h2>
+<p>按不同维度，锁可以分成下面几组——同一把锁在不同维度下有不同名字：</p>
+<table>
+	<thead>
+			<tr>
+					<th>维度</th>
+					<th>分类</th>
+					<th>说明</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>竞争是否排队</td>
+					<td>公平锁 / 非公平锁</td>
+					<td>synchronized 和 ReentrantLock 默认都是非公平锁，非公平可以避免线程唤醒的空档期、提高吞吐</td>
+			</tr>
+			<tr>
+					<td>同线程能否重复获取</td>
+					<td>可重入锁 / 不可重入锁</td>
+					<td>ReentrantLock 对同一线程可重入，不会自己锁死自己</td>
+			</tr>
+			<tr>
+					<td>能否被多线程共享</td>
+					<td>共享锁 / 独占锁</td>
+					<td>ReentrantReadWriteLock 中读锁是共享锁、写锁是排他锁</td>
+			</tr>
+			<tr>
+					<td>等待期能否被中断</td>
+					<td>可中断锁 / 不可中断锁</td>
+					<td>ReentrantLock 的 <code>lockInterruptibly()</code> 支持中断</td>
+			</tr>
+			<tr>
+					<td>是否锁住资源</td>
+					<td>悲观锁 / 乐观锁</td>
+					<td>synchronized 是悲观；CAS（如 Atomic 系列）是乐观</td>
+			</tr>
+			<tr>
+					<td>等待方式</td>
+					<td>自旋锁 / 阻塞锁</td>
+					<td>自旋避免上下文切换，但空耗 CPU</td>
+			</tr>
+			<tr>
+					<td>-</td>
+					<td>偏向锁/轻量级锁/重量级锁</td>
+					<td>synchronized 的锁升级路径（JDK 15 起偏向锁已废弃）</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="二reentrantlock-的四个高级特性">二、ReentrantLock 的四个高级特性</h2>
+<p>ReentrantLock 实现了 Lock 接口，作用与 synchronized 一样是线程安全，但多了四个 synchronized 没有的能力。</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-07-18-java-lock-reentrantlock/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2022-07-11-id_discuss/" title="几种id浅谈" target="_blank">几种id浅谈</a>
             </h1>
         </header>
@@ -649,83 +727,6 @@
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" title="redis日常使用的一些建议" target="_blank">redis日常使用的一些建议</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年3月5日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/redis' target="_blank">redis</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/safe' target="_blank">safe</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>最近处理了几起redis不安全的阿里云服务器，总结下一些建议</p>
-<h2 id="1安全建议">1、安全建议</h2>
-<h3 id="11设置bind">1.1、设置bind</h3>
-<p>默认bind 0.0.0.0是默认值，相当于不设防</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#6639ba">bind</span> 0.0.0.0
-</span></span><span style="display:flex;"><span>建议修改成链接端的IP，比如
-</span></span><span style="display:flex;"><span><span style="color:#6639ba">bind</span> 192.168.100.101
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="12设置auth">1.2、设置auth</h3>
-<p>默认是不设置密码，相当于不需要密码和鉴权就可以访问</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>requirepass foobared
-</span></span><span style="display:flex;"><span>建议开启密码访问，并且不能设置弱口令密码，比如
-</span></span><span style="display:flex;"><span>requirepass Admin9527#<span style="color:#1f2328">&amp;</span>@ekd452
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="13设置port">1.3、设置port</h3>
-<p>默认是6937，容易被扫描到</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>port <span style="color:#0550ae">6379</span>
-</span></span><span style="display:flex;"><span>建议修改默认端口，比如
-</span></span><span style="display:flex;"><span>port <span style="color:#0550ae">36379</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="14设置config">1.4、设置config</h3>
-<p>检查config这2个文件设置的值是否自己设置的值</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-03-05-redis_safe/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -871,6 +872,10 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-10-17-vcs-simulator-web/" title="我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了" target="_blank">我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-10-14-claude-code-subagent-system/" title="Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸" target="_blank">Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸</a>
     </li>
     
@@ -904,10 +909,6 @@
     
     <li>
         <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
     </li>
     
 </ul>
@@ -1141,7 +1142,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (7)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (8)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">Virus (5)</a></li>
     
@@ -1168,6 +1169,8 @@
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E5%99%A8/">容器 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%BC%80%E6%BA%90/">开源 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试 (1)</a></li>
     
@@ -1414,6 +1417,8 @@
     
     <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
     
+    <a href="https://anTtutu.github.io/tags/simulator/">Simulator</a>
+    
     <a href="https://anTtutu.github.io/tags/skill/">Skill</a>
     
     <a href="https://anTtutu.github.io/tags/split/">Split</a>
@@ -1499,6 +1504,8 @@
     <a href="https://anTtutu.github.io/tags/%E5%B9%BF%E5%91%8A/">广告</a>
     
     <a href="https://anTtutu.github.io/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BC%80%E6%BA%90/">开源</a>
     
     <a href="https://anTtutu.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试</a>
     

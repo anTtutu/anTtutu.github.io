@@ -77,6 +77,166 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-11-28-python_muilt_version/" title="python多版本管理工具" target="_blank">python多版本管理工具</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年11月28日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/python' target="_blank">python</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/sdk' target="_blank">sdk</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>python多版本管理工具整理介绍</p>
+<table>
+	<thead>
+			<tr>
+					<th>序号</th>
+					<th>工具名称</th>
+					<th>安装方式</th>
+					<th>说明</th>
+					<th>备注</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>pyenv</td>
+					<td>curl -L <a href="https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer">https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer</a> | bash</td>
+					<td>比较早出现的 python 多版本管理工具，目前不太活跃了</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>virtualenv</td>
+					<td>pip install virtualenv</td>
+					<td>通过创建虚拟机方式管理</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>anaconda</td>
+					<td><a href="https://repo.anaconda.com/archive/">https://repo.anaconda.com/archive/</a></td>
+					<td>带了很多科学计算包的发行版，包含conda</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>miniconda</td>
+					<td><a href="https://repo.anaconda.com/miniconda/">https://repo.anaconda.com/miniconda/</a></td>
+					<td>不带科学计算包的mini版本，只有python和conda</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>miniforge</td>
+					<td><a href="https://github.com/conda-forge/miniforge">https://github.com/conda-forge/miniforge</a></td>
+					<td>miniforge是由社区赞助、领导的，并且用GitHub托管所有的包，使用 （而且只用）conda-forge 作为（默认）下载channel，避开了Anaconda的repository</td>
+					<td>-</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="1conda自身管理">1、Conda自身管理</h2>
+<h3 id="11-更新conda">1.1 更新conda</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># 更新anaconda</span>
+</span></span><span style="display:flex;"><span>conda update conda
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="12-更新anaconda元数据包">1.2 更新anaconda元数据包</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># 更新anaconda元数据包</span>
+</span></span><span style="display:flex;"><span>conda update anaconda
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2python环境管理">2、Python环境管理</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># 创建一个新环境，并制定python解释器版本，没有会自动下载</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># python27 是环境名称</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># python=2.7 是要安装的包和版本，默认会为我们寻找2.7.x中的最新版本</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># anaconda 是创建环境时同时要安装的包，这个可以不写</span>
+</span></span><span style="display:flex;"><span>conda create -n python27 <span style="color:#953800">python</span><span style="color:#0550ae">=</span>2.7 anaconda
+</span></span><span style="display:flex;"><span>conda create -n python36 <span style="color:#953800">python</span><span style="color:#0550ae">=</span>3.6
+</span></span><span style="display:flex;"><span>conda create -n python37 <span style="color:#953800">python</span><span style="color:#0550ae">=</span>3.7
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 更新Python，进入某个环境运行下面的命令，将更新当前环境的Python到最新分支版本。比如当前是3.5，更新后将会到最新的3.X</span>
+</span></span><span style="display:flex;"><span>conda update python
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3虚拟环境管理">3、虚拟环境管理</h2>
+<h3 id="31-查看当前托管的所有虚拟环境列表">3.1 查看当前托管的所有虚拟环境列表</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ conda env list
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># conda environments:</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a">#</span>
+</span></span><span style="display:flex;"><span>base                  *  /root/anaconda3
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="32-创建虚拟环境">3.2 创建虚拟环境</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># 创建一个名为myvenv 的环境，指定Python版本是3.10</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># （不用管是3.10.x，conda会为我们自动寻找3.10.x中的最新版本）</span>
+</span></span><span style="display:flex;"><span>conda create --name myvenv <span style="color:#953800">python</span><span style="color:#0550ae">=</span>3.10
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>虚拟环境不会在当前环境下创建虚拟环境目录，所有的虚拟环境目录默认放在：/root/anaconda3/envs/</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-11-28-python_muilt_version/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2022-11-22-springboot_start_failed/" title="springboot常见兼容性错误" target="_blank">springboot常见兼容性错误</a>
             </h1>
         </header>
@@ -1261,84 +1421,6 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-07-18-java-lock-reentrantlock/" title="java锁体系与ReentrantLock详解" target="_blank">java锁体系与ReentrantLock详解</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年7月18日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/java' target="_blank">java</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>面试和实际编码里 java 锁都是绕不开的话题。这篇先按维度把常见锁的分类理清楚，再聚焦 ReentrantLock：它的四个高级特性分别解决 synchronized 的什么短板，配可运行的验证代码，最后是核心方法与注意事项。</p>
-<h2 id="一java-常见锁的七种分类">一、java 常见锁的七种分类</h2>
-<p>按不同维度，锁可以分成下面几组——同一把锁在不同维度下有不同名字：</p>
-<table>
-	<thead>
-			<tr>
-					<th>维度</th>
-					<th>分类</th>
-					<th>说明</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>竞争是否排队</td>
-					<td>公平锁 / 非公平锁</td>
-					<td>synchronized 和 ReentrantLock 默认都是非公平锁，非公平可以避免线程唤醒的空档期、提高吞吐</td>
-			</tr>
-			<tr>
-					<td>同线程能否重复获取</td>
-					<td>可重入锁 / 不可重入锁</td>
-					<td>ReentrantLock 对同一线程可重入，不会自己锁死自己</td>
-			</tr>
-			<tr>
-					<td>能否被多线程共享</td>
-					<td>共享锁 / 独占锁</td>
-					<td>ReentrantReadWriteLock 中读锁是共享锁、写锁是排他锁</td>
-			</tr>
-			<tr>
-					<td>等待期能否被中断</td>
-					<td>可中断锁 / 不可中断锁</td>
-					<td>ReentrantLock 的 <code>lockInterruptibly()</code> 支持中断</td>
-			</tr>
-			<tr>
-					<td>是否锁住资源</td>
-					<td>悲观锁 / 乐观锁</td>
-					<td>synchronized 是悲观；CAS（如 Atomic 系列）是乐观</td>
-			</tr>
-			<tr>
-					<td>等待方式</td>
-					<td>自旋锁 / 阻塞锁</td>
-					<td>自旋避免上下文切换，但空耗 CPU</td>
-			</tr>
-			<tr>
-					<td>-</td>
-					<td>偏向锁/轻量级锁/重量级锁</td>
-					<td>synchronized 的锁升级路径（JDK 15 起偏向锁已废弃）</td>
-			</tr>
-	</tbody>
-</table>
-<h2 id="二reentrantlock-的四个高级特性">二、ReentrantLock 的四个高级特性</h2>
-<p>ReentrantLock 实现了 Lock 接口，作用与 synchronized 一样是线程安全，但多了四个 synchronized 没有的能力。</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-07-18-java-lock-reentrantlock/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -1484,6 +1566,10 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-10-17-vcs-simulator-web/" title="我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了" target="_blank">我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-10-14-claude-code-subagent-system/" title="Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸" target="_blank">Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸</a>
     </li>
     
@@ -1517,10 +1603,6 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     
     <li>
         <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
     </li>
     
 </ul>
@@ -1754,7 +1836,7 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     
     <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (7)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (8)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">Virus (5)</a></li>
     
@@ -1781,6 +1863,8 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E5%99%A8/">容器 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%BC%80%E6%BA%90/">开源 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试 (1)</a></li>
     
@@ -2027,6 +2111,8 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     
     <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
     
+    <a href="https://anTtutu.github.io/tags/simulator/">Simulator</a>
+    
     <a href="https://anTtutu.github.io/tags/skill/">Skill</a>
     
     <a href="https://anTtutu.github.io/tags/split/">Split</a>
@@ -2112,6 +2198,8 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     <a href="https://anTtutu.github.io/tags/%E5%B9%BF%E5%91%8A/">广告</a>
     
     <a href="https://anTtutu.github.io/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BC%80%E6%BA%90/">开源</a>
     
     <a href="https://anTtutu.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试</a>
     

@@ -77,6 +77,62 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2026年3月20日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/AI' target="_blank">AI</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>用 Claude Code 干活一段时间之后，慢慢摸清了 Agent 和 Skill 这两个概念的门道。Agent 解决「谁来干、怎么干」，Skill 解决「会不会这一行」。这篇整理两者的原理，配上两个我自己在用的自定义样例，可以直接抄走改。</p>
+<h2 id="1先分清三个词">1、先分清三个词</h2>
+<table>
+	<thead>
+			<tr>
+					<th>概念</th>
+					<th>本质</th>
+					<th>打个比方</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>模型（LLM）</td>
+					<td>会推理的「大脑」，只能输入文本输出文本</td>
+					<td>一个聪明但没有手脚的顾问</td>
+			</tr>
+			<tr>
+					<td><strong>Agent</strong></td>
+					<td>模型 + 工具调用 + 自主循环：能读文件、执行命令、改代码、自己验收</td>
+					<td>授权完整的员工：自己查资料、自己动手、自己检查</td>
+			</tr>
+			<tr>
+					<td><strong>Skill</strong></td>
+					<td>预先打包的领域知识和流程，按需加载</td>
+					<td>员工手册里的 SOP：平时不占脑子，干到对应活时翻出来照做</td>
+			</tr>
+	</tbody>
+</table>
+<p>Agent 是干活的，Skill 是干活的技能包，就这么简单。</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2026-01-26-pages_died/" title="国内的pages服务都嘎了" target="_blank">国内的pages服务都嘎了</a>
             </h1>
         </header>
@@ -425,78 +481,6 @@
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2024-11-21-springboot-freemarker-integration/" title="SpringBoot接入FreeMarker完整指南：依赖、配置与可运行样例" target="_blank">SpringBoot接入FreeMarker完整指南：依赖、配置与可运行样例</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2024年11月21日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/java' target="_blank">java</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/springboot' target="_blank">springboot</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>FTL 模板语法在 <a href="/post/2024-11-14-freemarker-ftl/">FreeMarker常用语法与指令详解</a>里整理过了，这篇解决另一半问题：怎么把 FreeMarker 接进 SpringBoot。依赖、配置、渲染、全局变量，配一套能直接跑的样例。</p>
-<h2 id="1引入依赖">1、引入依赖</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#0550ae">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#0550ae">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;artifactId&gt;</span>spring-boot-starter-freemarker<span style="color:#0550ae">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#0550ae">&lt;/dependency&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#0550ae">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#0550ae">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&lt;artifactId&gt;</span>spring-boot-starter-web<span style="color:#0550ae">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#0550ae">&lt;/dependency&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>starter 会自动带上 freemarker 核心包和 <code>FreeMarkerAutoConfiguration</code>，不加任何配置就能跑。</p>
-<h2 id="2目录结构">2、目录结构</h2>
-<pre tabindex="0"><code>src/main/java
-  └── com.example.demo
-      ├── DemoApplication.java
-      └── controller/PageController.java
-src/main/resources
-  ├── application.yml
-  ├── static/                  # 静态资源（css/js）
-  └── templates/               # 模板默认目录（classpath:/templates/）
-      ├── index.ftl
-      ├── user/
-      │   └── detail.ftl
-      └── common/
-          ├── header.ftl
-          └── footer.ftl
-</code></pre><p>约定就三条：模板放 <code>classpath:/templates/</code>，后缀 <code>.ftl</code>，Controller 返回视图名不带后缀。</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2024-11-21-springboot-freemarker-integration/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -621,6 +605,10 @@ src/main/resources
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-10-17-vcs-simulator-web/" title="我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了" target="_blank">我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-10-14-claude-code-subagent-system/" title="Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸" target="_blank">Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸</a>
     </li>
     
@@ -654,10 +642,6 @@ src/main/resources
     
     <li>
         <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
     </li>
     
 </ul>
@@ -891,7 +875,7 @@ src/main/resources
     
     <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (7)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (8)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">Virus (5)</a></li>
     
@@ -918,6 +902,8 @@ src/main/resources
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E5%99%A8/">容器 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%BC%80%E6%BA%90/">开源 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试 (1)</a></li>
     
@@ -1164,6 +1150,8 @@ src/main/resources
     
     <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
     
+    <a href="https://anTtutu.github.io/tags/simulator/">Simulator</a>
+    
     <a href="https://anTtutu.github.io/tags/skill/">Skill</a>
     
     <a href="https://anTtutu.github.io/tags/split/">Split</a>
@@ -1249,6 +1237,8 @@ src/main/resources
     <a href="https://anTtutu.github.io/tags/%E5%B9%BF%E5%91%8A/">广告</a>
     
     <a href="https://anTtutu.github.io/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BC%80%E6%BA%90/">开源</a>
     
     <a href="https://anTtutu.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试</a>
     

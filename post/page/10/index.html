@@ -77,6 +77,53 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2020-12-11-mysql-daily-commands/" title="mysql日常检查命令与优化散记" target="_blank">mysql日常检查命令与优化散记</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年12月11日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/mysql' target="_blank">mysql</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>攒的一些 mysql 日常巡检命令和优化散记，合在一起记录。巡检部分用 show status/variables 就能完成，优化部分是建表和索引设计层面的经验，标注了适用版本。</p>
+<h2 id="1日常巡检命令">1、日常巡检命令</h2>
+<h3 id="11-最后一条语句的报错信息">1.1 最后一条语句的报错信息</h3>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#57606a">-- 显示最后一个执行语句产生的错误、警告和通知
+</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">show</span><span style="color:#fff"> </span>warnings<span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">-- 只显示错误
+</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">show</span><span style="color:#fff"> </span>errors<span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>调试 SQL 时比看客户端提示更全，写存储过程排查尤其有用。</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2020-12-11-mysql-daily-commands/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2020-12-05-shell-tips/" title="shell小技巧：URL转码表与set -euo pipefail" target="_blank">shell小技巧：URL转码表与set -euo pipefail</a>
             </h1>
         </header>
@@ -601,40 +648,6 @@
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2020-09-21-mac_app_list/" title="Mac下的工具软件" target="_blank">Mac下的工具软件</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2020年9月21日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/mac' target="_blank">mac</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/app' target="_blank">app</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>本文最早写于2020年9月，当时准备给自己的 mbp2015 升级固态硬盘（换成西数蓝盘 sn550 1T），为了保险，把手头的工具 App 清单备份下来。</p>
-<blockquote>
-<p>2026-09-24 更新：按当前机器实际安装的 App 全量重写了这篇清单（170+ 个），按类目重新归类。图标统一从各 App 安装包内（<code>*.app/Contents/Resources/AppIcon.icns</code>）提取并转换成 256x256 PNG，和当年手工整理的方式保持一致；系统自带 App、用户目录下的 App 也一并收录并标注了来源。下载地址只保留官方/项目主页，个别已停止维护或查不到官网的以「—」标注。另补充了 SDK 运行环境、CLI 开发工具与 AI 编程 CLI 三节（见文末）：SDK 图标来自官网高清资源/官方 GitHub 头像，AI CLI 图标取自各官方 GitHub 组织头像，少数无官方图标的以「—」标注。</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2020-09-21-mac_app_list/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -780,6 +793,10 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-10-17-vcs-simulator-web/" title="我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了" target="_blank">我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-10-14-claude-code-subagent-system/" title="Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸" target="_blank">Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸</a>
     </li>
     
@@ -813,10 +830,6 @@
     
     <li>
         <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
-    </li>
-    
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-03-20-ai-agent-and-skill/" title="AI开发入门：Agent与Skill体系详解，附可复制的自定义样例" target="_blank">AI开发入门：Agent与Skill体系详解，附可复制的自定义样例</a>
     </li>
     
 </ul>
@@ -1050,7 +1063,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (7)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (8)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/virus/">Virus (5)</a></li>
     
@@ -1077,6 +1090,8 @@
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E5%99%A8/">容器 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%BC%80%E6%BA%90/">开源 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试 (1)</a></li>
     
@@ -1323,6 +1338,8 @@
     
     <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
     
+    <a href="https://anTtutu.github.io/tags/simulator/">Simulator</a>
+    
     <a href="https://anTtutu.github.io/tags/skill/">Skill</a>
     
     <a href="https://anTtutu.github.io/tags/split/">Split</a>
@@ -1408,6 +1425,8 @@
     <a href="https://anTtutu.github.io/tags/%E5%B9%BF%E5%91%8A/">广告</a>
     
     <a href="https://anTtutu.github.io/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BC%80%E6%BA%90/">开源</a>
     
     <a href="https://anTtutu.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试</a>
     
