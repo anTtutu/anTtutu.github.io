@@ -1,0 +1,1531 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+
+    <title>IndexTTS-1.5本地搭建试用：B站开源的零样本语音克隆TTS | Anttu&#39;s Blog</title>
+    <meta property="og:title" content="IndexTTS-1.5本地搭建试用：B站开源的零样本语音克隆TTS - Anttu&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2026-02-10T12:30:00&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2026-02-10T12:30:00&#43;08:00'>
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,anttu,java,博客,bash,linux笔记,python笔记,公众号,小程序">
+    <meta name="description" content="IndexTTS-1.5 Intel Mac 本地搭建实战：conda 基础环境 &#43; uv 安装依赖、HuggingFace 镜像下载 2.9G 模型、Intel Mac torch 停更 2.2.2 封顶的坑、webui 启动、零样本音色克隆合成 wav 验证、无 CUDA 推理慢与 AMD 显卡点亮 MPS 的意外收获，附踩坑记录">
+        
+    <meta name="author" content="Anttu">
+    <meta property="og:url" content="https://anTtutu.github.io/post/2026-02-10-index-tts-1-5/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/asciinema-player.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://anTtutu.github.io/">
+                        Anttu&#39;s Blog
+                    </a>
+                
+                <p class="description">一位Java开发者，喜欢研究技术，同时也在学习Golang和Python中，对服务器、Linux使用比较熟悉。欢迎添加技术交流QQ群：655158296</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://anTtutu.github.io/">首页</a>
+                    
+                    <a  href="https://anTtutu.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://anTtutu.github.io/tags/" title="分类">分类</a>
+                    
+                    <a  href="https://anTtutu.github.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1indextts-是个啥">1、IndexTTS 是个啥</a></li>
+    <li><a href="#2搭建过程">2、搭建过程</a>
+      <ul>
+        <li><a href="#21-环境准备conda--ffmpeg">2.1 环境准备：conda + ffmpeg</a></li>
+        <li><a href="#22-安装依赖uv-方案">2.2 安装依赖：uv 方案</a></li>
+        <li><a href="#23-intel-mac-的-torch-停更坑">2.3 Intel Mac 的 torch 停更坑</a></li>
+        <li><a href="#24-下载模型权重huggingface-cli-拉取约-29g">2.4 下载模型权重：HuggingFace CLI 拉取约 2.9G</a></li>
+      </ul>
+    </li>
+    <li><a href="#3启动-webui">3、启动 webui</a></li>
+    <li><a href="#4试用证明搭建成功">4、试用：证明搭建成功</a>
+      <ul>
+        <li><a href="#41-webui-界面合成">4.1 webui 界面合成</a></li>
+        <li><a href="#42-产物验证别光靠耳朵">4.2 产物验证：别光靠耳朵</a></li>
+        <li><a href="#43-修复后的实测cpu-性能数据与试听">4.3 修复后的实测：cpu 性能数据与试听</a></li>
+        <li><a href="#44-命令行方式可选">4.4 命令行方式（可选）</a></li>
+      </ul>
+    </li>
+    <li><a href="#5踩坑记录">5、踩坑记录</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#相关阅读">相关阅读</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">IndexTTS-1.5本地搭建试用：B站开源的零样本语音克隆TTS</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2026年2月10日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/AI' target="_blank">AI</a>
+            </span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>最近一直在折腾 AI 工具链（agent、skill、MCP 这些），就琢磨着让 AI 的产出再进一步——比如给视频配音、给播报类内容配上音色。市面上的 TTS 云服务要么按字符收费、要么音色固定，B 站开源的 <strong>IndexTTS</strong> 支持零样本音色克隆：给十几秒的参考音频，就能模仿着这个音色把任意文本读出来，模型权重直接开放下载，本地就能跑，正合适。</p>
+<p>于是下载了 IndexTTS-1.5 到本地完整搭了一遍，记录 Mac 上从零到出声的过程中的爬坑经验。</p>
+<p>项目地址：<a href="https://github.com/index-tts/index-tts">https://github.com/index-tts/index-tts</a></p>
+<h2 id="1indextts-是个啥">1、IndexTTS 是个啥</h2>
+<p>先花一分钟说清楚它是什么，后面搭建时每个步骤为什么这么走就都顺理成章了：</p>
+<ul>
+<li><strong>零样本语音克隆</strong>：不用训练、不用微调，上传一段参考音频（说几句话就行），模型提取音色特征后用这个声音读任意文本</li>
+<li><strong>GPT 风格的架构</strong>：基于 XTTS、Tortoise 的思路改进，接了 BigVGAN2 声码器提升音质，数万小时数据训练</li>
+<li><strong>中文友好</strong>：支持用拼音纠正多音字的发音，标点符号可以控制停顿位置——这两点对中文内容创作很实用</li>
+<li><strong>1.5 版是稳定增强版</strong>：2025 年 5 月发布，中文错误率（WER 0.821）和英文表现在开源 TTS 里都是第一梯队</li>
+</ul>
+<p>模型在 HuggingFace 和 ModelScope 都有，整体是「源码 + 权重」两块：源码负责推理，权重约 2.9G 放 <code>checkpoints/</code> 目录。</p>
+<h2 id="2搭建过程">2、搭建过程</h2>
+<p>我的环境：Intel MacBook Pro（i7 + AMD 显卡，没有 N 卡没有 CUDA），conda 建基础环境、依赖安装走 uv，安装目录 <code>~/Downloads/Code/AI/index-tts-1.5.0</code>。先给结论：整套能搭通、能出声，就是推理速度偏慢——没有 CUDA 的机器这是硬伤，后面细说。</p>
+<h3 id="21-环境准备conda--ffmpeg">2.1 环境准备：conda + ffmpeg</h3>
+<p>先下载源码（也可以直接下 release 包解压，效果一样），然后建独立环境，Python 固定 3.10：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/index-tts/index-tts.git
+</span></span><span style="display:flex;"><span><span style="color:#6639ba">cd</span> index-tts
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>conda create -n index-tts-1.5 <span style="color:#953800">python</span><span style="color:#0550ae">=</span>3.10
+</span></span><span style="display:flex;"><span>conda activate index-tts-1.5
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里 conda 只干两件事：提供 Python 3.10 的解释器、装 ffmpeg 这类系统级依赖；pip 侧的依赖全部交给下一节的 uv 处理。</p>
+<p>ffmpeg 是处理音频依赖的（重采样、格式转换），没装的话先装一个：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># brew install ffmpeg</span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 或 conda install -c conda-forge ffmpeg</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我机器上已经有 MacPorts 装的 4.4.6，直接复用，不再折腾。</p>
+<h3 id="22-安装依赖uv-方案">2.2 安装依赖：uv 方案</h3>
+<p>装依赖这步我没用裸 pip，用的是 uv——Rust 写的包管理器（ruff 同门），依赖解析和下载都是并行化过的，torch 全家桶加 transformers 这一大串依赖，pip 要转半天，uv 基本一口气装完，还有全局缓存，换环境重装直接命中缓存。用法和 pip 平移兼容，没有心智负担：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># 装 uv（我直接 pip 装在 conda base 里；brew install uv 也一样）</span>
+</span></span><span style="display:flex;"><span>pip install uv
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>conda activate index-tts-1.5
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># conda 环境不设 VIRTUAL_ENV，uv 未必认得出当前环境，用 --python 显式指定解释器最稳</span>
+</span></span><span style="display:flex;"><span>uv pip install --python <span style="color:#cf222e">$(</span>which python<span style="color:#cf222e">)</span> -e <span style="color:#0a3069">&#34;.[webui]&#34;</span> --no-build-isolation
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>和 README 的 <code>pip install -e &quot;.[webui]&quot;</code> 逐个对应：<code>-e</code> 可编辑安装（改源码即时生效）；带 <code>[webui]</code> 这个 extra 才会把 gradio 装上（setup.py 里 <code>webui</code> extra 就是 gradio），否则 webui 起不来；<code>--no-build-isolation</code> 必须保留，setup.py 构建时要 import 已装好的 torch，默认的隔离构建会报 torch 找不到。</p>
+<p>装完核心依赖长这样（<code>uv pip list</code> 核对）：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>torch             2.2.2      # Intel Mac 的天花板版本，见下节
+</span></span><span style="display:flex;"><span>torchaudio        2.2.2
+</span></span><span style="display:flex;"><span>transformers      4.36.2     # 项目 requirements.txt 钉死的版本
+</span></span><span style="display:flex;"><span>accelerate        1.12.0
+</span></span><span style="display:flex;"><span>gradio            6.5.1
+</span></span><span style="display:flex;"><span>indextts          0.1.4      # -e 可编辑安装，指向源码目录
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>顺带一提：仓库里有个 <code>uv.lock</code>，打开只有 3 行元数据——这项目的依赖全写在 requirements.txt，pyproject 里没声明，uv 根本锁不出东西，别指望靠这个文件复现环境。</p>
+<h3 id="23-intel-mac-的-torch-停更坑">2.3 Intel Mac 的 torch 停更坑</h3>
+<p>这是 Intel Mac 搭 AI 环境绕不开的一坑：<strong>PyTorch 从 2.3 起不再给 macOS 出 x86_64 的包，2.2.2 就是 Intel Mac 能装到的最后一个版本</strong>。<code>pip index versions torch</code> 一查便见分晓：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>torch (2.2.2)
+</span></span><span style="display:flex;"><span>Available versions: 2.2.2, 2.2.1, 2.2.0, 2.1.2, 2.1.1, ...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>往新走 macOS 只剩 arm64（Apple Silicon）的包。这意味着：</p>
+<ul>
+<li>torch 装到 2.2.2 就封顶了，pip、uv 都一样，这是停更不是选择</li>
+<li>整个依赖树要跟着这个 2024 年初的老版本保守搭配：项目 requirements.txt 本来就把 transformers 钉在 4.36.2，和 torch 2.2.2 是配套的老组合，<strong>别手痒升级全家桶</strong>，各种 API 兼容问题能排到你怀疑人生</li>
+<li>README 里的 torch 安装命令带 <code>--index-url .../cu118</code> 是给 N 卡用户的，Mac 上不要照抄，装默认版就行</li>
+</ul>
+<p>Apple Silicon（M 系列）的 Mac 没有这个坑，直接装新版 torch。另外 README 提到 Windows 装 <code>pynini</code> 会编译失败要走 conda，Mac 上没这个问题。</p>
+<h3 id="24-下载模型权重huggingface-cli-拉取约-29g">2.4 下载模型权重：HuggingFace CLI 拉取约 2.9G</h3>
+<p>权重托管在 HuggingFace 的 <code>IndexTeam/IndexTTS-1.5</code> 仓库，7 个文件一次拉齐。CLI 不用单独装——前面装依赖时 huggingface_hub 已经带上了，新版命令叫 <code>hf</code>，README 里写的 <code>huggingface-cli</code> 是老名字，两个等价都能用。国内先把镜像切了再下：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>conda activate index-tts-1.5
+</span></span><span style="display:flex;"><span><span style="color:#6639ba">export</span> <span style="color:#953800">HF_ENDPOINT</span><span style="color:#0550ae">=</span><span style="color:#0a3069">&#34;https://hf-mirror.com&#34;</span>   <span style="color:#57606a"># 镜像，要和下载命令在同一个终端里执行</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hf download IndexTeam/IndexTTS-1.5 <span style="color:#0a3069">\
+</span></span></span><span style="display:flex;"><span>  config.yaml bigvgan_discriminator.pth bigvgan_generator.pth bpe.model dvae.pth gpt.pth unigram_12000.vocab <span style="color:#0a3069">\
+</span></span></span><span style="display:flex;"><span>  --local-dir checkpoints
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>几个点说清楚：</p>
+<ul>
+<li><strong>不用登录 token</strong>：公开模型匿名就能拉，不需要先 <code>hf auth login</code></li>
+<li><strong>断点续传是内置的</strong>：下载中的分块临时文件放在 <code>checkpoints/.cache/huggingface/download/</code> 下，每个文件配一组 <code>.lock</code> 锁和 <code>.metadata</code> 元数据，下完才落到 <code>--local-dir</code> 根目录，<code>.cache</code> 里只剩 32K 的元数据。中途断了重跑同一条命令，会自动从断点接着下，不会 2.9G 从头来</li>
+<li><strong>命令里那串文件名就是白名单</strong>：不写文件名默认拉整仓，写了就只下这几个——但也正因此容易漏，<strong><code>bpe.model</code>、<code>unigram_12000.vocab</code> 这两个几百 K 的小文件千万别漏</strong>，启动加载时缺哪个报哪个的错，跟网络无关，纯粹是下载清单没对齐</li>
+<li>CLI 不想用的，README 还给了 wget 逐个文件拉的笨办法（域名同样可以换成 hf-mirror.com），国内 ModelScope 也有同名仓库可下</li>
+</ul>
+<p>下完核对 <code>checkpoints/</code> 目录，四个大件加起来约 2.9G：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>gpt.pth                     664M   # 主模型
+</span></span><span style="display:flex;"><span>bigvgan_discriminator.pth   1.5G   # 判别器
+</span></span><span style="display:flex;"><span>bigvgan_generator.pth       501M   # 声码器生成器
+</span></span><span style="display:flex;"><span>dvae.pth                    232M   # 离散音色编码
+</span></span><span style="display:flex;"><span>bpe.model / unigram_12000.vocab / config.yaml   # 小文件
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>.cache/</code> 目录确认跑通之后删掉也不影响加载。</p>
+<h2 id="3启动-webui">3、启动 webui</h2>
+<p>权重就位后一条命令起服务：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>conda activate index-tts-1.5
+</span></span><span style="display:flex;"><span>python webui.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>首次启动要把几个模型逐一加载进内存，耐心等它刷完日志。这是我机器上的完整启动输出：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>(index-tts-1.5) ➜  index-tts-1.5.0 python webui.py
+</span></span><span style="display:flex;"><span>&gt;&gt; GPT weights restored from: checkpoints/gpt.pth
+</span></span><span style="display:flex;"><span>Removing weight norm...
+</span></span><span style="display:flex;"><span>&gt;&gt; bigvgan weights restored from: checkpoints/bigvgan_generator.pth
+</span></span><span style="display:flex;"><span>&gt;&gt; TextNormalizer loaded
+</span></span><span style="display:flex;"><span>&gt;&gt; bpe model loaded from: checkpoints/checkpoints/bpe.model
+</span></span><span style="display:flex;"><span>* Running on local URL:  http://127.0.0.1:7860
+</span></span><span style="display:flex;"><span>* To create a public link, set `share=True` in `launch()`.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>逐行对一下心里有底：</p>
+<ul>
+<li><code>GPT weights restored</code> / <code>bigvgan weights restored</code>：主模型和声码器权重加载成功，中间那句 <code>Removing weight norm...</code> 是 BigVGAN 初始化的正常输出，不是报错</li>
+<li><code>TextNormalizer loaded</code> / <code>bpe model loaded</code>：文本正则器和 BPE 分词模型就位</li>
+<li><strong>注意 bpe 那行的路径是 <code>checkpoints/checkpoints/bpe.model</code>，嵌套了一层</strong>——这不是下载错了，是 1.5.0 自己的路径拼接问题，也是踩坑记录第 1 条的由来，首启能不能过就看它</li>
+<li>看到 <code>Running on local URL</code> 就绪了；最后一句 <code>share=True</code> 是 gradio 的公网链接提示，本地用不用管</li>
+</ul>
+<p>浏览器打开 <code>http://127.0.0.1:7860</code>，能看到界面就说明 webui 这条链路通了：左边传参考音频，右边输文本，还能选 ordinary / fast 两种推理模式（fast 是分句批量推理，长文本快不少）。</p>
+<p>
+        <img class="mx-auto" alt="IndexTTS webui 界面" src="/posts/indextts/indextts.png" />   
+    </p>
+<p>界面就是上图：左边传参考音频，右边合成文本（文本框里那段「正在bilibili体验ai科技」是项目自带的示例文本），下方推理模式二选一——对应前文说的 ordinary（常规推理）/ fast（极速推理），温度、top_p、top_k 这几个采样参数也在这儿调，点「一键合成！」等结果就行。</p>
+<h2 id="4试用证明搭建成功">4、试用：证明搭建成功</h2>
+<p>搭好没搭好，出声才算数。试用就干三件事：传参考音频、合成、验证产物。</p>
+<h3 id="41-webui-界面合成">4.1 webui 界面合成</h3>
+<p>找了一段干净的人声录音（十几秒、无背景音），在界面里上传作为参考音频，输入一段中文文本点生成。第一次跑得再等一会儿——<strong>一段 25 秒左右的音频要等几分钟</strong>，没有 CUDA 的 N 卡，速度就是上不去。</p>
+<p>设备这块当时没多想：推理代码（<code>indextts/infer.py</code>）的设备是自动检测的——有 CUDA 用 CUDA，检测到 MPS 用 MPS，都没有才退 CPU。2 月份搭建时系统还是 macOS 10.15（Catalina），<strong>MPS 框架压根不存在，设备自动落在 cpu</strong>，就靠 cpu 硬跑，5 段 wav 全部出声。后来升级系统又踩出 MPS 的连环雷，那段故事在踩坑记录第 6 条。</p>
+<p>生成成功的标志：界面能直接播放，同时项目目录的 <code>outputs/</code> 下落了产物文件：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>outputs/
+</span></span><span style="display:flex;"><span>├── spk_1770692385.wav
+</span></span><span style="display:flex;"><span>├── spk_1770692428.wav
+</span></span><span style="display:flex;"><span>├── spk_1770692701.wav
+</span></span><span style="display:flex;"><span>├── spk_1770693387.wav
+</span></span><span style="display:flex;"><span>└── spk_1770695510.wav     # 文件名就是生成时刻的时间戳
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>换不同风格的参考音频又合成了几段，<code>outputs/</code> 里攒了 5 个 wav——音色都跟着参考音频走，字音、断句正常，多音字没有翻车。到这一步，<strong>零样本克隆的完整链路（参考音频 → 音色提取 → 合成）已经全部验证通过</strong>。</p>
+<h3 id="42-产物验证别光靠耳朵">4.2 产物验证：别光靠耳朵</h3>
+<p>试听之外用 <code>afinfo</code> 看下文件规格，确认生成的是正经音频而不是空壳：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>afinfo outputs/spk_1770695510.wav
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>File:           outputs/spk_1770695510.wav
+</span></span><span style="display:flex;"><span>File type ID:   WAVE
+</span></span><span style="display:flex;"><span>Num Tracks:     1
+</span></span><span style="display:flex;"><span>Data format:     1 ch,  24000 Hz, Int16
+</span></span><span style="display:flex;"><span>estimated duration: 25.600000 sec
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>24kHz 单声道、25.6 秒，规格正常。webui 的输出文件名规则是 <code>spk_{时间戳}.wav</code>（<code>webui.py</code> 里写死的 <code>spk_{int(time.time())}.wav</code>），多合成几次按时间排一下就能对上每段是哪次生成的。</p>
+<h3 id="43-修复后的实测cpu-性能数据与试听">4.3 修复后的实测：cpu 性能数据与试听</h3>
+<p>踩坑第 6 条修复（<code>device=&quot;cpu&quot;</code>）之后，又跑了一次完整的 fast 推理做验证——用 55 秒的台词录音做参考音频，合成 91 秒长文本，这次日志把性能数据全打出来了：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>&gt;&gt; start fast inference...
+</span></span><span style="display:flex;"><span>bigvgan: 100%|████████████████████████████...████| 8/8 [02:58&lt;00:00, 22.32s/it]
+</span></span><span style="display:flex;"><span>&gt;&gt; Reference audio length: 55.34 seconds
+</span></span><span style="display:flex;"><span>&gt;&gt; gpt_gen_time: 901.06 seconds
+</span></span><span style="display:flex;"><span>&gt;&gt; gpt_forward_time: 59.21 seconds
+</span></span><span style="display:flex;"><span>&gt;&gt; bigvgan_time: 178.58 seconds
+</span></span><span style="display:flex;"><span>&gt;&gt; Total fast inference time: 1139.23 seconds
+</span></span><span style="display:flex;"><span>&gt;&gt; Generated audio length: 90.97 seconds
+</span></span><span style="display:flex;"><span>&gt;&gt; [fast] bigvgan chunk_length: 4
+</span></span><span style="display:flex;"><span>&gt;&gt; [fast] batch_num: 8 bucket_max_size: 1
+</span></span><span style="display:flex;"><span>&gt;&gt; [fast] RTF: 12.5237
+</span></span><span style="display:flex;"><span>&gt;&gt; wav file saved to: outputs/spk_1792747708.wav
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>几个数字读一下，cpu 的性能画像就很具体了：</p>
+<ul>
+<li><strong>RTF 12.52</strong>：Real-Time Factor，生成 1 秒音频要花 12.5 秒——91 秒的音频等了 19 分钟（1139 秒），和总耗时正好对上。前面说「25 秒音频等几分钟」，按这个 RTF 算就是 5 分钟出头，数据自洽</li>
+<li><strong>大头在 gpt_gen_time（901 秒，占 79%）</strong>：GPT 自回归逐 token 生成语音码本，天生串行，cpu 上就是慢；bigvgan 声码器反而只要 178 秒（8 批 3 分钟，进度条一格格走完还挺解压）</li>
+<li>fast 模式把长文本切成 8 批（batch_num: 8）分批推理，这是它比 ordinary 快的原因，但 cpu 底子在这，快也只是相对的</li>
+</ul>
+<p>生成结果界面长这样，参考音频（55.3 秒的 webm 直接丢进去，webui 自己处理重采样和声道转换）和生成的音频（90.97 秒）都在：</p>
+<p>
+        <img class="mx-auto" alt="IndexTTS 生成结果界面" src="/posts/indextts/indextts_result.png" />   
+    </p>
+<p>实际效果可以直接试听——克隆墨彩环音色合成的这段：</p>
+<p><audio controls src="/posts/indextts/spk_1792747708.wav"></audio></p>
+<p>就是日志里那个 <code>spk_1792747708.wav</code> 原文件，24kHz 单声道，浏览器直接点播放。</p>
+<h3 id="44-命令行方式可选">4.4 命令行方式（可选）</h3>
+<p>不想开浏览器的话，<code>pip install -e .</code> 时注册的 CLI 也能合成，一条命令出文件：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>indextts <span style="color:#0a3069">&#34;大家好，我现在正在体验 IndexTTS 的语音合成，说实话，效果比我想象中好。&#34;</span> <span style="color:#0a3069">\
+</span></span></span><span style="display:flex;"><span>  --voice 你的参考音频.wav <span style="color:#0a3069">\
+</span></span></span><span style="display:flex;"><span>  --model_dir checkpoints <span style="color:#0a3069">\
+</span></span></span><span style="display:flex;"><span>  --config checkpoints/config.yaml <span style="color:#0a3069">\
+</span></span></span><span style="display:flex;"><span>  --output output.wav
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>和 webui 是同一个内核，webui 验证过了这里必然通，写出来是给以后写脚本批量合成用的。</p>
+<h2 id="5踩坑记录">5、踩坑记录</h2>
+<ol>
+<li>
+<p><strong>bpe.model 的加载路径双层嵌套</strong>：首启报找不到 bpe.model，一开始还以为是下载漏了文件，看启动日志才发现它要加载的是 <code>checkpoints/checkpoints/bpe.model</code>——七个文件里只有它一个走嵌套路径。翻了代码才明白：config.yaml 里写的是 <code>bpe_model: checkpoints/bpe.model</code>（相对项目根），<code>infer.py</code> 又拿这个值跟 <code>model_dir</code> 再拼一次（<code>os.path.join(model_dir, ...)</code>），双层 checkpoints 就这么来的。解决二选一：建 <code>checkpoints/checkpoints/</code> 目录把 bpe.model 放进去（我用的这个），或者把 config.yaml 那行改成 <code>bpe_model: bpe.model</code></p>
+</li>
+<li>
+<p><strong>Intel Mac torch 停更</strong>：PyTorch 2.2.2 之后 macOS 只出 arm64 的包，x86_64 封顶装到 2.2.2，升无可升；依赖树要跟着这个版本保守搭配（transformers 4.36.2 这套），别盲目升全家桶，详见 2.3 节</p>
+</li>
+<li>
+<p><strong>小文件漏下必报错</strong>：<code>bpe.model</code>、<code>unigram_12000.vocab</code> 才几百 K，最容易被漏，启动加载时报错的文件名就是缺的那个，对着补</p>
+</li>
+<li>
+<p><strong>没有 CUDA 的 GPU 就慢</strong>：这台 Intel Mac 没有 CUDA，BigVGAN 的融合 kernel 用不了，一段 25 秒的音频在 cpu 上要等几分钟（macOS 15 之后 AMD 显卡能借 MPS 出点力，但会踩出第 6 条的新坑）——跑通验证够用，批量生产上 N 卡</p>
+</li>
+<li>
+<p><strong>参考音频质量直接决定克隆效果</strong>：背景音杂、时长太短的参考音频，合成出来的音色会飘，选十几秒以上干净人声，效果立竿见影</p>
+</li>
+<li>
+<p><strong>升级 macOS 后推理报 <code>unsupported autocast device_type 'mps'</code></strong>：最隐蔽的一坑，大半年后才爆出来。2 月份系统还是 macOS 10.15（Catalina），没有 MPS 框架，<code>torch.backends.mps.is_available()</code> 返回 False，设备自动走 cpu，ordinary、fast 都跑得欢。后来系统升到 macOS 15.7.4（Sequoia），MPS 框架有了，<code>is_available()</code> 变 True，设备自动切成 mps——而且不是虚报，torch 2.2.2 的 MPS 后端在这台 Intel 机器上真能算，AMD 显卡走 Metal，实测 matmul 比 CPU 快一个数量级，fp16、conv1d 都通。坏就坏在 <code>torch.amp.autocast</code> 的设备白名单 2.2.2 里没有 mps（autocast 的 mps 支持要 2.3 才加），<code>infer.py</code> 里 5 处 <code>torch.amp.autocast(xxx.device.type, ...)</code> 动态传参全部撞雷，fast（3 处）、ordinary（2 处），点生成就炸。报错栈（中间 gradio/anyio 的框架帧省了）最后落在这行：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>&gt;&gt; start fast inference...
+</span></span><span style="display:flex;"><span>Traceback (most recent call last):
+</span></span><span style="display:flex;"><span>  ......（gradio/anyio 框架栈帧，省略）......
+</span></span><span style="display:flex;"><span>  File &#34;/Users/tuchenguang/Downloads/Code/AI/index-tts-1.5.0/webui.py&#34;, line 88, in gen_single
+</span></span><span style="display:flex;"><span>    output = tts.infer_fast(prompt, text, output_path, verbose=cmd_args.verbose,
+</span></span><span style="display:flex;"><span>  File &#34;/Users/tuchenguang/Downloads/Code/AI/index-tts-1.5.0/indextts/infer.py&#34;, line 384, in infer_fast
+</span></span><span style="display:flex;"><span>    with torch.amp.autocast(batch_text_tokens.device.type, enabled=self.dtype is not None, dtype=self.dtype):
+</span></span><span style="display:flex;"><span>  File &#34;/opt/miniconda3/envs/index-tts-1.5/lib/python3.10/site-packages/torch/amp/autocast_mode.py&#34;, line 241, in __init__
+</span></span><span style="display:flex;"><span>    raise RuntimeError(
+</span></span><span style="display:flex;"><span>RuntimeError: User specified an unsupported autocast device_type &#39;mps&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>栈里两个业务帧就是证据：<code>webui.py:88</code> 调的是 <code>infer_fast</code>（fast 模式），<code>infer.py:384</code> 正是那行动态传参的 autocast，device_type 传进去的是 &lsquo;mps&rsquo;——推理确实跑在 mps 上，被 2.2.2 的白名单拦下。<strong>所以不是升级弄坏了环境，是升级让设备从 cpu 切到了 mps，撞上 torch 停更版的坑——第 2 条换了个姿势又来了一次，想升 torch 绕过？Intel Mac 装不了，闭环了</strong>。恢复二选一：最省事是 <code>webui.py</code> 的 <code>IndexTTS(...)</code> 构造里加 <code>device=&quot;cpu&quot;</code> 钉死，构造函数会自动关掉 fp16，autocast 的 enabled 跟着变 False，一行回到升级前的等效状态；想吃 MPS 加速就在 <code>webui.py</code> 顶部 monkeypatch autocast，mps 时映射成 cpu 并关掉 amp：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#cf222e">import</span> <span style="color:#24292e">torch</span>
+</span></span><span style="display:flex;"><span>_orig_autocast <span style="color:#0550ae">=</span> torch<span style="color:#0550ae">.</span>amp<span style="color:#0550ae">.</span>autocast
+</span></span><span style="display:flex;"><span><span style="color:#cf222e">def</span> <span style="color:#6639ba">_mps_safe_autocast</span><span style="color:#1f2328">(</span>device_type<span style="color:#1f2328">,</span> enabled<span style="color:#0550ae">=</span><span style="color:#cf222e">True</span><span style="color:#1f2328">,</span> <span style="color:#0550ae">**</span>kwargs<span style="color:#1f2328">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#cf222e">if</span> device_type <span style="color:#0550ae">==</span> <span style="color:#0a3069">&#34;mps&#34;</span><span style="color:#1f2328">:</span>        <span style="color:#57606a"># torch 2.2 的 autocast 不认 mps，2.3 才支持</span>
+</span></span><span style="display:flex;"><span>        device_type<span style="color:#1f2328">,</span> enabled <span style="color:#0550ae">=</span> <span style="color:#0a3069">&#34;cpu&#34;</span><span style="color:#1f2328">,</span> <span style="color:#cf222e">False</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#cf222e">return</span> _orig_autocast<span style="color:#1f2328">(</span>device_type<span style="color:#1f2328">,</span> enabled<span style="color:#0550ae">=</span>enabled<span style="color:#1f2328">,</span> <span style="color:#0550ae">**</span>kwargs<span style="color:#1f2328">)</span>
+</span></span><span style="display:flex;"><span>torch<span style="color:#0550ae">.</span>amp<span style="color:#0550ae">.</span>autocast <span style="color:#0550ae">=</span> _mps_safe_autocast
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>整个搭建下来体会：<strong>IndexTTS-1.5 的部署门槛不高，坑都在「环境对不对、版本对不对、文件全不全」这种细节上</strong>——conda 建基础环境、uv 装依赖、镜像拉权重、<code>python webui.py</code> 起服务，一气呵成；Intel Mac 上 torch 停更 2.2.2 封顶是第一个要认命的坑，这个坑后来还连着升级 macOS 后的 autocast &lsquo;mps&rsquo; 雷，好在钉回 <code>device=&quot;cpu&quot;</code> 一行就恢复，就是没有 CUDA 整体速度慢，试用验证完全够用。零样本克隆的效果对得起开源第一梯队的评价，后续想批量合成（比如给文章自动配音频、给视频配音）就在 CLI 基础上包个脚本，遇到类似的本地 TTS 部署需求可以直接参考这篇。</p>
+<h2 id="相关阅读">相关阅读</h2>
+<ul>
+<li><a href="/post/2026-03-20-ai-agent-and-skill/">AI开发入门：Agent与Skill体系详解</a></li>
+<li><a href="/post/2026-01-19-spy_video/">爬取oss库</a></li>
+</ul>
+
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://anTtutu.github.io/">Anttu</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://anTtutu.github.io/post/2026-02-10-index-tts-1-5/">https://anTtutu.github.io/post/2026-02-10-index-tts-1-5/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/2026-01-19-spy_video/">爬取oss库</a></li>
+        
+        <li><a href="/post/2025-03-15-tech-stack-selection/">技术选型详解：Go、Python、Node&#43;Vue、UniApp、Java 各自的适用场景与侧重点</a></li>
+        
+        <li><a href="/post/2024-04-19-llm-terms-plain-words/">大模型术语人话版：把LLM当成一个打工人</a></li>
+        
+        <li><a href="/post/2023-09-15-python-dunder-magic-methods/">Python双下划线详解：__name__与魔术方法/属性全面整理（含版本限制）</a></li>
+        
+        <li><a href="/post/2022-11-28-python_muilt_version/">python多版本管理工具</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/AI' target="_blank">AI</a></li>
+                
+                <li><a href='/tags/TTS' target="_blank">TTS</a></li>
+                
+                <li><a href='/tags/python' target="_blank">python</a></li>
+                
+                <li><a href='/tags/uv' target="_blank">uv</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "anTtutu/anTtutu.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+    
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2026 <a href="https://anTtutu.github.io/">Anttu&#39;s Blog By Anttu</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://anTtutu.github.io/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">Anttu</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/anTtutu/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+<style type="text/css">
+div.highlight {
+    position: relative;
+    margin: 1em 0px;
+}
+
+.copy-code {
+    display: none;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(78, 78, 78, 0.8);
+    border-radius: var(--radius);
+    padding: 0 5px;
+    font: inherit;
+    user-select: none;
+    cursor: pointer;
+    border: 0;
+    --radius: 8px;
+}
+
+div.highlight:hover .copy-code,pre:hover .copy-code {
+    display: block;
+}
+
+</style>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/asciinema-player.js'></script>
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://anTtutu.github.io/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://anTtutu.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-10-23-contraption-lab/" title="从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记" target="_blank">从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-10-17-vcs-simulator-web/" title="我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了" target="_blank">我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-10-14-claude-code-subagent-system/" title="Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸" target="_blank">Claude Code 实战：用 5 个自定义 Subagent 治好主会话上下文爆炸</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-elk-mcp-ai-workflow/" title="结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证" target="_blank">结合ELK日志MCP的AI问题排查工作流：从页面报错到数据验证</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-27-agent-database-cli/" title="agent-database-cli：让Claude Code安全操作多种数据库的CLI工具" target="_blank">agent-database-cli：让Claude Code安全操作多种数据库的CLI工具</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-14-sdkman_issue/" title="sdkman与conda冲突问题解决" target="_blank">sdkman与conda冲突问题解决</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-10-docker_images/" title="日常研究备用的一些镜像记录" target="_blank">日常研究备用的一些镜像记录</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-09-07-ydnotes-obsidian/" title="有道云笔记迁移到obsidian" target="_blank">有道云笔记迁移到obsidian</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-07-02-claude-code-cli-cheatsheet/" title="Claude Code常用命令速查" target="_blank">Claude Code常用命令速查</a>
+    </li>
+    
+    <li>
+        <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (7)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/app/">App (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/aria2/">Aria2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/arm64/">Arm64 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/arthas/">Arthas (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/awr/">Awr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backend_execute/">Backend_execute (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/backup/">Backup (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/blog/">Blog (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/bug/">Bug (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/build/">Build (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cache/">Cache (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/caffeine/">Caffeine (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/captcha/">Captcha (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/check/">Check (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/claude-code/">Claude Code (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/clean/">Clean (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cli/">Cli (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cluster/">Cluster (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/conda/">Conda (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/covid-19/">Covid-19 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cve/">Cve (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/cygwin/">Cygwin (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dataguard/">Dataguard (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/db/">Db (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/deepfacelab/">Deepfacelab (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/devops/">Devops (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/docker/">Docker (7)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dockerfile/">Dockerfile (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dos/">Dos (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/drawio/">Drawio (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/dump/">Dump (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/eclipse/">Eclipse (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/explain/">Explain (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/faker/">Faker (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gcc/">Gcc (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/git/">Git (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/github/">Github (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitment/">Gitment (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/gitpages/">Gitpages (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/go/">Go (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h2/">H2 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/h5/">H5 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ha/">Ha (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/http/">Http (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/hugo/">Hugo (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/id/">Id (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/idea/">Idea (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/image/">Image (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/images/">Images (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/java/">Java (38)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jekyll/">Jekyll (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jenkins/">Jenkins (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jrebel/">Jrebel (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/js/">Js (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jsr/">Jsr (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/jvm/">Jvm (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/k8s/">K8s (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kafka/">Kafka (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kali/">Kali (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/kenlm/">Kenlm (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/linux/">Linux (28)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log/">Log (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/log4j/">Log4j (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/lombok/">Lombok (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mac/">Mac (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/matplotlib/">Matplotlib (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/maven/">Maven (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mcp/">Mcp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mine/">Mine (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mongodb/">Mongodb (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mvnd/">Mvnd (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/mysql/">Mysql (10)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/nginx/">Nginx (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/nmap/">Nmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/notes/">Notes (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/obsidian/">Obsidian (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oom/">Oom (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oracle/">Oracle (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/orangePi/">OrangePi (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/oss/">Oss (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/package/">Package (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pages/">Pages (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pandas/">Pandas (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/pg/">Pg (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/port/">Port (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/postgresql/">Postgresql (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/python/">Python (11)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/rec/">Rec (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/redis/">Redis (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/regexp/">Regexp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/safe/">Safe (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdk/">Sdk (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sdkman/">Sdkman (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/shell/">Shell (4)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/skill/">Skill (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/split/">Split (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/spring/">Spring (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springboot/">Springboot (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/springcloud/">Springcloud (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/spy/">Spy (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/sqlmap/">Sqlmap (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ssd/">Ssd (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tcp/">Tcp (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/termux/">Termux (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/test/">Test (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/testing/">Testing (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/tomcat/">Tomcat (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/union_id/">Union_id (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vcs/">Vcs (8)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/virus/">Virus (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/vxvm/">Vxvm (3)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/win10/">Win10 (6)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/xrebel/">Xrebel (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ydnotes/">Ydnotes (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/ynote/">Ynote (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zk/">Zk (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/zookeeper/">Zookeeper (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E4%BA%92%E8%81%94%E7%BD%91/">互联网 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (5)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E5%99%A8/">容器 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%AE%B9%E7%81%BE/">容灾 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E5%BC%80%E6%BA%90/">开源 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%8E%92%E6%9F%A5/">排查 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%9E%B6%E6%9E%84/">架构 (2)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%B8%B8%E6%88%8F/">游戏 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E8%BF%90%E7%BB%B4/">运维 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://anTtutu.github.io/tags/-devops/"> Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/-dockerfile/"> Dockerfile</a>
+    
+    <a href="https://anTtutu.github.io/tags/-nmap/"> Nmap</a>
+    
+    <a href="https://anTtutu.github.io/tags/about/">About</a>
+    
+    <a href="https://anTtutu.github.io/tags/agent/">Agent</a>
+    
+    <a href="https://anTtutu.github.io/tags/AI/">AI</a>
+    
+    <a href="https://anTtutu.github.io/tags/android/">Android</a>
+    
+    <a href="https://anTtutu.github.io/tags/app/">App</a>
+    
+    <a href="https://anTtutu.github.io/tags/aria2/">Aria2</a>
+    
+    <a href="https://anTtutu.github.io/tags/arm64/">Arm64</a>
+    
+    <a href="https://anTtutu.github.io/tags/arthas/">Arthas</a>
+    
+    <a href="https://anTtutu.github.io/tags/awr/">Awr</a>
+    
+    <a href="https://anTtutu.github.io/tags/backend_execute/">Backend_execute</a>
+    
+    <a href="https://anTtutu.github.io/tags/backup/">Backup</a>
+    
+    <a href="https://anTtutu.github.io/tags/binlog/">Binlog</a>
+    
+    <a href="https://anTtutu.github.io/tags/blog/">Blog</a>
+    
+    <a href="https://anTtutu.github.io/tags/bug/">Bug</a>
+    
+    <a href="https://anTtutu.github.io/tags/build/">Build</a>
+    
+    <a href="https://anTtutu.github.io/tags/cache/">Cache</a>
+    
+    <a href="https://anTtutu.github.io/tags/caffeine/">Caffeine</a>
+    
+    <a href="https://anTtutu.github.io/tags/captcha/">Captcha</a>
+    
+    <a href="https://anTtutu.github.io/tags/check/">Check</a>
+    
+    <a href="https://anTtutu.github.io/tags/claude/">Claude</a>
+    
+    <a href="https://anTtutu.github.io/tags/claude-code/">Claude Code</a>
+    
+    <a href="https://anTtutu.github.io/tags/clean/">Clean</a>
+    
+    <a href="https://anTtutu.github.io/tags/cli/">Cli</a>
+    
+    <a href="https://anTtutu.github.io/tags/cluster/">Cluster</a>
+    
+    <a href="https://anTtutu.github.io/tags/conda/">Conda</a>
+    
+    <a href="https://anTtutu.github.io/tags/covid-19/">Covid-19</a>
+    
+    <a href="https://anTtutu.github.io/tags/cve/">Cve</a>
+    
+    <a href="https://anTtutu.github.io/tags/cygwin/">Cygwin</a>
+    
+    <a href="https://anTtutu.github.io/tags/dataguard/">Dataguard</a>
+    
+    <a href="https://anTtutu.github.io/tags/db/">Db</a>
+    
+    <a href="https://anTtutu.github.io/tags/deepfacelab/">Deepfacelab</a>
+    
+    <a href="https://anTtutu.github.io/tags/devops/">Devops</a>
+    
+    <a href="https://anTtutu.github.io/tags/docker/">Docker</a>
+    
+    <a href="https://anTtutu.github.io/tags/dos/">Dos</a>
+    
+    <a href="https://anTtutu.github.io/tags/drawio/">Drawio</a>
+    
+    <a href="https://anTtutu.github.io/tags/dump/">Dump</a>
+    
+    <a href="https://anTtutu.github.io/tags/eclipse/">Eclipse</a>
+    
+    <a href="https://anTtutu.github.io/tags/ELK/">ELK</a>
+    
+    <a href="https://anTtutu.github.io/tags/explain/">Explain</a>
+    
+    <a href="https://anTtutu.github.io/tags/faker/">Faker</a>
+    
+    <a href="https://anTtutu.github.io/tags/feign/">Feign</a>
+    
+    <a href="https://anTtutu.github.io/tags/freemarker/">Freemarker</a>
+    
+    <a href="https://anTtutu.github.io/tags/gcc/">Gcc</a>
+    
+    <a href="https://anTtutu.github.io/tags/git/">Git</a>
+    
+    <a href="https://anTtutu.github.io/tags/github/">Github</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitment/">Gitment</a>
+    
+    <a href="https://anTtutu.github.io/tags/gitpages/">Gitpages</a>
+    
+    <a href="https://anTtutu.github.io/tags/go/">Go</a>
+    
+    <a href="https://anTtutu.github.io/tags/golang/">Golang</a>
+    
+    <a href="https://anTtutu.github.io/tags/graalvm/">Graalvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/h2/">H2</a>
+    
+    <a href="https://anTtutu.github.io/tags/h5/">H5</a>
+    
+    <a href="https://anTtutu.github.io/tags/ha/">Ha</a>
+    
+    <a href="https://anTtutu.github.io/tags/http/">Http</a>
+    
+    <a href="https://anTtutu.github.io/tags/https/">Https</a>
+    
+    <a href="https://anTtutu.github.io/tags/hugo/">Hugo</a>
+    
+    <a href="https://anTtutu.github.io/tags/id/">Id</a>
+    
+    <a href="https://anTtutu.github.io/tags/idea/">Idea</a>
+    
+    <a href="https://anTtutu.github.io/tags/image/">Image</a>
+    
+    <a href="https://anTtutu.github.io/tags/images/">Images</a>
+    
+    <a href="https://anTtutu.github.io/tags/java/">Java</a>
+    
+    <a href="https://anTtutu.github.io/tags/JDK21/">JDK21</a>
+    
+    <a href="https://anTtutu.github.io/tags/jekyll/">Jekyll</a>
+    
+    <a href="https://anTtutu.github.io/tags/jenkins/">Jenkins</a>
+    
+    <a href="https://anTtutu.github.io/tags/jrebel/">Jrebel</a>
+    
+    <a href="https://anTtutu.github.io/tags/js/">Js</a>
+    
+    <a href="https://anTtutu.github.io/tags/jsr/">Jsr</a>
+    
+    <a href="https://anTtutu.github.io/tags/jvm/">Jvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/k8s/">K8s</a>
+    
+    <a href="https://anTtutu.github.io/tags/kafka/">Kafka</a>
+    
+    <a href="https://anTtutu.github.io/tags/kali/">Kali</a>
+    
+    <a href="https://anTtutu.github.io/tags/keepalived/">Keepalived</a>
+    
+    <a href="https://anTtutu.github.io/tags/kenlm/">Kenlm</a>
+    
+    <a href="https://anTtutu.github.io/tags/linux/">Linux</a>
+    
+    <a href="https://anTtutu.github.io/tags/log/">Log</a>
+    
+    <a href="https://anTtutu.github.io/tags/log4j/">Log4j</a>
+    
+    <a href="https://anTtutu.github.io/tags/lombok/">Lombok</a>
+    
+    <a href="https://anTtutu.github.io/tags/lvs/">Lvs</a>
+    
+    <a href="https://anTtutu.github.io/tags/mac/">Mac</a>
+    
+    <a href="https://anTtutu.github.io/tags/matplotlib/">Matplotlib</a>
+    
+    <a href="https://anTtutu.github.io/tags/matter-js/">Matter-Js</a>
+    
+    <a href="https://anTtutu.github.io/tags/maven/">Maven</a>
+    
+    <a href="https://anTtutu.github.io/tags/mcp/">Mcp</a>
+    
+    <a href="https://anTtutu.github.io/tags/mine/">Mine</a>
+    
+    <a href="https://anTtutu.github.io/tags/mongodb/">Mongodb</a>
+    
+    <a href="https://anTtutu.github.io/tags/mvnd/">Mvnd</a>
+    
+    <a href="https://anTtutu.github.io/tags/mysql/">Mysql</a>
+    
+    <a href="https://anTtutu.github.io/tags/native-image/">Native Image</a>
+    
+    <a href="https://anTtutu.github.io/tags/nginx/">Nginx</a>
+    
+    <a href="https://anTtutu.github.io/tags/notes/">Notes</a>
+    
+    <a href="https://anTtutu.github.io/tags/obsidian/">Obsidian</a>
+    
+    <a href="https://anTtutu.github.io/tags/oom/">Oom</a>
+    
+    <a href="https://anTtutu.github.io/tags/openjdk/">Openjdk</a>
+    
+    <a href="https://anTtutu.github.io/tags/oracle/">Oracle</a>
+    
+    <a href="https://anTtutu.github.io/tags/orangePi/">OrangePi</a>
+    
+    <a href="https://anTtutu.github.io/tags/oss/">Oss</a>
+    
+    <a href="https://anTtutu.github.io/tags/package/">Package</a>
+    
+    <a href="https://anTtutu.github.io/tags/pages/">Pages</a>
+    
+    <a href="https://anTtutu.github.io/tags/pandas/">Pandas</a>
+    
+    <a href="https://anTtutu.github.io/tags/pg/">Pg</a>
+    
+    <a href="https://anTtutu.github.io/tags/Phaser/">Phaser</a>
+    
+    <a href="https://anTtutu.github.io/tags/port/">Port</a>
+    
+    <a href="https://anTtutu.github.io/tags/postgresql/">Postgresql</a>
+    
+    <a href="https://anTtutu.github.io/tags/python/">Python</a>
+    
+    <a href="https://anTtutu.github.io/tags/rec/">Rec</a>
+    
+    <a href="https://anTtutu.github.io/tags/redis/">Redis</a>
+    
+    <a href="https://anTtutu.github.io/tags/regexp/">Regexp</a>
+    
+    <a href="https://anTtutu.github.io/tags/safe/">Safe</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdk/">Sdk</a>
+    
+    <a href="https://anTtutu.github.io/tags/sdkman/">Sdkman</a>
+    
+    <a href="https://anTtutu.github.io/tags/shell/">Shell</a>
+    
+    <a href="https://anTtutu.github.io/tags/simulator/">Simulator</a>
+    
+    <a href="https://anTtutu.github.io/tags/skill/">Skill</a>
+    
+    <a href="https://anTtutu.github.io/tags/split/">Split</a>
+    
+    <a href="https://anTtutu.github.io/tags/springboot/">Springboot</a>
+    
+    <a href="https://anTtutu.github.io/tags/springcloud/">Springcloud</a>
+    
+    <a href="https://anTtutu.github.io/tags/springmvc/">Springmvc</a>
+    
+    <a href="https://anTtutu.github.io/tags/spy/">Spy</a>
+    
+    <a href="https://anTtutu.github.io/tags/sqlmap/">Sqlmap</a>
+    
+    <a href="https://anTtutu.github.io/tags/ssd/">Ssd</a>
+    
+    <a href="https://anTtutu.github.io/tags/tcp/">Tcp</a>
+    
+    <a href="https://anTtutu.github.io/tags/termux/">Termux</a>
+    
+    <a href="https://anTtutu.github.io/tags/test/">Test</a>
+    
+    <a href="https://anTtutu.github.io/tags/testing/">Testing</a>
+    
+    <a href="https://anTtutu.github.io/tags/thymeleaf/">Thymeleaf</a>
+    
+    <a href="https://anTtutu.github.io/tags/tomcat/">Tomcat</a>
+    
+    <a href="https://anTtutu.github.io/tags/TTS/">TTS</a>
+    
+    <a href="https://anTtutu.github.io/tags/TypeScript/">TypeScript</a>
+    
+    <a href="https://anTtutu.github.io/tags/uniapp/">Uniapp</a>
+    
+    <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
+    
+    <a href="https://anTtutu.github.io/tags/uv/">Uv</a>
+    
+    <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
+    
+    <a href="https://anTtutu.github.io/tags/virus/">Virus</a>
+    
+    <a href="https://anTtutu.github.io/tags/vue/">Vue</a>
+    
+    <a href="https://anTtutu.github.io/tags/vxvm/">Vxvm</a>
+    
+    <a href="https://anTtutu.github.io/tags/win10/">Win10</a>
+    
+    <a href="https://anTtutu.github.io/tags/xrebel/">Xrebel</a>
+    
+    <a href="https://anTtutu.github.io/tags/ydnotes/">Ydnotes</a>
+    
+    <a href="https://anTtutu.github.io/tags/ynote/">Ynote</a>
+    
+    <a href="https://anTtutu.github.io/tags/zk/">Zk</a>
+    
+    <a href="https://anTtutu.github.io/tags/zookeeper/">Zookeeper</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">主从复制</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1/">云服务</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E4%BC%98%E5%8C%96/">优化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%89%8D%E7%AB%AF/">前端</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8D%87%E7%BA%A7%E8%BF%81%E7%A7%BB/">升级迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%8E%8B%E6%B5%8B/">压测</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%9F%BA%E7%A1%80/">基础</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%89%E5%85%A8/">安全</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E5%99%A8/">容器</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%AE%B9%E7%81%BE/">容灾</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%B6%E5%8F%91/">并发</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%B9%BF%E5%91%8A/">广告</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E5%BC%80%E6%BA%90/">开源</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">性能测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8C%87%E6%A0%87/">指标</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%8E%92%E6%9F%A5/">排查</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/">效率工具</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/">日志分析</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%9E%B6%E6%9E%84/">架构</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E7%A7%91%E6%99%AE/">科普</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%AE%A4%E8%AF%81/">认证</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B0%83%E8%AF%95/">调试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">负载均衡</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%81%E7%A7%BB/">迁移</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%80%89%E5%9E%8B/">选型</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/">防重复提交</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://anTtutu.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

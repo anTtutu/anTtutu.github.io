@@ -76,6 +76,237 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-01-07-regexp/" title="一些正则小细节-不定期补充" target="_blank">一些正则小细节-不定期补充</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年1月7日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/regexp' target="_blank">regexp</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/java' target="_blank">java</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>记录日常工作碰到的一些正则小细节</p>
+<h2 id="1group分组">1、group分组</h2>
+<p>需要通过()把提取的参数圈起来，这样才会产生分组</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#cf222e">private</span><span style="color:#fff"> </span><span style="color:#cf222e">static</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span><span style="color:#6639ba">collectMapperId</span><span style="color:#1f2328">(</span>String<span style="color:#fff"> </span>value<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>String<span style="color:#fff"> </span>result<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;&#34;</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>String<span style="color:#fff"> </span>regId<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;id=\&#34;(.*?)\&#34;&#34;</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>Pattern<span style="color:#fff"> </span>pattern<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>Pattern<span style="color:#1f2328">.</span><span style="color:#1f2328">compile</span><span style="color:#1f2328">(</span>regId<span style="color:#1f2328">);</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>Matcher<span style="color:#fff"> </span>matcher<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>pattern<span style="color:#1f2328">.</span><span style="color:#1f2328">matcher</span><span style="color:#1f2328">(</span>value<span style="color:#1f2328">);</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">if</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>matcher<span style="color:#1f2328">.</span><span style="color:#1f2328">find</span><span style="color:#1f2328">())</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>result<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>matcher<span style="color:#1f2328">.</span><span style="color:#1f2328">group</span><span style="color:#1f2328">(</span>1<span style="color:#1f2328">);</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">return</span><span style="color:#fff"> </span>result<span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>对比如果没有(),是没有分组效果的</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-01-07-regexp/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" title="sdkman的使用" target="_blank">sdkman的使用</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年1月6日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/java' target="_blank">java</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/sdk' target="_blank">sdk</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>多sdk版本管理工具</p>
+<h2 id="1安装java-jdk">1、安装java jdk</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk install java
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2安装指定版本的-java-jdk">2、安装指定版本的 java jdk</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk install java 8u131
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3安装本地包">3、安装本地包</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk install groovy 3.0.0-SNAPSHOT /path/to/groovy-3.0.0-SNAPSHOT
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4移除-java-jdk">4、移除 java jdk</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk uninstall java 21-graalvm
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="5查看当前生效的-java-jdk">5、查看当前生效的 java jdk</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk current java
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 查看所有本地包的当前版本</span>
+</span></span><span style="display:flex;"><span>sdk current
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="6查看支持的清单">6、查看支持的清单</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk list
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="7查看软件的版本">7、查看软件的版本</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk list java
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="8临时切换版本">8、临时切换版本</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk use java 8.0.232.hs-adpt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="9切换默认版本">9、切换默认版本</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk default java 11.0.5.hs-adpt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="10sdk-版本升级">10、sdk 版本升级</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk upgrade springboot
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 本地所有sdk全部升级</span>
+</span></span><span style="display:flex;"><span>sdk upgrade 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="11sdkman-版本升级">11、sdkman 版本升级</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk selfupdate
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 强制重新安装</span>
+</span></span><span style="display:flex;"><span>sdk selfupdate force
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="12查看-sdkman-的版本">12、查看 sdkman 的版本</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="13离线模式">13、离线模式</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk offline <span style="color:#6639ba">enable</span>
+</span></span><span style="display:flex;"><span>  Forced offline mode enabled.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sdk offline disable
+</span></span><span style="display:flex;"><span>  Online mode re-enabled!
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当电脑没有网的时候,离线模式会进行自动切换.</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-01-06-sdkman/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2021-12-23-mysql_table_clean/" title="mysql大表的数据清理" target="_blank">mysql大表的数据清理</a>
             </h1>
         </header>
@@ -1192,104 +1423,6 @@
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2021-11-19-lombok/" title="lombok一些注解的含义" target="_blank">lombok一些注解的含义</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2021年11月19日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/lombok' target="_blank">lombok</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/java' target="_blank">java</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>lombok一些注解的含义整理</p>
-<h2 id="1accessorschain--true">1、@Accessors(chain = true)</h2>
-<p>链式风格，在调用set方法时，返回这个类的实例对象，比如：a.b.c</p>
-<h2 id="2data">2、@Data</h2>
-<p>在JavaBean或类JavaBean中使用，这个注解包含范围最广，它包含getter、setter、NoArgsConstructor、equals、canEqual、hashCode、toString 注解，即当使用当前注解时，会自动生成包含的所有方法；</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2021-11-19-lombok/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2021-10-19-git/" title=" git的日常操作命令整理" target="_blank"> git的日常操作命令整理</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2021年10月19日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/git' target="_blank">git</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/linux' target="_blank">linux</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>git的一些常见命令操作整理</p>
-<h2 id="1下载">1、下载</h2>
-<p>depth用于指定克隆深度，为1即表示只克隆最近一次commit，可以减少下载的容量</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git cone --depth<span style="color:#0550ae">=</span><span style="color:#0550ae">1</span> <span style="color:#0550ae">{</span>http://xxx/url<span style="color:#0550ae">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="2撤销commit">2、撤销commit</h2>
-<p>默认撤销，不撤销本地代码，撤销commit，并且撤销git add</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git reset --mixed HEAD^
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>不删除工作空间改动代码，撤销commit，不撤销git add</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git reset --soft HEAD^
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>删除工作空间改动代码，撤销commit，撤销git add</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2021-10-19-git/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -1435,6 +1568,10 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-10-23-contraption-lab/" title="从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记" target="_blank">从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-10-17-vcs-simulator-web/" title="我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了" target="_blank">我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了</a>
     </li>
     
@@ -1470,10 +1607,6 @@
         <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -1485,7 +1618,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/AI/">AI (6)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (7)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     
@@ -1725,7 +1858,7 @@
     
     <li><a href="https://anTtutu.github.io/categories/%E4%BA%92%E8%81%94%E7%BD%91/">互联网 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (5)</a></li>
     
@@ -1746,6 +1879,8 @@
     <li><a href="https://anTtutu.github.io/categories/%E6%9E%B6%E6%9E%84/">架构 (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%B8%B8%E6%88%8F/">游戏 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E8%BF%90%E7%BB%B4/">运维 (1)</a></li>
     
@@ -1922,6 +2057,8 @@
     
     <a href="https://anTtutu.github.io/tags/matplotlib/">Matplotlib</a>
     
+    <a href="https://anTtutu.github.io/tags/matter-js/">Matter-Js</a>
+    
     <a href="https://anTtutu.github.io/tags/maven/">Maven</a>
     
     <a href="https://anTtutu.github.io/tags/mcp/">Mcp</a>
@@ -1959,6 +2096,8 @@
     <a href="https://anTtutu.github.io/tags/pandas/">Pandas</a>
     
     <a href="https://anTtutu.github.io/tags/pg/">Pg</a>
+    
+    <a href="https://anTtutu.github.io/tags/Phaser/">Phaser</a>
     
     <a href="https://anTtutu.github.io/tags/port/">Port</a>
     
@@ -2010,9 +2149,15 @@
     
     <a href="https://anTtutu.github.io/tags/tomcat/">Tomcat</a>
     
+    <a href="https://anTtutu.github.io/tags/TTS/">TTS</a>
+    
+    <a href="https://anTtutu.github.io/tags/TypeScript/">TypeScript</a>
+    
     <a href="https://anTtutu.github.io/tags/uniapp/">Uniapp</a>
     
     <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
+    
+    <a href="https://anTtutu.github.io/tags/uv/">Uv</a>
     
     <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
     
@@ -2091,6 +2236,8 @@
     <a href="https://anTtutu.github.io/tags/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎</a>
     
     <a href="https://anTtutu.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a>
     
     <a href="https://anTtutu.github.io/tags/%E7%9B%91%E6%8E%A7/">监控</a>
     

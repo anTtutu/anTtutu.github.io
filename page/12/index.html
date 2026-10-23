@@ -76,6 +76,127 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2020-01-07-redis_batch_import/" title="30W数据批量导入redis集群" target="_blank">30W数据批量导入redis集群</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年1月7日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/redis' target="_blank">redis</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>碰到工作中有数据要一次性快速刷入redis的场景<br>
+查了下资料，找到了快速高效的写入方法了</p>
+<h2 id="1先想法子把数据组装程redis底层的命令格式">1、先想法子把数据组装程redis底层的命令格式</h2>
+<p>比如：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hset key filed value
+</span></span><span style="display:flex;"><span><span style="color:#6639ba">set</span> key value
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2大量的基础数据生成redis命令">2、大量的基础数据生成redis命令</h2>
+<p>之前我是采用golang读取数据源并转化程redis命令</p>
+<h2 id="3用redis批量导入方式写入redis">3、用redis批量导入方式写入redis</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat d1.txt <span style="color:#1f2328">|</span> redis-cli -a runoob
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果不想看到执行过程，可以用如下</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat d1.txt <span style="color:#1f2328">|</span> redis-cli -a runoob --pipe
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果是远程执行，也可以</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat d1.txt <span style="color:#1f2328">|</span> redis-cli -a runoob -p <span style="color:#0550ae">6380</span> -h 192.168.1.100 --pipe
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4为什么不用程序去做呢">4、为什么不用程序去做呢</h2>
+<p>经过对比测试，程序写入redis还赶不上上面的批量导入命令<br>
+难点是d1.txt文件的生成，需要把数据组装成如下的redis命令<br>
+举例d1.txt样例</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2020-01-07-redis_batch_import/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2019-12-21-mysql_expansion/" title="mysql集群在线无损扩容" target="_blank">mysql集群在线无损扩容</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年12月21日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/mysql' target="_blank">mysql</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/linux' target="_blank">linux</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>收到数据库磁盘占比告警了<br>
+前提条件，磁盘采用lvm管理方式，做在线无损扩容才方便管理，其他方式没测试过</p>
+<h2 id="1分配一个1t的新盘hddsdd随规划选择">1、分配一个1T的新盘，HDD、SDD随规划选择</h2>
+<p>这个一般在磁阵或者云管理平台操作，不需要什么命令，一般都是图形化操作</p>
+<h2 id="2查找新分配的1t新盘">2、查找新分配的1T新盘</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>fdisk -l     
+</span></span><span style="display:flex;"><span>lvmdiskscan
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>个人建议第二个命令，2个命令都会返回一堆查询值，怎么判断谁是新盘，谁是已使用的盘，这点有运维经验的人还是不成问题的，不详说</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2019-12-21-mysql_expansion/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2019-11-18-dos_cli/" title="dos命令速查" target="_blank">dos命令速查</a>
             </h1>
         </header>
@@ -908,72 +1029,6 @@ ffmpeg 4.4+</p>
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2019-03-26-mysql_data_restore/" title="被同事误删表找回丢失的数据" target="_blank">被同事误删表找回丢失的数据</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年3月26日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/mysql' target="_blank">mysql</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h4 id="有些不靠谱的同事真的很误事运维了几年的系统从来没出过误删表数据的事件3月14日下午突然被同事误删了订单表全量数据查询表返回0-rows突然大脑一片空白心想完了完了最重要的表数据全部被清理了虽然有每日凌晨5点的全量备份但是截止下午的数据怎么找回从来没碰到过误删事件也从来没处理过数据恢复">有些不靠谱的同事真的很误事，运维了几年的系统从来没出过误删表数据的事件，3月14日下午突然被同事误删了订单表全量数据，查询表返回0 rows，突然大脑一片空白，心想完了完了，最重要的表数据全部被清理了，虽然有每日凌晨5点的全量备份，但是截止下午的数据怎么找回？从来没碰到过误删事件，也从来没处理过数据恢复……</h4>
-<h2 id="一先挽救每日备份的数据">一、先挽救每日备份的数据</h2>
-<p>找到每日全量备份的数据，把订单表还原到测试库，然后单独把订单表重新备份，针对误删的表进行全量恢复
-采用的工具是mydumper，非mysql官方的mydump
-心想：好在有每日凌晨5点的全量备份，虽然在自己手里，从开发了每日全量备份脚本并配置定时任务每天执行，从来没派上用场，也希望不会派上用场，但是良好的备份意识还是挽救了90%的数据。
-半小时左右，90%的数据恢复，然后把问题上报。</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2019-03-26-mysql_data_restore/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2019-03-11-jdkbug/" title="JDK1.8.0.161版本bug定位" target="_blank">JDK1.8.0.161版本bug定位</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年3月8日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/bug' target="_blank">bug</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/java' target="_blank">java</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>好好运行的系统，突然故障，无意间根据错误信息查找，竟然是jdk的bug，描述下曲折的定位过程。</p>
-<h2 id="1错误日志">1、错误日志</h2>
-<p>有个老系统有使用到soap接口，采用CXF结合接口文件wsdl自动生成的接口开发的，突然在3月2日（后续日志定位才发现真正故障的时间）无法正常工作，但是实际发现时间已经到了3月6日了，直接查看日志文件，报错“组装saop报文头异常:Entity References are not allowed in SOAP documents”</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2019-03-11-jdkbug/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -1119,6 +1174,10 @@ ffmpeg 4.4+</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-10-23-contraption-lab/" title="从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记" target="_blank">从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-10-17-vcs-simulator-web/" title="我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了" target="_blank">我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了</a>
     </li>
     
@@ -1154,10 +1213,6 @@ ffmpeg 4.4+</p>
         <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -1169,7 +1224,7 @@ ffmpeg 4.4+</p>
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/AI/">AI (6)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (7)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     
@@ -1409,7 +1464,7 @@ ffmpeg 4.4+</p>
     
     <li><a href="https://anTtutu.github.io/categories/%E4%BA%92%E8%81%94%E7%BD%91/">互联网 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (5)</a></li>
     
@@ -1430,6 +1485,8 @@ ffmpeg 4.4+</p>
     <li><a href="https://anTtutu.github.io/categories/%E6%9E%B6%E6%9E%84/">架构 (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%B8%B8%E6%88%8F/">游戏 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E8%BF%90%E7%BB%B4/">运维 (1)</a></li>
     
@@ -1606,6 +1663,8 @@ ffmpeg 4.4+</p>
     
     <a href="https://anTtutu.github.io/tags/matplotlib/">Matplotlib</a>
     
+    <a href="https://anTtutu.github.io/tags/matter-js/">Matter-Js</a>
+    
     <a href="https://anTtutu.github.io/tags/maven/">Maven</a>
     
     <a href="https://anTtutu.github.io/tags/mcp/">Mcp</a>
@@ -1643,6 +1702,8 @@ ffmpeg 4.4+</p>
     <a href="https://anTtutu.github.io/tags/pandas/">Pandas</a>
     
     <a href="https://anTtutu.github.io/tags/pg/">Pg</a>
+    
+    <a href="https://anTtutu.github.io/tags/Phaser/">Phaser</a>
     
     <a href="https://anTtutu.github.io/tags/port/">Port</a>
     
@@ -1694,9 +1755,15 @@ ffmpeg 4.4+</p>
     
     <a href="https://anTtutu.github.io/tags/tomcat/">Tomcat</a>
     
+    <a href="https://anTtutu.github.io/tags/TTS/">TTS</a>
+    
+    <a href="https://anTtutu.github.io/tags/TypeScript/">TypeScript</a>
+    
     <a href="https://anTtutu.github.io/tags/uniapp/">Uniapp</a>
     
     <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
+    
+    <a href="https://anTtutu.github.io/tags/uv/">Uv</a>
     
     <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
     
@@ -1775,6 +1842,8 @@ ffmpeg 4.4+</p>
     <a href="https://anTtutu.github.io/tags/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎</a>
     
     <a href="https://anTtutu.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a>
     
     <a href="https://anTtutu.github.io/tags/%E7%9B%91%E6%8E%A7/">监控</a>
     

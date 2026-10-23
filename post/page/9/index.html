@@ -77,6 +77,88 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-05-10-tomcat-https-ssl/" title="tomcat配置https：keytool生成证书与server.xml配置" target="_blank">tomcat配置https：keytool生成证书与server.xml配置</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年5月10日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/tomcat' target="_blank">tomcat</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/java' target="_blank">java</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>内部系统要上 https，当时没有 CA 签发的证书，就用 keytool 做了自签名证书给 tomcat 配上。流程整理下，最后补上新版 JDK/tomcat 的差异说明——老环境照旧，新环境看最后一段。</p>
+<h2 id="1生成安全证书">1、生成安全证书</h2>
+<p>JDK 1.4 以后都自带 keytool，在 <code>&lt;JAVA_HOME&gt;\bin</code> 下：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>keytool -genkeypair -alias <span style="color:#0a3069">&#34;tomcat&#34;</span> -keyalg <span style="color:#0a3069">&#34;RSA&#34;</span> -keystore <span style="color:#0a3069">&#34;f:\tomcat.keystore&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参数说明：</p>
+<ul>
+<li><code>-alias</code>：证书别名，之后引用都用它</li>
+<li><code>-keyalg</code>：密钥算法，RSA</li>
+<li><code>-keystore</code>：keystore 文件的存放位置</li>
+</ul>
+<p>命令会交互式问一串信息，其中**「名字与姓氏」必须填域名**（比如 <a href="https://www.example.com">www.example.com</a>），这是最容易踩的坑——填成自己的姓名，之后运行时证书的域名和实际访问的域名对不上，浏览器照样报证书警告。密码我输的是 tomcat（测试环境），其余按实际情况填。</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2021-05-10-tomcat-https-ssl/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-05-10-redis-data-migration/" title="redis数据迁移：跨机房同步的python脚本" target="_blank">redis数据迁移：跨机房同步的python脚本</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年5月10日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/redis' target="_blank">redis</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/python' target="_blank">python</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>那阵子好几个项目要从老机房迁到阿里云，redis 直接用了阿里云带密码认证的实例。开发不想丢数据，又不愿意自己导，最后落到运维头上。麻烦在于：<strong>阿里云的 redis 实例只给访问地址、端口、密码，不支持 slaveof</strong>，主从同步这条路走不通，只能自己写个 python 脚本把源 redis 的数据取出来再写进去。</p>
+<p>脚本基于开源工具（作者 JaesonCheng，见文末参考）整理改造，实测 7.7 万个 key 同步只用了 6 秒。</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2021-05-10-redis-data-migration/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2021-05-01-system_port/" title="系统端口速查" target="_blank">系统端口速查</a>
             </h1>
         </header>
@@ -6942,122 +7024,6 @@
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2020-12-26-mysql-master-slave-replication/" title="mysql主从复制：搭建、状态检查与断点恢复" target="_blank">mysql主从复制：搭建、状态检查与断点恢复</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2020年12月26日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/mysql' target="_blank">mysql</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>主从复制是 mysql 高可用的基础：读写分离、故障切换、异地备份都建立在它之上。这篇整理主从搭建的完整步骤、状态检查要点，以及复制中断后的几种恢复手段——生产环境主从挂掉大多是「中断后不知道怎么安全地恢复」，这部分才是重点。</p>
-<h2 id="一主库master配置">一、主库（Master）配置</h2>
-<p><strong>1. 修改 my.cnf 开启 binlog</strong></p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#cf222e">[mysqld]</span>
-</span></span><span style="display:flex;"><span><span style="color:#1f2328">log-bin</span>    <span style="color:#0550ae">=</span> <span style="color:#0a3069">mysql-bin</span>
-</span></span><span style="display:flex;"><span><span style="color:#1f2328">server-id</span>  <span style="color:#0550ae">=</span> <span style="color:#0a3069">1</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><strong>2. 重启后创建复制账号</strong></p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2020-12-26-mysql-master-slave-replication/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2020-12-26-win10_go_build_icon/" title="Win10下打包go工具增加icon" target="_blank">Win10下打包go工具增加icon</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2020年12月26日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/win10' target="_blank">win10</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/build' target="_blank">build</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/go' target="_blank">go</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>go build默认产生的可执行文件没有图标icon，有时候挺丑的，想增加icon怎么办呢
-
-        <img class="mx-auto" alt="" src="/posts/icon/before.jpg" />   
-    </p>
-<h2 id="1方法1---windres命令">1、方法1 - windres命令</h2>
-<p>怎么安装和使用minGW参考前一篇文章<a href="/post/2020-12-05-win10_gcc_build_tools">Win10下新的gcc工具</a></p>
-<h3 id="11创建rc文件">1.1、创建rc文件</h3>
-<p>以test.go举例, 假设打包文件名test.exe, ico文件名test.ico<br>
-rc文件命名test.exe.rc</p>
-<p>文件中输入</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>IDI_ICON1 ICON &#34;test.ico&#34;
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="12执行windres命令创建syso文件">1.2、执行windres命令创建syso文件</h3>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#1f2328">windres</span><span style="color:#fff"> </span><span style="color:#0550ae">-</span><span style="color:#1f2328">o</span><span style="color:#fff"> </span><span style="color:#1f2328">test</span><span style="color:#1f2328">.</span><span style="color:#1f2328">exe</span><span style="color:#1f2328">.</span><span style="color:#1f2328">syso</span><span style="color:#fff"> </span><span style="color:#1f2328">test</span><span style="color:#1f2328">.</span><span style="color:#1f2328">exe</span><span style="color:#1f2328">.</span><span style="color:#1f2328">rc</span><span style="color:#fff">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="13执行go-build">1.3、执行go build</h3>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#cf222e">go</span><span style="color:#fff"> </span><span style="color:#1f2328">build</span><span style="color:#fff">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="2方法2---rsrc命令">2、方法2 - rsrc命令</h2>
-<p>需要先下载rsrc命令</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2020-12-26-win10_go_build_icon/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -7203,6 +7169,10 @@ rc文件命名test.exe.rc</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-10-23-contraption-lab/" title="从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记" target="_blank">从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-10-17-vcs-simulator-web/" title="我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了" target="_blank">我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了</a>
     </li>
     
@@ -7238,10 +7208,6 @@ rc文件命名test.exe.rc</p>
         <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -7253,7 +7219,7 @@ rc文件命名test.exe.rc</p>
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/AI/">AI (6)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (7)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     
@@ -7493,7 +7459,7 @@ rc文件命名test.exe.rc</p>
     
     <li><a href="https://anTtutu.github.io/categories/%E4%BA%92%E8%81%94%E7%BD%91/">互联网 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (5)</a></li>
     
@@ -7514,6 +7480,8 @@ rc文件命名test.exe.rc</p>
     <li><a href="https://anTtutu.github.io/categories/%E6%9E%B6%E6%9E%84/">架构 (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%B8%B8%E6%88%8F/">游戏 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E8%BF%90%E7%BB%B4/">运维 (1)</a></li>
     
@@ -7690,6 +7658,8 @@ rc文件命名test.exe.rc</p>
     
     <a href="https://anTtutu.github.io/tags/matplotlib/">Matplotlib</a>
     
+    <a href="https://anTtutu.github.io/tags/matter-js/">Matter-Js</a>
+    
     <a href="https://anTtutu.github.io/tags/maven/">Maven</a>
     
     <a href="https://anTtutu.github.io/tags/mcp/">Mcp</a>
@@ -7727,6 +7697,8 @@ rc文件命名test.exe.rc</p>
     <a href="https://anTtutu.github.io/tags/pandas/">Pandas</a>
     
     <a href="https://anTtutu.github.io/tags/pg/">Pg</a>
+    
+    <a href="https://anTtutu.github.io/tags/Phaser/">Phaser</a>
     
     <a href="https://anTtutu.github.io/tags/port/">Port</a>
     
@@ -7778,9 +7750,15 @@ rc文件命名test.exe.rc</p>
     
     <a href="https://anTtutu.github.io/tags/tomcat/">Tomcat</a>
     
+    <a href="https://anTtutu.github.io/tags/TTS/">TTS</a>
+    
+    <a href="https://anTtutu.github.io/tags/TypeScript/">TypeScript</a>
+    
     <a href="https://anTtutu.github.io/tags/uniapp/">Uniapp</a>
     
     <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
+    
+    <a href="https://anTtutu.github.io/tags/uv/">Uv</a>
     
     <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
     
@@ -7859,6 +7837,8 @@ rc文件命名test.exe.rc</p>
     <a href="https://anTtutu.github.io/tags/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎</a>
     
     <a href="https://anTtutu.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a>
     
     <a href="https://anTtutu.github.io/tags/%E7%9B%91%E6%8E%A7/">监控</a>
     

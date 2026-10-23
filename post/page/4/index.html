@@ -77,6 +77,102 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-12-26-covid-19/" title="羊了" target="_blank">羊了</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年12月26日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/covid-19' target="_blank">covid-19</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>因公司项目加班，跟开发、测试同学差点通宵，也不幸羊了，发现周边的人几乎羊了个遍，最后还是没苟住进决赛圈，修整一段时间&hellip;</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-12-26-covid-19/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-12-19-git_delete_history/" title="git删除历史提交记录" target="_blank">git删除历史提交记录</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年12月19日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/git' target="_blank">git</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/linux' target="_blank">linux</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>git如果碰到敏感信息提交，需要清理历史提交记录，在不删库的前提下，如何亡羊补牢呢？可以用下面的重写分支操作清理提交历史记录</p>
+<h2 id="1重写分支">1、重写分支</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git filter-branch --index-filter <span style="color:#0a3069">&#39;git rm -r --cached --ignore-unmatch src/main/resources/demo.txt&#39;</span> HEAD
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 如果出现冲突要增加-f</span>
+</span></span><span style="display:flex;"><span>git filter-branch  -f --index-filter
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 管理reflog信息</span>
+</span></span><span style="display:flex;"><span>git reflog expire --expire<span style="color:#0550ae">=</span>now --all  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 清理不必要的文件并优化本地存储库</span>
+</span></span><span style="display:flex;"><span>git gc --prune<span style="color:#0550ae">=</span>now  
+</span></span><span style="display:flex;"><span>git gc --aggressive --prune<span style="color:#0550ae">=</span>now
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#57606a"># 强制推送主分支</span>
+</span></span><span style="display:flex;"><span>git push --all --force
+</span></span></code></pre></td></tr></table>
+</div>
+</div>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-12-19-git_delete_history/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2022-11-28-python_muilt_version/" title="python多版本管理工具" target="_blank">python多版本管理工具</a>
             </h1>
         </header>
@@ -1262,165 +1358,6 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-09-06-mac_docker_dev/" title="Mac配置docker开发工具" target="_blank">Mac配置docker开发工具</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年9月6日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/docker' target="_blank">docker</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/mac' target="_blank">mac</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>2020年整了一套android下的termux开发环境，今天继续配置一套docker下的开发环境。<a href="/post/2020-09-28-android_termux">termux搭建参考</a></p>
-<p>开发电脑环境准备如下：</p>
-<table>
-	<thead>
-			<tr>
-					<th>系统</th>
-					<th>版本</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>MacOS</td>
-					<td>10.14.6</td>
-			</tr>
-			<tr>
-					<td>docker</td>
-					<td>20.10.12</td>
-			</tr>
-	</tbody>
-</table>
-<p>待安装的开发工具环境如下：</p>
-<table>
-	<thead>
-			<tr>
-					<th>镜像</th>
-					<th>版本</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>mongo</td>
-					<td>6.0</td>
-			</tr>
-			<tr>
-					<td>redis</td>
-					<td>7.0</td>
-			</tr>
-			<tr>
-					<td>mysql</td>
-					<td>8.0</td>
-			</tr>
-			<tr>
-					<td>nginx</td>
-					<td>1.22.0</td>
-			</tr>
-			<tr>
-					<td>minio</td>
-					<td>latest</td>
-			</tr>
-			<tr>
-					<td>etcd</td>
-					<td>latest</td>
-			</tr>
-	</tbody>
-</table>
-<h2 id="1查询docker进程">1、查询docker进程</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>launchctl list <span style="color:#1f2328">|</span> grep docker
-</span></span><span style="display:flex;"><span>-	0	com.docker.helper
-</span></span><span style="display:flex;"><span>14047	0	com.docker.docker.47840
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="2停止启动docker进程">2、停止、启动docker进程</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>launchctl stop com.docker.docker.47840 <span style="color:#0550ae">&amp;&amp;</span> launchctl start com.docker.docker.47840
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="3启动docker">3、启动docker</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>open /Applications/Docker.app
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="ps">PS:</h4>
-<blockquote>
-<p>目前通过 open /Applications/Docker.app 可以启动，通过 launchctl start com.docker.docker.xxx 方式不能启动了。</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-09-06-mac_docker_dev/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-08-11-arthas/" title="转载-arthas常见用法" target="_blank">转载-arthas常见用法</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年8月11日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/arthas' target="_blank">arthas</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>Arthas是Alibaba开源的Java诊断工具，动态跟踪Java代码；实时监控JVM状态，可以在不中断程序执行的情况下轻松完成JVM相关问题排查工作 。支持JDK 6+，支持Linux/Mac/Windows。这个工具真的很好用，而且入门超简单，十分推荐。</p>
-<h2 id="1使用场景">1、使用场景</h2>
-<ul>
-<li>1、这个类从哪个 jar 包加载的？为什么会报各种类相关的 Exception？</li>
-<li>2、我改的代码为什么没有执行到？难道是我没 commit？分支搞错了？</li>
-<li>3、遇到问题无法在线上 debug，难道只能通过加日志再重新发布吗？</li>
-<li>4、线上遇到某个用户的数据处理有问题，但线上同样无法 debug，线下无法重现！</li>
-<li>5、是否有一个全局视角来查看系统的运行状况？</li>
-<li>6、有什么办法可以监控到JVM的实时运行状态？接下来，围绕这6个问题，学习下Arthas的基本用法。</li>
-</ul>
-<h2 id="2安装">2、安装</h2>
-<p>执行下面命令下载</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-08-11-arthas/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -1566,6 +1503,10 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-10-23-contraption-lab/" title="从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记" target="_blank">从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-10-17-vcs-simulator-web/" title="我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了" target="_blank">我把 VCS 模拟器搬进了浏览器：vcs-simulator-web 开源了</a>
     </li>
     
@@ -1601,10 +1542,6 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
         <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-04-09-drawio-mcp/" title="Draw.io MCP &#43; Claude Code 集成教程" target="_blank">Draw.io MCP &#43; Claude Code 集成教程</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -1616,7 +1553,7 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/AI/">AI (6)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (7)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     
@@ -1856,7 +1793,7 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     
     <li><a href="https://anTtutu.github.io/categories/%E4%BA%92%E8%81%94%E7%BD%91/">互联网 (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (1)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E5%AE%89%E5%85%A8/">安全 (5)</a></li>
     
@@ -1877,6 +1814,8 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     <li><a href="https://anTtutu.github.io/categories/%E6%9E%B6%E6%9E%84/">架构 (2)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎 (1)</a></li>
+    
+    <li><a href="https://anTtutu.github.io/categories/%E6%B8%B8%E6%88%8F/">游戏 (1)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/%E8%BF%90%E7%BB%B4/">运维 (1)</a></li>
     
@@ -2053,6 +1992,8 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     
     <a href="https://anTtutu.github.io/tags/matplotlib/">Matplotlib</a>
     
+    <a href="https://anTtutu.github.io/tags/matter-js/">Matter-Js</a>
+    
     <a href="https://anTtutu.github.io/tags/maven/">Maven</a>
     
     <a href="https://anTtutu.github.io/tags/mcp/">Mcp</a>
@@ -2090,6 +2031,8 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     <a href="https://anTtutu.github.io/tags/pandas/">Pandas</a>
     
     <a href="https://anTtutu.github.io/tags/pg/">Pg</a>
+    
+    <a href="https://anTtutu.github.io/tags/Phaser/">Phaser</a>
     
     <a href="https://anTtutu.github.io/tags/port/">Port</a>
     
@@ -2141,9 +2084,15 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     
     <a href="https://anTtutu.github.io/tags/tomcat/">Tomcat</a>
     
+    <a href="https://anTtutu.github.io/tags/TTS/">TTS</a>
+    
+    <a href="https://anTtutu.github.io/tags/TypeScript/">TypeScript</a>
+    
     <a href="https://anTtutu.github.io/tags/uniapp/">Uniapp</a>
     
     <a href="https://anTtutu.github.io/tags/union_id/">Union_id</a>
+    
+    <a href="https://anTtutu.github.io/tags/uv/">Uv</a>
     
     <a href="https://anTtutu.github.io/tags/vcs/">Vcs</a>
     
@@ -2222,6 +2171,8 @@ HostPort 对应的端口代表 宿主机 的端口。</p>……
     <a href="https://anTtutu.github.io/tags/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">模板引擎</a>
     
     <a href="https://anTtutu.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+    
+    <a href="https://anTtutu.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a>
     
     <a href="https://anTtutu.github.io/tags/%E7%9B%91%E6%8E%A7/">监控</a>
     
