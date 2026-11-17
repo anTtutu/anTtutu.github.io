@@ -77,6 +77,89 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" title="linux后台执行可用方式整理" target="_blank">linux后台执行可用方式整理</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年3月23日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/linux' target="_blank">linux</a>
+            </span>
+            
+            <span class="meta-category">
+                <a href='/categories/backend_execute' target="_blank">backend_execute</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>最近答疑群友如何后台运行 ssh 连接后的操作，整理了下日常常见的后台执行方式，方便知识梳理。</p>
+<h2 id="1nohup方式">1、nohup方式</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># nohup sh shell.sh &amp;</span>
+</span></span><span style="display:flex;"><span>查看日志：tail -f nohup.out
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2disown方式">2、disown方式</h2>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># sh shell.sh &amp; disown</span>
+</span></span><span style="display:flex;"><span>查看日志：断开终端后，不能再查看日志
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3screen方式">3、screen方式</h2>
+<p>执行screen，如果命令不存在，需要先安装：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># yum install screen -y</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>新建一个屏幕：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># screen -S screen_name</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行命令：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># sh shell.sh</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>依次按 Ctrl+A 与 D (无 Ctrl) 脱离该屏幕，此时程序仍运行在后台。</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-03-23-linux_backend_execute/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2022-03-05-redis-ops/" title="redis运维：监控指标体系与性能问题分析" target="_blank">redis运维：监控指标体系与性能问题分析</a>
             </h1>
         </header>
@@ -625,41 +708,6 @@ count 表示输出次数，如果没有指定该值，但是指定了 delay 的�
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2022-01-10-otp-one-time-password/" title="OTP动态口令：原理与java实现" target="_blank">OTP动态口令：原理与java实现</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年1月10日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/%E5%AE%89%E5%85%A8' target="_blank">安全</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>对外网开放的后台管理系统，只用静态口令认证有几个先天问题：用户为了好记会选有特征的密码、明文传输时可被截获、内部人员能拿到密码冒用。OTP（One-Time Password，一次性密码/动态口令）是最容易落地的双因素认证增强手段，这篇整理它的原理和一套 java 实现方案。</p>
-<h2 id="一静态口令的风险">一、静态口令的风险</h2>
-<ol>
-<li>便于记忆的密码往往有特征，容易被猜测和爆破</li>
-<li>非加密传输时认证信息可被直接截获</li>
-<li>合法授权者（包括内部人员）可以复制密码冒用，事后无法追责</li>
-</ol>
-<p>静态口令从根本上无法确定「现在操作的人就是账户本人」。</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2022-01-10-otp-one-time-password/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -805,6 +853,10 @@ count 表示输出次数，如果没有指定该值，但是指定了 delay 的�
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-11-17-cc-switch-vs-magpie/" title="CC Switch 对比 Magpie：两家供应商管家的优缺点掰开看，以及我为什么重心挪到了后者" target="_blank">CC Switch 对比 Magpie：两家供应商管家的优缺点掰开看，以及我为什么重心挪到了后者</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-10-23-contraption-lab/" title="从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记" target="_blank">从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记</a>
     </li>
     
@@ -840,10 +892,6 @@ count 表示输出次数，如果没有指定该值，但是指定了 delay 的�
         <a href="https://anTtutu.github.io/post/2026-07-02-claude-code-cli-cheatsheet/" title="Claude Code常用命令速查" target="_blank">Claude Code常用命令速查</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -855,7 +903,7 @@ count 表示输出次数，如果没有指定该值，但是指定了 delay 的�
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/AI/">AI (7)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (8)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     

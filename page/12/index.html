@@ -76,6 +76,36 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2020-02-11-mysql-binlog-analysis/" title="用pt-query-digest分析mysql binlog" target="_blank">用pt-query-digest分析mysql binlog</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年2月11日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/mysql' target="_blank">mysql</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>排查历史数据问题时经常要翻 binlog：某个时间段数据到底被谁改成了什么样。mysqlbinlog 只能把 binlog 转成可读文本，想要按语句聚合统计（哪类语句最多、耗时分布），用 percona toolkit 里的 pt-query-digest 加上 <code>--type binlog</code> 就能对转出来的结果做分析。我的环境是 centos，亲测可用。</p>
+<h2 id="1单独安装-pt-query-digest">1、单独安装 pt-query-digest</h2>
+<p>不想装整套 percona toolkit 的话，单独装 pt-query-digest 就够了：</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2020-02-11-mysql-binlog-analysis/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2020-01-07-redis_batch_import/" title="30W数据批量导入redis集群" target="_blank">30W数据批量导入redis集群</a>
             </h1>
         </header>
@@ -944,91 +974,6 @@ ffmpeg 4.4+</p>
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2019-04-21-linux_knoledge/" title="linux的一些细节点-不定期补充" target="_blank">linux的一些细节点-不定期补充</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年4月21日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/linux' target="_blank">linux</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="前言">前言</h2>
-<p>linux的一些小细节记录</p>
-<h2 id="1tmp目录var目录自动清理">1、tmp目录、var目录自动清理</h2>
-<p>tmp下的文件或目录长时间没有更新或者改动的话，systemd-tmpfiles 会按配置定期清理，配置参考如下:</p>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vi /usr/lib/tmpfiles.d/tmp.conf
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># Clear tmp directories separately, to make them easier to override  </span>
-</span></span><span style="display:flex;"><span>v /tmp <span style="color:#0550ae">1777</span> root root 90d  
-</span></span><span style="display:flex;"><span>v /var/tmp <span style="color:#0550ae">1777</span> root root 90d  
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Exclude namespace mountpoints created with PrivateTmp=yes  </span>
-</span></span><span style="display:flex;"><span>x /tmp/systemd-private-%b-*  
-</span></span><span style="display:flex;"><span>X /tmp/systemd-private-%b-*/tmp  
-</span></span><span style="display:flex;"><span>x /var/tmp/systemd-private-%b-*  
-</span></span><span style="display:flex;"><span>X /var/tmp/systemd-private-%b-*/tmp
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="2tcp连接数统计">2、tcp连接数统计</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>netstat -ant<span style="color:#1f2328">|</span>awk <span style="color:#0a3069">&#39;/^tcp/ {++S[$NF]} END {for(a in S) print (a,S[a])}&#39;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>TIME_WAIT <span style="color:#0550ae">1</span>
-</span></span><span style="display:flex;"><span>FIN_WAIT2 <span style="color:#0550ae">1</span>
-</span></span><span style="display:flex;"><span>ESTABLISHED <span style="color:#0550ae">34</span>
-</span></span><span style="display:flex;"><span>LAST_ACK <span style="color:#0550ae">1</span>
-</span></span><span style="display:flex;"><span>LISTEN <span style="color:#0550ae">23</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>注：netstat 属于已停止维护的 net-tools 套件，新发行版推荐用 ss 等价替代：<code>ss -ant | awk 'NR&gt;1 {++S[$1]} END {for(a in S) print (a,S[a])}'</code>。</p>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2019-04-21-linux_knoledge/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -1174,6 +1119,10 @@ ffmpeg 4.4+</p>
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-11-17-cc-switch-vs-magpie/" title="CC Switch 对比 Magpie：两家供应商管家的优缺点掰开看，以及我为什么重心挪到了后者" target="_blank">CC Switch 对比 Magpie：两家供应商管家的优缺点掰开看，以及我为什么重心挪到了后者</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-10-23-contraption-lab/" title="从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记" target="_blank">从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记</a>
     </li>
     
@@ -1209,10 +1158,6 @@ ffmpeg 4.4+</p>
         <a href="https://anTtutu.github.io/post/2026-07-02-claude-code-cli-cheatsheet/" title="Claude Code常用命令速查" target="_blank">Claude Code常用命令速查</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -1224,7 +1169,7 @@ ffmpeg 4.4+</p>
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/AI/">AI (7)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (8)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     

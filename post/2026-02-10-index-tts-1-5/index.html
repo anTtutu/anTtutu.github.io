@@ -557,7 +557,7 @@
 <p><strong>没有 CUDA 的 GPU 就慢</strong>：这台 Intel Mac 没有 CUDA，BigVGAN 的融合 kernel 用不了，一段 25 秒的音频在 cpu 上要等几分钟（macOS 15 之后 AMD 显卡能借 MPS 出点力，但会踩出第 6 条的新坑）——跑通验证够用，批量生产上 N 卡</p>
 </li>
 <li>
-<p><strong>参考音频质量直接决定克隆效果</strong>：背景音杂、时长太短的参考音频，合成出来的音色会飘，选十几秒以上干净人声，效果立竿见影</p>
+<p><strong>参考音频质量直接决定克隆效果</strong>：背景音杂、时长太短的参考音频，合成出来的音色会飘，选十几秒的干净人声，效果立竿见影——后来发现「以上」并不成立，太长也有代价，见踩坑第 8 条</p>
 </li>
 <li>
 <p><strong>升级 macOS 后推理报 <code>unsupported autocast device_type 'mps'</code></strong>：最隐蔽的一坑，大半年后才爆出来。2 月份系统还是 macOS 10.15（Catalina），没有 MPS 框架，<code>torch.backends.mps.is_available()</code> 返回 False，设备自动走 cpu，ordinary、fast 都跑得欢。后来系统升到 macOS 15.7.4（Sequoia），MPS 框架有了，<code>is_available()</code> 变 True，设备自动切成 mps——而且不是虚报，torch 2.2.2 的 MPS 后端在这台 Intel 机器上真能算，AMD 显卡走 Metal，实测 matmul 比 CPU 快一个数量级，fp16、conv1d 都通。坏就坏在 <code>torch.amp.autocast</code> 的设备白名单 2.2.2 里没有 mps（autocast 的 mps 支持要 2.3 才加），<code>infer.py</code> 里 5 处 <code>torch.amp.autocast(xxx.device.type, ...)</code> 动态传参全部撞雷，fast（3 处）、ordinary（2 处），点生成就炸。报错栈（中间 gradio/anyio 的框架帧省了）最后落在这行：</p>
@@ -609,6 +609,51 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div></li>
+<li>
+<p><strong>webui 文本框一动就报 <code>NameError: name 'pd' is not defined</code></strong>：第 6 条修复之后又跑了几轮，撞见一个不挡合成的怪毛病：在文本框里输入或修改文字，界面就弹错误红条。日志的顺序还很唬人——合成指标刚打完、<code>wav file saved</code> 都落盘了，后面却跟着一大段 Traceback，乍一看像刚生成完就崩了：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>&gt;&gt; Generated audio length: 33.79 seconds
+</span></span><span style="display:flex;"><span>&gt;&gt; [fast] RTF: 12.1983
+</span></span><span style="display:flex;"><span>&gt;&gt; wav file saved to: outputs/spk_1792772580.wav
+</span></span><span style="display:flex;"><span>Traceback (most recent call last):
+</span></span><span style="display:flex;"><span>  ......（gradio/anyio 框架栈帧，省略）......
+</span></span><span style="display:flex;"><span>  File &#34;/Users/tuchenguang/Downloads/Code/AI/index-tts-1.5.0/webui.py&#34;, line 183, in on_input_text_change
+</span></span><span style="display:flex;"><span>    df = pd.DataFrame([], columns=[&#34;序号&#34;, &#34;分句内容&#34;, &#34;Token数&#34;])
+</span></span><span style="display:flex;"><span>  NameError: name &#39;pd&#39; is not defined
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>读栈老规矩，最后落的业务帧才是案发现场：<code>webui.py:183</code> 的 <code>on_input_text_change</code>——这是挂在<strong>文本框变化事件</strong>上的回调，负责把输入文本做分句预览（序号 / 分句内容 / Token 数一张表），跟推理链路没关系。所以 <strong>wav 是正常生成的，崩的只是这个锦上添花的预览功能</strong>，红条再长也不用慌。根因就一句话：webui.py 里用了 <code>pd.DataFrame</code>，但整个文件<strong>没有 <code>import pandas as pd</code></strong>——上游代码的疏漏，和踩坑第 1 条（bpe.model 双层路径）师出同门，都是上游的小毛病而非环境问题。顺带一个经典鉴别点：<strong>报 <code>NameError</code> 是代码里没 import，报 <code>ModuleNotFoundError</code> 才是环境里没装包</strong>——pandas 本身不用装，gradio 的依赖里就带着它，差的只是这一行。修复：webui.py 顶部补上 <code>import pandas as pd</code>，重启 webui 生效。</p>
+</li>
+<li>
+<p><strong>参考音频太长，偶尔报 <code>max_mel_tokens</code> 超限——长句被拦腰截断</strong>：这次换了一段 <strong>48 秒</strong>的长参考音频，fast 推理刚起步，日志里就冒出一条 RuntimeWarning：</p>
+<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>/Users/tuchenguang/Downloads/Code/AI/index-tts-1.5.0/indextts/infer.py:410: RuntimeWarning: WARN: generation stopped due to exceeding `max_mel_tokens` (600). Consider reducing `max_text_tokens_per_sentence`(120) or increasing `max_mel_tokens`.
+</span></span><span style="display:flex;"><span>  warnings.warn(
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这条的姿势和前几条都不同：<strong>是 warning 不是 error，流程不中断</strong>——bigvgan 照跑、wav 照样落盘，这轮 39.94 秒的音频看起来「完整」生成了。危害是暗的：撞线的分句被<strong>拦腰截断、尾部缺字</strong>，试听不留神根本发现不了。翻了代码把机制理清：</p>
+<ul>
+<li><strong>单句语音码本上限 600 token</strong>：GPT 按分句逐句自回归生成语音码本，<code>max_mel_tokens</code> 默认 600，作为 <code>max_generate_length</code> 传进 <code>inference_speech</code>（<code>gpt/model.py:697</code> 的 <code>max_length = trunc_index + max_generate_length</code>）；某句生成到 600 还没出现停止 token（<code>infer.py:409</code> 判 <code>codes[-1] != stop_mel_token</code>），这句就被硬截并报上面那条 warning——且 <code>has_warned</code> 标记下<strong>整轮只警告一次</strong>，多句中招也只提醒一回，别被「只警告一次」骗成「只截了一句」</li>
+<li><strong>长参考是推手</strong>：参考音频先压成风格 latent 作为 GPT 的条件前缀，生成节奏会跟着参考的说话风格走——参考又长、语速又慢时，同样的字要花更多 token，「长参考 × 长分句」就撞上限。这也解释了「偶尔」：4.3 节那轮 55 秒参考没中招、这轮 48 秒中了，说明不是超过某个秒数必炸，而是组合概率性命中，短分句永远安全</li>
+<li><strong>从源头治最省事</strong>：warning 自带的两条建议各有代价——<code>max_text_tokens_per_sentence</code> 在 webui 里就有滑杆可调，但把长句切得更碎会伤句间韵律衔接；调大 <code>max_mel_tokens</code> 得改代码（webui 没暴露这个参数）。都不如控制参考音频时长：<strong>15 秒左右</strong>的干净人声刚好，音色信息足够、又不会把生成节奏带飘。和踩坑第 5 条凑成一个完整区间：太短（十几秒以下）音色飘，太长（几十秒）容易截断，<strong>15 秒左右是黄金值</strong>——这次 48 秒就是反面教材</li>
+</ul>
+</li>
 </ol>
 <h2 id="总结">总结</h2>
 <p>整个搭建下来体会：<strong>IndexTTS-1.5 的部署门槛不高，坑都在「环境对不对、版本对不对、文件全不全」这种细节上</strong>——conda 建基础环境、uv 装依赖、镜像拉权重、<code>python webui.py</code> 起服务，一气呵成；Intel Mac 上 torch 停更 2.2.2 封顶是第一个要认命的坑，这个坑后来还连着升级 macOS 后的 autocast &lsquo;mps&rsquo; 雷，好在钉回 <code>device=&quot;cpu&quot;</code> 一行就恢复，就是没有 CUDA 整体速度慢，试用验证完全够用。零样本克隆的效果对得起开源第一梯队的评价，后续想批量合成（比如给文章自动配音频、给视频配音）就在 CLI 基础上包个脚本，遇到类似的本地 TTS 部署需求可以直接参考这篇。</p>
@@ -822,6 +867,10 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-11-17-cc-switch-vs-magpie/" title="CC Switch 对比 Magpie：两家供应商管家的优缺点掰开看，以及我为什么重心挪到了后者" target="_blank">CC Switch 对比 Magpie：两家供应商管家的优缺点掰开看，以及我为什么重心挪到了后者</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-10-23-contraption-lab/" title="从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记" target="_blank">从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记</a>
     </li>
     
@@ -857,10 +906,6 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
         <a href="https://anTtutu.github.io/post/2026-07-02-claude-code-cli-cheatsheet/" title="Claude Code常用命令速查" target="_blank">Claude Code常用命令速查</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -872,7 +917,7 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/AI/">AI (7)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (8)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     

@@ -76,6 +76,42 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://anTtutu.github.io/post/2021-11-27-perf-test-tools/" title="性能测试入门：从PV/QPS/TPS概念到四款压测工具横评" target="_blank">性能测试入门：从PV/QPS/TPS概念到四款压测工具横评</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年11月27日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95' target="_blank">性能测试</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>项目需要对一批接口压测，要求 QPS 达到 6 万以上。一直用的 jmeter 单台电脑打不到这个量级，于是对几款主流压测工具做了一次横评。压测机为 Linux 4核8G，为避免干扰，测试时服务器只运行压测工具，且非本机压本机。</p>
+<p>先从概念说起，再对比工具。</p>
+<h2 id="一先分清-pv--qps--tps">一、先分清 PV / QPS / TPS</h2>
+<ul>
+<li><strong>PV（Page View）</strong>：页面访问量，每次用户访问或者刷新页面都会被计算在内。</li>
+<li><strong>QPS（Query Per Second）</strong>：每秒查询数，每秒系统能够处理的查询请求次数。比如执行了 select 操作，相应的 qps 会增加。</li>
+<li><strong>TPS（Transactions Per Second）</strong>：每秒事务数，每秒系统能够处理的事务次数。比如执行了 dml 操作，那么相应的 tps 会增加。</li>
+</ul>
+<p><strong>不同的应用系统 tps/qps 是没有可对比性的</strong>。例如：</p>……
+        </div>
+        <p class="readmore"><a href="https://anTtutu.github.io/post/2021-11-27-perf-test-tools/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://anTtutu.github.io/post/2021-11-19-lombok/" title="lombok一些注解的含义" target="_blank">lombok一些注解的含义</a>
             </h1>
         </header>
@@ -622,657 +658,6 @@
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://anTtutu.github.io/post/2021-06-05-python_faker/" title="python工具-faker测试数据生成器" target="_blank">python工具-faker测试数据生成器</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2021年6月5日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/python' target="_blank">python</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/test' target="_blank">test</a>
-            </span>
-            
-            <span class="meta-category">
-                <a href='/categories/faker' target="_blank">faker</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            <h2 id="1参考">1、参考</h2>
-<p>官方地址： <a href="https://faker.readthedocs.io/">https://faker.readthedocs.io/</a><br>
-ruby 和 java 下都有类似的 faker 工具，但是对比过 java 的，还是 python 这个完善很多。ruby 的暂没测试</p>
-<h2 id="2用法示例">2、用法示例</h2>
-<div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#cf222e">from</span> <span style="color:#24292e">faker</span> <span style="color:#cf222e">import</span> Faker
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>fake <span style="color:#0550ae">=</span> Faker<span style="color:#1f2328">(</span>locale<span style="color:#0550ae">=</span><span style="color:#0a3069">&#39;zh_CN&#39;</span><span style="color:#1f2328">)</span> 
-</span></span><span style="display:flex;"><span><span style="color:#57606a">#为生成数据的文化选项，默认为en_US，只有使用了相关文化，才能生成对应的随机信息</span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a">#由于文化差异，设置文化的时候会导致有些字段比如省份等会出现方法报错等问题</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="3常用函数介绍">3、常用函数介绍</h2>
-<table>
-	<thead>
-			<tr>
-					<th>参数</th>
-					<th>说明</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>city_suffix()</td>
-					<td>市，县</td>
-			</tr>
-			<tr>
-					<td>country()</td>
-					<td>国家</td>
-			</tr>
-			<tr>
-					<td>country_code()</td>
-					<td>国家编码</td>
-			</tr>
-			<tr>
-					<td>district()</td>
-					<td>区</td>
-			</tr>
-			<tr>
-					<td>geo_coordinate()</td>
-					<td>地理坐标</td>
-			</tr>
-			<tr>
-					<td>latitude()</td>
-					<td>地理坐标(纬度)</td>
-			</tr>
-			<tr>
-					<td>longitude()</td>
-					<td>地理坐标(经度)</td>
-			</tr>
-			<tr>
-					<td>lexify()</td>
-					<td>替换所有问号（“？”）带有随机字母的事件。</td>
-			</tr>
-			<tr>
-					<td>numerify()</td>
-					<td>三位随机数字</td>
-			</tr>
-			<tr>
-					<td>postcode()</td>
-					<td>邮编</td>
-			</tr>
-			<tr>
-					<td>province()</td>
-					<td>省份</td>
-			</tr>
-			<tr>
-					<td>street_address()</td>
-					<td>街道地址</td>
-			</tr>
-			<tr>
-					<td>street_name()</td>
-					<td>街道名</td>
-			</tr>
-			<tr>
-					<td>street_suffix()</td>
-					<td>街、路</td>
-			</tr>
-			<tr>
-					<td>random_digit()</td>
-					<td>0~9随机数</td>
-			</tr>
-			<tr>
-					<td>random_digit_not_null()</td>
-					<td>1~9的随机数</td>
-			</tr>
-			<tr>
-					<td>random_element()</td>
-					<td>随机字母</td>
-			</tr>
-			<tr>
-					<td>random_int()</td>
-					<td>随机数字，默认0~9999，可以通过设置min,max来设置</td>
-			</tr>
-			<tr>
-					<td>random_letter()</td>
-					<td>随机字母</td>
-			</tr>
-			<tr>
-					<td>random_number()</td>
-					<td>随机数字，参数digits设置生成的数字位数</td>
-			</tr>
-			<tr>
-					<td>color_name()</td>
-					<td>随机颜色名</td>
-			</tr>
-			<tr>
-					<td>hex_color()</td>
-					<td>随机HEX颜色</td>
-			</tr>
-			<tr>
-					<td>rgb_color()</td>
-					<td>随机RGB颜色</td>
-			</tr>
-			<tr>
-					<td>safe_color_name()</td>
-					<td>随机安全色名</td>
-			</tr>
-			<tr>
-					<td>safe_hex_color()</td>
-					<td>随机安全HEX颜色</td>
-			</tr>
-			<tr>
-					<td>bs()</td>
-					<td>随机公司服务名</td>
-			</tr>
-			<tr>
-					<td>company()</td>
-					<td>随机公司名（长）</td>
-			</tr>
-			<tr>
-					<td>company_prefix()</td>
-					<td>随机公司名（短）</td>
-			</tr>
-			<tr>
-					<td>company_suffix()</td>
-					<td>公司性质</td>
-			</tr>
-			<tr>
-					<td>credit_card_expire()</td>
-					<td>随机信用卡到期日</td>
-			</tr>
-			<tr>
-					<td>credit_card_full()</td>
-					<td>生成完整信用卡信息</td>
-			</tr>
-			<tr>
-					<td>credit_card_number()</td>
-					<td>信用卡号</td>
-			</tr>
-			<tr>
-					<td>credit_card_provider()</td>
-					<td>信用卡类型</td>
-			</tr>
-			<tr>
-					<td>credit_card_security_code()</td>
-					<td>信用卡安全码</td>
-			</tr>
-			<tr>
-					<td>currency_code()</td>
-					<td>货币编码</td>
-			</tr>
-			<tr>
-					<td>am_pm()</td>
-					<td>AM/PM</td>
-			</tr>
-			<tr>
-					<td>century()</td>
-					<td>随机世纪</td>
-			</tr>
-			<tr>
-					<td>date()</td>
-					<td>随机日期</td>
-			</tr>
-			<tr>
-					<td>date_between()</td>
-					<td>随机生成指定范围内日期，参数</td>
-			</tr>
-			<tr>
-					<td>date_between_dates()</td>
-					<td>随机生成指定范围内日期，用法同上</td>
-			</tr>
-			<tr>
-					<td>date_object()</td>
-					<td>随机生产从1970-1-1到指定日期的随机日期。</td>
-			</tr>
-			<tr>
-					<td>date_this_month()</td>
-					<td></td>
-			</tr>
-			<tr>
-					<td>date_this_year()</td>
-					<td></td>
-			</tr>
-			<tr>
-					<td>date_time()</td>
-					<td>随机生成指定时间（1970年1月1日至今）</td>
-			</tr>
-			<tr>
-					<td>date_time_ad()</td>
-					<td>生成公元1年到现在的随机时间</td>
-			</tr>
-			<tr>
-					<td>date_time_between()</td>
-					<td>用法同dates</td>
-			</tr>
-			<tr>
-					<td>future_date()</td>
-					<td>未来日期</td>
-			</tr>
-			<tr>
-					<td>future_datetime()</td>
-					<td>未来时间</td>
-			</tr>
-			<tr>
-					<td>month()</td>
-					<td>随机月份</td>
-			</tr>
-			<tr>
-					<td>month_name()</td>
-					<td>随机月份（英文）</td>
-			</tr>
-			<tr>
-					<td>past_date()</td>
-					<td>随机生成已经过去的日期</td>
-			</tr>
-			<tr>
-					<td>past_datetime()</td>
-					<td>随机生成已经过去的时间</td>
-			</tr>
-			<tr>
-					<td>time()</td>
-					<td>随机24小时时间</td>
-			</tr>
-			<tr>
-					<td>timedelta()</td>
-					<td>随机获取时间差</td>
-			</tr>
-			<tr>
-					<td>time_object()</td>
-					<td>随机24小时时间，time对象</td>
-			</tr>
-			<tr>
-					<td>time_series()</td>
-					<td>随机TimeSeries对象</td>
-			</tr>
-			<tr>
-					<td>timezone()</td>
-					<td>随机时区</td>
-			</tr>
-			<tr>
-					<td>unix_time()</td>
-					<td>随机Unix时间</td>
-			</tr>
-			<tr>
-					<td>year()</td>
-					<td>随机年份</td>
-			</tr>
-			<tr>
-					<td>file_extension()</td>
-					<td>随机文件扩展名</td>
-			</tr>
-			<tr>
-					<td>file_name()</td>
-					<td>随机文件名（包含扩展名，不包含路径）</td>
-			</tr>
-			<tr>
-					<td>file_path()</td>
-					<td>随机文件路径（包含文件名，扩展名）</td>
-			</tr>
-			<tr>
-					<td>mime_type()</td>
-					<td>随机mime Type</td>
-			</tr>
-			<tr>
-					<td>ascii_company_email()</td>
-					<td>随机ASCII公司邮箱名</td>
-			</tr>
-			<tr>
-					<td>ascii_email()</td>
-					<td>随机ASCII邮箱</td>
-			</tr>
-			<tr>
-					<td>ascii_free_email()</td>
-					<td></td>
-			</tr>
-			<tr>
-					<td>ascii_safe_email()</td>
-					<td></td>
-			</tr>
-			<tr>
-					<td>company_email()</td>
-					<td></td>
-			</tr>
-			<tr>
-					<td>domain_name()</td>
-					<td>生成域名</td>
-			</tr>
-			<tr>
-					<td>domain_word()</td>
-					<td>域词(即，不包含后缀)</td>
-			</tr>
-			<tr>
-					<td>email()</td>
-					<td></td>
-			</tr>
-			<tr>
-					<td>free_email()</td>
-					<td></td>
-			</tr>
-			<tr>
-					<td>free_email_domain()</td>
-					<td></td>
-			</tr>
-			<tr>
-					<td>f.safe_email()</td>
-					<td>安全邮箱</td>
-			</tr>
-			<tr>
-					<td>f.image_url()</td>
-					<td>随机URL地址</td>
-			</tr>
-			<tr>
-					<td>ipv4()</td>
-					<td>随机IP4地址</td>
-			</tr>
-			<tr>
-					<td>ipv6()</td>
-					<td>随机IP6地址</td>
-			</tr>
-			<tr>
-					<td>mac_address()</td>
-					<td>随机MAC地址</td>
-			</tr>
-			<tr>
-					<td>tld()</td>
-					<td>网址域名后缀(.com,.net.cn,等等，不包括.)</td>
-			</tr>
-			<tr>
-					<td>uri()</td>
-					<td>随机URI地址</td>
-			</tr>
-			<tr>
-					<td>uri_extension()</td>
-					<td>网址文件后缀</td>
-			</tr>
-			<tr>
-					<td>uri_page()</td>
-					<td>网址文件（不包含后缀）</td>
-			</tr>
-			<tr>
-					<td>uri_path()</td>
-					<td>网址文件路径（不包含文件名）</td>
-			</tr>
-			<tr>
-					<td>url()</td>
-					<td>随机URL地址</td>
-			</tr>
-			<tr>
-					<td>user_name()</td>
-					<td>随机用户名</td>
-			</tr>
-			<tr>
-					<td>isbn10()</td>
-					<td>随机ISBN（10位）</td>
-			</tr>
-			<tr>
-					<td>isbn13()</td>
-					<td>随机ISBN（13位）</td>
-			</tr>
-			<tr>
-					<td>job()</td>
-					<td>随机职位</td>
-			</tr>
-			<tr>
-					<td>paragraph()</td>
-					<td>随机生成一个段落</td>
-			</tr>
-			<tr>
-					<td>paragraphs()</td>
-					<td>随机生成多个段落，通过参数nb来控制段落数，返回数组</td>
-			</tr>
-			<tr>
-					<td>sentence()</td>
-					<td>随机生成一句话</td>
-			</tr>
-			<tr>
-					<td>sentences()</td>
-					<td>随机生成多句话，与段落类似</td>
-			</tr>
-			<tr>
-					<td>text()</td>
-					<td>随机生成一篇文章（不要幻想着人工智能了，至今没完全看懂一句话是什么意思）</td>
-			</tr>
-			<tr>
-					<td>word()</td>
-					<td>随机生成词语</td>
-			</tr>
-			<tr>
-					<td>words()</td>
-					<td>随机生成多个词语，用法与段落，句子，类似</td>
-			</tr>
-			<tr>
-					<td>binary()</td>
-					<td>随机生成二进制编码</td>
-			</tr>
-			<tr>
-					<td>boolean()</td>
-					<td>True/False</td>
-			</tr>
-			<tr>
-					<td>language_code()</td>
-					<td>随机生成两位语言编码</td>
-			</tr>
-			<tr>
-					<td>locale()</td>
-					<td>随机生成语言/国际 信息</td>
-			</tr>
-			<tr>
-					<td>md5()</td>
-					<td>随机生成MD5</td>
-			</tr>
-			<tr>
-					<td>null_boolean()</td>
-					<td>NULL/True/False</td>
-			</tr>
-			<tr>
-					<td>password()</td>
-					<td>随机生成密码,可选参数：length：密码长度；special_chars：是否能使用特殊字符；digits：是否包含数字；upper_case：是否包含大写字母；lower_case：是否包含小写字母</td>
-			</tr>
-			<tr>
-					<td>sha1()</td>
-					<td>随机SHA1</td>
-			</tr>
-			<tr>
-					<td>sha256()</td>
-					<td>随机SHA256</td>
-			</tr>
-			<tr>
-					<td>uuid4()</td>
-					<td>随机UUID</td>
-			</tr>
-			<tr>
-					<td>first_name()</td>
-					<td></td>
-			</tr>
-			<tr>
-					<td>first_name_female()</td>
-					<td>女性名</td>
-			</tr>
-			<tr>
-					<td>first_name_male()</td>
-					<td>男性名</td>
-			</tr>
-			<tr>
-					<td>first_romanized_name()</td>
-					<td>罗马名</td>
-			</tr>
-			<tr>
-					<td>last_name()</td>
-					<td></td>
-			</tr>
-			<tr>
-					<td>last_name_female()</td>
-					<td>女姓</td>
-			</tr>
-			<tr>
-					<td>last_name_male()</td>
-					<td>男姓</td>
-			</tr>
-			<tr>
-					<td>last_romanized_name()</td>
-					<td></td>
-			</tr>
-			<tr>
-					<td>name()</td>
-					<td>随机生成全名</td>
-			</tr>
-			<tr>
-					<td>name_female()</td>
-					<td>男性全名</td>
-			</tr>
-			<tr>
-					<td>name_male()</td>
-					<td>女性全名</td>
-			</tr>
-			<tr>
-					<td>romanized_name()</td>
-					<td>罗马名</td>
-			</tr>
-			<tr>
-					<td>msisdn()</td>
-					<td>移动台国际用户识别码，即移动用户的ISDN号码</td>
-			</tr>
-			<tr>
-					<td>phone_number()</td>
-					<td>随机生成手机号</td>
-			</tr>
-			<tr>
-					<td>phonenumber_prefix()</td>
-					<td>随机生成手机号段</td>
-			</tr>
-			<tr>
-					<td>profile()</td>
-					<td>随机生成档案信息</td>
-			</tr>
-			<tr>
-					<td>simple_profile()</td>
-					<td>随机生成简单档案信息</td>
-			</tr>
-	</tbody>
-</table>
-<h2 id="4随机生成指定类型数据">4、随机生成指定类型数据</h2>
-<table>
-	<thead>
-			<tr>
-					<th>参数</th>
-					<th>说明</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>pybool()</td>
-					<td>布尔类型</td>
-			</tr>
-			<tr>
-					<td>pydecimal()</td>
-					<td>数字</td>
-			</tr>
-			<tr>
-					<td>pydict()</td>
-					<td>字典</td>
-			</tr>
-			<tr>
-					<td>pyfloat()</td>
-					<td>left_digits=5 #生成的整数位数, right_digits=2 #生成的小数位数, positive=True #是否只有正数</td>
-			</tr>
-			<tr>
-					<td>pyint()</td>
-					<td>整型</td>
-			</tr>
-			<tr>
-					<td>pyiterable()</td>
-					<td>迭代器</td>
-			</tr>
-			<tr>
-					<td>pylist()</td>
-					<td>列表</td>
-			</tr>
-			<tr>
-					<td>pyset()</td>
-					<td>集合</td>
-			</tr>
-			<tr>
-					<td>pystr()</td>
-					<td>字符串</td>
-			</tr>
-			<tr>
-					<td>pystruct()</td>
-					<td>结构体</td>
-			</tr>
-			<tr>
-					<td>pytuple()</td>
-					<td>元组</td>
-			</tr>
-	</tbody>
-</table>
-<h2 id="5随机生成常用数据">5、随机生成常用数据</h2>
-<table>
-	<thead>
-			<tr>
-					<th>参数</th>
-					<th>说明</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>ssn()</td>
-					<td>生成身份证号</td>
-			</tr>
-			<tr>
-					<td>chrome()</td>
-					<td>随机生成Chrome的浏览器user_agent信息</td>
-			</tr>
-			<tr>
-					<td>firefox()</td>
-					<td>随机生成FireFox的浏览器user_agent信息</td>
-			</tr>
-			<tr>
-					<td>internet_explorer()</td>
-					<td>随机生成IE的浏览器user_agent信息</td>
-			</tr>
-			<tr>
-					<td>opera()</td>
-					<td>随机生成Opera的浏览器user_agent信息</td>
-			</tr>
-			<tr>
-					<td>safari()</td>
-					<td>随机生成Safari的浏览器user_agent信息</td>
-			</tr>
-			<tr>
-					<td>linux_platform_token()</td>
-					<td>随机Linux信息</td>
-			</tr>
-			<tr>
-					<td>user_agent()</td>
-					<td>随机user_agent信息</td>
-			</tr>
-	</tbody>
-</table>……
-        </div>
-        <p class="readmore"><a href="https://anTtutu.github.io/post/2021-06-05-python_faker/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -1418,6 +803,10 @@ ruby 和 java 下都有类似的 faker 工具，但是对比过 java 的，还�
 <ul class="widget-list">
     
     <li>
+        <a href="https://anTtutu.github.io/post/2026-11-17-cc-switch-vs-magpie/" title="CC Switch 对比 Magpie：两家供应商管家的优缺点掰开看，以及我为什么重心挪到了后者" target="_blank">CC Switch 对比 Magpie：两家供应商管家的优缺点掰开看，以及我为什么重心挪到了后者</a>
+    </li>
+    
+    <li>
         <a href="https://anTtutu.github.io/post/2026-10-23-contraption-lab/" title="从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记" target="_blank">从弄丢的杂志光盘到女儿的物理启蒙：网页版机关游戏 Contraption Lab 开发调测记</a>
     </li>
     
@@ -1453,10 +842,6 @@ ruby 和 java 下都有类似的 faker 工具，但是对比过 java 的，还�
         <a href="https://anTtutu.github.io/post/2026-07-02-claude-code-cli-cheatsheet/" title="Claude Code常用命令速查" target="_blank">Claude Code常用命令速查</a>
     </li>
     
-    <li>
-        <a href="https://anTtutu.github.io/post/2026-04-30-claude-skills/" title="claude code skill介绍" target="_blank">claude code skill介绍</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -1468,7 +853,7 @@ ruby 和 java 下都有类似的 faker 工具，但是对比过 java 的，还�
     
     <li><a href="https://anTtutu.github.io/categories/about/">About (1)</a></li>
     
-    <li><a href="https://anTtutu.github.io/categories/AI/">AI (7)</a></li>
+    <li><a href="https://anTtutu.github.io/categories/AI/">AI (8)</a></li>
     
     <li><a href="https://anTtutu.github.io/categories/android/">Android (2)</a></li>
     
