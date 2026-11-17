@@ -235,7 +235,7 @@
             <h2 id="前言">前言</h2>
 <p>用 Claude Code 这两年，供应商和中转换了一拨又一拨。最早手搓 <code>~/.claude/settings.json</code> 和 <code>~/.codex/config.toml</code>，改坏了翻备份，后来嫌烦装了 <strong>CC Switch</strong>（今年 6 月它就把我的 Codex 配置迁过一遍，<code>~/.cc-switch</code> 里还留着当时的迁移记录），这一用就是大半年，供应商、MCP、Skills、会话、用量全交给它。</p>
 <p>前阵子看到 yetone（macOS 翻译工具 Bob 的作者）发了 <strong>Magpie</strong>，口号是「Every agent&rsquo;s model. One place.」，10 月 13 日顺手装上，配了几家中转断断续续用到现在。</p>
-<p>结果是：<strong>以前 CC Switch 用得多，现在 Magpie 更适合我。</strong> 这篇不劝谁照搬，就是把两家掰开揉碎对比一遍——用法、优势、不足，最后说说我的情况和理由。口径先讲清：CC Switch 那半边来自半年日常，Magpie 那半边来自文档加近一个月的浅尝，评价偏保守是正常的；版本号和 star 数是写稿当天（2026-11-17）的快照，功能以各家官方文档为准。</p>
+<p>结果是：<strong>以前 CC Switch 用得多，现在 Magpie 更适合我。</strong> 这篇不劝谁照搬，就是把两家掰开揉碎对比一遍——用法、优势、不足，最后说说我的情况和理由。口径先讲清：CC Switch 那半边来自半年日常，Magpie 那半边来自文档加实际使用（用量页截图为证）；版本号和 star 数是写稿当天（2026-11-17）的快照，功能以各家官方文档为准。</p>
 <h2 id="1先看我机器上两家的真实状态">1、先看我机器上两家的真实状态</h2>
 <p>先说个容易误判的细节：<strong>写稿这天，CC Switch 的进程在跑，Magpie 的网关没在跑</strong>。<code>ps</code> 里 cc-switch 活着、监听 <code>127.0.0.1:15721</code>；<code>127.0.0.1:3425</code> 无人接听。但这不是「Magpie 被淘汰了」的证据——Magpie 的 TUI/CLI 形态关掉之后网关本身就停，它是按需起服务的。所以下面只拿这些当背景，不当裁判依据。</p>
 <h3 id="11-cc-switch404从-6-月用到现在">1.1 CC Switch：4.0.4，从 6 月用到现在</h3>
@@ -271,12 +271,19 @@
 <li><strong>聚合</strong>：把多家供应商的模型塞进 Claude Code / Codex 的同一个模型列表，<code>/model</code> 选哪个，请求就发去哪一家</li>
 </ul>
 <p>切换生效范围要记牢：<strong>Claude Code 热切换不用重启；Codex、Gemini CLI、Grok Build 要重启终端；Claude Desktop 要重开 App</strong>。</p>
-<!-- 截图 1：CC Switch 主界面（直连 / 路由 / 聚合标签 + 供应商卡片），文件放到 static/posts/ccswitch-magpie/cc-switch-main.png -->
-<!-- ![CC Switch 主界面](/posts/ccswitch-magpie/cc-switch-main.png) -->
-<!-- 截图 2：系统托盘子菜单，每个工具一行，直接点供应商名切换 -->
-<!-- ![托盘里直接切供应商](/posts/ccswitch-magpie/cc-switch-tray.png) -->
+<p>主界面，Claude Code 页签的「路由」模式：顶部写着「路由生效中 → OpenRouter」，下面是故障转移队列，Key 一律打码显示：</p>
+<p>
+        <img class="mx-auto" alt="CC Switch 主界面：Claude Code 的路由模式与供应商队列" src="/posts/ccswitch-magpie/ccswitch_1.png" />   
+    </p>
+<p>托盘子菜单更方便：每个工具一行，点进去直接切供应商，灰色那行是官方订阅（不走路由），打勾的是当前生效的：</p>
+<p>
+        <img class="mx-auto" alt="CC Switch 托盘子菜单：Claude Code 的路由队列逐一切换" src="/posts/ccswitch-magpie/ccswitch_2.png" />   
+    </p>
 <h3 id="22-magpie一个本地网关伺候所有-agent">2.2 Magpie：一个本地网关伺候所有 Agent</h3>
-<p>思路完全不同：<code>127.0.0.1:3425</code> 起一个网关，同时说 OpenAI Chat、OpenAI Responses、Anthropic Messages 和 Gemini 四种协议并互相转换，<strong>所有 Agent 都指向这一个端点</strong>，模型从一份统一目录里挑。菜单栏 App、窗口版、<code>magpie tui</code>、<code>magpie web</code>、CLI 五种形态都有，Mac 上一个二进制才 15 MB 左右：</p>
+<p>思路完全不同：<code>127.0.0.1:3425</code> 起一个网关，同时说 OpenAI Chat、OpenAI Responses、Anthropic Messages 和 Gemini 四种协议并互相转换，<strong>所有 Agent 都指向这一个端点</strong>，模型从一份统一目录里挑。菜单栏 App、窗口版、<code>magpie tui</code>、<code>magpie web</code>、CLI 五种形态都有，Mac 上一个二进制才 15 MB 左右。菜单栏面板长这样，Agent / 用量 / 路由三个页签：</p>
+<p>
+        <img class="mx-auto" alt="magpie 菜单栏面板：Agent / 用量 / 路由三个页签" src="/posts/ccswitch-magpie/magpie_2.png" />   
+    </p>
 <div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -291,19 +298,25 @@
 </span></span><span style="display:flex;"><span>magpie quota                                 <span style="color:#57606a"># 看各账号配额</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>它强在三块：</p>
+</div><p>窗口版的 Agent 页：左边是使用 / 模型 / 供应商 / 路由 / 网关 / 用量，每个 Agent 一行，模型下拉 + 右侧接入开关。坦白说拍这张时我还没接入任何 Agent（开关全关，都写着「用 xx 自己的设置」）——接入是逐 Agent 决定的，不是一把梭：</p>
+<p>
+        <img class="mx-auto" alt="magpie 窗口版 Agent 页：逐 Agent 选模型、逐 Agent 接入" src="/posts/ccswitch-magpie/magpie_1.png" />   
+    </p>
+<p>它强在三块：</p>
 <ul>
 <li><strong>订阅共享</strong>：登录过的 Claude、ChatGPT、Copilot、Gemini Code Assist 等订阅会当成供应商，其他 Agent 直接共用，多账号自动故障转移，还有「每日热身」帮你卡 5 小时窗口</li>
 <li><strong>路由组</strong>：<code>smart</code>（用快续期的订阅）、<code>order</code>（前一个答不上来才换下一个）、<code>rotate</code>（每轮换）、<code>usage</code>（最少用的先用）、<code>pace</code>（按周剩余额度匀着用）；会话粘在答过它的账号上以保住提示词缓存，组还能嵌套</li>
 <li><strong>隐私脱敏</strong>：默认关，打开后密钥、邮箱、证件号在请求离开本机前被替换成 <code>{{API_KEY_k3v9x2mq}}</code> 这样的占位符，回复里再还原；规则找不准的还能选本地小模型兜底</li>
 </ul>
+<p>设置 › 隐私页，脱敏的粒度都在这：密钥、个人信息（邮箱 / 手机号 / 身份证号 / 银行卡号）、账号打码，外加脱敏词和自定义规则（前缀或正则）。注意看开关——拍这张时「脱敏密钥」还是关的，默认关这点不是吹的，得自己手动开；底下「计入用户数」就是每天回传一次匿名统计的那条，不想发就关：</p>
+<p>
+        <img class="mx-auto" alt="magpie 设置 › 隐私页：脱敏粒度与统计开关" src="/posts/ccswitch-magpie/magpie_6.png" />   
+    </p>
+<p>路由页是实时播放的：哪个 Agent 的请求经网关走了哪条组、为什么排它、各自回应如何，都在这页看。没请求时给你三个模板起步——难题给强模型、便宜优先、永不卡住：</p>
+<p>
+        <img class="mx-auto" alt="magpie 路由页：实时路由决策与三个开箱模板" src="/posts/ccswitch-magpie/magpie_3.png" />   
+    </p>
 <p>安装是 <code>curl -fsSL https://usemagpie.ai/install.sh | sh</code>，或 <code>go install</code>，或 Docker；卸载脚本会把 Agent 配置还原回去。而且<strong>它能从 CC Switch、Claude Code、Codex 直接导入供应商</strong>——两家不冲突，迁移不疼。</p>
-<!-- 截图 3：Magpie 菜单栏面板 + 模型选择器 -->
-<!-- ![Magpie 菜单栏面板](/posts/ccswitch-magpie/magpie-panel.png) -->
-<!-- 截图 4：Routing 视图，各 Agent 经网关到各供应商的实时决策 -->
-<!-- ![Magpie 路由视图](/posts/ccswitch-magpie/magpie-routing.png) -->
-<!-- 截图 5：Insights › Masking，脱敏了多少个值 -->
-<!-- ![Magpie 脱敏统计](/posts/ccswitch-magpie/magpie-masking.png) -->
 <h3 id="23-配置落盘对比">2.3 配置落盘对比</h3>
 <p>两家都承诺「只改关键字段，不动我的东西」，CC Switch 这条我验过，<code>~/.claude/settings.json</code> 现在长这样（敏感值打码）：</p>
 <div class="highlight"><div style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
@@ -434,7 +447,14 @@
 <li><strong>调度是另一个量级</strong>：配额用完自动接下一个、会话粘账号保缓存、订阅当供应商共享给所有 Agent——这是 CC Switch 给不了的</li>
 <li><strong>脱敏独一份</strong>：密钥不出本机，Mask / Warn / Block 三档可调，规则 + 可选本地模型双保险</li>
 <li><strong>形态全且轻</strong>：15 MB 单二进制，TUI/CLI 对终端重度用户友好；编辑器覆盖面比 CC Switch 广</li>
+<li><strong>观测细</strong>：用量页按今天 / 7 天 / 30 天 / 90 天拉 Token、请求、费用、缓存命中、活跃时长、项目、模型分布，菜单栏面板看个大概，窗口版看细节：</li>
 </ul>
+<p>
+        <img class="mx-auto" alt="magpie 用量：菜单栏面板看今日" src="/posts/ccswitch-magpie/magpie_4.png" />   
+    </p>
+<p>
+        <img class="mx-auto" alt="magpie 窗口版用量页：90 天的会话、Token、缓存命中和按时段热力图" src="/posts/ccswitch-magpie/magpie_5.png" />   
+    </p>
 <h3 id="34-magpie-的不足">3.4 Magpie 的不足</h3>
 <ul>
 <li><strong>生态年轻</strong>：版本号还在 0.1.x，文档全英文；仓库明确写着「不收 PR，有事去 Discord 提」——对开源用户来说这条挺要命</li>
@@ -446,7 +466,7 @@
 <li><strong>新旧包共存</strong>：<code>/Applications</code> 里留着 3.16.2，实际从 DMG 起的是 4.0.4，托盘图标看着像没升级。判断看 <code>ps</code> 里的进程路径，不在 App 目录里就是 DMG 直跑的</li>
 <li><strong>路由模式下换模型仍要重启</strong>：Claude Code 热切换，但 Codex / Gemini CLI / Grok Build 换模型后还是得重启终端，别指望全自动</li>
 <li><strong>两个工具别同时接管同一份配置</strong>：两家都会写 <code>~/.claude/settings.json</code> 里的 <code>ANTHROPIC_BASE_URL</code>（一个指 15721，一个指 3425），后写的覆盖先写的。我的规矩是同一时间只让一个接管，另一个想玩就先停掉前者</li>
-<li><strong>Magpie 的网关不是常驻的</strong>：TUI/CLI 形态一关网关就停，连着它的 Agent 立刻失联。想让它一直在线，用桌面 App 或 <code>magpie serve</code> / Docker，别用 TUI 当主力</li>
+<li><strong>Magpie 的网关不是常驻的</strong>：TUI/CLI 形态一关网关就停，连着它的 Agent 立刻失联。想让它一直在线，用桌面 App 或 <code>magpie serve</code> / Docker，别用 TUI 当主力——我拍 Magpie 截图那会儿窗口版开着，左下角「网关 127.0.0.1:3425」绿灯亮着；等我关窗口去查端口，就没人听了</li>
 </ol>
 <h2 id="5我的情况不是推荐">5、我的情况（不是推荐）</h2>
 <p>以前 CC Switch 用得多，因为它把「换供应商」这件事的摩擦降到了零；现在重心挪到 Magpie，就三个原因：<strong>一个网关统一伺候所有 Agent</strong>（不用再逐个工具点切换）、<strong>路由组真的在替我省配额</strong>（多账号自动接力，会话不丢缓存）、<strong>脱敏和 TUI 贴合我的终端工作流</strong>。但 Magpie 文档全英文、版本还年轻，这是我接受了的代价——你要是不在意调度和脱敏，CC Switch 依然是更省心的那个。</p>
